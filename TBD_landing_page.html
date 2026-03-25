@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TBD Studio | 讓選擇變清楚，讓路徑可驗收 - 專業升學顧問</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // v3 palette
+            'tbd-light': '#D0CEDB',     // Light Grey
+            'tbd-mid': '#767995',       // Bluish Grey
+            'tbd-accent': '#1A5D94',    // Muted Blue
+            'tbd-dark': '#142143',      // Dark Blue
+            'tbd-yellow': '#FAB748',    // Mellow Yellow
+          },
+          fontFamily: {
+            sans: ['"Inter"', '"Noto Sans TC"', 'sans-serif'],
+            serif: ['"EB Garamond"', 'serif'],
+          },
+          boxShadow: {
+            'soft': '0 10px 30px rgba(20, 33, 67, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+  </style>
+  <style>
+  html { scroll-behavior: smooth; }
+  body { 
+    font-family: 'Inter', 'Noto Sans TC', sans-serif; 
+    -webkit-font-smoothing: antialiased; /* 讓文字在 Mac 上更細緻 */
+  }
+  /* 讓選單連結在滾動到該區域時有更明顯的互動 */
+  .nav-link-active { color: #142143; font-weight: 600; }
+</style>
+</head>
+
+<body class="bg-white text-tbd-dark leading-relaxed">
+
+    <nav class="fixed w-full z-50 border-b border-tbd-light/60 bg-white/90 backdrop-blur-md">
+    <div class="container mx-auto flex items-center justify-between px-6 py-3">
+        <div class="flex items-center">
+            <img src="https://lh3.googleusercontent.com/u/0/d/14mnzD0NuTntlX6MoWcJHeBvLQD2uZe0E"
+                alt="TBD Studio Logo" 
+                class="h-9 sm:h-11 w-auto object-contain"">
+        </div>
+        <!-- Desktop Tabs (minimal) -->
+        <div class="hidden lg:flex items-center gap-6 text-sm text-tbd-mid">
+        <a href="#pain" class="hover:text-tbd-dark transition">常見焦慮</a>
+        <a href="#cases" class="hover:text-tbd-dark transition">成功案例</a>
+        <a href="#method" class="hover:text-tbd-dark transition">方法流程</a>
+        <a href="#contact" class="hover:text-tbd-dark transition">策略諮詢</a>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Mobile CTA (icon-like, compact) -->
+        <a href="#contact"
+            class="inline-flex lg:hidden items-center justify-center bg-tbd-accent text-white px-3.5 py-2 rounded-md text-sm font-medium hover:opacity-90 transition shadow-soft">
+            策略諮詢
+        </a>
+        <!-- Desktop CTA -->
+        <a href="#contact"
+            class="hidden lg:inline-flex bg-tbd-accent text-white px-5 py-2.5 rounded-md text-sm font-medium hover:opacity-90 transition shadow-soft">
+            預約策略諮詢 →
+        </a>
+
+        <!-- Mobile Menu -->
+        <details class="lg:hidden relative" id="mobileMenu">
+            <summary class="list-none cursor-pointer select-none inline-flex items-center justify-center w-10 h-10 rounded-md border border-tbd-light/80 bg-white hover:bg-tbd-light/40 transition">
+            <!-- Hamburger -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-label="Menu">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="#142143" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            </summary>
+
+            <!-- Backdrop (click to close via JS below) -->
+            <div class="fixed inset-0 bg-black/10" data-menu-backdrop></div>
+
+            <!-- Panel -->
+            <div class="absolute right-0 mt-3 w-[88vw] max-w-sm rounded-xl border border-tbd-light/80 bg-white shadow-soft overflow-hidden">
+            <div class="px-4 py-3 border-b border-tbd-light/70 flex items-center justify-between">
+                <div class="text-sm font-semibold text-tbd-dark">快速導覽</div>
+
+                <!-- Close -->
+                <button type="button" data-close-menu
+                class="cursor-pointer select-none inline-flex items-center justify-center w-8 h-8 rounded-md border border-tbd-light/80 bg-white hover:bg-tbd-light/40 transition"
+                aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6L6 18" stroke="#142143" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                </button>
+            </div>
+
+            <div class="p-2">
+                <a href="#pain" class="block px-3 py-3 rounded-lg hover:bg-tbd-light/35 text-tbd-dark" data-menu-link>常見焦慮</a>
+                <a href="#cases" class="block px-3 py-3 rounded-lg hover:bg-tbd-light/35 text-tbd-dark" data-menu-link>成功案例</a>
+                <a href="#method" class="block px-3 py-3 rounded-lg hover:bg-tbd-light/35 text-tbd-dark" data-menu-link>方法流程</a>
+
+                <div class="p-2 pt-3">
+                <a href="#contact"
+                    class="w-full inline-flex items-center justify-center bg-tbd-accent text-white px-4 py-3 rounded-md text-sm font-medium hover:opacity-90 transition shadow-soft"
+                    data-menu-link>
+                    預約策略諮詢 →
+                </a>
+                </div>
+            </div>
+            </div>
+
+            <!-- Tiny inline JS: close on X / backdrop / link -->
+            <script>
+            (() => {
+                const menu = document.getElementById('mobileMenu');
+                if (!menu) return;
+
+                const close = () => { menu.open = false; };
+
+                menu.querySelectorAll('[data-close-menu]').forEach(btn => {
+                btn.addEventListener('click', (e) => { e.preventDefault(); close(); });
+                });
+
+                const backdrop = menu.querySelector('[data-menu-backdrop]');
+                if (backdrop) backdrop.addEventListener('click', close);
+
+                menu.querySelectorAll('[data-menu-link]').forEach(a => {
+                a.addEventListener('click', () => close());
+                });
+            })();
+            </script>
+        </details>
+        </div>
+    </div>
+    </nav>
+
+  <!-- HERO -->
+  <header class="relative pt-24 sm:pt-28 lg:pt-44 pb-14 lg:pb-28 bg-gradient-to-b from-white to-tbd-light/55 overflow-hidden">
+    <!-- Shape language: triangle + circle + line (low opacity, cool tone) -->
+    <div class="absolute -top-12 -right-10 opacity-[0.10] pointer-events-none">
+      <svg width="560" height="560" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="55,5 95,85 20,92" fill="#1A5D94"/>
+        <circle cx="28" cy="30" r="10" fill="#767995"/>
+        <path d="M10 70 L90 55" stroke="#142143" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+      </svg>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
+      <div class="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-12">
+        <div class="lg:w-1/2 space-y-5 sm:space-y-6">
+
+          <!-- Badge: wrap-friendly -->
+          <div class="inline-flex flex-wrap items-center gap-2 rounded-full border border-tbd-mid/30 bg-white/70 px-4 py-2 text-xs sm:text-sm">
+            <span class="text-tbd-dark font-medium">志向探索 × 申請策略 × 備審／面試 × 歷程規劃</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-relaxed text-tbd-dark">
+            Define, Design, Deliver <br>
+            <span class="text-tbd-accent">Your Next Move</span>
+          </h1>
+
+          <h2 class="text-lg sm:text-xl lg:text-2xl text-tbd-mid font-medium">
+            在多元的升學選擇中建立清晰航線，
+            <span class="hidden sm:inline"><br></span>
+            讓孩子成長的每一步都能穩穩實現。
+          </h2>
+
+          <!-- CTAs: stack on mobile -->
+          <div class="pt-2">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+              <a href="#pain"
+                 class="inline-flex items-center justify-center border border-tbd-light/80 bg-white px-6 sm:px-8 py-3 rounded-md text-base sm:text-lg font-medium text-tbd-dark hover:bg-tbd-light/35 transition">
+                先看成功案例
+              </a>
+              <a href="#contact"
+                 class="inline-flex items-center justify-center bg-tbd-accent text-white px-6 sm:px-8 py-3 rounded-md text-base sm:text-lg font-medium hover:opacity-90 transition shadow-soft">
+                預約策略諮詢 →
+              </a>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-tbd-mid">* 付費諮詢費用可全額折抵後續方案</p>
+          </div>
+        </div>
+
+        <div class="lg:w-1/2 w-full">
+          <div class="relative">
+            <div class="absolute -inset-2 rounded-xl bg-gradient-to-br from-tbd-accent/15 to-tbd-yellow/15 blur-2xl opacity-60"></div>
+
+            <!-- Hero Visual: abstract SVG (no real-person imagery) -->
+            <div class="relative rounded-xl shadow-soft w-full aspect-[4/3] bg-white overflow-hidden border border-tbd-light/70">
+              <svg viewBox="0 0 100 75" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" aria-label="Abstract consulting visual">
+                <defs>
+                  <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#1A5D94" stop-opacity="0.18"/>
+                    <stop offset="1" stop-color="#FAB748" stop-opacity="0.18"/>
+                  </linearGradient>
+                </defs>
+                <rect width="100" height="75" fill="url(#g)"/>
+                <circle cx="24" cy="28" r="10" fill="#767995" fill-opacity="0.35"/>
+                <path d="M10 55 L88 42" stroke="#142143" stroke-width="1.8" stroke-linecap="round" opacity="0.35"/>
+                <polygon points="62,10 92,62 48,68" fill="#1A5D94" fill-opacity="0.22"/>
+                <path d="M18 18 L34 18" stroke="#142143" stroke-width="1.2" stroke-linecap="round" opacity="0.20"/>
+                <path d="M18 22 L40 22" stroke="#142143" stroke-width="1.2" stroke-linecap="round" opacity="0.20"/>
+                <path d="M18 26 L36 26" stroke="#142143" stroke-width="1.2" stroke-linecap="round" opacity="0.20"/>
+              </svg>
+            </div>
+
+            <!-- Overlay: auto-wrap + mobile spacing -->
+            <div class="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 bg-white/75 backdrop-blur rounded-lg p-3 sm:p-4 border border-tbd-light/70">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <p class="text-xs sm:text-sm font-semibold text-tbd-dark">
+                  交付物可驗收 · 進度可追蹤 · 版本可回溯
+                </p>
+                <span class="self-start sm:self-auto text-[11px] sm:text-xs font-bold text-tbd-accent bg-tbd-accent/10 px-2 py-1 rounded">
+                  Transparent
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- PAIN POINTS -->
+  <section id="pain" class="py-14 sm:py-16 lg:py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 max-w-5xl text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 lg:mb-12 text-tbd-dark">你是否也面臨這樣的升學焦慮？</h2>
+
+      <div class="grid md:grid-cols-3 gap-6 sm:gap-8 text-left">
+        <!-- card (reordered: 意見分歧 first) -->
+        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="inline-block w-2 h-2 rounded-full bg-tbd-accent"></span>
+            <h3 class="text-lg sm:text-xl font-bold">意見分歧，決策困難</h3>
+          </div>
+          <p class="text-tbd-mid text-sm sm:text-base">
+            親子對科系的期待常有落差；面對升學，又難以摸透校系招生偏好。此時，正需要客觀的第三方專業視角來協助釐清盲點。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="inline-block w-2 h-2 rounded-full bg-tbd-accent"></span>
+            <h3 class="text-lg sm:text-xl font-bold">經歷豐富，卻無法聚焦</h3>
+          </div>
+          <p class="text-tbd-mid text-sm sm:text-base">
+            獎狀、營隊寫得滿滿滿，卻拼湊不出一個立體的「人」？別讓孩子的真實熱情與天賦，被淹沒在毫無記憶點的清單裡。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="inline-block w-2 h-2 rounded-full bg-tbd-accent"></span>
+            <h3 class="text-lg sm:text-xl font-bold">成績優異，卻缺乏故事</h3>
+          </div>
+          <p class="text-tbd-mid text-sm sm:text-base">
+            學科頂尖只是基本的入場券！若沒有引人入勝的專屬敘事，即使成績傲人，也怕在海量的優秀名單中失去亮點、黯然失色。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASES (moved before METHOD per meeting notes) -->
+  <section id="cases" class="py-14 sm:py-16 lg:py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 lg:mb-12 text-center text-tbd-dark">讓學生的故事，成為被錄取的理由</h2>
+
+      <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
+        <!-- card -->
+        <div class="bg-white border border-tbd-light/80 rounded-xl overflow-hidden hover:shadow-soft transition-shadow">
+          <img src="https://placehold.co/600x400/D0CEDB/142143?text=Tech+Story&font=inter" alt="Tech Student" class="w-full h-44 sm:h-48 object-cover">
+          <div class="p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-bold text-tbd-accent bg-tbd-accent/10 px-2 py-1 rounded">非典型逆襲</span>
+              <span class="text-[11px] sm:text-xs text-tbd-mid">新竹 / 校排45%</span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold">從「愛打電動」到「具備使用者思維的工程人才」</h3>
+            <p class="text-tbd-mid text-sm">
+              我們不談玩遊戲，而是把他的模組製作經驗整理成「產品開發流程」：目標、使用者、迭代、驗收。
+            </p>
+            <div class="pt-4 border-t border-tbd-light/70">
+              <p class="font-bold text-tbd-dark text-sm sm:text-base">成果：錄取頂尖大學資工系（特殊選材/個申）</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-tbd-light/80 rounded-xl overflow-hidden hover:shadow-soft transition-shadow">
+          <img src="https://placehold.co/600x400/D0CEDB/142143?text=Top+Student&font=inter" alt="Top Student" class="w-full h-44 sm:h-48 object-cover">
+          <div class="p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-bold text-tbd-accent bg-tbd-accent/10 px-2 py-1 rounded">差異化定位</span>
+              <span class="text-[11px] sm:text-xs text-tbd-mid">台北 / 校排8%</span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold">在千篇一律的優秀履歷中，建立「獨特觀點」</h3>
+            <p class="text-tbd-mid text-sm">
+              我們把「完美但像罐頭」的履歷，轉化為清晰人設：跨域興趣 → 主題線 → 可驗收的作品與反思。
+            </p>
+            <div class="pt-4 border-t border-tbd-light/70">
+              <p class="font-bold text-tbd-dark text-sm sm:text-base">成果：同時錄取台大政治與海外名校</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-tbd-light/80 rounded-xl overflow-hidden hover:shadow-soft transition-shadow">
+          <img src="https://placehold.co/600x400/D0CEDB/142143?text=Guidance&font=inter" alt="Career Guidance" class="w-full h-44 sm:h-48 object-cover">
+          <div class="p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-bold text-tbd-accent bg-tbd-accent/10 px-2 py-1 rounded">早期生涯定錨</span>
+              <span class="text-[11px] sm:text-xs text-tbd-mid">台南 / 高一</span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold">停止無效焦慮，繪製三年成長藍圖</h3>
+            <p class="text-tbd-mid text-sm">
+              先做潛力診斷，釐清衝突與限制，再把目標拆成每月里程碑，讓家庭看到「下一步怎麼走」。
+            </p>
+            <div class="pt-4 border-t border-tbd-light/70">
+              <p class="font-bold text-tbd-dark text-sm sm:text-base">成果：確立專題方向，找回學習動力</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES / METHOD -->
+<section id="method" class="py-16 sm:py-20 lg:py-24 bg-tbd-dark text-white relative overflow-hidden">
+    <div class="absolute -bottom-24 -left-20 opacity-[0.1] pointer-events-none rotate-12">
+      <svg width="600" height="600" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" fill="#767995"/>
+        <path d="M15 55 L85 45" stroke="#FAB748" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+        <polygon points="70,10 95,70 45,82" fill="#1A5D94"/>
+      </svg>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
+      <div class="text-center mb-12 lg:mb-20">
+        <h2 class="text-2xl sm:text-4xl font-bold mb-6 tracking-tight">
+          我們不提供標準答案，<span class="text-tbd-yellow">我們設計一套可重現的成長流程</span>
+        </h2>
+        <p class="text-white/70 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
+          TBD 的核心價值，是把模糊的「才華」轉化為清晰的「資產」<br class="hidden sm:block">
+          讓每一步的努力，都能被看見、被追蹤、也能被驗收。
+        </p>
+      </div>
+
+      <div class="flex flex-col lg:flex-row items-stretch justify-between gap-6 lg:gap-4">
+        
+        <div class="flex-1 group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
+          <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20">
+            <span class="text-tbd-yellow font-bold text-lg">01</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Mapping<br>潛力盤點</h3>
+          <p class="text-white/60 text-sm leading-relaxed mb-6">盤點學生能力、家庭期待、建立「能力與敘事地圖」。</p>
+          <div class="inline-flex items-center gap-2 text-[11px] text-white/70 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+            版本化 / 可追蹤
+          </div>
+        </div>
+
+        <div class="hidden lg:flex items-center text-white/20">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </div>
+
+        <div class="flex-1 group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
+          <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20">
+            <span class="text-tbd-yellow font-bold text-lg">02</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Positioning<br>敘事定位</h3>
+          <p class="text-white/60 text-sm leading-relaxed mb-6">透過共創找到申請核心靈魂，建立「敘事定位圖」。</p>
+          <div class="inline-flex items-center gap-2 text-[11px] text-white/70 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            共創 / 可驗證
+          </div>
+        </div>
+
+        <div class="hidden lg:flex items-center text-white/20">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </div>
+
+        <div class="flex-1 group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
+          <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20">
+            <span class="text-tbd-yellow font-bold text-lg">03</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Strategy<br>策略設計</h3>
+          <p class="text-white/60 text-sm leading-relaxed mb-6">將龐大目標拆解成可執行的細節，建立「WBS 計畫」。</p>
+          <div class="inline-flex items-center gap-2 text-[11px] text-white/70 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+            拆解 / 節奏化
+          </div>
+        </div>
+
+        <div class="hidden lg:flex items-center text-white/20">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </div>
+
+        <div class="flex-1 group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
+          <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20">
+            <span class="text-tbd-yellow font-bold text-lg">04</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Asset Delivery<br>資產交付</h3>
+          <p class="text-white/60 text-sm leading-relaxed mb-6">最終產出的不僅是申請材料，更是可遷移的「資產包」。</p>
+          <div class="inline-flex items-center gap-2 text-[11px] text-white/70 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+            模組化 / 再利用
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 lg:mt-24 text-center">
+        <div class="inline-block relative">
+          <span class="absolute -top-4 -left-6 text-4xl text-tbd-yellow opacity-30 font-serif">“</span>
+          <p class="font-serif text-xl sm:text-2xl italic text-white/90">
+            讓每個交付物，都成為下一次更快的模板。
+          </p>
+          <span class="absolute -bottom-8 -right-6 text-4xl text-tbd-yellow opacity-30 font-serif">”</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-14 sm:py-16 lg:py-20 bg-tbd-light/60">
+    <div class="container mx-auto px-4 sm:px-6 max-w-4xl text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-tbd-dark">開始設計你的升學路徑</h2>
+      <p class="text-base sm:text-lg text-tbd-mid mb-6 sm:mb-8">
+        我們相信，信任建立在透明的評估之上。<br>
+        預約一次 60 分鐘的升學策略諮詢，獲得一份客觀的策略建議報告。
+      </p>
+
+      <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-soft inline-block text-left max-w-md w-full border border-tbd-light/80">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold mb-1 text-tbd-dark">特質評估與升學策略規劃</h3>
+            <p class="text-tbd-mid mb-5 sm:mb-6 text-sm sm:text-base">適合首次接觸 TBD 的家庭</p>
+          </div>
+        </div>
+
+        <ul class="space-y-3 mb-6 sm:mb-8 text-tbd-mid text-sm sm:text-base">
+          <li class="flex items-center">
+            <span class="w-5 h-5 rounded-full bg-tbd-accent/10 flex items-center justify-center mr-2">
+              <span class="w-2 h-2 rounded-full bg-tbd-accent"></span>
+            </span>
+            60 分鐘一對一深度諮詢
+          </li>
+          <li class="flex items-center">
+            <span class="w-5 h-5 rounded-full bg-tbd-accent/10 flex items-center justify-center mr-2">
+              <span class="w-2 h-2 rounded-full bg-tbd-accent"></span>
+            </span>
+            個人特質與經歷初步盤點
+          </li>
+          <li class="flex items-center">
+            <span class="w-5 h-5 rounded-full bg-tbd-accent/10 flex items-center justify-center mr-2">
+              <span class="w-2 h-2 rounded-full bg-tbd-accent"></span>
+            </span>
+            交付：升學、職涯策略建議報告（可追蹤/可驗收）
+          </li>
+        </ul>
+
+        <div class="text-center">
+          <div class="text-2xl sm:text-3xl font-bold text-tbd-dark mb-1">NT$ 3,500</div>
+          <p class="text-xs sm:text-sm text-tbd-mid mb-5 sm:mb-6">（* 若後續合作正式方案可全額折抵）</p>
+
+          <button class="w-full bg-tbd-accent text-white px-6 py-3 rounded-md font-medium hover:opacity-90 transition shadow-soft">
+            加 Line 預約策略諮詢
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-tbd-dark text-white/70 py-10 sm:py-12 text-sm">
+    <div class="container mx-auto px-4 sm:px-6 max-w-6xl grid md:grid-cols-3 gap-6 sm:gap-8">
+      <div>
+        <div class="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">TBD <span class="text-tbd-accent">Studio.</span></div>
+        <p class="text-white/70">Structure Thought, Deliver Clarity.</p>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-3 sm:mb-4">聯絡我們</h4>
+        <p class="mb-2">Email: contact@tbdstudio.tw（範例）</p>
+        <p>Line ID: @tbdstudio（範例）</p>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-3 sm:mb-4">服務地區</h4>
+        <p class="text-white/70">主要服務新竹、台北及南部地區家庭。<br>提供完整線上視訊諮詢與協作流程。</p>
+      </div>
+    </div>
+    <div class="container mx-auto px-4 sm:px-6 max-w-6xl mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10 text-center">
+      © 2026 TBD Studio. All Rights Reserved.
+    </div>
+  </footer>
+
+</body>
+</html>
