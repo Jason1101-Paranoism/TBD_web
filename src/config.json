@@ -24,6 +24,11 @@
       "href": "pages/cases.html"
     },
     {
+      "id": "portfolio-guide",
+      "label": "Portfolio 指南",
+      "href": "pages/portfolio-guide.html"
+    },
+    {
       "id": "audience",
       "label": "適合對象",
       "href": "pages/audience.html"
@@ -73,6 +78,14 @@
       "source": "cases.html",
       "output": "pages/cases.html",
       "body_class": "sub-page cases-page"
+    },
+    {
+      "id": "portfolio-guide",
+      "title": "Portfolio 指南｜TBD Studio",
+      "description": "TBD Studio 高中生 Portfolio 建置指南，協助學生整理自主學習、專題作品與升學主線。",
+      "source": "portfolio-guide.html",
+      "output": "pages/portfolio-guide.html",
+      "body_class": "sub-page portfolio-guide-page"
     },
     {
       "id": "audience",
