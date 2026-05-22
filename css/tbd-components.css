@@ -1,0 +1,19 @@
+.button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 999px; background: var(--tbd-accent); color: #fff; font-weight: 800; box-shadow: var(--tbd-shadow); }
+.button.secondary { background: transparent; color: var(--tbd-dark); border: 1px solid var(--tbd-line); box-shadow: none; }
+.kicker, .badge, .tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--tbd-line); background: rgba(26,93,148,.08); color: var(--tbd-accent); border-radius: 999px; font-size: 13px; font-weight: 800; letter-spacing: .03em; }
+.card, .hero-card { background: #fff; border: 1px solid var(--tbd-line); border-radius: 24px; padding: 26px; box-shadow: var(--tbd-shadow); }
+.note { background: rgba(208,206,219,.36); border-left: 5px solid var(--tbd-yellow); border-radius: 16px; padding: 18px 20px; color: var(--tbd-dark); font-weight: 700; }
+.cta { margin-top: 40px; background: var(--tbd-dark); color: #fff; border-radius: 28px; padding: 30px; display: grid; gap: 10px; overflow: hidden; }
+.cta p { color: rgba(255,255,255,.82); }
+.cta .button { background: var(--tbd-yellow); color: var(--tbd-dark); }
+.cta .button.secondary { background: transparent; border-color: rgba(255,255,255,.32); color: #fff; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--tbd-line); border-radius: 20px; background: #fff; box-shadow: var(--tbd-shadow); }
+table { width: 100%; border-collapse: collapse; min-width: 760px; }
+th, td { text-align: left; padding: 15px 16px; border-bottom: 1px solid var(--tbd-line); vertical-align: top; }
+th { background: rgba(208,206,219,.36); color: var(--tbd-dark); font-weight: 800; }
+tr:last-child td { border-bottom: 0; }
+.timeline { display: grid; gap: 14px; }
+.timeline-item { display: grid; grid-template-columns: 145px 1fr; gap: 18px; padding: 18px; background: #fff; border: 1px solid var(--tbd-line); border-radius: 20px; box-shadow: 0 8px 24px rgba(20,33,67,.05); }
+.timeline-time { font-weight: 900; color: var(--tbd-accent); }
+@media (max-width: 820px) { .timeline-item { grid-template-columns: 1fr; } }

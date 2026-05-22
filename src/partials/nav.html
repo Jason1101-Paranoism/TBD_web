@@ -1,0 +1,39 @@
+<header class="site-header">
+  <nav class="site-nav" aria-label="主要導覽">
+    <a class="site-logo" href="{{home_href}}" aria-label="TBD Studio 官方首頁">
+      <img src="{{logo_url}}" alt="TBD Studio Logo" width="168" height="44">
+    </a>
+
+    <div class="site-nav-links" aria-label="桌面導覽">
+{{desktop_links}}
+    </div>
+
+    <div class="site-nav-actions">
+      <a class="site-nav-cta site-nav-cta--mobile" href="{{contact_href}}">策略諮詢</a>
+      <a class="site-nav-cta site-nav-cta--desktop" href="{{contact_href}}">預約策略諮詢 →</a>
+
+      <details class="site-menu" id="mobileMenu">
+        <summary class="site-menu-button" aria-label="開啟導覽選單">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </summary>
+        <div class="site-menu-backdrop" data-menu-backdrop></div>
+        <div class="site-menu-panel">
+          <div class="site-menu-head">
+            <div class="site-menu-title">快速導覽</div>
+            <button type="button" class="site-menu-close" data-close-menu aria-label="關閉導覽選單">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="site-menu-links">
+{{mobile_links}}
+            <a class="site-menu-cta" href="{{contact_href}}" data-menu-link>預約策略諮詢 →</a>
+          </div>
+        </div>
+      </details>
+    </div>
+  </nav>
+</header>

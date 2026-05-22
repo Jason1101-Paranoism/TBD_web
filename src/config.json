@@ -1,0 +1,118 @@
+{
+  "site": {
+    "name": "TBD Studio",
+    "logo_url": "https://lh3.googleusercontent.com/u/0/d/14mnzD0NuTntlX6MoWcJHeBvLQD2uZe0E",
+    "line_url": "https://lin.ee/9ciZvbA",
+    "email": "tbd.consulting.studio@gmail.com",
+    "line_id": "@756etimx",
+    "tagline": "Define, Design, Deliver Your Next Move."
+  },
+  "nav": [
+    {
+      "id": "home",
+      "label": "官方首頁",
+      "href": "index.html"
+    },
+    {
+      "id": "overview",
+      "label": "服務總覽",
+      "href": "pages/index.html"
+    },
+    {
+      "id": "cases",
+      "label": "成功案例",
+      "href": "pages/cases.html"
+    },
+    {
+      "id": "audience",
+      "label": "適合對象",
+      "href": "pages/audience.html"
+    },
+    {
+      "id": "services",
+      "label": "服務項目",
+      "href": "pages/services.html"
+    },
+    {
+      "id": "timeline",
+      "label": "申請時程",
+      "href": "pages/timeline.html"
+    },
+    {
+      "id": "plans",
+      "label": "服務方案",
+      "href": "pages/plans.html"
+    },
+    {
+      "id": "process",
+      "label": "合作流程",
+      "href": "pages/process.html"
+    }
+  ],
+  "pages": [
+    {
+      "id": "home",
+      "title": "TBD Studio | 讓選擇變清楚，讓路徑可驗收 - 專業升學顧問",
+      "description": "TBD Studio 協助學生進行志向探索、申請策略、備審面試與歷程規劃。",
+      "source": "home.html",
+      "output": "index.html",
+      "body_class": "home-page"
+    },
+    {
+      "id": "overview",
+      "title": "服務總覽｜TBD Studio",
+      "description": "TBD Studio 升學申請策略、備審資料整理與面試訓練服務總覽。",
+      "source": "index.html",
+      "output": "pages/index.html",
+      "body_class": "sub-page"
+    },
+    {
+      "id": "cases",
+      "title": "成功案例｜TBD Studio",
+      "description": "TBD Studio 特殊選才、備審與面試訓練成功案例。",
+      "source": "cases.html",
+      "output": "pages/cases.html",
+      "body_class": "sub-page cases-page"
+    },
+    {
+      "id": "audience",
+      "title": "適合對象｜TBD Studio",
+      "description": "判斷學生是否適合 TBD Studio 的升學申請、書審與面試服務。",
+      "source": "audience.html",
+      "output": "pages/audience.html",
+      "body_class": "sub-page"
+    },
+    {
+      "id": "services",
+      "title": "服務項目｜TBD Studio",
+      "description": "TBD Studio 的升學方向諮詢、備審資料整理、作品集與面試訓練服務。",
+      "source": "services.html",
+      "output": "pages/services.html",
+      "body_class": "sub-page"
+    },
+    {
+      "id": "timeline",
+      "title": "申請時程｜TBD Studio",
+      "description": "大學個人申請、研究所推甄與特殊選才準備時程。",
+      "source": "timeline.html",
+      "output": "pages/timeline.html",
+      "body_class": "sub-page"
+    },
+    {
+      "id": "plans",
+      "title": "服務方案｜TBD Studio",
+      "description": "TBD Studio 備審健檢、備審重構、面試訓練與全程陪跑方案。",
+      "source": "plans.html",
+      "output": "pages/plans.html",
+      "body_class": "sub-page"
+    },
+    {
+      "id": "process",
+      "title": "合作流程｜TBD Studio",
+      "description": "TBD Studio 從初步了解、狀況診斷到正式送件的合作流程。",
+      "source": "process.html",
+      "output": "pages/process.html",
+      "body_class": "sub-page"
+    }
+  ]
+}
