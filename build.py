@@ -68,6 +68,7 @@ def normalize_content(content: str) -> str:
 def render_page(page: dict):
     output = page["output"]
     prefix = rel_prefix(output)
+    site_url = CONFIG["site"].get("site_url", "")
     context = {
         **CONFIG["site"],
         "title": page["title"],
@@ -75,6 +76,8 @@ def render_page(page: dict):
         "body_class": page.get("body_class", ""),
         "asset_prefix": prefix,
         "home_href": resolve_href("index.html", output),
+        "canonical_url": f"{site_url}/{output}",
+        "og_image": page.get("og_image", CONFIG["site"].get("og_image", "")),
     }
     content = normalize_content(load(SRC / "pages" / page["source"]))
     html = load(SRC / "templates" / "base.html")

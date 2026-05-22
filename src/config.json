@@ -5,7 +5,9 @@
     "line_url": "https://lin.ee/9ciZvbA",
     "email": "tbd.consulting.studio@gmail.com",
     "line_id": "@756etimx",
-    "tagline": "Define, Design, Deliver Your Next Move."
+    "tagline": "Define, Design, Deliver Your Next Move.",
+    "site_url": "https://tbd-studio.vercel.app",
+    "og_image": "https://tbd-studio.vercel.app/assets/images/TBD_Landing%20Page%20Banner.png"
   },
   "nav": [
     {
@@ -14,14 +16,14 @@
       "href": "index.html"
     },
     {
-      "id": "overview",
-      "label": "服務總覽",
-      "href": "pages/index.html"
-    },
-    {
       "id": "cases",
       "label": "成功案例",
       "href": "pages/cases.html"
+    },
+    {
+      "id": "services",
+      "label": "服務內容",
+      "href": "pages/services.html"
     },
     {
       "id": "portfolio-guide",
@@ -29,24 +31,9 @@
       "href": "pages/portfolio-guide.html"
     },
     {
-      "id": "audience",
-      "label": "適合對象",
-      "href": "pages/audience.html"
-    },
-    {
-      "id": "services",
-      "label": "服務項目",
-      "href": "pages/services.html"
-    },
-    {
       "id": "timeline",
       "label": "申請時程",
       "href": "pages/timeline.html"
-    },
-    {
-      "id": "plans",
-      "label": "服務方案",
-      "href": "pages/plans.html"
     },
     {
       "id": "process",
@@ -97,11 +84,11 @@
     },
     {
       "id": "services",
-      "title": "服務項目｜TBD Studio",
-      "description": "TBD Studio 的升學方向諮詢、備審資料整理、作品集與面試訓練服務。",
+      "title": "服務內容｜TBD Studio",
+      "description": "TBD Studio 服務說明：適合哪些升學管道、具體服務項目，以及健檢、重構、面試訓練與全程陪跑四種合作方案。",
       "source": "services.html",
       "output": "pages/services.html",
-      "body_class": "sub-page"
+      "body_class": "sub-page services-page"
     },
     {
       "id": "timeline",

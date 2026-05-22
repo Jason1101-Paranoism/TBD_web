@@ -1,940 +1,691 @@
-<!-- Portfolio Guide Page Fragment｜放在 src/pages/portfolio-guide.html -->
-<section class="portfolio-guide-page bg-[#F8FAFC] min-h-screen">
-  <div id="portfolioGuideRoot"></div>
+<section class="portfolio-guide-page bg-[#F8FAFC]" style="min-height:100vh">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+<div class="grid lg:grid-cols-[260px_1fr] gap-8 items-start">
 
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="lg:sticky lg:top-24">
+  <div class="rounded-2xl border border-[#D0CEDB] bg-white p-4" style="border-color:rgba(208,206,219,.7)">
+    <div class="px-3 pb-3 border-b" style="border-color:rgba(208,206,219,.5)">
+      <p class="text-[11px] font-extrabold text-[#1A5D94] tracking-widest uppercase">Guide Menu</p>
+      <h2 class="mt-1 text-lg font-extrabold text-[#142143]">Portfolio 指南</h2>
+    </div>
+    <nav class="mt-3 space-y-1">
+      <button type="button" data-tab="home"      class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">首頁</button>
+      <button type="button" data-tab="concept"   class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">Portfolio 是什麼</button>
+      <button type="button" data-tab="step"      class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">從 0 開始建立</button>
+      <button type="button" data-tab="templates" class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">架構模板</button>
+      <button type="button" data-tab="tools"     class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">工具指南</button>
+      <button type="button" data-tab="cases"     class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">真實案例</button>
+      <button type="button" data-tab="mistakes"  class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">常見錯誤</button>
+      <button type="button" data-tab="resources" class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">精選 Portfolio 資源</button>
+      <button type="button" data-tab="faq"       class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">FAQ</button>
+    </nav>
+  </div>
+</aside>
 
-  <script type="text/babel">
-    const { useState } = React;
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="space-y-10">
 
-    const LINE_URL = "https://lin.ee/9ciZvbA";
+<!-- ─── TAB: HOME ─── -->
+<div id="pg-tab-home" class="pg-panel space-y-12">
 
-    const Icons = {
-      ArrowRight: ({ className = "w-4 h-4" }) => (
-        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      ),
-      Check: ({ className = "w-5 h-5 text-emerald-500" }) => (
-        <svg className={`${className} shrink-0`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      X: ({ className = "w-5 h-5 text-rose-500" }) => (
-        <svg className={`${className} shrink-0`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      Copy: ({ className = "w-4 h-4" }) => (
-        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3" />
-        </svg>
-      ),
-      Sparkles: ({ className = "w-5 h-5" }) => (
-        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21l-.813-5.096L3 15l5.096-.813L9 9l.813 5.187L15 15l-5.187.813zM19.071 4.929l-.535 3.354-3.354.535 3.354.535.535 3.354.535-3.354 3.354-.535-3.354-.535-.535-3.354z" />
-        </svg>
-      ),
-      Layers: ({ className = "w-5 h-5" }) => (
-        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-        </svg>
-      ),
-      TrendingUp: ({ className = "w-5 h-5" }) => (
-        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg>
-      )
-    };
-
-    function PortfolioGuideApp() {
-      const [currentTab, setCurrentTab] = useState("home");
-      const [mockupTab, setMockupTab] = useState("projects");
-      const [stepActiveIndex, setStepActiveIndex] = useState(0);
-      const [selectedTool, setSelectedTool] = useState("notion");
-      const [activeCaseField, setActiveCaseField] = useState("engineering");
-      const [openFaq, setOpenFaq] = useState(null);
-      const [toast, setToast] = useState("");
-
-      const [sandboxName, setSandboxName] = useState("林大為");
-      const [sandboxLine, setSandboxLine] = useState("校園社群工具開發");
-      const [sandboxPain, setSandboxPain] = useState("高一新生選課系統繁雜，新生難以快速找到合適學長姐問課");
-      const [sandboxAction, setSandboxAction] = useState("利用 React 與 Firebase 自學架設「問課導師媒合平台」");
-      const [sandboxResult, setSandboxResult] = useState("上線 2 週內吸引全校 450+ 位學生註冊，促成 120 次有效諮詢");
-      const [generatedPrompt, setGeneratedPrompt] = useState("");
-
-      const navItems = [
-        { id: "home", label: "首頁" },
-        { id: "concept", label: "Portfolio 是什麼" },
-        { id: "step", label: "從 0 開始建立" },
-        { id: "templates", label: "架構模板" },
-        { id: "tools", label: "工具指南" },
-        { id: "cases", label: "真實案例" },
-        { id: "mistakes", label: "常見錯誤" },
-        { id: "resources", label: "精選 Portfolio 資源" },
-        { id: "faq", label: "FAQ" }
-      ];
-
-      const showToast = (message) => {
-        setToast(message);
-        window.setTimeout(() => setToast(""), 2600);
-      };
-
-      const copyText = async (text, message = "已複製！") => {
-        try {
-          await navigator.clipboard.writeText(text);
-          showToast(message);
-        } catch (err) {
-          const textarea = document.createElement("textarea");
-          textarea.value = text;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand("copy");
-          document.body.removeChild(textarea);
-          showToast(message);
-        }
-      };
-
-      const handleTabChange = (id) => {
-        setCurrentTab(id);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      };
-
-      const handleGeneratePrompt = () => {
-        if (!sandboxPain || !sandboxAction || !sandboxResult) {
-          showToast("請先填寫痛點、行動與成果。");
-          return;
-        }
-
-        const prompt = `你是一位專業升學顧問與大學面試教練。請根據以下學生素材，將內容潤飾成一段可放入高中生 Portfolio 個人網站的專業經歷敘述。
-
-學生姓名：${sandboxName || "學生"}
-個人主線：${sandboxLine || "尚未填寫"}
-遭遇的痛點 Situation：${sandboxPain}
-採取的行動 Action：${sandboxAction}
-具體成果 Result：${sandboxResult}
-
-請依照 STAR / SARI 敘事邏輯重寫：
-1. 使用第一人稱「我」。
-2. 字數約 200–300 字。
-3. 語氣自信、真實、有高中生自主學習感。
-4. 避免過度浮誇、官腔、AI 味。
-5. 凸顯「問題意識 → 行動方法 → 成果證據 → 反思成長」。
-6. 可使用簡短段落或條列。
-7. 不要輸出前言，不要說「以下是」。`;
-
-        setGeneratedPrompt(prompt);
-        showToast("Prompt 已產生，可以複製使用。");
-      };
-
-      const steps = [
-        {
-          title: "整理歷史探索與素材",
-          desc: "不要急著排版。先把高中三年做過的活動、報告、競賽、自主學習、社團任務與 Side Project 全部列出來。",
-          tip: "此階段不要自我審查，重點是累積素材池。照片、程式碼、簡報、報告、影片與獎狀都要標記連結。",
-          checklist: ["列出至少 8 個探索經歷", "每個經歷至少找到 1 個證明連結", "把檔案整理到雲端資料夾"]
-        },
-        {
-          title: "萃取個人核心主線",
-          desc: "在凌亂經歷中尋找交集：你持續在意什麼問題？你常常主動學什麼？你解決問題時偏好的工具是什麼？",
-          tip: "試著把主線濃縮成一句話，例如：用資料分析理解校園行為，或用開源硬體改善生活問題。",
-          checklist: ["用 20 字內描述核心熱情", "選出 3 個最能證明主線的作品", "刪除和主線無關的素材"]
-        },
-        {
-          title: "撰寫 About Me",
-          desc: "不要從家庭背景或個性形容詞開始。直接說明你的學習信念、代表實踐、申請方向與未來想解決的問題。",
-          tip: "使用三段式：信念 → 高中實踐亮點 → 大學想延伸的學術方向。",
-          checklist: ["300 字內完成", "包含具體代表作", "避免熱情、努力、積極等空泛詞"]
-        },
-        {
-          title: "撰寫 Projects 專案解構",
-          desc: "Projects 是 Portfolio 核心。每個專案都要說清楚 Situation、Action、Result、Insight。",
-          tip: "不要只寫結果，教授更想看你如何面對問題、debug、修正方向與形成下一步。",
-          checklist: ["寫出痛點與問題情境", "列出實際方法與工具", "補上成果數據與反思"]
-        },
-        {
-          title: "整理 Skills 能力矩陣",
-          desc: "不要寫 Python 80%、領導力 90%。改用技能分類與代表作品證明能力。",
-          tip: "每個技能後面要能接出一個作品或任務，例如：Python｜OpenCV 車流分析系統。",
-          checklist: ["拿掉百分比能力條", "每個技能對應代表作", "只保留面試能回答的技能"]
-        },
-        {
-          title: "選擇工具與部署方式",
-          desc: "依照時間、技術能力、申請方向選工具。不是越難越好，而是能否穩定呈現與更新。",
-          tip: "文組與初學者可從 Notion / Carrd 開始；資工與工程方向可考慮 GitHub Pages / Vercel。",
-          checklist: ["確認手機版可讀", "所有連結可點擊", "圖片壓縮後再上傳"]
-        },
-        {
-          title: "測試、回饋與迭代",
-          desc: "請家長、同學或老師用 3 分鐘試看，確認他們能不能說出你的主線與代表能力。",
-          tip: "Portfolio 是動態資產，第一次完成後仍要持續修正。",
-          checklist: ["3 分鐘內看懂主線", "沒有錯字與失效連結", "CTA 與聯絡方式清楚"]
-        }
-      ];
-
-      const tools = {
-        notion: {
-          title: "Notion",
-          tag: "零門檻開始",
-          best: "適合先整理素材、建立文字版作品集與簡易公開頁。",
-          pros: ["上手最快", "適合整理資料庫", "不用寫程式"],
-          cons: ["視覺客製有限", "互動與動畫較弱", "正式感略低"]
-        },
-        carrd: {
-          title: "Carrd",
-          tag: "一頁式漂亮網站",
-          best: "適合想快速做出精美 landing page 的學生。",
-          pros: ["視覺乾淨", "成本低", "一頁式架構清楚"],
-          cons: ["多頁內容不方便", "作品數多時較難管理", "進階互動有限"]
-        },
-        github: {
-          title: "GitHub Pages",
-          tag: "工程 / 資工加分",
-          best: "適合想展示程式能力、版本紀錄與開源專案的學生。",
-          pros: ["技術證明力強", "可連接 GitHub 作品", "免費部署"],
-          cons: ["需要基本 HTML/CSS/Git", "初期維護門檻較高", "設計需自己處理"]
-        },
-        vercel: {
-          title: "Vercel",
-          tag: "互動作品展示",
-          best: "適合已有前端專案，或想展示互動式網站 / 小工具的學生。",
-          pros: ["部署體驗好", "支援現代前端框架", "適合互動 Demo"],
-          cons: ["需要較高技術門檻", "需注意 API key 安全", "對純內容頁可能過重"]
-        }
-      };
-
-      const cases = {
-        engineering: {
-          title: "工程實作型學生",
-          line: "主線：從競賽動手做到工程問題解決",
-          text: "適合展示機器人、程式、實驗設計、debug 紀錄與實作影片。重點不是只說拿獎，而是解釋你如何面對技術瓶頸，如何拆解問題並驗證解法。",
-          evidence: ["GitHub commit 紀錄", "操作影片", "設計草圖", "比賽或專題成果"]
-        },
-        social: {
-          title: "社會議題型學生",
-          line: "主線：從觀察現象到提出改善方案",
-          text: "適合展示訪談、問卷、田野紀錄、資料視覺化與政策分析。重點是讓研究方法與個人關懷同時被看見。",
-          evidence: ["問卷資料", "訪談摘要", "圖表分析", "行動方案"]
-        },
-        design: {
-          title: "設計 / 傳播型學生",
-          line: "主線：從使用者需求到視覺與體驗設計",
-          text: "適合展示 Figma 原型、品牌識別、社群企劃、使用者測試與迭代紀錄。重點是說清楚你不是只做美，而是能回應需求。",
-          evidence: ["Figma 原型", "設計迭代", "社群數據", "使用者回饋"]
-        }
-      };
-
-      return (
-        <div className="text-[#142143]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
-            <div className="grid lg:grid-cols-[260px_1fr] gap-8 items-start">
-              <aside className="lg:sticky lg:top-24">
-                <div className="rounded-2xl border border-[#D0CEDB]/70 bg-white/90 shadow-soft p-4">
-                  <div className="px-3 pb-3 border-b border-[#D0CEDB]/50">
-                    <p className="text-[11px] font-extrabold text-[#1A5D94] tracking-widest uppercase">Guide Menu</p>
-                    <h2 className="mt-1 text-lg font-extrabold text-[#142143]">Portfolio 指南</h2>
-                  </div>
-                  <nav className="mt-3 space-y-1">
-                    {navItems.map((item) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => handleTabChange(item.id)}
-                        className={`w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition ${
-                          currentTab === item.id
-                            ? "bg-[#1A5D94] text-white shadow-soft"
-                            : "text-[#767995] hover:bg-[#D0CEDB]/25 hover:text-[#142143]"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </nav>
-                </div>
-              </aside>
-
-              <main className="space-y-10">
-                {currentTab === "home" && renderHome()}
-                {currentTab === "concept" && renderConcept()}
-                {currentTab === "step" && renderSteps()}
-                {currentTab === "templates" && renderTemplates()}
-                {currentTab === "tools" && renderTools()}
-                {currentTab === "cases" && renderCases()}
-                {currentTab === "mistakes" && renderMistakes()}
-                {currentTab === "resources" && renderResources()}
-                {currentTab === "faq" && renderFaq()}
-              </main>
-            </div>
-
-            {renderBottomCta()}
+  <section class="grid lg:grid-cols-12 gap-8 items-center">
+    <div class="lg:col-span-7 space-y-6">
+      <span class="inline-flex items-center rounded-full bg-[#1A5D94] px-4 py-2 text-xs font-extrabold text-white" style="background:rgba(26,93,148,.1);color:#1A5D94">陪你從 0 到 1 打造升學主線</span>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-[#142143]">
+        從 0 開始建立你的<br>
+        <span style="background:linear-gradient(to right,#1A5D94,#142143,#FAB748);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">高中生 Portfolio</span>
+      </h1>
+      <p class="text-lg text-[#767995] leading-relaxed max-w-2xl">不只是把資料放上網，而是把自主學習、專題成果與活動經歷整理成教授看得懂的個人主線。</p>
+      <div class="grid sm:grid-cols-3 gap-4 pt-4 max-w-2xl" style="border-top:1px solid rgba(208,206,219,.6)">
+        <div><p class="text-xl font-black text-[#1A5D94]">3 分鐘</p><p class="mt-1 text-xs text-[#767995]">讓教授快速看懂主線</p></div>
+        <div><p class="text-xl font-black text-[#1A5D94]">1 條主線</p><p class="mt-1 text-xs text-[#767995]">串起專題、活動與反思</p></div>
+        <div><p class="text-xl font-black text-[#1A5D94]">長期資產</p><p class="mt-1 text-xs text-[#767995]">升學後仍能持續更新</p></div>
+      </div>
+    </div>
+    <div class="lg:col-span-5">
+      <!-- Portfolio Mockup -->
+      <div class="bg-white rounded-2xl overflow-hidden" style="box-shadow:0 25px 50px -12px rgba(0,0,0,.25);border:1px solid rgba(208,206,219,.5)">
+        <div class="px-4 py-3 flex items-center justify-between" style="background:#142143">
+          <div class="flex space-x-1.5">
+            <div class="w-3 h-3 rounded-full" style="background:#ef4444"></div>
+            <div class="w-3 h-3 rounded-full" style="background:#f59e0b"></div>
+            <div class="w-3 h-3 rounded-full" style="background:#10b981"></div>
           </div>
-
-          {toast && (
-            <div className="fixed bottom-5 right-5 z-[70] rounded-xl bg-[#142143] text-white px-5 py-3 shadow-2xl text-sm font-bold">
-              {toast}
-            </div>
-          )}
+          <div class="text-xs text-slate-400 font-mono">portfolio.tbd</div>
+          <div class="w-6"></div>
         </div>
-      );
-
-      function SectionHeader({ kicker, title, children }) {
-        return (
-          <div className="space-y-3">
-            <span className="inline-flex items-center rounded-full bg-[#1A5D94]/10 text-[#1A5D94] px-3 py-1 text-xs font-extrabold">
-              {kicker}
-            </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">
-              {title}
-            </h1>
-            {children && <p className="text-[#767995] leading-relaxed max-w-3xl">{children}</p>}
-          </div>
-        );
-      }
-
-      function renderHome() {
-        return (
-          <div className="space-y-12">
-            <section className="grid lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-7 space-y-6">
-                <span className="inline-flex items-center rounded-full bg-[#1A5D94]/10 text-[#1A5D94] px-4 py-2 text-xs font-extrabold">
-                  陪你從 0 到 1 打造升學主線
-                </span>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-                  從 0 開始建立你的<br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1A5D94] via-[#142143] to-[#FAB748]">
-                    高中生 Portfolio
-                  </span>
-                </h1>
-                <p className="text-lg text-[#767995] leading-relaxed max-w-2xl">
-                  不只是把資料放上網，而是把自主學習、專題成果與活動經歷整理成教授看得懂的個人主線。
-                </p>
-
-                <div className="grid sm:grid-cols-3 gap-4 pt-4 border-t border-[#D0CEDB]/60 max-w-2xl">
-                  <Metric value="主線化" label="把散亂素材串成故事" />
-                  <Metric value="可驗證" label="連結作品、紀錄與證據" />
-                  <Metric value="可延伸" label="升學後仍能持續更新" />
-                </div>
-              </div>
-
-              <div className="lg:col-span-5">
-                <PortfolioMockup />
-              </div>
-            </section>
-
-            <section className="grid md:grid-cols-3 gap-6">
-              <FeatureCard icon={<Icons.Sparkles />} title="串接個人主線">
-                讓獎狀、專題、活動不再只是清單，而是變成能說明你為什麼適合某個學群的故事。
-              </FeatureCard>
-              <FeatureCard icon={<Icons.Layers />} title="建立真實證明力">
-                用 GitHub、影片、設計稿、實驗紀錄等證據，補上 PDF 備審容易缺少的可信度。
-              </FeatureCard>
-              <FeatureCard icon={<Icons.TrendingUp />} title="形成長期資產">
-                個人網站可以一路延伸到大學、實習、研究與求職，是一份可以更新的數位履歷。
-              </FeatureCard>
-            </section>
-
-            <section className="rounded-3xl bg-gradient-to-br from-[#142143] to-[#1A5D94] text-white p-8 lg:p-10 shadow-soft">
-              <div className="grid lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-5 space-y-4">
-                  <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-extrabold text-[#FAB748]">
-                    評審教授內心話
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold leading-snug">
-                    空洞的包裝，不如真實的反思。
-                  </h2>
-                  <p className="text-sm text-white/75 leading-relaxed">
-                    很多學生放滿證書與漂亮排版，但教授真正想確認的是：你遇到什麼問題、如何學會方法、如何修正錯誤，以及下一步想走向哪裡。
-                  </p>
-                </div>
-                <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-                  {[
-                    ["與挫折共處", "比起完美成果，更重要的是你如何處理 bug、失敗與限制。"],
-                    ["學習歷程一致", "主線不能像臨時拼湊，而要看得出長期累積。"],
-                    ["實務操作素養", "程式碼、數據、影片、實驗紀錄都能提高可信度。"],
-                    ["學科熱情", "熱情不是口號，而是你願意投入時間找資料、做測試、修正方向。"]
-                  ].map(([title, text]) => (
-                    <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                      <h3 className="font-extrabold text-[#FAB748]">{title}</h3>
-                      <p className="mt-2 text-xs leading-relaxed text-white/70">{text}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      function Metric({ value, label }) {
-        return (
-          <div>
-            <p className="text-xl font-black text-[#1A5D94]">{value}</p>
-            <p className="mt-1 text-xs text-[#767995]">{label}</p>
-          </div>
-        );
-      }
-
-      function FeatureCard({ icon, title, children }) {
-        return (
-          <article className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
-            <div className="w-12 h-12 rounded-xl bg-[#1A5D94]/10 flex items-center justify-center text-[#1A5D94]">{icon}</div>
-            <h3 className="mt-4 text-lg font-extrabold text-[#142143]">{title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-[#767995]">{children}</p>
-          </article>
-        );
-      }
-
-      function PortfolioMockup() {
-        return (
-          <div className="bg-white rounded-2xl shadow-2xl border border-[#D0CEDB]/50 overflow-hidden">
-            <div className="bg-[#142143] px-4 py-3 flex items-center justify-between">
-              <div className="flex space-x-1.5">
-                <div className="w-3 h-3 rounded-full bg-rose-500"></div>
-                <div className="w-3 h-3 rounded-full bg-amber-400"></div>
-                <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
-              </div>
-              <div className="text-xs text-slate-400 font-mono">portfolio.tbd</div>
-              <div className="w-6"></div>
-            </div>
-
-            <div className="p-6 space-y-5">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#1A5D94] to-[#FAB748] flex items-center justify-center text-white text-xl font-black">
-                  陳
-                </div>
-                <div>
-                  <h3 className="text-lg font-extrabold text-[#142143]">陳元宏</h3>
-                  <p className="text-xs text-[#767995] font-semibold">主線：低功耗邊緣運算與開源物聯網實踐</p>
-                </div>
-              </div>
-
-              <div className="flex border-b border-[#D0CEDB]/40 text-xs font-mono">
-                {["about", "projects", "skills"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setMockupTab(tab)}
-                    className={`pb-2 px-3 font-bold transition ${
-                      mockupTab === tab ? "border-b-2 border-[#1A5D94] text-[#1A5D94]" : "text-[#767995]"
-                    }`}
-                  >
-                    {tab === "about" ? "關於我" : tab === "projects" ? "代表專案" : "掌握工具"}
-                  </button>
-                ))}
-              </div>
-
-              <div className="min-h-[170px] bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm">
-                {mockupTab === "about" && (
-                  <div className="space-y-2">
-                    <p className="font-bold text-[#1A5D94]">「我深信最佳的學習在於親手將抽象邏輯落地實踐。」</p>
-                    <p className="text-[#767995] text-xs leading-relaxed">
-                      我在高中自主學習中專注於物聯網架構，嘗試以低成本硬體建立校園車流量辨識器。
-                    </p>
-                  </div>
-                )}
-                {mockupTab === "projects" && (
-                  <div className="space-y-3">
-                    <Project title="Edge-Traffic-Analyzer" tag="45+ Stars" text="串接 OpenCV 於 Raspberry Pi，建立校園車流追蹤系統。" />
-                    <Project title="ESP32 微氣象監測節點" tag="IoT" text="每 5 分鐘回傳空氣品質資訊，並發布 LINE 警報。" />
-                  </div>
-                )}
-                {mockupTab === "skills" && (
-                  <div className="space-y-3">
-                    <SkillGroup title="開發語言與框架" items={["Python", "C/C++", "OpenCV", "Git"]} />
-                    <SkillGroup title="硬體與協議" items={["ESP32", "Raspberry Pi", "WiFi", "MQTT"]} />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      }
-
-      function Project({ title, tag, text }) {
-        return (
-          <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-            <div className="flex justify-between gap-3">
-              <span className="font-bold text-[#142143] text-xs">{title}</span>
-              <span className="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">{tag}</span>
-            </div>
-            <p className="text-[11px] text-[#767995] mt-1">{text}</p>
-          </div>
-        );
-      }
-
-      function SkillGroup({ title, items }) {
-        return (
-          <div>
-            <span className="text-xs font-semibold text-[#142143]">{title}</span>
-            <div className="flex flex-wrap gap-1.5 mt-1.5">
-              {items.map((item) => (
-                <span key={item} className="text-[10px] bg-[#1A5D94]/10 text-[#1A5D94] px-2 py-0.5 rounded font-mono font-bold">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        );
-      }
-
-      function renderConcept() {
-        return (
-          <div className="space-y-8">
-            <SectionHeader kicker="基礎概念" title="Portfolio 是什麼？">
-              Portfolio 是能展現能力亮點與探索軌跡的動態作品集。它不是取代備審 PDF，而是補上 PDF 最難呈現的互動、證據與長期更新能力。
-            </SectionHeader>
-
-            <div className="bg-white rounded-2xl border border-[#D0CEDB]/60 overflow-hidden shadow-soft">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm min-w-[760px]">
-                  <thead className="bg-[#D0CEDB]/35 text-[#142143]">
-                    <tr>
-                      <th className="p-4 font-extrabold">比較維度</th>
-                      <th className="p-4 font-extrabold text-[#1A5D94]">個人 Portfolio 網站</th>
-                      <th className="p-4 font-extrabold text-[#767995]">傳統備審 PDF</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#D0CEDB]/40">
-                    {[
-                      ["排版自由度", "可用卡片、動線、互動與多媒體呈現個人主線。", "受格式限制，容易變成文字與證明堆疊。"],
-                      ["證據呈現", "可連結 GitHub、影片、設計稿、Demo 與數據。", "多數只能放截圖與簡短說明。"],
-                      ["長期價值", "可持續更新到大學、實習、研究與求職。", "常在申請結束後失去用途。"],
-                      ["核心目的", "說清楚你如何學習、行動、反思與累積。", "多半偏向合規上傳與成果羅列。"]
-                    ].map((row) => (
-                      <tr key={row[0]}>
-                        <td className="p-4 font-bold text-[#142143]">{row[0]}</td>
-                        <td className="p-4 text-[#1A5D94] font-semibold">{row[1]}</td>
-                        <td className="p-4 text-[#767995]">{row[2]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <section className="bg-slate-100 rounded-2xl p-6 sm:p-8 grid lg:grid-cols-12 gap-6">
-              <div className="lg:col-span-4 space-y-3">
-                <h2 className="text-xl font-extrabold text-[#142143]">什麼是個人主線？</h2>
-                <p className="text-sm text-[#767995] leading-relaxed">
-                  如果高中三年的探索是散落的珍珠，個人主線就是把它們串起來的線。主線不只說明你做過什麼，更說明你為什麼持續往這個方向前進。
-                </p>
-              </div>
-              <div className="lg:col-span-8 grid md:grid-cols-2 gap-4">
-                <div className="bg-white rounded-2xl border border-rose-100 p-5">
-                  <div className="flex items-center gap-2 font-extrabold text-rose-600"><Icons.X />散亂素材</div>
-                  <ul className="mt-3 text-xs text-[#767995] space-y-2 list-disc list-inside">
-                    <li>放了鋼琴、奧林匹亞、英文心得</li>
-                    <li>每件事都不錯，但彼此沒有關係</li>
-                    <li>教授看不出你想申請什麼，也看不出長期動機</li>
-                  </ul>
-                </div>
-                <div className="bg-white rounded-2xl border border-emerald-100 p-5">
-                  <div className="flex items-center gap-2 font-extrabold text-emerald-600"><Icons.Check />主線串聯</div>
-                  <ul className="mt-3 text-xs text-[#767995] space-y-2 list-disc list-inside">
-                    <li>主線：用開源硬體推動校園永續</li>
-                    <li>自學 ESP32、感測器與資料紀錄</li>
-                    <li>每個作品都回到同一個問題意識</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            <section className="grid md:grid-cols-2 gap-6">
-              <div className="border border-rose-200 bg-rose-50/40 rounded-2xl p-6">
-                <h3 className="font-extrabold text-rose-600">錯誤：傳統流水帳</h3>
-                <p className="mt-3 text-sm text-[#767995] leading-relaxed">
-                  「我做了一個 Arduino 澆水器，我負責接線和寫程式，這讓我學到團隊合作。」
-                </p>
-                <p className="mt-3 text-xs text-rose-700 font-bold">問題：沒有動機、沒有技術細節、沒有成果證據。</p>
-              </div>
-              <div className="border border-emerald-200 bg-emerald-50/40 rounded-2xl p-6">
-                <h3 className="font-extrabold text-emerald-700">較佳：專業敘事</h3>
-                <p className="mt-3 text-sm text-[#767995] leading-relaxed">
-                  「因為學校花圃在長假期間常因人力不足而乾枯，我使用 ESP32 與土壤濕度感測器設計低成本灌溉提醒系統，並透過實測調整濕度門檻。」
-                </p>
-                <p className="mt-3 text-xs text-emerald-700 font-bold">優點：動機明確、方法具體、成果可驗證。</p>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      function renderSteps() {
-        return (
-          <div className="space-y-8">
-            <SectionHeader kicker="Step by Step" title="一步步引導：從 0 到 1 建立 Portfolio">
-              這套流程保留原始版本的 7 步驟精神，但改成更適合官網閱讀與側欄切換的版型。
-            </SectionHeader>
-
-            <div className="grid lg:grid-cols-[0.75fr_1.25fr] gap-6">
-              <div className="space-y-2">
-                {steps.map((step, index) => (
-                  <button
-                    key={step.title}
-                    type="button"
-                    onClick={() => setStepActiveIndex(index)}
-                    className={`w-full text-left rounded-2xl border px-4 py-3 transition ${
-                      stepActiveIndex === index
-                        ? "bg-[#1A5D94] text-white border-[#1A5D94] shadow-soft"
-                        : "bg-white text-[#142143] border-[#D0CEDB]/60 hover:bg-[#D0CEDB]/20"
-                    }`}
-                  >
-                    <div className="text-xs font-black opacity-70">STEP {index + 1}</div>
-                    <div className="mt-1 font-extrabold">{step.title}</div>
-                  </button>
-                ))}
-              </div>
-
-              <article className="bg-white border border-[#D0CEDB]/60 rounded-3xl p-6 sm:p-8 shadow-soft">
-                <span className="text-xs font-black text-[#1A5D94]">STEP {stepActiveIndex + 1}</span>
-                <h2 className="mt-2 text-2xl font-extrabold text-[#142143]">{steps[stepActiveIndex].title}</h2>
-                <p className="mt-4 text-[#767995] leading-relaxed">{steps[stepActiveIndex].desc}</p>
-                <div className="mt-5 rounded-2xl bg-[#FAB748]/15 border border-[#FAB748]/30 p-4">
-                  <div className="text-sm font-extrabold text-[#142143]">操作提醒</div>
-                  <p className="mt-2 text-sm text-[#767995] leading-relaxed">{steps[stepActiveIndex].tip}</p>
-                </div>
-                <div className="mt-5">
-                  <div className="text-sm font-extrabold text-[#142143]">檢查清單</div>
-                  <ul className="mt-3 space-y-2">
-                    {steps[stepActiveIndex].checklist.map((item) => (
-                      <li key={item} className="flex gap-2 text-sm text-[#767995]"><Icons.Check />{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            </div>
-          </div>
-        );
-      }
-
-      function renderTemplates() {
-        const blocks = [
-          ["About Me 個人簡介", "一句信念、代表行動、申請動機與未來方向。"],
-          ["Projects 精選專案", "每個專案都要有問題、方法、成果、反思。"],
-          ["Experiences 探索經歷", "放與主線相關的競賽、營隊、社團與學術活動。"],
-          ["Skills 技術工具矩陣", "用代表作證明技能，不用百分比能力條。"],
-          ["Contact 行動管道", "保留 Email、GitHub、LinkedIn 或其他適合的聯絡方式。"]
-        ];
-        return (
-          <div className="space-y-8">
-            <SectionHeader kicker="Structure" title="經典 5 大板塊：不踩雷的黃金配比">
-              一份好的 Portfolio 不需要很多頁，但每個區塊都要清楚回答教授想確認的問題。
-            </SectionHeader>
-
-            <div className="grid md:grid-cols-2 gap-5">
-              {blocks.map(([title, text]) => (
-                <article key={title} className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
-                  <h3 className="font-extrabold text-[#142143]">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#767995]">{text}</p>
-                </article>
-              ))}
-            </div>
-
-            {renderPromptGenerator()}
-          </div>
-        );
-      }
-
-      function renderPromptGenerator() {
-        return (
-          <section className="bg-white border border-[#D0CEDB]/70 rounded-3xl p-6 sm:p-8 shadow-soft space-y-6">
+        <div class="p-6 space-y-5">
+          <div class="flex items-center space-x-4">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center text-white text-xl font-black" style="background:linear-gradient(to top right,#1A5D94,#FAB748)">陳</div>
             <div>
-              <span className="inline-flex rounded-full bg-[#FAB748]/20 text-[#142143] px-3 py-1 text-xs font-extrabold">Prompt Generator</span>
-              <h2 className="mt-3 text-2xl font-extrabold text-[#142143]">用 Prompt 把素材轉成 Portfolio 文案</h2>
-              <p className="mt-2 text-sm text-[#767995] leading-relaxed">
-                先不用串接 AI。填入自己的痛點、行動與成果，系統會幫你整理成可直接貼到 ChatGPT / Gemini / Claude 的高品質 Prompt。
-              </p>
+              <p class="text-lg font-extrabold text-[#142143]">陳元宏</p>
+              <p class="text-xs text-[#767995] font-semibold">主線：低功耗邊緣運算與開源物聯網實踐</p>
             </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <Input label="學生姓名" value={sandboxName} onChange={setSandboxName} />
-              <Input label="個人主線" value={sandboxLine} onChange={setSandboxLine} />
-              <Textarea label="遭遇的痛點 Situation" value={sandboxPain} onChange={setSandboxPain} />
-              <Textarea label="採取的行動 Action" value={sandboxAction} onChange={setSandboxAction} />
-              <Textarea label="具體成果 Result" value={sandboxResult} onChange={setSandboxResult} className="md:col-span-2" />
+          </div>
+          <div class="flex font-mono text-xs" style="border-bottom:1px solid rgba(208,206,219,.4)">
+            <button type="button" data-mockup-tab="about"    class="pg-mockup-btn pb-2 px-3 font-bold transition text-[#767995]">關於我</button>
+            <button type="button" data-mockup-tab="projects" class="pg-mockup-btn pb-2 px-3 font-bold transition text-[#1A5D94] border-b-2 border-[#1A5D94]">代表專案</button>
+            <button type="button" data-mockup-tab="skills"   class="pg-mockup-btn pb-2 px-3 font-bold transition text-[#767995]">掌握工具</button>
+          </div>
+          <div class="min-h-[170px] p-4 rounded-xl text-sm" style="background:#f8fafc;border:1px solid #f1f5f9">
+            <div id="pg-mockup-about" class="pg-mockup-panel space-y-2 hidden">
+              <p class="font-bold text-[#1A5D94]">「我深信最佳的學習在於親手將抽象邏輯落地實踐。」</p>
+              <p class="text-[#767995] text-xs leading-relaxed">我在高中自主學習中專注於物聯網架構，嘗試以低成本硬體建立校園車流量辨識器。</p>
             </div>
-
-            <button
-              type="button"
-              onClick={handleGeneratePrompt}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1A5D94] px-6 py-3 text-sm font-extrabold text-white shadow-soft hover:bg-[#142143] transition"
-            >
-              產生 Prompt
-              <Icons.ArrowRight />
-            </button>
-
-            {generatedPrompt && (
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
-                <div>
-                  <h4 className="text-sm font-extrabold text-[#142143]">可複製使用的 Portfolio 潤飾 Prompt</h4>
-                  <p className="mt-1 text-xs text-[#767995]">將以下內容貼到 ChatGPT、Gemini 或 Claude，即可產生第一版 Portfolio 文案。</p>
+            <div id="pg-mockup-projects" class="pg-mockup-panel space-y-3">
+              <div class="bg-white p-3 rounded-xl" style="border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.1)">
+                <div class="flex justify-between gap-3">
+                  <span class="font-bold text-[#142143] text-xs">Edge-Traffic-Analyzer</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-bold" style="background:#d1fae5;color:#065f46">45+ Stars</span>
                 </div>
-                <pre className="whitespace-pre-wrap text-xs leading-relaxed text-[#142143] bg-white border border-slate-200 rounded-xl p-4 overflow-x-auto">
-                  {generatedPrompt}
-                </pre>
-                <button
-                  type="button"
-                  onClick={() => copyText(generatedPrompt, "Prompt 已複製！")}
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#142143] px-5 py-3 text-sm font-bold text-white hover:bg-[#1A5D94] transition"
-                >
-                  <Icons.Copy />
-                  複製 Prompt
-                </button>
+                <p class="text-[11px] text-[#767995] mt-1">串接 OpenCV 於 Raspberry Pi，建立校園車流追蹤系統。</p>
               </div>
-            )}
-          </section>
-        );
-      }
-
-      function Input({ label, value, onChange }) {
-        return (
-          <label className="block">
-            <span className="text-xs font-extrabold text-[#142143]">{label}</span>
-            <input
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
-              className="mt-2 w-full rounded-xl border border-[#D0CEDB]/80 bg-white px-4 py-3 text-sm text-[#142143] outline-none focus:border-[#1A5D94]"
-            />
-          </label>
-        );
-      }
-
-      function Textarea({ label, value, onChange, className = "" }) {
-        return (
-          <label className={`block ${className}`}>
-            <span className="text-xs font-extrabold text-[#142143]">{label}</span>
-            <textarea
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
-              rows="3"
-              className="mt-2 w-full rounded-xl border border-[#D0CEDB]/80 bg-white px-4 py-3 text-sm text-[#142143] outline-none focus:border-[#1A5D94]"
-            />
-          </label>
-        );
-      }
-
-      function renderTools() {
-        return (
-          <div className="space-y-8">
-            <SectionHeader kicker="Tools" title="挑選你的一生之水：高中生架站工具對決">
-              工具不是越難越好，而是要符合你的時間、技術門檻與申請目標。
-            </SectionHeader>
-
-            <div className="flex flex-wrap gap-2">
-              {Object.entries(tools).map(([id, tool]) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => setSelectedTool(id)}
-                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${
-                    selectedTool === id ? "bg-[#1A5D94] text-white" : "bg-white text-[#767995] border border-[#D0CEDB]/70"
-                  }`}
-                >
-                  {tool.title}
-                </button>
-              ))}
-            </div>
-
-            <article className="bg-white border border-[#D0CEDB]/60 rounded-3xl p-6 sm:p-8 shadow-soft">
-              <span className="inline-flex rounded-full bg-[#FAB748]/20 text-[#142143] px-3 py-1 text-xs font-extrabold">
-                {tools[selectedTool].tag}
-              </span>
-              <h2 className="mt-3 text-2xl font-extrabold text-[#142143]">{tools[selectedTool].title}</h2>
-              <p className="mt-3 text-[#767995] leading-relaxed">{tools[selectedTool].best}</p>
-
-              <div className="mt-6 grid md:grid-cols-2 gap-5">
-                <div className="rounded-2xl bg-emerald-50 border border-emerald-100 p-5">
-                  <h3 className="font-extrabold text-emerald-700">優勢</h3>
-                  <ul className="mt-3 space-y-2">
-                    {tools[selectedTool].pros.map((item) => (
-                      <li key={item} className="flex gap-2 text-sm text-[#767995]"><Icons.Check />{item}</li>
-                    ))}
-                  </ul>
+              <div class="bg-white p-3 rounded-xl" style="border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.1)">
+                <div class="flex justify-between gap-3">
+                  <span class="font-bold text-[#142143] text-xs">ESP32 微氣象監測節點</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-bold" style="background:#d1fae5;color:#065f46">IoT</span>
                 </div>
-                <div className="rounded-2xl bg-rose-50 border border-rose-100 p-5">
-                  <h3 className="font-extrabold text-rose-700">限制</h3>
-                  <ul className="mt-3 space-y-2">
-                    {tools[selectedTool].cons.map((item) => (
-                      <li key={item} className="flex gap-2 text-sm text-[#767995]"><Icons.X />{item}</li>
-                    ))}
-                  </ul>
+                <p class="text-[11px] text-[#767995] mt-1">每 5 分鐘回傳空氣品質資訊，並發布 LINE 警報。</p>
+              </div>
+            </div>
+            <div id="pg-mockup-skills" class="pg-mockup-panel space-y-3 hidden">
+              <div>
+                <span class="text-xs font-semibold text-[#142143]">開發語言與框架</span>
+                <div class="flex flex-wrap gap-1.5 mt-1.5">
+                  <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" style="background:rgba(26,93,148,.1);color:#1A5D94">Python</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" style="background:rgba(26,93,148,.1);color:#1A5D94">C/C++</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" style="background:rgba(26,93,148,.1);color:#1A5D94">OpenCV</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" style="background:rgba(26,93,148,.1);color:#1A5D94">Git</span>
                 </div>
               </div>
-            </article>
-          </div>
-        );
-      }
-
-      function renderCases() {
-        return (
-          <div className="space-y-8">
-            <SectionHeader kicker="Cases" title="真實案例拆解：看別人怎麼贏">
-              案例不只是展示結果，而是讓教授看懂你如何從問題出發、採取行動，最後形成可遷移能力。
-            </SectionHeader>
-
-            <div className="grid sm:grid-cols-3 gap-3">
-              {Object.entries(cases).map(([id, item]) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => setActiveCaseField(id)}
-                  className={`rounded-2xl border p-4 text-left transition ${
-                    activeCaseField === id ? "bg-[#142143] text-white border-[#142143]" : "bg-white text-[#142143] border-[#D0CEDB]/70"
-                  }`}
-                >
-                  <div className="font-extrabold">{item.title}</div>
-                  <div className={`mt-1 text-xs ${activeCaseField === id ? "text-white/65" : "text-[#767995]"}`}>{item.line}</div>
-                </button>
-              ))}
-            </div>
-
-            <article className="bg-white border border-[#D0CEDB]/60 rounded-3xl p-6 sm:p-8 shadow-soft">
-              <h2 className="text-2xl font-extrabold text-[#142143]">{cases[activeCaseField].title}</h2>
-              <p className="mt-2 text-sm font-bold text-[#1A5D94]">{cases[activeCaseField].line}</p>
-              <p className="mt-4 text-[#767995] leading-relaxed">{cases[activeCaseField].text}</p>
-              <div className="mt-6">
-                <h3 className="font-extrabold text-[#142143]">適合放入的證據</h3>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {cases[activeCaseField].evidence.map((item) => (
-                    <span key={item} className="rounded-full bg-[#1A5D94]/10 text-[#1A5D94] px-3 py-1 text-xs font-extrabold">{item}</span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          </div>
-        );
-      }
-
-      function renderMistakes() {
-        const mistakes = [
-          ["毫無故事的資料堆積", "把所有證書、照片、活動都丟上去，反而讓教授看不出你真正的方向。"],
-          ["充斥 AI 空泛形容詞", "例如熱情、積極、富有創意，若沒有具體行動支撐，就會變成低可信度文字。"],
-          ["花俏刺眼的排版與配色", "動畫與色彩不能蓋過內容。最好的設計是讓主線更容易被讀懂。"],
-          ["忽略手機版與連結測試", "教授或助教可能用手機快速打開，若版面跑掉或連結失效，印象會大打折扣。"]
-        ];
-        return (
-          <div className="space-y-8">
-            <SectionHeader kicker="Mistakes" title="別踩雷！高中生最容易犯的 Portfolio 致命傷">
-              以下錯誤會讓 Portfolio 看起來像包裝，而不是能力證據。
-            </SectionHeader>
-            <div className="grid md:grid-cols-2 gap-5">
-              {mistakes.map(([title, text]) => (
-                <article key={title} className="bg-white border border-rose-100 rounded-2xl p-6 shadow-soft">
-                  <div className="flex gap-3">
-                    <Icons.X />
-                    <div>
-                      <h3 className="font-extrabold text-[#142143]">{title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-[#767995]">{text}</p>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        );
-      }
-
-      function renderResources() {
-        const resources = [
-          ["作品整理表", "盤點作品名稱、問題、方法、成果、證據連結與反思。", "把散亂素材先整理成表格"],
-          ["STAR / SARI Prompt", "把每段經歷改寫成有情境、有行動、有成果、有洞察的敘事。", "適合搭配 Prompt 產生器"],
-          ["網站檢查清單", "檢查手機版、連結、錯字、圖片壓縮、CTA 與首頁 30 秒可讀性。", "上線前必做"],
-          ["一對一諮詢", "若素材很多但不知道怎麼收斂，可先用初談確認主線與作品集必要性。", "適合時間緊迫者"]
-        ];
-        return (
-          <div className="space-y-8">
-            <SectionHeader kicker="Resources" title="TBD Studio 專屬：高中生建站資源庫">
-              先用簡單工具建立結構，再逐步做成正式網站。
-            </SectionHeader>
-            <div className="grid md:grid-cols-2 gap-5">
-              {resources.map(([title, text, tag]) => (
-                <article key={title} className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
-                  <span className="inline-flex rounded-full bg-[#FAB748]/20 text-[#142143] px-3 py-1 text-xs font-extrabold">{tag}</span>
-                  <h3 className="mt-3 font-extrabold text-[#142143]">{title}</h3>
-                  <p className="mt-2 text-sm text-[#767995] leading-relaxed">{text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        );
-      }
-
-      function renderFaq() {
-        const faqs = [
-          ["不會寫程式可以做 Portfolio 嗎？", "可以。Notion、Carrd 或 Google Sites 都能先做出可用版本。重點是內容主線，不是技術炫技。"],
-          ["Portfolio 會不會取代備審 PDF？", "不會。它比較像補充證據與互動展示，可以讓教授更快理解你的作品與脈絡。"],
-          ["一定要買網域嗎？", "不一定。早期可以用免費網址，等內容穩定後再購買個人網域。"],
-          ["什麼學生最適合做？", "有專題、競賽、研究、社團成果或自主學習累積，但不知道怎麼整理成主線的學生。"],
-          ["可以用 AI 幫我寫 Portfolio 嗎？", "可以用 AI 輔助整理與改寫，但不能讓 AI 取代你的真實經驗。最好的做法是先填寫自己的痛點、行動與成果，再用 Prompt 請 AI 潤飾。"],
-          ["作品不夠多怎麼辦？", "不用追求數量。2–3 個高品質、有完整問題意識與反思的作品，通常比 10 個零散活動更有說服力。"]
-        ];
-        return (
-          <div className="space-y-8">
-            <SectionHeader kicker="FAQ" title="關於高中 Portfolio 的熱門疑惑" />
-            <div className="space-y-3">
-              {faqs.map(([question, answer], index) => (
-                <article key={question} className="bg-white border border-[#D0CEDB]/60 rounded-2xl shadow-soft overflow-hidden">
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="w-full px-6 py-4 flex justify-between items-center gap-4 text-left"
-                  >
-                    <span className="font-extrabold text-[#142143]">{question}</span>
-                    <span className="text-[#1A5D94] font-black">{openFaq === index ? "−" : "+"}</span>
-                  </button>
-                  {openFaq === index && (
-                    <p className="px-6 pb-5 text-sm leading-relaxed text-[#767995]">{answer}</p>
-                  )}
-                </article>
-              ))}
-            </div>
-          </div>
-        );
-      }
-
-      function renderBottomCta() {
-        return (
-          <section className="mt-16 mb-20 lg:mb-28">
-            <div className="relative overflow-hidden rounded-[28px] bg-white border border-[#D0CEDB]/70 shadow-soft">
-              <div className="absolute -right-24 -top-24 w-72 h-72 rounded-full bg-[#1A5D94]/10 blur-2xl"></div>
-              <div className="absolute -left-24 -bottom-24 w-72 h-72 rounded-full bg-[#FAB748]/20 blur-2xl"></div>
-
-              <div className="relative grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center p-8 sm:p-10 lg:p-12">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center rounded-full bg-[#1A5D94]/10 text-[#1A5D94] px-3 py-1 text-xs font-extrabold tracking-wide">
-                    Portfolio Strategy
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#142143] leading-snug">
-                    不知道如何把「散亂經歷」<br className="hidden sm:block" />
-                    包裝成「高分主線」？
-                  </h2>
-                  <p className="text-sm sm:text-base text-[#767995] leading-relaxed max-w-2xl">
-                    TBD Studio 協助高中生梳理自主學習、專題成果與活動經歷，將零散素材整理成教授看得懂的個人敘事與作品集架構。
-                  </p>
-                </div>
-
-                <div className="lg:justify-self-end w-full lg:w-auto">
-                  <a
-                    href={LINE_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group w-full lg:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#1A5D94] px-6 sm:px-8 py-4 text-sm font-extrabold text-white shadow-soft transition-all duration-300 hover:bg-[#142143] hover:-translate-y-0.5"
-                  >
-                    <span>預約 Portfolio 策略諮詢</span>
-                    <span className="transition-transform group-hover:translate-x-1">→</span>
-                  </a>
-                  <p className="mt-3 text-center lg:text-left text-xs text-[#767995]">
-                    初談後可協助判斷是否需要作品集、備審或面試陪跑。
-                  </p>
+              <div>
+                <span class="text-xs font-semibold text-[#142143]">硬體與協議</span>
+                <div class="flex flex-wrap gap-1.5 mt-1.5">
+                  <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" style="background:rgba(26,93,148,.1);color:#1A5D94">ESP32</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" style="background:rgba(26,93,148,.1);color:#1A5D94">Raspberry Pi</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" style="background:rgba(26,93,148,.1);color:#1A5D94">WiFi</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" style="background:rgba(26,93,148,.1);color:#1A5D94">MQTT</span>
                 </div>
               </div>
             </div>
-          </section>
-        );
-      }
-    }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    ReactDOM.createRoot(document.getElementById("portfolioGuideRoot")).render(<PortfolioGuideApp />);
-  </script>
+  <section class="rounded-3xl p-6 sm:p-8" style="border:1px solid rgba(208,206,219,.7);background:#fff;box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <h2 class="text-2xl font-extrabold text-[#142143]">為什麼現在需要 Portfolio？</h2>
+    <p class="mt-3 text-sm sm:text-base leading-relaxed text-[#767995]">在 108 課綱強調自主學習與學習歷程的脈絡下，學生不只需要完成資料上傳，更需要能說清楚自己如何探索、如何行動、如何反思。Portfolio 的價值不在於取代學習歷程，而是補上 PDF 難以呈現的互動證據、作品脈絡與長期累積。</p>
+  </section>
+
+  <section class="grid md:grid-cols-3 gap-6">
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(26,93,148,.1);color:#1A5D94">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21l-.813-5.096L3 15l5.096-.813L9 9l.813 5.187L15 15l-5.187.813zM19.071 4.929l-.535 3.354-3.354.535 3.354.535.535 3.354.535-3.354 3.354-.535-3.354-.535-.535-3.354z"/></svg>
+      </div>
+      <h3 class="mt-4 text-lg font-extrabold text-[#142143]">串接個人主線</h3>
+      <p class="mt-3 text-sm leading-relaxed text-[#767995]">讓獎狀、專題、活動不再只是清單，而是變成能說明你為什麼適合某個學群的故事。</p>
+    </article>
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(26,93,148,.1);color:#1A5D94">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+      </div>
+      <h3 class="mt-4 text-lg font-extrabold text-[#142143]">建立真實證明力</h3>
+      <p class="mt-3 text-sm leading-relaxed text-[#767995]">用 GitHub、影片、設計稿、實驗紀錄等證據，補上 PDF 備審容易缺少的可信度。</p>
+    </article>
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(26,93,148,.1);color:#1A5D94">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+      </div>
+      <h3 class="mt-4 text-lg font-extrabold text-[#142143]">形成長期資產</h3>
+      <p class="mt-3 text-sm leading-relaxed text-[#767995]">個人網站可以一路延伸到大學、實習、研究與求職，是一份可以更新的數位履歷。</p>
+    </article>
+  </section>
+
+  <section class="rounded-3xl text-white p-8 lg:p-10" style="background:linear-gradient(to bottom right,#142143,#1A5D94);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <div class="grid lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-5 space-y-4">
+        <span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-[#FAB748]" style="background:rgba(255,255,255,.1)">評審教授內心話</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold leading-snug text-white">空洞的包裝，不如真實的反思。</h2>
+        <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,.75)">很多學生放滿證書與漂亮排版，但教授真正想確認的是：你遇到什麼問題、如何學會方法、如何修正錯誤，以及下一步想走向哪裡。</p>
+      </div>
+      <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold text-[#FAB748]">與挫折共處</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">比起完美成果，更重要的是你如何處理 bug、失敗與限制。</p></div>
+        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold text-[#FAB748]">學習歷程一致</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">主線不能像臨時拼湊，而要看得出長期累積。</p></div>
+        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold text-[#FAB748]">實務操作素養</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">程式碼、數據、影片、實驗紀錄都能提高可信度。</p></div>
+        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold text-[#FAB748]">學科熱情</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">熱情不是口號，而是你願意投入時間找資料、做測試、修正方向。</p></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /pg-tab-home -->
+
+<!-- ─── TAB: CONCEPT ─── -->
+<div id="pg-tab-concept" class="pg-panel space-y-8 hidden">
+
+  <div class="space-y-3">
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold" style="background:rgba(26,93,148,.1);color:#1A5D94">基礎概念</span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">Portfolio 是什麼？</h1>
+    <p class="text-[#767995] leading-relaxed max-w-3xl">Portfolio 是能展現能力亮點與探索軌跡的動態作品集。它不是取代備審 PDF，而是補上 PDF 最難呈現的互動、證據與長期更新能力。</p>
+  </div>
+
+  <div class="bg-white rounded-2xl overflow-hidden" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm" style="min-width:760px">
+        <thead style="background:rgba(208,206,219,.35)">
+          <tr>
+            <th class="p-4 font-extrabold text-[#142143]">比較維度</th>
+            <th class="p-4 font-extrabold text-[#1A5D94]">個人 Portfolio 網站</th>
+            <th class="p-4 font-extrabold text-[#767995]">傳統備審 PDF</th>
+          </tr>
+        </thead>
+        <tbody style="border-top:1px solid rgba(208,206,219,.4)">
+          <tr style="border-bottom:1px solid rgba(208,206,219,.4)">
+            <td class="p-4 font-bold text-[#142143]">排版自由度</td>
+            <td class="p-4 font-semibold text-[#1A5D94]">可用卡片、動線、互動與多媒體呈現個人主線。</td>
+            <td class="p-4 text-[#767995]">受格式限制，容易變成文字與證明堆疊。</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(208,206,219,.4)">
+            <td class="p-4 font-bold text-[#142143]">證據呈現</td>
+            <td class="p-4 font-semibold text-[#1A5D94]">可連結 GitHub、影片、設計稿、Demo 與數據。</td>
+            <td class="p-4 text-[#767995]">多數只能放截圖與簡短說明。</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(208,206,219,.4)">
+            <td class="p-4 font-bold text-[#142143]">長期價值</td>
+            <td class="p-4 font-semibold text-[#1A5D94]">可持續更新到大學、實習、研究與求職。</td>
+            <td class="p-4 text-[#767995]">常在申請結束後失去用途。</td>
+          </tr>
+          <tr>
+            <td class="p-4 font-bold text-[#142143]">核心目的</td>
+            <td class="p-4 font-semibold text-[#1A5D94]">說清楚你如何學習、行動、反思與累積。</td>
+            <td class="p-4 text-[#767995]">多半偏向合規上傳與成果羅列。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <section class="rounded-3xl bg-white p-6 sm:p-8" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <h2 class="text-2xl font-extrabold text-[#142143]">什麼是「個人主線」？</h2>
+    <p class="mt-3 text-sm sm:text-base leading-relaxed text-[#767995]">如果高中三年的各項探索是一顆顆散亂的珍珠，個人主線就是把它們串起來的那條線。沒有主線，教授只會看到很多活動；有了主線，教授才能看懂你如何形成方向。</p>
+    <div class="mt-6 grid md:grid-cols-2 gap-5">
+      <div class="rounded-2xl p-5" style="border:1px solid #fecaca;background:rgba(254,242,242,.5)"><h3 class="font-extrabold text-red-600">沒有主線</h3><p class="mt-2 text-sm text-[#767995] leading-relaxed">鋼琴紀錄、競賽證書、英文心得各自存在，教授看不出你想申請什麼，也看不出你如何累積能力。</p></div>
+      <div class="rounded-2xl p-5" style="border:1px solid #a7f3d0;background:rgba(236,253,245,.6)"><h3 class="font-extrabold text-emerald-700">有主線</h3><p class="mt-2 text-sm text-[#767995] leading-relaxed">用「開源硬體推動校園永續」串起自學、實作、校園觀察與申請動機，讓每段經歷都服務同一個方向。</p></div>
+    </div>
+  </section>
+
+  <section class="rounded-3xl bg-white p-6 sm:p-8" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <h2 class="text-2xl font-extrabold text-[#142143]">Before / After：從流水帳變成專業敘事</h2>
+    <div class="mt-6 grid md:grid-cols-2 gap-5">
+      <div class="rounded-2xl p-5" style="border:1px solid #fecaca;background:rgba(254,242,242,.4)"><h3 class="font-extrabold text-red-600">Before｜傳統流水帳</h3><p class="mt-3 text-sm text-[#767995] leading-relaxed">我們做了一個 Arduino 澆水器，我負責接線和寫程式。這個活動讓我學到團隊合作，也讓我覺得寫程式很有趣。</p></div>
+      <div class="rounded-2xl p-5" style="border:1px solid #a7f3d0;background:rgba(236,253,245,.6)"><h3 class="font-extrabold text-emerald-700">After｜現代 Portfolio 敘事</h3><p class="mt-3 text-sm text-[#767995] leading-relaxed">因為校園花圃在寒暑假缺乏照護，我使用 ESP32 與土壤濕度感測器建立自動灌溉系統，設定濕度低於 40% 時觸發提醒與澆水，並記錄感測誤差與後續修正方向。</p></div>
+    </div>
+  </section>
+
+</div><!-- /pg-tab-concept -->
+
+<!-- ─── TAB: STEP ─── -->
+<div id="pg-tab-step" class="pg-panel space-y-8 hidden">
+
+  <div class="space-y-3">
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold" style="background:rgba(26,93,148,.1);color:#1A5D94">Step by Step</span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">從 0 開始建立 Portfolio</h1>
+    <p class="text-[#767995] leading-relaxed max-w-3xl">先不要急著選工具。最重要的是先把素材整理成主線，再決定用什麼形式呈現。</p>
+  </div>
+
+  <div class="grid lg:grid-cols-[260px_1fr] gap-6">
+    <div class="space-y-2">
+      <button type="button" class="pg-step-btn w-full text-left rounded-xl px-4 py-3 font-bold text-sm transition bg-[#1A5D94] text-white">01｜整理歷史探索與素材</button>
+      <button type="button" class="pg-step-btn w-full text-left rounded-xl px-4 py-3 font-bold text-sm transition bg-white text-[#767995] border border-[#D0CEDB]" style="border-color:rgba(208,206,219,.6)">02｜萃取個人核心主線</button>
+      <button type="button" class="pg-step-btn w-full text-left rounded-xl px-4 py-3 font-bold text-sm transition bg-white text-[#767995] border border-[#D0CEDB]" style="border-color:rgba(208,206,219,.6)">03｜撰寫 About Me</button>
+      <button type="button" class="pg-step-btn w-full text-left rounded-xl px-4 py-3 font-bold text-sm transition bg-white text-[#767995] border border-[#D0CEDB]" style="border-color:rgba(208,206,219,.6)">04｜撰寫 Projects 專案解構</button>
+      <button type="button" class="pg-step-btn w-full text-left rounded-xl px-4 py-3 font-bold text-sm transition bg-white text-[#767995] border border-[#D0CEDB]" style="border-color:rgba(208,206,219,.6)">05｜整理 Skills 能力矩陣</button>
+      <button type="button" class="pg-step-btn w-full text-left rounded-xl px-4 py-3 font-bold text-sm transition bg-white text-[#767995] border border-[#D0CEDB]" style="border-color:rgba(208,206,219,.6)">06｜選擇工具與部署方式</button>
+      <button type="button" class="pg-step-btn w-full text-left rounded-xl px-4 py-3 font-bold text-sm transition bg-white text-[#767995] border border-[#D0CEDB]" style="border-color:rgba(208,206,219,.6)">07｜測試、回饋與迭代</button>
+    </div>
+    <div>
+      <!-- Step 1 -->
+      <article class="pg-step-panel bg-white rounded-3xl p-6 sm:p-8" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+        <p class="text-sm font-extrabold text-[#1A5D94]">Step 1</p>
+        <h2 class="mt-2 text-2xl font-extrabold text-[#142143]">整理歷史探索與素材</h2>
+        <p class="mt-4 text-[#767995] leading-relaxed">不要急著排版。先把高中三年做過的活動、報告、競賽、自主學習、社團任務與 Side Project 全部列出來。</p>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(250,183,72,.15);border:1px solid rgba(250,183,72,.3)"><p class="text-sm font-bold text-[#142143]">Tip</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">此階段不要自我審查，重點是累積素材池。照片、程式碼、簡報、報告、影片與獎狀都要標記連結。</p></div>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)"><p class="text-sm font-bold text-[#142143]">Example</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">例如：高一物理水火箭、高二微控制器自主學習、寒假資工工作坊、GitHub 作業程式碼、社團粉專經營數據。</p></div>
+        <div class="mt-5 grid gap-2"><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>列出至少 8 個探索經歷</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>每個經歷至少找到 1 個證明連結</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>把檔案整理到雲端資料夾</span></div></div>
+      </article>
+      <!-- Step 2 -->
+      <article class="pg-step-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+        <p class="text-sm font-extrabold text-[#1A5D94]">Step 2</p>
+        <h2 class="mt-2 text-2xl font-extrabold text-[#142143]">萃取個人核心主線</h2>
+        <p class="mt-4 text-[#767995] leading-relaxed">在凌亂經歷中尋找交集：你持續在意什麼問題？你常常主動學什麼？你解決問題時偏好的工具是什麼？</p>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(250,183,72,.15);border:1px solid rgba(250,183,72,.3)"><p class="text-sm font-bold text-[#142143]">Tip</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">試著把主線濃縮成一句話，例如：用資料分析理解校園行為，或用開源硬體改善生活問題。</p></div>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)"><p class="text-sm font-bold text-[#142143]">Example</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">例如：用開源硬體推動校園永續、用資料視覺化理解社群互動、用設計方法改善學生資訊落差。</p></div>
+        <div class="mt-5 grid gap-2"><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>用 20 字內描述核心熱情</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>選出 3 個最能證明主線的作品</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>刪除和主線無關的素材</span></div></div>
+      </article>
+      <!-- Step 3 -->
+      <article class="pg-step-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+        <p class="text-sm font-extrabold text-[#1A5D94]">Step 3</p>
+        <h2 class="mt-2 text-2xl font-extrabold text-[#142143]">撰寫 About Me</h2>
+        <p class="mt-4 text-[#767995] leading-relaxed">不要從家庭背景或個性形容詞開始。直接說明你的學習信念、代表實踐、申請方向與未來想解決的問題。</p>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(250,183,72,.15);border:1px solid rgba(250,183,72,.3)"><p class="text-sm font-bold text-[#142143]">Tip</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">使用三段式：信念 → 高中實踐亮點 → 大學想延伸的學術方向。</p></div>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)"><p class="text-sm font-bold text-[#142143]">Example</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">例如：我相信好的科技學習不只在課本裡，而在於能否把一個真實問題拆成可測試、可修正、可分享的實作。</p></div>
+        <div class="mt-5 grid gap-2"><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>300 字內完成</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>包含具體代表作</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>避免熱情、努力、積極等空泛詞</span></div></div>
+      </article>
+      <!-- Step 4 -->
+      <article class="pg-step-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+        <p class="text-sm font-extrabold text-[#1A5D94]">Step 4</p>
+        <h2 class="mt-2 text-2xl font-extrabold text-[#142143]">撰寫 Projects 專案解構</h2>
+        <p class="mt-4 text-[#767995] leading-relaxed">Projects 是 Portfolio 核心。每個專案都要說清楚 Situation、Action、Result、Insight。</p>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(250,183,72,.15);border:1px solid rgba(250,183,72,.3)"><p class="text-sm font-bold text-[#142143]">Tip</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">不要只寫結果，教授更想看你如何面對問題、debug、修正方向與形成下一步。</p></div>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)"><p class="text-sm font-bold text-[#142143]">Example</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">例如：因為校門口車流壅塞，我用 Raspberry Pi + OpenCV 做車流偵測，最後完成 Demo 影片與 GitHub 紀錄。</p></div>
+        <div class="mt-5 grid gap-2"><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>寫出痛點與問題情境</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>列出實際方法與工具</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>補上成果數據與反思</span></div></div>
+      </article>
+      <!-- Step 5 -->
+      <article class="pg-step-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+        <p class="text-sm font-extrabold text-[#1A5D94]">Step 5</p>
+        <h2 class="mt-2 text-2xl font-extrabold text-[#142143]">整理 Skills 能力矩陣</h2>
+        <p class="mt-4 text-[#767995] leading-relaxed">不要寫 Python 80%、領導力 90%。改用技能分類與代表作品證明能力。</p>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(250,183,72,.15);border:1px solid rgba(250,183,72,.3)"><p class="text-sm font-bold text-[#142143]">Tip</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">每個技能後面要能接出一個作品或任務，例如：Python｜OpenCV 車流分析系統。</p></div>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)"><p class="text-sm font-bold text-[#142143]">Example</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">例如：資料分析｜問卷清理與圖表製作；Figma｜使用者流程圖與高擬真原型；Git｜專案版本管理。</p></div>
+        <div class="mt-5 grid gap-2"><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>拿掉百分比能力條</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>每個技能對應代表作</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>只保留面試能回答的技能</span></div></div>
+      </article>
+      <!-- Step 6 -->
+      <article class="pg-step-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+        <p class="text-sm font-extrabold text-[#1A5D94]">Step 6</p>
+        <h2 class="mt-2 text-2xl font-extrabold text-[#142143]">選擇工具與部署方式</h2>
+        <p class="mt-4 text-[#767995] leading-relaxed">依照時間、技術能力、申請方向選工具。不是越難越好，而是能否穩定呈現與更新。</p>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(250,183,72,.15);border:1px solid rgba(250,183,72,.3)"><p class="text-sm font-bold text-[#142143]">Tip</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">文組與初學者可從 Notion / Carrd 開始；資工與工程方向可考慮 GitHub Pages / Vercel。</p></div>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)"><p class="text-sm font-bold text-[#142143]">Example</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">例如：文組用 Notion + Super 快速公開；設計組用 Framer / Webflow；資工組用 GitHub Pages 展示程式脈絡。</p></div>
+        <div class="mt-5 grid gap-2"><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>確認手機版可讀</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>所有連結可點擊</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>圖片壓縮後再上傳</span></div></div>
+      </article>
+      <!-- Step 7 -->
+      <article class="pg-step-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+        <p class="text-sm font-extrabold text-[#1A5D94]">Step 7</p>
+        <h2 class="mt-2 text-2xl font-extrabold text-[#142143]">測試、回饋與迭代</h2>
+        <p class="mt-4 text-[#767995] leading-relaxed">請家長、同學或老師用 3 分鐘試看，確認他們能不能說出你的主線與代表能力。</p>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(250,183,72,.15);border:1px solid rgba(250,183,72,.3)"><p class="text-sm font-bold text-[#142143]">Tip</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">Portfolio 是動態資產，第一次完成後仍要持續修正。</p></div>
+        <div class="mt-5 rounded-2xl p-4" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)"><p class="text-sm font-bold text-[#142143]">Example</p><p class="mt-1 text-sm text-[#767995] leading-relaxed">例如：請對方看完首頁後回答：你想申請什麼方向？你最強的證據是什麼？哪個作品最有記憶點？</p></div>
+        <div class="mt-5 grid gap-2"><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>3 分鐘內看懂主線</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>沒有錯字與失效連結</span></div><div class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>CTA 與聯絡方式清楚</span></div></div>
+      </article>
+    </div>
+  </div>
+
+</div><!-- /pg-tab-step -->
+
+<!-- ─── TAB: TEMPLATES ─── -->
+<div id="pg-tab-templates" class="pg-panel space-y-8 hidden">
+
+  <div class="space-y-3">
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold" style="background:rgba(26,93,148,.1);color:#1A5D94">Structure</span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">推薦架構模板</h1>
+    <p class="text-[#767995] leading-relaxed max-w-3xl">一份好的 Portfolio 不需要頁面很多，但每個區塊都要對應到教授想確認的能力。</p>
+  </div>
+
+  <div class="bg-white rounded-3xl overflow-hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm" style="min-width:720px">
+        <thead style="background:rgba(208,206,219,.3)">
+          <tr><th class="p-4 text-left font-extrabold text-[#142143]">模組</th><th class="p-4 text-left font-extrabold text-[#142143]">建議比重</th><th class="p-4 text-left font-extrabold text-[#142143]">用途</th></tr>
+        </thead>
+        <tbody>
+          <tr style="border-top:1px solid rgba(208,206,219,.4)"><td class="p-4 font-extrabold text-[#142143]">Hero 首屏</td><td class="p-4 font-black text-[#1A5D94]">15%</td><td class="p-4 text-[#767995]">姓名、主線、目標學群、最關鍵的一句話。</td></tr>
+          <tr style="border-top:1px solid rgba(208,206,219,.4)"><td class="p-4 font-extrabold text-[#142143]">About Me</td><td class="p-4 font-black text-[#1A5D94]">20%</td><td class="p-4 text-[#767995]">不是自傳流水帳，而是你如何形成目前方向。</td></tr>
+          <tr style="border-top:1px solid rgba(208,206,219,.4)"><td class="p-4 font-extrabold text-[#142143]">Projects</td><td class="p-4 font-black text-[#1A5D94]">35%</td><td class="p-4 text-[#767995]">每個專案都要有問題、方法、成果、反思。</td></tr>
+          <tr style="border-top:1px solid rgba(208,206,219,.4)"><td class="p-4 font-extrabold text-[#142143]">Evidence</td><td class="p-4 font-black text-[#1A5D94]">20%</td><td class="p-4 text-[#767995]">放可驗證的連結：影片、程式碼、簡報、報告。</td></tr>
+          <tr style="border-top:1px solid rgba(208,206,219,.4)"><td class="p-4 font-extrabold text-[#142143]">Contact / CTA</td><td class="p-4 font-black text-[#1A5D94]">10%</td><td class="p-4 text-[#767995]">讓教授、合作對象或實習單位知道如何進一步了解你。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Prompt Generator -->
+  <section class="bg-white rounded-3xl p-6 sm:p-8 space-y-6" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <div>
+      <span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-[#142143]" style="background:rgba(250,183,72,.2)">Prompt Generator</span>
+      <h2 class="mt-3 text-2xl font-extrabold text-[#142143]">用 Prompt 把素材轉成 Portfolio 文案</h2>
+      <p class="mt-2 text-sm text-[#767995] leading-relaxed">先不用串接 AI。填入自己的痛點、行動與成果，系統會幫你整理成 STAR 結構與可直接貼到 ChatGPT / Gemini / Claude 的高品質 Prompt。</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <label class="block"><span class="text-xs font-extrabold text-[#142143]">學生姓名</span><input id="pg-name" type="text" value="林大為" class="mt-2 w-full rounded-xl px-4 py-3 text-sm text-[#142143] outline-none" style="border:1px solid rgba(208,206,219,.8);background:#fff" /></label>
+      <label class="block"><span class="text-xs font-extrabold text-[#142143]">個人主線</span><input id="pg-line" type="text" value="校園社群工具開發" class="mt-2 w-full rounded-xl px-4 py-3 text-sm text-[#142143] outline-none" style="border:1px solid rgba(208,206,219,.8);background:#fff" /></label>
+      <label class="block"><span class="text-xs font-extrabold text-[#142143]">遭遇的痛點 Situation</span><textarea id="pg-pain" rows="3" class="mt-2 w-full rounded-xl px-4 py-3 text-sm text-[#142143] outline-none" style="border:1px solid rgba(208,206,219,.8);background:#fff">高一新生選課系統繁雜，新生難以快速找到合適學長姐問課</textarea></label>
+      <label class="block"><span class="text-xs font-extrabold text-[#142143]">採取的行動 Action</span><textarea id="pg-action" rows="3" class="mt-2 w-full rounded-xl px-4 py-3 text-sm text-[#142143] outline-none" style="border:1px solid rgba(208,206,219,.8);background:#fff">利用 React 與 Firebase 自學架設「問課導師媒合平台」</textarea></label>
+      <label class="block md:col-span-2"><span class="text-xs font-extrabold text-[#142143]">具體成果 Result</span><textarea id="pg-result" rows="3" class="mt-2 w-full rounded-xl px-4 py-3 text-sm text-[#142143] outline-none" style="border:1px solid rgba(208,206,219,.8);background:#fff">上線 2 週內吸引全校 450+ 位學生註冊，促成 120 次有效諮詢</textarea></label>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3">
+      <button id="pg-copy-star-btn" type="button" class="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-extrabold text-white transition" style="background:#142143">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3"/></svg>
+        複製 STAR 結構
+      </button>
+      <button id="pg-generate-btn" type="button" class="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-extrabold text-white transition" style="background:#1A5D94">
+        產生 AI 潤飾 Prompt
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </button>
+    </div>
+    <div class="rounded-2xl p-5" style="background:#f8fafc;border:1px solid #e2e8f0">
+      <h4 class="text-sm font-extrabold text-[#142143]">目前 STAR/SARI 結構</h4>
+      <pre id="pg-star-display" class="mt-3 whitespace-pre-wrap text-xs leading-relaxed text-[#142143] rounded-xl p-4 overflow-x-auto" style="background:#fff;border:1px solid #e2e8f0"></pre>
+    </div>
+    <div id="pg-generated-prompt-container" class="rounded-2xl p-5 space-y-4 hidden" style="background:#f8fafc;border:1px solid #e2e8f0">
+      <div>
+        <h4 class="text-sm font-extrabold text-[#142143]">可複製使用的 Portfolio 潤飾 Prompt</h4>
+        <p class="mt-1 text-xs text-[#767995]">將以下內容貼到 ChatGPT、Gemini 或 Claude，即可產生第一版 Portfolio 文案。</p>
+      </div>
+      <pre id="pg-generated-prompt-display" class="whitespace-pre-wrap text-xs leading-relaxed text-[#142143] rounded-xl p-4 overflow-x-auto" style="background:#fff;border:1px solid #e2e8f0"></pre>
+      <button id="pg-copy-generated-btn" type="button" class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-bold text-white transition" style="background:#142143">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3"/></svg>
+        複製 Prompt
+      </button>
+    </div>
+  </section>
+
+</div><!-- /pg-tab-templates -->
+
+<!-- ─── TAB: TOOLS ─── -->
+<div id="pg-tab-tools" class="pg-panel space-y-8 hidden">
+
+  <div class="space-y-3">
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold" style="background:rgba(26,93,148,.1);color:#1A5D94">Tools</span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">工具指南</h1>
+    <p class="text-[#767995] leading-relaxed max-w-3xl">工具不是越難越好，而是要符合你的時間、技術門檻與申請目標。</p>
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    <button type="button" data-tool="notion"  class="pg-tool-btn rounded-full px-4 py-2 text-sm font-bold transition bg-[#1A5D94] text-white">Notion</button>
+    <button type="button" data-tool="carrd"   class="pg-tool-btn rounded-full px-4 py-2 text-sm font-bold transition bg-white text-[#767995] border" style="border-color:rgba(208,206,219,.6)">Carrd</button>
+    <button type="button" data-tool="framer"  class="pg-tool-btn rounded-full px-4 py-2 text-sm font-bold transition bg-white text-[#767995] border" style="border-color:rgba(208,206,219,.6)">Framer / Webflow</button>
+    <button type="button" data-tool="github"  class="pg-tool-btn rounded-full px-4 py-2 text-sm font-bold transition bg-white text-[#767995] border" style="border-color:rgba(208,206,219,.6)">GitHub Pages</button>
+    <button type="button" data-tool="vercel"  class="pg-tool-btn rounded-full px-4 py-2 text-sm font-bold transition bg-white text-[#767995] border" style="border-color:rgba(208,206,219,.6)">Vercel</button>
+  </div>
+
+  <!-- Notion -->
+  <article data-tool="notion" class="pg-tool-panel bg-white rounded-3xl p-6 sm:p-8" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-[#142143]" style="background:rgba(250,183,72,.2)">零門檻開始</span>
+    <h2 class="mt-3 text-2xl font-extrabold text-[#142143]">Notion</h2>
+    <p class="mt-3 text-[#767995] leading-relaxed">適合先整理素材、建立文字版作品集與簡易公開頁。</p>
+    <p class="mt-4 rounded-2xl p-4 text-sm leading-relaxed text-[#767995]" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)">建議路徑：先建立素材資料庫 → 分出 About / Projects / Evidence → 公開頁面；若想更像網站，可搭配 Super / Potion 類工具包裝成個人網址。</p>
+    <div class="mt-6 grid md:grid-cols-2 gap-5">
+      <div><h3 class="font-extrabold text-emerald-700">優點</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>上手最快</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>適合整理資料庫</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>不用寫程式</li></ul></div>
+      <div><h3 class="font-extrabold text-red-600">限制</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>視覺客製有限</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>互動與動畫較弱</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>正式感略低</li></ul></div>
+    </div>
+  </article>
+
+  <!-- Carrd -->
+  <article data-tool="carrd" class="pg-tool-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-[#142143]" style="background:rgba(250,183,72,.2)">一頁式漂亮網站</span>
+    <h2 class="mt-3 text-2xl font-extrabold text-[#142143]">Carrd</h2>
+    <p class="mt-3 text-[#767995] leading-relaxed">適合想快速做出精美 landing page 的學生。</p>
+    <p class="mt-4 rounded-2xl p-4 text-sm leading-relaxed text-[#767995]" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)">建議路徑：先做一頁式首頁 → 放 2–3 個代表專案 → 加入 CTA 與外部作品連結。</p>
+    <div class="mt-6 grid md:grid-cols-2 gap-5">
+      <div><h3 class="font-extrabold text-emerald-700">優點</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>視覺乾淨</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>成本低</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>一頁式架構清楚</li></ul></div>
+      <div><h3 class="font-extrabold text-red-600">限制</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>多頁內容不方便</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>作品數多時較難管理</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>進階互動有限</li></ul></div>
+    </div>
+  </article>
+
+  <!-- Framer -->
+  <article data-tool="framer" class="pg-tool-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-[#142143]" style="background:rgba(250,183,72,.2)">設計與商管路線</span>
+    <h2 class="mt-3 text-2xl font-extrabold text-[#142143]">Framer / Webflow</h2>
+    <p class="mt-3 text-[#767995] leading-relaxed">適合設計、傳播、商管、社科方向，想做出更精緻視覺與互動的學生。</p>
+    <p class="mt-4 rounded-2xl p-4 text-sm leading-relaxed text-[#767995]" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)">建議路徑：選定模板 → 套入個人主線 → 每個專案都用問題 / 行動 / 成果 / 反思呈現，不要只做漂亮版面。</p>
+    <div class="mt-6 grid md:grid-cols-2 gap-5">
+      <div><h3 class="font-extrabold text-emerald-700">優點</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>視覺表現強</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>適合品牌感</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>不一定要寫程式</li></ul></div>
+      <div><h3 class="font-extrabold text-red-600">限制</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>學習曲線中等</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>免費方案限制較多</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>內容更新需有版面感</li></ul></div>
+    </div>
+  </article>
+
+  <!-- GitHub -->
+  <article data-tool="github" class="pg-tool-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-[#142143]" style="background:rgba(250,183,72,.2)">工程 / 資工加分</span>
+    <h2 class="mt-3 text-2xl font-extrabold text-[#142143]">GitHub Pages</h2>
+    <p class="mt-3 text-[#767995] leading-relaxed">適合想展示程式能力、版本紀錄與開源專案的學生。</p>
+    <p class="mt-4 rounded-2xl p-4 text-sm leading-relaxed text-[#767995]" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)">建議路徑：建立 username.github.io repo → 放入 index.html → 每個專案連回 GitHub repo、commit 紀錄與 Demo。</p>
+    <div class="mt-6 grid md:grid-cols-2 gap-5">
+      <div><h3 class="font-extrabold text-emerald-700">優點</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>技術證明力強</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>可連接 GitHub 作品</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>免費部署</li></ul></div>
+      <div><h3 class="font-extrabold text-red-600">限制</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>需要基本 HTML/CSS/Git</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>初期維護門檻較高</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>設計需自己處理</li></ul></div>
+    </div>
+  </article>
+
+  <!-- Vercel -->
+  <article data-tool="vercel" class="pg-tool-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-[#142143]" style="background:rgba(250,183,72,.2)">互動作品展示</span>
+    <h2 class="mt-3 text-2xl font-extrabold text-[#142143]">Vercel</h2>
+    <p class="mt-3 text-[#767995] leading-relaxed">適合已有前端專案，或想展示互動式網站 / 小工具的學生。</p>
+    <p class="mt-4 rounded-2xl p-4 text-sm leading-relaxed text-[#767995]" style="background:rgba(26,93,148,.05);border:1px solid rgba(26,93,148,.1)">建議路徑：將 React / Vite / Next 專案接到 GitHub → 用 Vercel 自動部署 → 每次 commit 都留下迭代紀錄。</p>
+    <div class="mt-6 grid md:grid-cols-2 gap-5">
+      <div><h3 class="font-extrabold text-emerald-700">優點</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>部署體驗好</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>支援現代前端框架</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>適合互動 Demo</li></ul></div>
+      <div><h3 class="font-extrabold text-red-600">限制</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>需要較高技術門檻</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>需注意 API key 安全</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>對純內容頁可能過重</li></ul></div>
+    </div>
+  </article>
+
+</div><!-- /pg-tab-tools -->
+
+<!-- ─── TAB: CASES ─── -->
+<div id="pg-tab-cases" class="pg-panel space-y-8 hidden">
+
+  <div class="space-y-3">
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold" style="background:rgba(26,93,148,.1);color:#1A5D94">Cases</span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">真實案例如何呈現？</h1>
+    <p class="text-[#767995] leading-relaxed max-w-3xl">案例不只是展示結果，而是讓教授看懂你如何從問題出發、採取行動，最後形成可遷移能力。</p>
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    <button type="button" data-case="engineering" class="pg-case-btn rounded-full px-4 py-2 text-sm font-bold transition bg-[#1A5D94] text-white">案例 A｜工程實作型學生</button>
+    <button type="button" data-case="social"      class="pg-case-btn rounded-full px-4 py-2 text-sm font-bold transition bg-white text-[#767995] border" style="border-color:rgba(208,206,219,.6)">案例 B｜商管資料分析型學生</button>
+    <button type="button" data-case="design"      class="pg-case-btn rounded-full px-4 py-2 text-sm font-bold transition bg-white text-[#767995] border" style="border-color:rgba(208,206,219,.6)">案例 C｜設計 / 傳播型學生</button>
+  </div>
+
+  <!-- Engineering -->
+  <article data-case="engineering" class="pg-case-panel bg-white rounded-3xl p-6 sm:p-8" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <h2 class="text-2xl font-extrabold text-[#142143]">案例 A｜工程實作型學生</h2>
+    <p class="mt-2 text-sm font-bold text-[#1A5D94]">主線：從競賽動手做到工程問題解決</p>
+    <p class="mt-4 text-[#767995] leading-relaxed">適合展示機器人、程式、實驗設計、debug 紀錄與實作影片。重點不是只說拿獎，而是解釋你如何面對技術瓶頸，如何拆解問題並驗證解法。</p>
+    <div class="mt-6 grid md:grid-cols-3 gap-4">
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">敘事轉換</h3><p class="mt-3 text-sm leading-relaxed text-[#767995]">從「我參加過比賽」改成「我如何從失敗與調整中形成工程思維」。</p></div>
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">為什麼有說服力</h3><p class="mt-3 text-sm leading-relaxed text-[#767995]">教授可以看到的不只是獎項，而是問題拆解、測試迭代與動手能力。</p></div>
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">可放證據</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>GitHub commit 紀錄</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>操作影片</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>設計草圖</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>比賽或專題成果</li></ul></div>
+    </div>
+  </article>
+
+  <!-- Social -->
+  <article data-case="social" class="pg-case-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <h2 class="text-2xl font-extrabold text-[#142143]">案例 B｜商管資料分析型學生</h2>
+    <p class="mt-2 text-sm font-bold text-[#1A5D94]">主線：從觀察現象到提出改善方案</p>
+    <p class="mt-4 text-[#767995] leading-relaxed">適合展示訪談、問卷、田野紀錄、資料視覺化與政策分析。重點是讓研究方法與個人關懷同時被看見。</p>
+    <div class="mt-6 grid md:grid-cols-3 gap-4">
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">敘事轉換</h3><p class="mt-3 text-sm leading-relaxed text-[#767995]">從「我關心社會議題」改成「我如何蒐集資料、驗證假設並提出可行方案」。</p></div>
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">為什麼有說服力</h3><p class="mt-3 text-sm leading-relaxed text-[#767995]">教授可以辨識學生是否真的理解研究方法，而不是只寫理念。</p></div>
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">可放證據</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>問卷資料</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>訪談摘要</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>圖表分析</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>行動方案</li></ul></div>
+    </div>
+  </article>
+
+  <!-- Design -->
+  <article data-case="design" class="pg-case-panel bg-white rounded-3xl p-6 sm:p-8 hidden" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <h2 class="text-2xl font-extrabold text-[#142143]">案例 C｜設計 / 傳播型學生</h2>
+    <p class="mt-2 text-sm font-bold text-[#1A5D94]">主線：從使用者需求到視覺與體驗設計</p>
+    <p class="mt-4 text-[#767995] leading-relaxed">適合展示 Figma 原型、品牌識別、社群企劃、使用者測試與迭代紀錄。重點是說清楚你不是只做美，而是能回應需求。</p>
+    <div class="mt-6 grid md:grid-cols-3 gap-4">
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">敘事轉換</h3><p class="mt-3 text-sm leading-relaxed text-[#767995]">從「我會設計」改成「我如何理解受眾、測試方案並修正視覺溝通」。</p></div>
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">為什麼有說服力</h3><p class="mt-3 text-sm leading-relaxed text-[#767995]">教授可以看到審美之外的問題意識、溝通策略與迭代能力。</p></div>
+      <div class="rounded-2xl p-4" style="background:#f8fafc;border:1px solid #e2e8f0"><h3 class="text-sm font-extrabold text-[#142143]">可放證據</h3><ul class="mt-3 space-y-2"><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Figma 原型</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>設計迭代</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>社群數據</li><li class="flex gap-2 text-sm text-[#767995]"><svg class="w-4 h-4 shrink-0" style="color:#10b981" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>使用者回饋</li></ul></div>
+    </div>
+  </article>
+
+</div><!-- /pg-tab-cases -->
+
+<!-- ─── TAB: MISTAKES ─── -->
+<div id="pg-tab-mistakes" class="pg-panel space-y-8 hidden">
+
+  <div class="space-y-3">
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold" style="background:rgba(26,93,148,.1);color:#1A5D94">Mistakes</span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">教授最討厭的 Portfolio 地雷</h1>
+    <p class="text-[#767995] leading-relaxed max-w-3xl">以下錯誤會讓 Portfolio 看起來像包裝，而不是能力證據。</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5">
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid #fecaca;box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <div class="flex gap-3">
+        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div><h3 class="font-extrabold text-[#142143]">地雷一：把 Portfolio 當成雲端硬碟</h3><p class="mt-2 text-sm leading-relaxed text-[#767995]">所有作品都丟上去，但沒有分類、主線與篩選。教授只會覺得資訊太多，無法判斷重點。</p></div>
+      </div>
+    </article>
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid #fecaca;box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <div class="flex gap-3">
+        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div><h3 class="font-extrabold text-[#142143]">地雷二：滿頁都是 AI 形容詞</h3><p class="mt-2 text-sm leading-relaxed text-[#767995]">充斥熱忱、積極、深刻體會，但缺少具體行動與成果證據。</p></div>
+      </div>
+    </article>
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid #fecaca;box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <div class="flex gap-3">
+        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div><h3 class="font-extrabold text-[#142143]">地雷三：設計很花，但教授找不到重點</h3><p class="mt-2 text-sm leading-relaxed text-[#767995]">動畫、顏色、特效過多，反而阻礙閱讀。</p></div>
+      </div>
+    </article>
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid #fecaca;box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <div class="flex gap-3">
+        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#ef4444" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div><h3 class="font-extrabold text-[#142143]">地雷四：忽略手機版與連結測試</h3><p class="mt-2 text-sm leading-relaxed text-[#767995]">網站打不開、圖片過大、GitHub 連結失效，都會直接降低信任感。</p></div>
+      </div>
+    </article>
+  </div>
+
+</div><!-- /pg-tab-mistakes -->
+
+<!-- ─── TAB: RESOURCES ─── -->
+<div id="pg-tab-resources" class="pg-panel space-y-8 hidden">
+
+  <div class="space-y-3">
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold" style="background:rgba(26,93,148,.1);color:#1A5D94">Resources</span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">精選 Portfolio 資源</h1>
+    <p class="text-[#767995] leading-relaxed max-w-3xl">先用簡單工具建立結構，再逐步做成正式網站。</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5">
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <h3 class="font-extrabold text-[#142143]">主線 Prompt</h3>
+      <p id="pg-res-1" class="mt-2 text-sm text-[#767995] leading-relaxed">請根據我的高中經歷，幫我找出 3 條可能的個人主線，並說明每條主線適合申請哪些學群。</p>
+      <button type="button" data-copy-id="pg-res-1" data-copy-msg="主線 Prompt 已複製！" class="mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold text-white transition" style="background:#1A5D94">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3"/></svg>
+        複製
+      </button>
+    </article>
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <h3 class="font-extrabold text-[#142143]">專案卡 Prompt</h3>
+      <p id="pg-res-2" class="mt-2 text-sm text-[#767995] leading-relaxed">請把以下專案素材整理成 STAR/SARI 結構，包含問題情境、行動方法、成果證據與反思遷移。</p>
+      <button type="button" data-copy-id="pg-res-2" data-copy-msg="專案卡 Prompt 已複製！" class="mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold text-white transition" style="background:#1A5D94">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3"/></svg>
+        複製
+      </button>
+    </article>
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <h3 class="font-extrabold text-[#142143]">About Me Prompt</h3>
+      <p id="pg-res-3" class="mt-2 text-sm text-[#767995] leading-relaxed">請根據我的主線與代表作品，幫我寫一段 250 字內的 Portfolio About Me。</p>
+      <button type="button" data-copy-id="pg-res-3" data-copy-msg="About Me Prompt 已複製！" class="mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold text-white transition" style="background:#1A5D94">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3"/></svg>
+        複製
+      </button>
+    </article>
+    <article class="bg-white rounded-2xl p-6" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <h3 class="font-extrabold text-[#142143]">面試追問 Prompt</h3>
+      <p id="pg-res-4" class="mt-2 text-sm text-[#767995] leading-relaxed">請根據我的 Portfolio 專案，模擬教授可能追問的 10 個問題，並指出回答時要避免的漏洞。</p>
+      <button type="button" data-copy-id="pg-res-4" data-copy-msg="面試追問 Prompt 已複製！" class="mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold text-white transition" style="background:#1A5D94">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3"/></svg>
+        複製
+      </button>
+    </article>
+  </div>
+
+</div><!-- /pg-tab-resources -->
+
+<!-- ─── TAB: FAQ ─── -->
+<div id="pg-tab-faq" class="pg-panel space-y-8 hidden">
+
+  <div class="space-y-3">
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold" style="background:rgba(26,93,148,.1);color:#1A5D94">FAQ</span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#142143] leading-tight">常見問題</h1>
+  </div>
+
+  <div class="space-y-3">
+    <article class="pg-faq-item bg-white rounded-2xl overflow-hidden" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <button type="button" class="pg-faq-btn w-full px-6 py-4 flex justify-between items-center gap-4 text-left">
+        <span class="font-extrabold text-[#142143]">沒有大獎或亮眼證照，也能做出好的 Portfolio 嗎？</span>
+        <span class="pg-faq-toggle text-[#1A5D94] font-black text-xl shrink-0">+</span>
+      </button>
+      <p class="pg-faq-body px-6 pb-5 text-sm leading-relaxed text-[#767995] hidden">可以。Portfolio 的重點不是炫耀成果，而是說清楚你的探索脈絡、問題意識、行動方法與反思。小作品只要能證明你真的做過、想過、修正過，就有價值。</p>
+    </article>
+    <article class="pg-faq-item bg-white rounded-2xl overflow-hidden" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <button type="button" class="pg-faq-btn w-full px-6 py-4 flex justify-between items-center gap-4 text-left">
+        <span class="font-extrabold text-[#142143]">不會寫程式，可以做 Portfolio 嗎？</span>
+        <span class="pg-faq-toggle text-[#1A5D94] font-black text-xl shrink-0">+</span>
+      </button>
+      <p class="pg-faq-body px-6 pb-5 text-sm leading-relaxed text-[#767995] hidden">可以。Notion、Carrd、Google Sites、Framer 都能做出可用版本。工具不是重點，主線與證據才是重點。</p>
+    </article>
+    <article class="pg-faq-item bg-white rounded-2xl overflow-hidden" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <button type="button" class="pg-faq-btn w-full px-6 py-4 flex justify-between items-center gap-4 text-left">
+        <span class="font-extrabold text-[#142143]">高一 / 高二開始會不會太早或太晚？</span>
+        <span class="pg-faq-toggle text-[#1A5D94] font-black text-xl shrink-0">+</span>
+      </button>
+      <p class="pg-faq-body px-6 pb-5 text-sm leading-relaxed text-[#767995] hidden">不會。高一適合開始累積素材，高二適合收斂主線，高三適合整理成可展示版本。越早開始，越能避免最後只剩拼貼資料。</p>
+    </article>
+    <article class="pg-faq-item bg-white rounded-2xl overflow-hidden" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <button type="button" class="pg-faq-btn w-full px-6 py-4 flex justify-between items-center gap-4 text-left">
+        <span class="font-extrabold text-[#142143]">教授真的會點開網站嗎？</span>
+        <span class="pg-faq-toggle text-[#1A5D94] font-black text-xl shrink-0">+</span>
+      </button>
+      <p class="pg-faq-body px-6 pb-5 text-sm leading-relaxed text-[#767995] hidden">不一定每位教授都會完整點開，但好的 Portfolio 可以成為備審 PDF、面試自我介紹與教授追問的補充證據。重點是它讓你能準備得更有結構。</p>
+    </article>
+    <article class="pg-faq-item bg-white rounded-2xl overflow-hidden" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <button type="button" class="pg-faq-btn w-full px-6 py-4 flex justify-between items-center gap-4 text-left">
+        <span class="font-extrabold text-[#142143]">Portfolio 多久要更新一次？</span>
+        <span class="pg-faq-toggle text-[#1A5D94] font-black text-xl shrink-0">+</span>
+      </button>
+      <p class="pg-faq-body px-6 pb-5 text-sm leading-relaxed text-[#767995] hidden">建議每完成一個重要專題、競賽或反思後就小幅更新；正式申請前 1–2 個月再做一次整體整理與除錯。</p>
+    </article>
+    <article class="pg-faq-item bg-white rounded-2xl overflow-hidden" style="border:1px solid rgba(208,206,219,.6);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+      <button type="button" class="pg-faq-btn w-full px-6 py-4 flex justify-between items-center gap-4 text-left">
+        <span class="font-extrabold text-[#142143]">AI 可以幫我寫 Portfolio 嗎？</span>
+        <span class="pg-faq-toggle text-[#1A5D94] font-black text-xl shrink-0">+</span>
+      </button>
+      <p class="pg-faq-body px-6 pb-5 text-sm leading-relaxed text-[#767995] hidden">AI 可以協助整理語句與結構，但不能替你創造真實經歷。請把 AI 當成編輯工具，不要讓它取代你的反思與證據。</p>
+    </article>
+  </div>
+
+</div><!-- /pg-tab-faq -->
+
+</main><!-- /main -->
+</div><!-- /grid -->
+
+<!-- ═══ BOTTOM CTA ═══ -->
+<section class="mt-16 mb-20 lg:mb-28">
+  <div class="relative overflow-hidden rounded-[28px] bg-white" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
+    <div class="absolute" style="right:-6rem;top:-6rem;width:18rem;height:18rem;border-radius:9999px;background:rgba(26,93,148,.1);filter:blur(2.5rem)"></div>
+    <div class="absolute" style="left:-6rem;bottom:-6rem;width:18rem;height:18rem;border-radius:9999px;background:rgba(250,183,72,.2);filter:blur(2.5rem)"></div>
+    <div class="relative grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center p-8 sm:p-10 lg:p-12">
+      <div class="space-y-4">
+        <div class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold tracking-wide" style="background:rgba(26,93,148,.1);color:#1A5D94">Portfolio Strategy</div>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#142143] leading-snug">
+          不知道如何把「散亂經歷」<br class="hidden sm:block">
+          包裝成「高分主線」？
+        </h2>
+        <p class="text-sm sm:text-base text-[#767995] leading-relaxed max-w-2xl">TBD Studio 協助高中生梳理自主學習、專題成果與活動經歷，將零散素材整理成教授看得懂的個人敘事與作品集架構。</p>
+      </div>
+      <div class="lg:justify-self-end w-full lg:w-auto">
+        <a href="https://lin.ee/9ciZvbA" target="_blank" rel="noopener noreferrer" class="group w-full lg:w-auto inline-flex items-center justify-center gap-2 rounded-xl px-6 sm:px-8 py-4 text-sm font-extrabold text-white transition-all duration-300" style="background:#1A5D94">
+          <span>預約 Portfolio 策略諮詢</span>
+          <span style="transition:transform .3s">→</span>
+        </a>
+        <p class="mt-3 text-center lg:text-left text-xs text-[#767995]">初談後可協助判斷是否需要作品集、備審或面試陪跑。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /max-w-7xl -->
+
+<!-- Toast notification -->
+<div id="pg-toast" class="fixed bottom-5 right-5 rounded-xl text-white px-5 py-3 text-sm font-bold hidden" style="background:#142143;box-shadow:0 25px 50px rgba(0,0,0,.25);z-index:70" aria-live="polite"></div>
+
+<script src="../js/portfolio-guide.js"></script>
 </section>

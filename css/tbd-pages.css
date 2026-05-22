@@ -66,3 +66,20 @@
   .cases-page .case-hero { padding-top: 60px; }
   .case-process-grid, .sari-grid { grid-template-columns: 1fr; }
 }
+
+/* Cases: more case slots */
+.case-more-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; margin-top: 20px; }
+.case-more-card { border: 1px solid var(--tbd-line); border-radius: 24px; padding: 26px; background: #fff; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--tbd-shadow); }
+.case-more-type { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 999px; background: rgba(208,206,219,.36); color: var(--tbd-mid); font-size: 12px; font-weight: 800; letter-spacing: .06em; width: fit-content; }
+.case-more-card h3 { font-size: 18px; line-height: 1.42; color: var(--tbd-dark); margin: 0; }
+.case-more-card p { color: var(--tbd-mid); font-size: 14px; line-height: 1.7; margin: 0; flex: 1; }
+.case-more-status { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: rgba(118,121,149,.7); border-top: 1px solid var(--tbd-line); padding-top: 12px; margin-top: 4px; }
+@media (max-width: 640px) { .case-more-grid { grid-template-columns: 1fr; } }
+
+/* Services integrated page */
+.services-chapter-header { margin-bottom: 4px; }
+.services-chapter-header .kicker { background: rgba(20,33,67,.08); color: var(--tbd-dark); border-color: rgba(20,33,67,.14); font-size: 11px; letter-spacing: .12em; }
+.services-chapter-header h2 { margin-top: 10px; }
+.services-chapter-desc { color: var(--tbd-mid); max-width: 680px; font-size: 16px; line-height: 1.7; margin-top: 6px; }
+.services-plan-featured { border-color: var(--tbd-accent); background: rgba(26,93,148,.05); }
+.services-plan-featured .badge { background: rgba(26,93,148,.12); }
