@@ -12,24 +12,39 @@
     const LINE_URL = "https://lin.ee/9ciZvbA";
 
     const Icons = {
-      ArrowRight: () => (
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      ArrowRight: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
       ),
-      Check: () => (
-        <svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      Check: ({ className = "w-5 h-5 text-emerald-500" }) => (
+        <svg className={`${className} shrink-0`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      X: () => (
-        <svg className="w-5 h-5 text-rose-500 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      X: ({ className = "w-5 h-5 text-rose-500" }) => (
+        <svg className={`${className} shrink-0`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      Copy: () => (
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      Copy: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3" />
+        </svg>
+      ),
+      Sparkles: ({ className = "w-5 h-5" }) => (
+        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21l-.813-5.096L3 15l5.096-.813L9 9l.813 5.187L15 15l-5.187.813zM19.071 4.929l-.535 3.354-3.354.535 3.354.535.535 3.354.535-3.354 3.354-.535-3.354-.535-.535-3.354z" />
+        </svg>
+      ),
+      Layers: ({ className = "w-5 h-5" }) => (
+        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+      ),
+      TrendingUp: ({ className = "w-5 h-5" }) => (
+        <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
         </svg>
       )
     };
@@ -37,6 +52,9 @@
     function PortfolioGuideApp() {
       const [currentTab, setCurrentTab] = useState("home");
       const [mockupTab, setMockupTab] = useState("projects");
+      const [stepActiveIndex, setStepActiveIndex] = useState(0);
+      const [selectedTool, setSelectedTool] = useState("notion");
+      const [activeCaseField, setActiveCaseField] = useState("engineering");
       const [openFaq, setOpenFaq] = useState(null);
       const [toast, setToast] = useState("");
 
@@ -111,6 +129,103 @@
         showToast("Prompt 已產生，可以複製使用。");
       };
 
+      const steps = [
+        {
+          title: "整理歷史探索與素材",
+          desc: "不要急著排版。先把高中三年做過的活動、報告、競賽、自主學習、社團任務與 Side Project 全部列出來。",
+          tip: "此階段不要自我審查，重點是累積素材池。照片、程式碼、簡報、報告、影片與獎狀都要標記連結。",
+          checklist: ["列出至少 8 個探索經歷", "每個經歷至少找到 1 個證明連結", "把檔案整理到雲端資料夾"]
+        },
+        {
+          title: "萃取個人核心主線",
+          desc: "在凌亂經歷中尋找交集：你持續在意什麼問題？你常常主動學什麼？你解決問題時偏好的工具是什麼？",
+          tip: "試著把主線濃縮成一句話，例如：用資料分析理解校園行為，或用開源硬體改善生活問題。",
+          checklist: ["用 20 字內描述核心熱情", "選出 3 個最能證明主線的作品", "刪除和主線無關的素材"]
+        },
+        {
+          title: "撰寫 About Me",
+          desc: "不要從家庭背景或個性形容詞開始。直接說明你的學習信念、代表實踐、申請方向與未來想解決的問題。",
+          tip: "使用三段式：信念 → 高中實踐亮點 → 大學想延伸的學術方向。",
+          checklist: ["300 字內完成", "包含具體代表作", "避免熱情、努力、積極等空泛詞"]
+        },
+        {
+          title: "撰寫 Projects 專案解構",
+          desc: "Projects 是 Portfolio 核心。每個專案都要說清楚 Situation、Action、Result、Insight。",
+          tip: "不要只寫結果，教授更想看你如何面對問題、debug、修正方向與形成下一步。",
+          checklist: ["寫出痛點與問題情境", "列出實際方法與工具", "補上成果數據與反思"]
+        },
+        {
+          title: "整理 Skills 能力矩陣",
+          desc: "不要寫 Python 80%、領導力 90%。改用技能分類與代表作品證明能力。",
+          tip: "每個技能後面要能接出一個作品或任務，例如：Python｜OpenCV 車流分析系統。",
+          checklist: ["拿掉百分比能力條", "每個技能對應代表作", "只保留面試能回答的技能"]
+        },
+        {
+          title: "選擇工具與部署方式",
+          desc: "依照時間、技術能力、申請方向選工具。不是越難越好，而是能否穩定呈現與更新。",
+          tip: "文組與初學者可從 Notion / Carrd 開始；資工與工程方向可考慮 GitHub Pages / Vercel。",
+          checklist: ["確認手機版可讀", "所有連結可點擊", "圖片壓縮後再上傳"]
+        },
+        {
+          title: "測試、回饋與迭代",
+          desc: "請家長、同學或老師用 3 分鐘試看，確認他們能不能說出你的主線與代表能力。",
+          tip: "Portfolio 是動態資產，第一次完成後仍要持續修正。",
+          checklist: ["3 分鐘內看懂主線", "沒有錯字與失效連結", "CTA 與聯絡方式清楚"]
+        }
+      ];
+
+      const tools = {
+        notion: {
+          title: "Notion",
+          tag: "零門檻開始",
+          best: "適合先整理素材、建立文字版作品集與簡易公開頁。",
+          pros: ["上手最快", "適合整理資料庫", "不用寫程式"],
+          cons: ["視覺客製有限", "互動與動畫較弱", "正式感略低"]
+        },
+        carrd: {
+          title: "Carrd",
+          tag: "一頁式漂亮網站",
+          best: "適合想快速做出精美 landing page 的學生。",
+          pros: ["視覺乾淨", "成本低", "一頁式架構清楚"],
+          cons: ["多頁內容不方便", "作品數多時較難管理", "進階互動有限"]
+        },
+        github: {
+          title: "GitHub Pages",
+          tag: "工程 / 資工加分",
+          best: "適合想展示程式能力、版本紀錄與開源專案的學生。",
+          pros: ["技術證明力強", "可連接 GitHub 作品", "免費部署"],
+          cons: ["需要基本 HTML/CSS/Git", "初期維護門檻較高", "設計需自己處理"]
+        },
+        vercel: {
+          title: "Vercel",
+          tag: "互動作品展示",
+          best: "適合已有前端專案，或想展示互動式網站 / 小工具的學生。",
+          pros: ["部署體驗好", "支援現代前端框架", "適合互動 Demo"],
+          cons: ["需要較高技術門檻", "需注意 API key 安全", "對純內容頁可能過重"]
+        }
+      };
+
+      const cases = {
+        engineering: {
+          title: "工程實作型學生",
+          line: "主線：從競賽動手做到工程問題解決",
+          text: "適合展示機器人、程式、實驗設計、debug 紀錄與實作影片。重點不是只說拿獎，而是解釋你如何面對技術瓶頸，如何拆解問題並驗證解法。",
+          evidence: ["GitHub commit 紀錄", "操作影片", "設計草圖", "比賽或專題成果"]
+        },
+        social: {
+          title: "社會議題型學生",
+          line: "主線：從觀察現象到提出改善方案",
+          text: "適合展示訪談、問卷、田野紀錄、資料視覺化與政策分析。重點是讓研究方法與個人關懷同時被看見。",
+          evidence: ["問卷資料", "訪談摘要", "圖表分析", "行動方案"]
+        },
+        design: {
+          title: "設計 / 傳播型學生",
+          line: "主線：從使用者需求到視覺與體驗設計",
+          text: "適合展示 Figma 原型、品牌識別、社群企劃、使用者測試與迭代紀錄。重點是說清楚你不是只做美，而是能回應需求。",
+          evidence: ["Figma 原型", "設計迭代", "社群數據", "使用者回饋"]
+        }
+      };
+
       return (
         <div className="text-[#142143]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
@@ -180,7 +295,7 @@
 
       function renderHome() {
         return (
-          <div className="space-y-10">
+          <div className="space-y-12">
             <section className="grid lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-7 space-y-6">
                 <span className="inline-flex items-center rounded-full bg-[#1A5D94]/10 text-[#1A5D94] px-4 py-2 text-xs font-extrabold">
@@ -209,16 +324,44 @@
             </section>
 
             <section className="grid md:grid-cols-3 gap-6">
-              {[
-                ["串接個人主線", "讓獎狀、專題、活動不再只是清單，而是變成能說明你為什麼適合某個學群的故事。"],
-                ["建立真實證明力", "用 GitHub、影片、設計稿、實驗紀錄等證據，補上 PDF 備審容易缺少的可信度。"],
-                ["形成長期資產", "個人網站可以一路延伸到大學、實習、研究與求職，是一份可以更新的數位履歷。"]
-              ].map(([title, text]) => (
-                <article key={title} className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
-                  <h3 className="text-lg font-extrabold text-[#142143]">{title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[#767995]">{text}</p>
-                </article>
-              ))}
+              <FeatureCard icon={<Icons.Sparkles />} title="串接個人主線">
+                讓獎狀、專題、活動不再只是清單，而是變成能說明你為什麼適合某個學群的故事。
+              </FeatureCard>
+              <FeatureCard icon={<Icons.Layers />} title="建立真實證明力">
+                用 GitHub、影片、設計稿、實驗紀錄等證據，補上 PDF 備審容易缺少的可信度。
+              </FeatureCard>
+              <FeatureCard icon={<Icons.TrendingUp />} title="形成長期資產">
+                個人網站可以一路延伸到大學、實習、研究與求職，是一份可以更新的數位履歷。
+              </FeatureCard>
+            </section>
+
+            <section className="rounded-3xl bg-gradient-to-br from-[#142143] to-[#1A5D94] text-white p-8 lg:p-10 shadow-soft">
+              <div className="grid lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-5 space-y-4">
+                  <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-extrabold text-[#FAB748]">
+                    評審教授內心話
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold leading-snug">
+                    空洞的包裝，不如真實的反思。
+                  </h2>
+                  <p className="text-sm text-white/75 leading-relaxed">
+                    很多學生放滿證書與漂亮排版，但教授真正想確認的是：你遇到什麼問題、如何學會方法、如何修正錯誤，以及下一步想走向哪裡。
+                  </p>
+                </div>
+                <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+                  {[
+                    ["與挫折共處", "比起完美成果，更重要的是你如何處理 bug、失敗與限制。"],
+                    ["學習歷程一致", "主線不能像臨時拼湊，而要看得出長期累積。"],
+                    ["實務操作素養", "程式碼、數據、影片、實驗紀錄都能提高可信度。"],
+                    ["學科熱情", "熱情不是口號，而是你願意投入時間找資料、做測試、修正方向。"]
+                  ].map(([title, text]) => (
+                    <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                      <h3 className="font-extrabold text-[#FAB748]">{title}</h3>
+                      <p className="mt-2 text-xs leading-relaxed text-white/70">{text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </section>
           </div>
         );
@@ -230,6 +373,16 @@
             <p className="text-xl font-black text-[#1A5D94]">{value}</p>
             <p className="mt-1 text-xs text-[#767995]">{label}</p>
           </div>
+        );
+      }
+
+      function FeatureCard({ icon, title, children }) {
+        return (
+          <article className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
+            <div className="w-12 h-12 rounded-xl bg-[#1A5D94]/10 flex items-center justify-center text-[#1A5D94]">{icon}</div>
+            <h3 className="mt-4 text-lg font-extrabold text-[#142143]">{title}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-[#767995]">{children}</p>
+          </article>
         );
       }
 
@@ -359,35 +512,97 @@
                 </table>
               </div>
             </div>
+
+            <section className="bg-slate-100 rounded-2xl p-6 sm:p-8 grid lg:grid-cols-12 gap-6">
+              <div className="lg:col-span-4 space-y-3">
+                <h2 className="text-xl font-extrabold text-[#142143]">什麼是個人主線？</h2>
+                <p className="text-sm text-[#767995] leading-relaxed">
+                  如果高中三年的探索是散落的珍珠，個人主線就是把它們串起來的線。主線不只說明你做過什麼，更說明你為什麼持續往這個方向前進。
+                </p>
+              </div>
+              <div className="lg:col-span-8 grid md:grid-cols-2 gap-4">
+                <div className="bg-white rounded-2xl border border-rose-100 p-5">
+                  <div className="flex items-center gap-2 font-extrabold text-rose-600"><Icons.X />散亂素材</div>
+                  <ul className="mt-3 text-xs text-[#767995] space-y-2 list-disc list-inside">
+                    <li>放了鋼琴、奧林匹亞、英文心得</li>
+                    <li>每件事都不錯，但彼此沒有關係</li>
+                    <li>教授看不出你想申請什麼，也看不出長期動機</li>
+                  </ul>
+                </div>
+                <div className="bg-white rounded-2xl border border-emerald-100 p-5">
+                  <div className="flex items-center gap-2 font-extrabold text-emerald-600"><Icons.Check />主線串聯</div>
+                  <ul className="mt-3 text-xs text-[#767995] space-y-2 list-disc list-inside">
+                    <li>主線：用開源硬體推動校園永續</li>
+                    <li>自學 ESP32、感測器與資料紀錄</li>
+                    <li>每個作品都回到同一個問題意識</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section className="grid md:grid-cols-2 gap-6">
+              <div className="border border-rose-200 bg-rose-50/40 rounded-2xl p-6">
+                <h3 className="font-extrabold text-rose-600">錯誤：傳統流水帳</h3>
+                <p className="mt-3 text-sm text-[#767995] leading-relaxed">
+                  「我做了一個 Arduino 澆水器，我負責接線和寫程式，這讓我學到團隊合作。」
+                </p>
+                <p className="mt-3 text-xs text-rose-700 font-bold">問題：沒有動機、沒有技術細節、沒有成果證據。</p>
+              </div>
+              <div className="border border-emerald-200 bg-emerald-50/40 rounded-2xl p-6">
+                <h3 className="font-extrabold text-emerald-700">較佳：專業敘事</h3>
+                <p className="mt-3 text-sm text-[#767995] leading-relaxed">
+                  「因為學校花圃在長假期間常因人力不足而乾枯，我使用 ESP32 與土壤濕度感測器設計低成本灌溉提醒系統，並透過實測調整濕度門檻。」
+                </p>
+                <p className="mt-3 text-xs text-emerald-700 font-bold">優點：動機明確、方法具體、成果可驗證。</p>
+              </div>
+            </section>
           </div>
         );
       }
 
       function renderSteps() {
-        const steps = [
-          ["整理素材池", "先列出高中階段所有活動、專題、競賽、報告與自學紀錄。"],
-          ["萃取個人主線", "從經歷交集找出你真正持續關心的問題與學習方向。"],
-          ["撰寫 About Me", "用信念、實踐亮點、未來方向建立第一印象。"],
-          ["拆解 Projects", "用 STAR / SARI 說明情境、行動、成果與反思。"],
-          ["整理 Skills", "避免百分比能力條，改用代表作證明能力。"],
-          ["選擇工具部署", "依照能力與時間選 Notion、Carrd、GitHub Pages 或 Vercel。"],
-          ["測試與迭代", "請老師、同學、家長試看，確認 3 分鐘內能看懂你的主線。"]
-        ];
         return (
           <div className="space-y-8">
-            <SectionHeader kicker="Step by Step" title="從 0 開始建立 Portfolio">
-              先不要急著選工具。最重要的是先把素材整理成主線，再決定用什麼形式呈現。
+            <SectionHeader kicker="Step by Step" title="一步步引導：從 0 到 1 建立 Portfolio">
+              這套流程保留原始版本的 7 步驟精神，但改成更適合官網閱讀與側欄切換的版型。
             </SectionHeader>
-            <div className="grid gap-4">
-              {steps.map(([title, text], index) => (
-                <article key={title} className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-5 shadow-soft grid sm:grid-cols-[80px_1fr] gap-4">
-                  <div className="text-[#1A5D94] font-black text-xl">0{index + 1}</div>
-                  <div>
-                    <h3 className="font-extrabold text-[#142143]">{title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[#767995]">{text}</p>
-                  </div>
-                </article>
-              ))}
+
+            <div className="grid lg:grid-cols-[0.75fr_1.25fr] gap-6">
+              <div className="space-y-2">
+                {steps.map((step, index) => (
+                  <button
+                    key={step.title}
+                    type="button"
+                    onClick={() => setStepActiveIndex(index)}
+                    className={`w-full text-left rounded-2xl border px-4 py-3 transition ${
+                      stepActiveIndex === index
+                        ? "bg-[#1A5D94] text-white border-[#1A5D94] shadow-soft"
+                        : "bg-white text-[#142143] border-[#D0CEDB]/60 hover:bg-[#D0CEDB]/20"
+                    }`}
+                  >
+                    <div className="text-xs font-black opacity-70">STEP {index + 1}</div>
+                    <div className="mt-1 font-extrabold">{step.title}</div>
+                  </button>
+                ))}
+              </div>
+
+              <article className="bg-white border border-[#D0CEDB]/60 rounded-3xl p-6 sm:p-8 shadow-soft">
+                <span className="text-xs font-black text-[#1A5D94]">STEP {stepActiveIndex + 1}</span>
+                <h2 className="mt-2 text-2xl font-extrabold text-[#142143]">{steps[stepActiveIndex].title}</h2>
+                <p className="mt-4 text-[#767995] leading-relaxed">{steps[stepActiveIndex].desc}</p>
+                <div className="mt-5 rounded-2xl bg-[#FAB748]/15 border border-[#FAB748]/30 p-4">
+                  <div className="text-sm font-extrabold text-[#142143]">操作提醒</div>
+                  <p className="mt-2 text-sm text-[#767995] leading-relaxed">{steps[stepActiveIndex].tip}</p>
+                </div>
+                <div className="mt-5">
+                  <div className="text-sm font-extrabold text-[#142143]">檢查清單</div>
+                  <ul className="mt-3 space-y-2">
+                    {steps[stepActiveIndex].checklist.map((item) => (
+                      <li key={item} className="flex gap-2 text-sm text-[#767995]"><Icons.Check />{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
             </div>
           </div>
         );
@@ -395,17 +610,18 @@
 
       function renderTemplates() {
         const blocks = [
-          ["Hero 首屏", "姓名、主線、目標學群、最關鍵的一句話。"],
-          ["About Me", "不是自傳流水帳，而是你如何形成目前方向。"],
-          ["Projects", "每個專案都要有問題、方法、成果、反思。"],
-          ["Evidence", "放可驗證的連結：影片、程式碼、簡報、報告。"],
-          ["Reflection", "說明失敗、修正、下一步，而不只是成果展示。"]
+          ["About Me 個人簡介", "一句信念、代表行動、申請動機與未來方向。"],
+          ["Projects 精選專案", "每個專案都要有問題、方法、成果、反思。"],
+          ["Experiences 探索經歷", "放與主線相關的競賽、營隊、社團與學術活動。"],
+          ["Skills 技術工具矩陣", "用代表作證明技能，不用百分比能力條。"],
+          ["Contact 行動管道", "保留 Email、GitHub、LinkedIn 或其他適合的聯絡方式。"]
         ];
         return (
           <div className="space-y-8">
-            <SectionHeader kicker="Structure" title="推薦架構模板">
-              一份好的 Portfolio 不需要頁面很多，但每個區塊都要對應到教授想確認的能力。
+            <SectionHeader kicker="Structure" title="經典 5 大板塊：不踩雷的黃金配比">
+              一份好的 Portfolio 不需要很多頁，但每個區塊都要清楚回答教授想確認的問題。
             </SectionHeader>
+
             <div className="grid md:grid-cols-2 gap-5">
               {blocks.map(([title, text]) => (
                 <article key={title} className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
@@ -414,6 +630,7 @@
                 </article>
               ))}
             </div>
+
             {renderPromptGenerator()}
           </div>
         );
@@ -498,25 +715,53 @@
       }
 
       function renderTools() {
-        const tools = [
-          ["Notion", "最快開始，適合整理素材與文字版作品集。"],
-          ["Carrd", "漂亮、簡單，適合做一頁式個人網站。"],
-          ["GitHub Pages", "適合資工、工程、資料分析方向學生。"],
-          ["Vercel", "適合已經有前端專案，想展示互動作品的人。"]
-        ];
         return (
           <div className="space-y-8">
-            <SectionHeader kicker="Tools" title="工具指南">
+            <SectionHeader kicker="Tools" title="挑選你的一生之水：高中生架站工具對決">
               工具不是越難越好，而是要符合你的時間、技術門檻與申請目標。
             </SectionHeader>
-            <div className="grid md:grid-cols-2 gap-5">
-              {tools.map(([title, text]) => (
-                <article key={title} className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
-                  <h3 className="font-extrabold text-[#142143]">{title}</h3>
-                  <p className="mt-2 text-sm text-[#767995] leading-relaxed">{text}</p>
-                </article>
+
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(tools).map(([id, tool]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setSelectedTool(id)}
+                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${
+                    selectedTool === id ? "bg-[#1A5D94] text-white" : "bg-white text-[#767995] border border-[#D0CEDB]/70"
+                  }`}
+                >
+                  {tool.title}
+                </button>
               ))}
             </div>
+
+            <article className="bg-white border border-[#D0CEDB]/60 rounded-3xl p-6 sm:p-8 shadow-soft">
+              <span className="inline-flex rounded-full bg-[#FAB748]/20 text-[#142143] px-3 py-1 text-xs font-extrabold">
+                {tools[selectedTool].tag}
+              </span>
+              <h2 className="mt-3 text-2xl font-extrabold text-[#142143]">{tools[selectedTool].title}</h2>
+              <p className="mt-3 text-[#767995] leading-relaxed">{tools[selectedTool].best}</p>
+
+              <div className="mt-6 grid md:grid-cols-2 gap-5">
+                <div className="rounded-2xl bg-emerald-50 border border-emerald-100 p-5">
+                  <h3 className="font-extrabold text-emerald-700">優勢</h3>
+                  <ul className="mt-3 space-y-2">
+                    {tools[selectedTool].pros.map((item) => (
+                      <li key={item} className="flex gap-2 text-sm text-[#767995]"><Icons.Check />{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-2xl bg-rose-50 border border-rose-100 p-5">
+                  <h3 className="font-extrabold text-rose-700">限制</h3>
+                  <ul className="mt-3 space-y-2">
+                    {tools[selectedTool].cons.map((item) => (
+                      <li key={item} className="flex gap-2 text-sm text-[#767995]"><Icons.X />{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </article>
           </div>
         );
       }
@@ -524,37 +769,53 @@
       function renderCases() {
         return (
           <div className="space-y-8">
-            <SectionHeader kicker="Cases" title="真實案例如何呈現？">
+            <SectionHeader kicker="Cases" title="真實案例拆解：看別人怎麼贏">
               案例不只是展示結果，而是讓教授看懂你如何從問題出發、採取行動，最後形成可遷移能力。
             </SectionHeader>
-            <div className="grid lg:grid-cols-2 gap-6">
-              <article className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
-                <h3 className="font-extrabold text-[#142143]">工程型學生</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#767995]">
-                  可展示機器人、程式、實驗設計、debug 紀錄與實作影片。重點不是只說拿獎，而是解釋你如何解決工程問題。
-                </p>
-              </article>
-              <article className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
-                <h3 className="font-extrabold text-[#142143]">社會議題型學生</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#767995]">
-                  可展示訪談、問卷、田野紀錄、資料視覺化與政策分析。重點是讓研究方法與個人關懷同時被看見。
-                </p>
-              </article>
+
+            <div className="grid sm:grid-cols-3 gap-3">
+              {Object.entries(cases).map(([id, item]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setActiveCaseField(id)}
+                  className={`rounded-2xl border p-4 text-left transition ${
+                    activeCaseField === id ? "bg-[#142143] text-white border-[#142143]" : "bg-white text-[#142143] border-[#D0CEDB]/70"
+                  }`}
+                >
+                  <div className="font-extrabold">{item.title}</div>
+                  <div className={`mt-1 text-xs ${activeCaseField === id ? "text-white/65" : "text-[#767995]"}`}>{item.line}</div>
+                </button>
+              ))}
             </div>
+
+            <article className="bg-white border border-[#D0CEDB]/60 rounded-3xl p-6 sm:p-8 shadow-soft">
+              <h2 className="text-2xl font-extrabold text-[#142143]">{cases[activeCaseField].title}</h2>
+              <p className="mt-2 text-sm font-bold text-[#1A5D94]">{cases[activeCaseField].line}</p>
+              <p className="mt-4 text-[#767995] leading-relaxed">{cases[activeCaseField].text}</p>
+              <div className="mt-6">
+                <h3 className="font-extrabold text-[#142143]">適合放入的證據</h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {cases[activeCaseField].evidence.map((item) => (
+                    <span key={item} className="rounded-full bg-[#1A5D94]/10 text-[#1A5D94] px-3 py-1 text-xs font-extrabold">{item}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
           </div>
         );
       }
 
       function renderMistakes() {
         const mistakes = [
-          ["只有漂亮排版，沒有主線", "視覺只是輔助，教授真正看的是你的問題意識與能力證據。"],
-          ["把所有經歷都放上去", "Portfolio 不是倉庫。無關主線的素材要刪除或放到附錄。"],
-          ["沒有失敗與修正", "只寫成功會顯得不真實。debug、重做與反思反而更有價值。"],
-          ["技能條寫 90%", "不要用無根據百分比。用作品與任務證明能力。"]
+          ["毫無故事的資料堆積", "把所有證書、照片、活動都丟上去，反而讓教授看不出你真正的方向。"],
+          ["充斥 AI 空泛形容詞", "例如熱情、積極、富有創意，若沒有具體行動支撐，就會變成低可信度文字。"],
+          ["花俏刺眼的排版與配色", "動畫與色彩不能蓋過內容。最好的設計是讓主線更容易被讀懂。"],
+          ["忽略手機版與連結測試", "教授或助教可能用手機快速打開，若版面跑掉或連結失效，印象會大打折扣。"]
         ];
         return (
           <div className="space-y-8">
-            <SectionHeader kicker="Mistakes" title="常見錯誤">
+            <SectionHeader kicker="Mistakes" title="別踩雷！高中生最容易犯的 Portfolio 致命傷">
               以下錯誤會讓 Portfolio 看起來像包裝，而不是能力證據。
             </SectionHeader>
             <div className="grid md:grid-cols-2 gap-5">
@@ -576,23 +837,22 @@
 
       function renderResources() {
         const resources = [
-          ["作品整理表", "先盤點作品名稱、問題、方法、成果、證據連結與反思。"],
-          ["STAR / SARI Prompt", "把每段經歷改寫成有情境、有行動、有成果、有洞察的敘事。"],
-          ["網站檢查清單", "檢查手機版、連結、錯字、圖片壓縮、CTA 與首頁 30 秒可讀性。"]
+          ["作品整理表", "盤點作品名稱、問題、方法、成果、證據連結與反思。", "把散亂素材先整理成表格"],
+          ["STAR / SARI Prompt", "把每段經歷改寫成有情境、有行動、有成果、有洞察的敘事。", "適合搭配 Prompt 產生器"],
+          ["網站檢查清單", "檢查手機版、連結、錯字、圖片壓縮、CTA 與首頁 30 秒可讀性。", "上線前必做"],
+          ["一對一諮詢", "若素材很多但不知道怎麼收斂，可先用初談確認主線與作品集必要性。", "適合時間緊迫者"]
         ];
         return (
           <div className="space-y-8">
-            <SectionHeader kicker="Resources" title="精選 Portfolio 資源">
+            <SectionHeader kicker="Resources" title="TBD Studio 專屬：高中生建站資源庫">
               先用簡單工具建立結構，再逐步做成正式網站。
             </SectionHeader>
-            <div className="grid gap-4">
-              {resources.map(([title, text]) => (
-                <article key={title} className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft flex gap-3">
-                  <Icons.Check />
-                  <div>
-                    <h3 className="font-extrabold text-[#142143]">{title}</h3>
-                    <p className="mt-2 text-sm text-[#767995] leading-relaxed">{text}</p>
-                  </div>
+            <div className="grid md:grid-cols-2 gap-5">
+              {resources.map(([title, text, tag]) => (
+                <article key={title} className="bg-white border border-[#D0CEDB]/60 rounded-2xl p-6 shadow-soft">
+                  <span className="inline-flex rounded-full bg-[#FAB748]/20 text-[#142143] px-3 py-1 text-xs font-extrabold">{tag}</span>
+                  <h3 className="mt-3 font-extrabold text-[#142143]">{title}</h3>
+                  <p className="mt-2 text-sm text-[#767995] leading-relaxed">{text}</p>
                 </article>
               ))}
             </div>
@@ -605,11 +865,13 @@
           ["不會寫程式可以做 Portfolio 嗎？", "可以。Notion、Carrd 或 Google Sites 都能先做出可用版本。重點是內容主線，不是技術炫技。"],
           ["Portfolio 會不會取代備審 PDF？", "不會。它比較像補充證據與互動展示，可以讓教授更快理解你的作品與脈絡。"],
           ["一定要買網域嗎？", "不一定。早期可以用免費網址，等內容穩定後再購買個人網域。"],
-          ["什麼學生最適合做？", "有專題、競賽、研究、社團成果或自主學習累積，但不知道怎麼整理成主線的學生。"]
+          ["什麼學生最適合做？", "有專題、競賽、研究、社團成果或自主學習累積，但不知道怎麼整理成主線的學生。"],
+          ["可以用 AI 幫我寫 Portfolio 嗎？", "可以用 AI 輔助整理與改寫，但不能讓 AI 取代你的真實經驗。最好的做法是先填寫自己的痛點、行動與成果，再用 Prompt 請 AI 潤飾。"],
+          ["作品不夠多怎麼辦？", "不用追求數量。2–3 個高品質、有完整問題意識與反思的作品，通常比 10 個零散活動更有說服力。"]
         ];
         return (
           <div className="space-y-8">
-            <SectionHeader kicker="FAQ" title="常見問題" />
+            <SectionHeader kicker="FAQ" title="關於高中 Portfolio 的熱門疑惑" />
             <div className="space-y-3">
               {faqs.map(([question, answer], index) => (
                 <article key={question} className="bg-white border border-[#D0CEDB]/60 rounded-2xl shadow-soft overflow-hidden">
