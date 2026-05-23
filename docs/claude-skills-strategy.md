@@ -50,7 +50,7 @@
 | 首頁 Hero 改版 | `frontend-design`, `taste-skill` | `ui-ux-pro-max`, `ux-strategy` | 保留教育語氣，不要做成 SaaS 風格 |
 | 服務頁排版調整 | `frontend-design`, `taste-skill` | `ui-ux-pro-max` | 信任感比炫技重要 |
 | 成功案例頁設計 | `frontend-design`, `taste-skill` | `ux-strategy` | 去識別化原則優先 |
-| Portfolio Guide 改版 | `frontend-design` | `taste-skill`（可選）| 此頁有 React CDN，改版前確認範圍 |
+| Portfolio Guide 改版 | `frontend-design` | `taste-skill`（可選）| 此頁已改為純 vanilla JS，正常走 build.py |
 | 整頁視覺健診 | `redesign-skill` | 不要同時啟用 `ux-strategy` | 先聚焦視覺，策略討論另開 |
 | Nav 結構決策 | `ux-strategy`（策略討論）| `redesign-skill` | ux-strategy 給方向，frontend-design 做實作 |
 | 單點 CSS 修改 | 不需要任何 skill | — | 直接改 `css/tbd-components.css` |

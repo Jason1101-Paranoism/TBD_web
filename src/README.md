@@ -4,7 +4,7 @@
 
 - `partials/`：全站共用區塊。
 - `templates/base.html`：每一頁共用骨架。
-- `pages/`：每一頁自己的主要內容。
+- `pages/`：每一頁自己的主要內容（含 `resources/` 子目錄）。
 - `config.json`：站點資料、導覽、頁面 metadata。
 
 修改後請回到專案根目錄執行：
