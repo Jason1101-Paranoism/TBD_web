@@ -94,15 +94,20 @@ def render_page(page: dict):
     save(ROOT / output, html)
 
 def build_subdir_pages():
-    """Scan src/pages/*/ subdirectories and build each HTML file found."""
+    """Scan src/pages/*/ subdirectories and build each HTML file found.
+    Skips files already registered in config (they get correct metadata from render_page).
+    """
     pages_src = SRC / "pages"
+    config_outputs = {p["output"] for p in CONFIG["pages"]}
     built = 0
     for subdir in sorted(pages_src.iterdir()):
         if not subdir.is_dir():
             continue
         for html_file in sorted(subdir.glob("*.html")):
-            rel_source = f"{subdir.name}/{html_file.name}"
             output = f"pages/{subdir.name}/{html_file.name}"
+            if output in config_outputs:
+                continue  # already built with correct metadata by render_page()
+            rel_source = f"{subdir.name}/{html_file.name}"
             page = {
                 "id": f"{subdir.name}-{html_file.stem}",
                 "title": f"TBD Studio | {html_file.stem.replace('-', ' ').title()}",

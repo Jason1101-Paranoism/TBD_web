@@ -114,3 +114,7 @@
 .sidebar-cta { text-align: center; }
 .sidebar-cta p { font-size: 0.875rem; color: var(--tbd-mid); margin-bottom: 1rem; }
 .sidebar-cta .button { width: 100%; text-align: center; }
+
+.text-link { color: var(--tbd-accent); text-decoration: none; font-size: 0.875rem; font-weight: 600; }
+.text-link:hover { text-decoration: underline; }
+.article-hero { /* modifier for article page hero — extend as needed */ }
