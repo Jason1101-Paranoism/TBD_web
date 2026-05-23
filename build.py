@@ -122,15 +122,24 @@ def generate_sitemap():
     site_url = CONFIG["site"].get("site_url", "").rstrip("/")
     today = date.today().isoformat()
     urls = []
+    seen = set()
     for page in CONFIG["pages"]:
         output = page["output"]
-        loc = f"{site_url}/{output}"
-        urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
+        # Special-case homepage
+        if output == "index.html":
+            loc = f"{site_url}/"
+        else:
+            loc = f"{site_url}/{output}"
+        if output not in seen:
+            seen.add(output)
+            urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
     pages_dir = ROOT / "pages"
     for subpage in sorted(pages_dir.glob("*/*.html")):
         rel = subpage.relative_to(ROOT).as_posix()
-        loc = f"{site_url}/{rel}"
-        urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
+        if rel not in seen:
+            seen.add(rel)
+            loc = f"{site_url}/{rel}"
+            urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     xml += "\n".join(urls)
@@ -162,7 +171,10 @@ def check_broken_links():
         for href in pattern.findall(content):
             if any(href.startswith(p) for p in skip_prefixes):
                 continue
-            target = (html_file.parent / href).resolve()
+            if href.startswith("/"):
+                target = (ROOT / href.lstrip("/")).resolve()
+            else:
+                target = (html_file.parent / href).resolve()
             if not target.exists():
                 print(f"[WARN] broken link in {html_file.relative_to(ROOT)}: {href}")
                 warnings += 1
