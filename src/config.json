@@ -39,6 +39,11 @@
       "id": "process",
       "label": "合作流程",
       "href": "pages/process.html"
+    },
+    {
+      "id": "resources",
+      "label": "知識庫",
+      "href": "pages/resources/index.html"
     }
   ],
   "pages": [
@@ -113,6 +118,22 @@
       "source": "process.html",
       "output": "pages/process.html",
       "body_class": "sub-page"
+    },
+    {
+      "id": "resources",
+      "title": "升學知識庫｜TBD Studio",
+      "description": "TBD Studio 升學知識文章：備審撰寫、特殊選才準備、面試技巧與 Portfolio 建置指南。",
+      "source": "resources/index.html",
+      "output": "pages/resources/index.html",
+      "body_class": "sub-page resources-page"
+    },
+    {
+      "id": "resources-article-template",
+      "title": "文章標題｜TBD Studio",
+      "description": "TBD Studio 升學知識文章。",
+      "source": "resources/article-template.html",
+      "output": "pages/resources/article-template.html",
+      "body_class": "sub-page article-page"
     }
   ]
 }
