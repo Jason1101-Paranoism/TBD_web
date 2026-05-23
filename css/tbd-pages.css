@@ -83,3 +83,34 @@
 .services-chapter-desc { color: var(--tbd-mid); max-width: 680px; font-size: 16px; line-height: 1.7; margin-top: 6px; }
 .services-plan-featured { border-color: var(--tbd-accent); background: rgba(26,93,148,.05); }
 .services-plan-featured .badge { background: rgba(26,93,148,.12); }
+
+/* ── Resources / Knowledge Base ── */
+.article-card { display: flex; flex-direction: column; gap: 0.5rem; }
+.article-card .card-desc { color: var(--tbd-mid); font-size: 0.9rem; flex: 1; }
+.article-status { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--tbd-mid); background: var(--tbd-light); padding: 0.2rem 0.6rem; border-radius: 999px; width: fit-content; }
+
+.breadcrumb { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--tbd-mid); margin-bottom: 1rem; }
+.breadcrumb a { color: var(--tbd-mid); text-decoration: none; }
+.breadcrumb a:hover { color: var(--tbd-accent); }
+
+.article-layout { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+@media (min-width: 1024px) {
+  .article-layout { grid-template-columns: 1fr 280px; align-items: start; }
+}
+
+.article-body { max-width: 100%; }
+.article-section { margin-bottom: 2.5rem; }
+.article-section h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--tbd-dark); }
+.article-section p, .article-section ul { color: var(--tbd-mid); line-height: 1.75; }
+.article-section ul { padding-left: 1.25rem; }
+.article-section li { margin-bottom: 0.4rem; }
+
+.article-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+.sidebar-toc h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--tbd-dark); }
+.sidebar-toc ul { list-style: none; padding: 0; }
+.sidebar-toc li { margin-bottom: 0.4rem; }
+.sidebar-toc a { font-size: 0.875rem; color: var(--tbd-mid); text-decoration: none; }
+.sidebar-toc a:hover { color: var(--tbd-accent); }
+.sidebar-cta { text-align: center; }
+.sidebar-cta p { font-size: 0.875rem; color: var(--tbd-mid); margin-bottom: 1rem; }
+.sidebar-cta .button { width: 100%; text-align: center; }
