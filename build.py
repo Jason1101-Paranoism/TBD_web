@@ -93,10 +93,98 @@ def render_page(page: dict):
         html = html.replace("{{" + key + "}}", value)
     save(ROOT / output, html)
 
+def build_subdir_pages():
+    """Scan src/pages/*/ subdirectories and build each HTML file found."""
+    pages_src = SRC / "pages"
+    built = 0
+    for subdir in sorted(pages_src.iterdir()):
+        if not subdir.is_dir():
+            continue
+        for html_file in sorted(subdir.glob("*.html")):
+            rel_source = f"{subdir.name}/{html_file.name}"
+            output = f"pages/{subdir.name}/{html_file.name}"
+            page = {
+                "id": f"{subdir.name}-{html_file.stem}",
+                "title": f"TBD Studio | {html_file.stem.replace('-', ' ').title()}",
+                "description": "",
+                "source": rel_source,
+                "output": output,
+                "body_class": "sub-page",
+            }
+            render_page(page)
+            built += 1
+    return built
+
+
+def generate_sitemap():
+    """Generate sitemap.xml from config pages + subdirectory pages."""
+    from datetime import date
+    site_url = CONFIG["site"].get("site_url", "").rstrip("/")
+    today = date.today().isoformat()
+    urls = []
+    for page in CONFIG["pages"]:
+        output = page["output"]
+        loc = f"{site_url}/{output}"
+        urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
+    pages_dir = ROOT / "pages"
+    for subpage in sorted(pages_dir.glob("*/*.html")):
+        rel = subpage.relative_to(ROOT).as_posix()
+        loc = f"{site_url}/{rel}"
+        urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    xml += "\n".join(urls)
+    xml += "\n</urlset>\n"
+    save(ROOT / "sitemap.xml", xml)
+    print(f"Generated sitemap.xml with {len(urls)} URLs.")
+
+
+def check_descriptions():
+    """Warn if any config page is missing a description."""
+    warnings = 0
+    for page in CONFIG["pages"]:
+        if not page.get("description", "").strip():
+            print(f"[WARN] missing description: {page['output']}")
+            warnings += 1
+    return warnings
+
+
+def check_broken_links():
+    """Warn about internal hrefs that point to non-existent files."""
+    import re
+    pattern = re.compile(r'href="([^"#?]+)"')
+    skip_prefixes = ("http", "mailto:", "tel:", "//", "#")
+    warnings = 0
+    for html_file in sorted(ROOT.glob("pages/**/*.html")) + [ROOT / "index.html"]:
+        if not html_file.exists():
+            continue
+        content = html_file.read_text(encoding="utf-8")
+        for href in pattern.findall(content):
+            if any(href.startswith(p) for p in skip_prefixes):
+                continue
+            target = (html_file.parent / href).resolve()
+            if not target.exists():
+                print(f"[WARN] broken link in {html_file.relative_to(ROOT)}: {href}")
+                warnings += 1
+    return warnings
+
+
 def main():
     for page in CONFIG["pages"]:
         render_page(page)
     print(f"Built {len(CONFIG['pages'])} pages.")
+
+    sub_built = build_subdir_pages()
+    if sub_built:
+        print(f"Built {sub_built} subdir pages.")
+
+    generate_sitemap()
+
+    warn_count = check_descriptions() + check_broken_links()
+    if warn_count:
+        print(f"{warn_count} warning(s) found.")
+    else:
+        print("All checks passed.")
 
 if __name__ == "__main__":
     main()
