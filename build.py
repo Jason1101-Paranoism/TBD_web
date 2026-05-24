@@ -42,6 +42,7 @@ def render_nav(page: dict) -> str:
         mobile.append(f'            <a href="{href}"{cls}{attr} data-menu-link>{item["label"]}</a>')
     context = {
         **CONFIG["site"],
+        "asset_prefix": prefix,
         "home_href": resolve_href("index.html", output),
         "contact_href": resolve_href("index.html#contact", output),
         "desktop_links": "\n".join(desktop),

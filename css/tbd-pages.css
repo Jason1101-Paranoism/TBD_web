@@ -9,11 +9,12 @@
 .sub-page .grid { display: grid; gap: 18px; }
 .sub-page .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .sub-page .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.sub-page h1 { font-size: clamp(34px, 5vw, 58px); line-height: 1.14; margin: 18px 0; letter-spacing: -0.04em; color: var(--tbd-dark); }
-.sub-page h2 { font-size: clamp(26px, 3vw, 38px); line-height: 1.24; margin: 0 0 16px; letter-spacing: -0.03em; color: var(--tbd-dark); }
-.sub-page h3 { font-size: 21px; margin: 0 0 10px; color: var(--tbd-dark); }
+.sub-page h1 { font-size: clamp(26px, 3.5vw, 38px); font-weight: 900; line-height: 1.18; margin: 14px 0; letter-spacing: -0.03em; color: var(--tbd-dark); }
+.sub-page h2 { font-size: clamp(20px, 2.5vw, 28px); font-weight: 900; line-height: 1.28; margin: 0 0 14px; letter-spacing: -0.02em; color: var(--tbd-dark); }
+.sub-page h3 { font-size: 17px; font-weight: 800; margin: 0 0 10px; color: var(--tbd-dark); }
 .sub-page p { margin: 0 0 14px; }
-.sub-page .lead { font-size: 19px; color: var(--tbd-mid); max-width: 760px; }
+.sub-page .lead { font-size: 17px; font-weight: 600; color: var(--tbd-mid); max-width: 760px; line-height: 1.65; }
+.sub-page .cta h2 { color: #fff; }
 .sub-page ul { padding-left: 1.2em; margin: 10px 0 0; }
 .sub-page li { margin: 5px 0; }
 .home-page .site-header + header { margin-top: 0; }
@@ -27,7 +28,7 @@
 .case-result-card { position: relative; overflow: hidden; }
 .case-result-card::before { content: ""; position: absolute; right: -48px; top: -48px; width: 160px; height: 160px; border-radius: 999px; background: rgba(26,93,148,.10); }
 .case-result-card h3 { position: relative; font-size: clamp(26px, 3vw, 36px); line-height: 1.22; color: var(--tbd-dark); }
-.case-result-label { position: relative; display: inline-flex; margin-bottom: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(250,183,72,.22); color: var(--tbd-dark); font-weight: 900; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.case-result-label { position: relative; display: inline-flex; margin-bottom: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(26,93,148,.12); color: var(--tbd-accent); font-weight: 900; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
 .case-proof-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .case-proof-row span, .case-tags span { display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 10px; background: rgba(26,93,148,.08); color: var(--tbd-accent); font-size: 12px; font-weight: 800; }
 .case-summary-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
@@ -51,6 +52,7 @@
 .case-method-panel { display: grid; grid-template-columns: 1.05fr .95fr; gap: 24px; align-items: center; padding: 30px; border-radius: 28px; background: var(--tbd-dark); color: #fff; overflow: hidden; }
 .case-method-panel h2 { color: #fff; margin-top: 16px; }
 .case-method-panel p { color: rgba(255,255,255,.72); }
+.case-method-panel .kicker { background: rgba(255,255,255,.1); color: var(--tbd-yellow); border-color: rgba(255,255,255,.18); }
 .sari-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
 .sari-grid div { min-height: 130px; border: 1px solid rgba(255,255,255,.12); border-radius: 22px; background: rgba(255,255,255,.06); padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
 .sari-grid strong { color: var(--tbd-yellow); font-size: 40px; line-height: 1; }
@@ -85,7 +87,8 @@
 .services-plan-featured .badge { background: rgba(26,93,148,.12); }
 
 /* ── Resources / Knowledge Base ── */
-.article-card { display: flex; flex-direction: column; gap: 0.5rem; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.article-card { display: flex; flex-direction: column; gap: 0.6rem; padding: 28px; }
 .article-card .card-desc { color: var(--tbd-mid); font-size: 0.9rem; flex: 1; }
 .article-status { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--tbd-mid); background: var(--tbd-light); padding: 0.2rem 0.6rem; border-radius: 999px; width: fit-content; }
 

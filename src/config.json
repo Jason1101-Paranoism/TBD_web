@@ -1,7 +1,8 @@
 {
   "site": {
     "name": "TBD Studio",
-    "logo_url": "https://lh3.googleusercontent.com/u/0/d/14mnzD0NuTntlX6MoWcJHeBvLQD2uZe0E",
+    "logo_url": "assets/images/tbd_logo_lighttransparent_.png",
+    "logo_dark_url": "assets/images/tbd-logo-dark.png",
     "line_url": "https://lin.ee/9ciZvbA",
     "email": "tbd.consulting.studio@gmail.com",
     "line_id": "@756etimx",
@@ -12,7 +13,7 @@
   "nav": [
     {
       "id": "home",
-      "label": "官方首頁",
+      "label": "首頁",
       "href": "index.html"
     },
     {
@@ -26,19 +27,14 @@
       "href": "pages/services.html"
     },
     {
-      "id": "portfolio-guide",
-      "label": "Portfolio 指南",
-      "href": "pages/portfolio-guide.html"
+      "id": "process",
+      "label": "合作流程",
+      "href": "pages/process.html"
     },
     {
       "id": "timeline",
       "label": "申請時程",
       "href": "pages/timeline.html"
-    },
-    {
-      "id": "process",
-      "label": "合作流程",
-      "href": "pages/process.html"
     },
     {
       "id": "resources",
