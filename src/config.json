@@ -269,6 +269,38 @@
       "source": "resources/no-resources.html",
       "output": "pages/resources/no-resources.html",
       "body_class": "sub-page article-page"
+    },
+    {
+      "id": "interview-prep",
+      "title": "面試前你必須做的五件事｜TBD Studio",
+      "description": "讀熟備審、準備自我介紹主線、了解科系、大聲練習、準備問題——五件事讓你在面試現場真正有底氣。",
+      "source": "resources/interview-prep.html",
+      "output": "pages/resources/interview-prep.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "scatter-to-story",
+      "title": "如何把零散的活動整理成一條有邏輯的故事？｜TBD Studio",
+      "description": "活動看起來很散，不是材料問題而是視角問題。四個步驟幫你從現有活動找到真實存在的主線。",
+      "source": "resources/scatter-to-story.html",
+      "output": "pages/resources/scatter-to-story.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "execution-over-knowledge",
+      "title": "AI 時代為什麼 Execution 比知識更重要？｜TBD Studio",
+      "description": "知識從來沒有像現在這樣容易取得。說明在 AI 工具普及的時代，「真的做過」為何比「知道」更有價值。",
+      "source": "resources/execution-over-knowledge.html",
+      "output": "pages/resources/execution-over-knowledge.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "cs-ai-application",
+      "title": "申請資工/AI 科系，備審要展示什麼？｜TBD Studio",
+      "description": "資工/AI 科系評審真正在找的不是技術清單，而是問題意識。說明最有說服力的材料與最常見的四個失誤。",
+      "source": "resources/cs-ai-application.html",
+      "output": "pages/resources/cs-ai-application.html",
+      "body_class": "sub-page article-page"
     }
   ]
 }
