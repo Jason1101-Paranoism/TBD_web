@@ -237,6 +237,38 @@
       "source": "resources/side-project-from-zero.html",
       "output": "pages/resources/side-project-from-zero.html",
       "body_class": "sub-page article-page"
+    },
+    {
+      "id": "readme-guide",
+      "title": "如何寫出一份讓人看懂的 README？｜TBD Studio",
+      "description": "README 是評審對專案的第一印象。說明好的 README 應包含什麼、最常見的錯誤，以及 commit 紀錄的重要性。",
+      "source": "resources/readme-guide.html",
+      "output": "pages/resources/readme-guide.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "reflection-in-portfolio",
+      "title": "學習歷程中的「反思」到底是什麼？｜TBD Studio",
+      "description": "反思不是感想段落。說明三種有效反思結構、最常見的兩個陷阱，以及如何讓反思成為習慣而非考前臨時補寫。",
+      "source": "resources/reflection-in-portfolio.html",
+      "output": "pages/resources/reflection-in-portfolio.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "strong-applicant-traits",
+      "title": "強申請者有哪些共同特徵？｜TBD Studio",
+      "description": "觀察強申請者的共同特徵：清楚主線、具體說明、真實問題意識、清醒自我認識、主動性與備審面試一致性。",
+      "source": "resources/strong-applicant-traits.html",
+      "output": "pages/resources/strong-applicant-traits.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "no-resources",
+      "title": "沒有特殊資源，也能做出強的學習歷程嗎？｜TBD Studio",
+      "description": "評審真正在評什麼、沒有特殊資源的學生如何建立有說服力的學習歷程，以及現在最值得做的幾件事。",
+      "source": "resources/no-resources.html",
+      "output": "pages/resources/no-resources.html",
+      "body_class": "sub-page article-page"
     }
   ]
 }
