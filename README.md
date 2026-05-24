@@ -1,7 +1,7 @@
 # TBD Studio 官方網站
 
-> 版本：v1.5 | 最後更新：2026-05-23  
-> 現況：P0 / P1 / P2 全數完成，正式上線
+> 版本：v2.0 | 最後更新：2026-05-25
+> 現況：Astro 5 遷移完成，正式上線
 
 ---
 
@@ -19,124 +19,155 @@ TBD Studio 是針對高中生與大學生的升學策略顧問品牌，主要服
 
 ---
 
-## 使用方式
+## 技術棧
 
-直接預覽 / 部署：
-- 開啟根目錄 `index.html`
-- 或部署到 Vercel（目前使用 `https://tbd-studio.vercel.app`）
+- **框架**：Astro 5（靜態輸出）
+- **內容**：MDX Content Collections（知識庫文章）
+- **樣式**：Tailwind CDN + 自訂 CSS（`public/css/`）
+- **部署**：Vercel（push to main 自動觸發）
 
-開發修改：
-1. 修改 `src/pages/` 的內容片段，或 `src/partials/` 的共用區塊
-2. 修改 `src/config.json` 的頁面、導覽與站點資訊
-3. 執行：
+---
+
+## 開發指令
 
 ```bash
-python build.py
+npm install        # 安裝依賴
+npm run dev        # 啟動本地開發伺服器（http://localhost:4321）
+npm run build      # 建置靜態檔案至 dist/
+npm run preview    # 預覽 build 結果
 ```
-
-系統會重新產生 `index.html`、`pages/*.html`、`pages/resources/*.html`，以及 `sitemap.xml`。
 
 ---
 
 ## 架構
 
-```txt
-.
-├─ index.html                  # build 後首頁，可直接部署
-├─ pages/                      # build 後子頁，可直接部署
-│  ├─ cases.html
-│  ├─ services.html
-│  ├─ portfolio-guide.html
-│  ├─ timeline.html
-│  ├─ process.html
-│  └─ resources/               # 知識庫（P2 新增）
-│     ├─ index.html
-│     └─ article-template.html
-├─ sitemap.xml                 # build 自動產生
-├─ assets/
-│  └─ images/
-├─ css/
-│  ├─ style.css                # CSS 入口
-│  ├─ tbd-theme.css            # 品牌色、字體、設計 tokens
-│  ├─ tbd-base.css             # body、reset、全站基礎
-│  ├─ tbd-layout.css           # nav、footer、全站 layout
-│  ├─ tbd-components.css       # button、card、table、timeline、cta
-│  └─ tbd-pages.css            # 子頁與首頁差異樣式
-├─ js/
-│  ├─ main.js                  # mobile menu 等全站互動
-│  └─ portfolio-guide.js       # Portfolio Guide 互動邏輯
-├─ src/
-│  ├─ config.json              # 網站資訊、導覽、頁面 metadata
-│  ├─ templates/
-│  │  └─ base.html             # 全站 HTML 骨架
-│  ├─ partials/
-│  │  ├─ head.html             # 共用 head、OG metadata、字體、Tailwind、CSS
-│  │  ├─ nav.html              # 共用 navbar
-│  │  ├─ footer.html           # 共用 footer
-│  │  └─ scripts.html          # 共用 scripts
-│  └─ pages/                   # 各頁主要內容片段（維護來源）
-│     └─ resources/            # 知識庫頁面片段
-├─ build.py                    # 靜態頁面產生器
-├─ CLAUDE.md                   # Claude 協作規範
-└─ docs/                       # 專案文件與歷史規劃
+```
+src/
+├── components/
+│   ├── Nav.astro          ← 全站導覽列
+│   └── Footer.astro       ← 全站頁腳
+├── config/
+│   └── site.ts            ← 站台常數（logo、LINE URL、nav 項目）
+├── content/
+│   └── articles/          ← 知識庫文章（MDX Content Collections）
+│       └── *.mdx          ← 每篇文章一個 .mdx 檔
+├── layouts/
+│   ├── BaseLayout.astro   ← 全站 HTML shell
+│   └── ArticleLayout.astro ← 知識庫文章版型
+└── pages/
+    ├── index.astro        ← 首頁
+    └── pages/
+        ├── cases.astro
+        ├── services.astro
+        ├── process.astro
+        ├── timeline.astro
+        ├── plans.astro
+        ├── audience.astro
+        ├── index.astro    ← 服務總覽
+        ├── resources.astro ← 知識庫首頁
+        └── resources/
+            └── [slug].astro ← 動態路由，從 MDX 產生
+
+public/
+├── css/                   ← CSS 靜態檔案
+├── js/                    ← main.js、portfolio-guide.js
+├── assets/images/
+└── pages/
+    └── portfolio-guide.html ← 獨立靜態頁面
+
+css/                       ← CSS 原始碼（與 public/css/ 保持同步）
+dist/                      ← Build 產物（不 commit，由 Vercel 自動產生）
+```
+
+---
+
+## 新增知識庫文章
+
+在 `src/content/articles/` 新增一個 `.mdx` 檔，**不需要改任何其他設定**。
+
+**必填 Frontmatter：**
+
+```yaml
+---
+title: 文章標題
+description: 頁面 meta description
+kicker: 分類標籤
+lead: 文章導言
+sidebarCtaText: 側欄 CTA 說明文字
+sidebarCtaUtm: utm_campaign 值
+bottomCtaH2: 底部 CTA 標題
+bottomCtaUtm: utm_campaign 值
+tocItems:
+  - href: "#section-id"
+    label: 目錄文字
+relatedArticles:
+  - badge: 分類
+    title: 文章標題
+    href: /pages/resources/slug.html
+    desc: 簡短說明
+---
+```
+
+**內文結構：**
+
+```mdx
+<section class="article-section" id="section-id">
+## 段落標題
+
+段落內容。
+</section>
 ```
 
 ---
 
 ## 維護原則
 
-- 要改 navbar：改 `src/config.json` 的 nav 陣列
-- 要改 footer：改 `src/partials/footer.html`
-- 要新增頁面：新增 `src/pages/xxx.html`，再到 `src/config.json` 加 page 與 nav
-- 要新增知識庫文章：複製 `src/pages/resources/article-template.html`，在 config.json 登錄
-- 要改品牌色：改 `css/tbd-theme.css`（CSS 變數前綴為 `--tbd-*`）
-- 要改卡片、按鈕、表格：改 `css/tbd-components.css`
+- 要改 Nav：改 `src/config/site.ts` 的 `nav` 陣列
+- 要改 Footer：改 `src/components/Footer.astro`
+- 要新增知識庫文章：在 `src/content/articles/` 新增 `.mdx` 檔
+- 要改品牌色：改 `css/tbd-theme.css`（同步更新 `public/css/tbd-theme.css`）
+- 要改卡片、按鈕：改 `css/tbd-components.css`（同步更新 `public/css/`）
 
-**重要：** `pages/` 和 `sitemap.xml` 是 build 產物，但需要 commit（Vercel 直接部署 git repo，不跑 build command）。
+**重要：** 不要直接修改 `dist/`，那是 build 產物，由 Vercel 自動產生。
 
 ---
 
-## Navbar（目前 7 項）
+## Navbar（目前 6 項）
 
-官方首頁 / 成功案例 / 服務內容 / Portfolio 指南 / 申請時程 / 合作流程 / 知識庫
+首頁 / 成功案例 / 服務內容 / 合作流程 / 申請時程 / 知識庫
 
 ---
 
 ## 版本紀錄
 
+### v2.0 | 2026-05-25 — Astro 5 遷移
+
+- 從 Python build.py 靜態 SSG 遷移至 **Astro 5 + MDX Content Collections**
+- 知識庫文章改以 `.mdx` 管理，新增文章不再需要改任何設定檔
+- 新增 `ArticleLayout.astro`、`BaseLayout.astro`、`Nav.astro`、`Footer.astro`
+- 部署改為 Vercel 自動 build（`npm run build`，output: `dist/`）
+
 ### v1.5 | 2026-05-23 — P2 完成
 
-- **知識庫系統**：`/resources/` 列表頁 + 文章模板，Navbar 加入「知識庫」
-- **CTA UTM Tracking**：5 個頁面 LINE 連結加入 UTM 參數（utm_source=website&utm_medium=cta）
-- **build.py 強化**：子目錄頁面支援、sitemap.xml 產生、description 完整性檢查、內部連結存在性檢查
+- 知識庫系統上線：列表頁 + 21 篇文章
+- CTA UTM Tracking：5 個頁面 LINE 連結加入 UTM 參數
+- Navbar 加入「知識庫」
 
 ### v1.4 | 2026-05-22 — P1 完成
 
-- **Portfolio Guide 去 Babel runtime**：React CDN + Babel → 純 HTML + vanilla JS
-- **服務內容整合頁**：audience / services / plans 三頁合併為 services.html，三章節結構
-- **成功案例頁增加 slot**：個人申請與研究所推甄預告卡
+- Portfolio Guide 改為純 vanilla JS
+- 服務內容整合頁：audience / services / plans 三頁合併
 
 ### v1.3 | 2026-05-22 — P0 完成
 
-- **Navbar 收斂**：從 9 項精簡為 6 項
-- **首頁 H1**：「把零散經歷，整理成教授看得懂的申請策略」
-- **主圖本地化**：hero 圖改為 `assets/images/TBD_Landing Page Banner.png`
-- **OG Metadata**：canonical + og:* + twitter:card 全數補上，build.py 自動注入
-
-### v1.2 | 2026-05-22 — Claude Skills 規範建立
-
-- 新增 `CLAUDE.md`、`.claude/skills/README.md`、`docs/claude-skills-strategy.md`
-
-### v1.1 — Template System 建立
-
-- 從單頁 Landing Page 進化成 build.py 模板系統
-- 加入 `normalize_content()` 防呆，防止雙 nav/footer
+- Navbar 收斂：從 9 項精簡為 6 項
+- 首頁 H1、主圖本地化、OG Metadata 補齊
 
 ---
 
 ## 技術注意事項
 
-- 使用 Tailwind CDN（非 PostCSS 編譯版），適合靜態 HTML
-- Logo 使用 Google Drive URL，建議未來移至 `assets/` 目錄
-- `site_url` 設為 `https://tbd-studio.vercel.app`，部署 domain 若不同需更新 `src/config.json`
-- UTM 追蹤需搭配 GA4 才能看到數據，LINE 後台無法直接顯示
+- 使用 Tailwind CDN（非 PostCSS 編譯版），適合靜態輸出
+- `build.format: 'file'` 保留 `.html` 副檔名（符合舊 URL 結構）
+- `portfolio-guide.html` 為獨立 React/Babel 頁面，放在 `public/pages/`，不走 Astro 模板
+- UTM 追蹤需搭配 GA4 才能看到數據

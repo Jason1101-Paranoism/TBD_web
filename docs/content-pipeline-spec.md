@@ -1,8 +1,7 @@
 # TBD Studio 內容管線規格書
 
-> 版本：v1.0 | 2026-05-24  
-> 狀態：規劃中，尚未執行  
-> 目標：將 IG 貼文系統化轉換為官網知識庫、部落格、FAQ 與服務導流內容
+> 版本：v2.0 | 2026-05-25
+> 狀態：Astro 遷移已完成，進入半自動產檔階段
 
 ---
 
@@ -15,7 +14,7 @@
 ```
 IG 貼文（社群觸及）
     ↓
-官網知識庫 / Blog（長尾搜尋 + 品牌信任）
+官網知識庫（長尾搜尋 + 品牌信任）
     ↓
 FAQ / 服務頁（降低諮詢成本）
     ↓
@@ -24,51 +23,50 @@ LINE / 預約頁（轉換成交）
 
 ---
 
-## 二、技術架構決策
+## 二、技術架構
 
 ### 現況
 
-目前官網為靜態 HTML + Python build.py 模板系統。知識庫文章目前以純 HTML fragment 管理（`src/pages/resources/`），適合文章數 < 10 篇的階段。
+官網已遷移至 **Astro 5 + MDX Content Collections**。
 
-### 目標架構：遷移至 Astro
+新增文章只需在 `src/content/articles/` 丟一個 `.mdx` 檔，commit 後 Vercel 自動部署，無需改任何設定。
 
-當文章數達到 15–20 篇後，遷移至 **Astro**（靜態網站生成器）。
+### 文章路由規則
 
-**選擇 Astro 的原因：**
+- 文章檔案：`src/content/articles/{slug}.mdx`
+- 產生 URL：`/pages/resources/{slug}.html`
+- 知識庫列表：`/pages/resources.html`
 
-| 考量 | Astro | Next.js / Vite+React |
-|------|-------|---------------------|
-| 適合靜態內容站 | ✅ 天生支援 | 需額外設定 |
-| Markdown / MDX 驅動 | ✅ 內建 Content Collections | 需額外套件 |
-| 無 JS hydration 負擔 | ✅ Islands Architecture | ❌ 預設全頁 JS |
-| 維護門檻 | 低 | 中高 |
-| 現有 Tailwind CSS 相容 | ✅ | ✅ |
-| 現有 HTML 可直接複用 | ✅ `.astro` 元件語法接近 HTML | ❌ 需改寫成 JSX |
+### 現有 Content Collection Schema
 
-### 遷移時機
-
-**不立即遷移**，原因：
-1. 現有 HTML + build.py 架構在文章少時維護成本更低
-2. 遷移前需先確立內容格式標準（Markdown frontmatter）
-3. 先跑通 5–10 篇文章的人工流程，再評估自動化需求
-
-**觸發遷移的條件（任一）：**
-- 知識庫文章 ≥ 15 篇
-- 需要文章標籤頁、分類列表頁、搜尋功能
-- 需要 Markdown 編輯流程（非直接改 HTML）
+```yaml
+title: string
+description: string
+kicker: string
+lead: string
+sidebarCtaText: string
+sidebarCtaUtm: string
+bottomCtaH2: string
+bottomCtaP: string (optional)
+bottomCtaUtm: string
+tocItems: { href, label }[]
+relatedArticles: { badge, title, href, desc }[]
+```
 
 ---
 
 ## 三、內容分類系統
 
-| 分類 | Slug | 說明 |
-|------|------|------|
-| 升學策略 | `admission-strategy` | 科系選擇、申請路徑、特殊選才、繁星申請 |
-| 學習歷程 | `learning-portfolio` | 學習歷程檔案、反思撰寫、成果整理 |
-| 備審資料 | `application-docs` | 自傳、讀書計畫、申請動機、資料架構 |
-| 面試準備 | `interview-prep` | 自我介紹、教授提問、口語表達、模擬面試 |
-| 案例分享 | `case-studies` | 學生回饋、家長回饋、成功案例 |
-| 常見問題 | `faq` | 服務流程、費用、適合對象、合作方式 |
+| 分類 | 說明 |
+|------|------|
+| Side Project | Side Project 定義、類型、開始方式、完整流程 |
+| 學習歷程 | 學習歷程主線、三年規劃、資源有無的影響 |
+| 備審策略 | 審閱視角、常見問題、反思結構、強申請者特徵 |
+| 競賽 | 競賽選擇與延伸 |
+| GitHub / Portfolio | GitHub 作品集、README、個人網站 |
+| 面試 | 面試準備五件事 |
+| 科系指南 | 資工/AI 科系申請 |
+| 觀點 | AI 時代執行力等視角文章 |
 
 ---
 
@@ -138,9 +136,6 @@ source: instagram
 original_title: 升學顧問都在做什麼
 content_type: carousel          # carousel / single / reel
 category: admission-strategy
-sub_category:
-  - learning-portfolio
-  - application-docs
 audience:
   - 高中生
   - 家長
@@ -150,16 +145,13 @@ core_message: 升學顧問不是代寫或包裝，而是協助學生找到定位
 pain_points:
   - 不知道自己適合什麼科系
   - 經歷很多但無法整理成清楚主線
-  - 缺乏有說服力的個人故事
 service_connection:
   - 升學策略諮詢
   - 學習歷程整理
-  - 備審資料規劃
 seo_keywords:
   - 升學顧問
   - 學習歷程
   - 備審資料
-  - 特殊選才
 cta:
   primary: 預約升學策略諮詢
   secondary: 查看更多升學準備文章
@@ -168,119 +160,50 @@ status: draft                    # draft / review / published
 
 ---
 
-## 七、五種輸出版本格式
+## 七、MDX 文章輸出格式
 
-### 7.1 Blog 文章版（SEO 導向）
+Claude 直接產出可放入 `src/content/articles/` 的 `.mdx` 檔：
 
-```markdown
+```mdx
 ---
 title: "文章標題（SEO 化）"
-slug: "url-friendly-slug"
-category: "admission-strategy"
-tags: [學習歷程, 備審資料, 特殊選才]
-audience: [高中生, 家長]
-source_post: "tbd_001"
-status: "draft"
-created_at: "2026-05-24"
-seo_title: "..."
-seo_description: "..."
-cta: "預約升學策略諮詢"
+description: "頁面 meta description"
+kicker: "分類標籤"
+lead: "文章導言（hero 區的摘要段落）"
+sidebarCtaText: "側欄 CTA 說明文字"
+sidebarCtaUtm: "article-slug"
+bottomCtaH2: "底部 CTA 標題"
+bottomCtaUtm: "article-slug"
+tocItems:
+  - href: "#section-1"
+    label: "目錄項目"
+relatedArticles:
+  - badge: "分類"
+    title: "相關文章標題"
+    href: "/pages/resources/related-slug.html"
+    desc: "簡短說明"
 ---
 
-## 前言
+<section class="article-section" id="section-1">
+## 段落標題
 
-## 主體段落 1
-
-## 主體段落 2
-
-## 主體段落 3
-
-## 結語 + CTA
+段落內容。
+</section>
 ```
-
-### 7.2 Knowledge Base 條目版（官網查詢）
-
-精簡條目，偏問答型，200–400 字。包含：核心說明、適合對象、TBD 協助方式。
-
-### 7.3 FAQ 版（客服 / LINE 自動回覆）
-
-```markdown
-Q：問題
-
-A：回答（2–4 句話，直接回答，不迴避）
-```
-
-### 7.4 服務頁段落版
-
-可直接嵌入官網服務頁的 50–100 字段落，強調 TBD 切入方式，不用第一人稱。
-
-### 7.5 CTA 導流版
-
-2–3 行短文案，用於官網卡片、文章結尾、LINE 選單。
 
 ---
 
-## 八、Astro 目標架構（遷移後）
+## 八、自動化程度規劃
 
-### 資料夾結構
+### 階段一：MVP 半自動（已完成）
 
-```
-src/
-  content/
-    blog/
-      001-what-do-admission-consultants-do.md
-      002-learning-portfolio-mistakes.md
-    knowledge/
-      admission-consulting.md
-      learning-portfolio.md
-    faq/
-      admission.md
-      portfolio.md
-
-  pages/
-    blog/
-      index.astro          ← 文章列表頁
-      [slug].astro         ← 文章詳情頁（自動產生）
-    resources/
-      index.astro          ← 知識庫列表頁
-      [slug].astro         ← 知識庫條目頁
-    faq/
-      index.astro
-
-  components/
-    ArticleCard.astro
-    FAQItem.astro
-    CTABlock.astro
-```
-
-### 關鍵 Astro 功能使用
-
-- **Content Collections**：型別安全的 Markdown 管理，frontmatter 自動驗證
-- **動態路由 `[slug].astro`**：從 Markdown 自動產生所有文章頁，不需手動加 config
-- **Islands Architecture**：只在需要互動的元件載入 JS（如 Portfolio Guide）
-
-### 遷移策略
-
-1. 現有 HTML partials（nav、footer）→ Astro Layout 元件
-2. 現有 `src/config.json` → Astro `site.config.ts`
-3. 現有 `build.py` → Astro build（`npm run build`）
-4. 現有 CSS（`tbd-*.css`）→ 直接沿用，無需改寫
-5. 現有 `pages/*.html` → 逐頁改寫為 `.astro`（可分批進行）
-
----
-
-## 九、自動化程度規劃
-
-### 階段一：MVP 半自動（現在）
-
-- 人工提供 IG 截圖 → Claude 讀圖萃取 → 產出五種格式 → 人工微調 → 手動放入 HTML
+- 人工提供 IG 截圖 → Claude 讀圖萃取 → 產出 MDX 格式 → 人工微調 → commit
 - 不依賴 API，最穩定
-- 適合處理既有 20 篇貼文
 
-### 階段二：半自動產檔（遷移 Astro 後）
+### 階段二：半自動產檔（現在可執行）
 
-- Claude 直接輸出 `.md` 檔（含 frontmatter）
-- 放入 `src/content/blog/` → git commit → Vercel 自動部署
+- Claude 直接輸出 `.mdx` 檔（含 frontmatter）
+- 放入 `src/content/articles/` → git commit → Vercel 自動部署
 - 可搭配 Notion MCP 直接存取內容資料庫
 
 ### 階段三：完整自動化管線（未來）
@@ -290,7 +213,7 @@ IG 貼文截圖 / Caption
     ↓
 Claude 讀圖 + OCR
     ↓
-產出結構化 JSON + Markdown
+產出 MDX 檔（含 frontmatter）
     ↓
 自動寫入 GitHub Repo
     ↓
@@ -301,7 +224,7 @@ Vercel 自動部署
 
 ---
 
-## 十、內容管理總表欄位（Notion / Google Sheet）
+## 九、內容管理總表欄位
 
 | 欄位 | 說明 | 範例 |
 |------|------|------|
@@ -313,56 +236,14 @@ Vercel 自動部署
 | 漏斗階段 | 行銷漏斗位置 | 信任建立 |
 | 狀態 | 處理進度 | 待整理 / 草稿 / 已上架 |
 | Slug | 網址路徑 | what-do-admission-consultants-do |
+| MDX 檔案 | 對應檔案名稱 | src/content/articles/slug.mdx |
 | CTA | 導流文案 | 預約升學策略諮詢 |
 | 對應服務 | 連結到哪個服務 | 升學策略諮詢 |
 | 是否重發 IG | 改寫後是否回發 IG | 是 / 否 |
-| 備註 | 待補資料或優化方向 | |
 
 ---
 
-## 十一、執行排程
-
-### 第一週：建立格式標準
-
-- 選 3–5 篇代表性 IG 貼文（涵蓋不同分類）
-- 走完整個輸出流程一次
-- 確認 YAML 欄位與文章語氣
-- 建立內容管理總表
-
-### 第二週：批次處理既有內容
-
-- 處理 10–20 篇 IG 貼文
-- 每篇產出完整九區塊輸出
-- 以 HTML fragment 上架至現有 `src/pages/resources/`
-
-### 第三週：評估遷移時機
-
-- 統計文章數與維護複雜度
-- 若達到遷移條件，啟動 Astro 遷移計劃
-- 若尚未達到，繼續以 HTML 方式管理
-
-### 第四週：優化與自動化
-
-- 建立 Markdown 產生模板
-- 設計批次匯入流程
-- 確認 SEO、內部連結與 CTA 效果
-
----
-
-## 十二、預期成果
-
-完成本計劃後，TBD Studio 將擁有：
-
-1. 可持續運作的 IG 內容再利用流程
-2. 一批可上架官網的部落格文章
-3. 可查詢的升學知識庫（以分類系統組織）
-4. 可用於客服與 LINE 自動回覆的 FAQ 庫
-5. 更完整的 SEO 內容基礎
-6. 清楚的 Astro 遷移路線圖
-
----
-
-## 十三、核心原則
+## 十、核心原則
 
 > IG 是內容的起點，官網才是內容資產的沉澱地。
 

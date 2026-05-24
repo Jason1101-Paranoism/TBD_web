@@ -1,6 +1,6 @@
 # Claude Skills Strategy — TBD Studio 官網
 
-> 版本：v1.0 | 2026-05-22  
+> 版本：v2.0 | 2026-05-25
 > 本文件定義 TBD Studio 官網在 Claude 協作過程中的 Skills 使用策略與工作流程。
 
 ---
@@ -11,35 +11,35 @@
 
 適用範圍：Landing Page、服務頁、品牌頁、案例頁的日常前端修改。
 
-| Skill | 來源 | 說明 |
-|-------|------|------|
-| `frontend-design` | Anthropic 官方 | HTML/CSS 前端實作的執行層，確保結構語意正確、響應式設計、可維護的 CSS 架構 |
-| `taste-skill` | tasteskill.dev | 視覺品味守門員，避免 AI 產生的 generic UI（不必要的卡片 grid、炫技動效、SaaS 模板感） |
-| `output-skill` | 搭配 taste-skill | 最終輸出品質確保：無 placeholder、互動狀態完整、空白區塊有內容、視覺完整 |
+| Skill | 說明 |
+|-------|------|
+| `frontend-design` | HTML/CSS 前端實作的執行層，確保結構語意正確、響應式設計、可維護的 CSS 架構 |
+| `taste-skill` | 視覺品味守門員，避免 AI 產生的 generic UI（不必要的卡片 grid、炫技動效、SaaS 模板感） |
+| `output-skill` | 最終輸出品質確保：無 placeholder、互動狀態完整、空白區塊有內容、視覺完整 |
 
 ### Redesign Layer（改版層）
 
 適用範圍：對既有頁面進行整體視覺健診與改善。
 
-| Skill | 來源 | 說明 |
-|-------|------|------|
-| `redesign-skill` | 搭配 taste-skill | 審查頁面排版問題：間距、層級、CTA 位置、區塊順序。不做無謂的架構重組。 |
+| Skill | 說明 |
+|-------|------|
+| `redesign-skill` | 審查頁面排版問題：間距、層級、CTA 位置、區塊順序。不做無謂的架構重組。 |
 
 ### Product UX Layer（產品後台層）
 
 適用範圍：未來學生管理後台、教師媒合、CRM 或設計系統建立。
 
-| Skill | 來源 | 說明 |
-|-------|------|------|
-| `ui-ux-pro-max` | nextlevelbuilder.io | 複雜產品 UI 規格化，適合 dashboard、資料視覺化、跨頁面一致性規範、表單設計。**不適合 Landing Page**。 |
+| Skill | 說明 |
+|-------|------|
+| `ui-ux-pro-max` | 複雜產品 UI 規格化，適合 dashboard、資料視覺化、跨頁面一致性規範、表單設計。**不適合 Landing Page**。 |
 
 ### Strategy Layer（策略層）
 
 適用範圍：IA 決策、Nav 重組、轉換漏斗分析、使用者旅程規劃。
 
-| Skill | 來源 | 說明 |
-|-------|------|------|
-| `ux-strategy` | mcpmarket.com | 商業目標與 UX 對齊，適合 onboarding flow、North Star Metric、轉換漏斗設計。**不介入一般 CSS 修改**。 |
+| Skill | 說明 |
+|-------|------|
+| `ux-strategy` | 商業目標與 UX 對齊，適合 onboarding flow、North Star Metric、轉換漏斗設計。**不介入一般 CSS 修改**。 |
 
 ---
 
@@ -50,12 +50,11 @@
 | 首頁 Hero 改版 | `frontend-design`, `taste-skill` | `ui-ux-pro-max`, `ux-strategy` | 保留教育語氣，不要做成 SaaS 風格 |
 | 服務頁排版調整 | `frontend-design`, `taste-skill` | `ui-ux-pro-max` | 信任感比炫技重要 |
 | 成功案例頁設計 | `frontend-design`, `taste-skill` | `ux-strategy` | 去識別化原則優先 |
-| Portfolio Guide 改版 | `frontend-design` | `taste-skill`（可選）| 此頁已改為純 vanilla JS，正常走 build.py |
+| 知識庫文章新增 | 不需要任何 skill | — | 直接新增 `.mdx` 檔即可 |
 | 整頁視覺健診 | `redesign-skill` | 不要同時啟用 `ux-strategy` | 先聚焦視覺，策略討論另開 |
 | Nav 結構決策 | `ux-strategy`（策略討論）| `redesign-skill` | ux-strategy 給方向，frontend-design 做實作 |
 | 單點 CSS 修改 | 不需要任何 skill | — | 直接改 `css/tbd-components.css` |
 | 學生後台 UI | `ui-ux-pro-max`, `frontend-design` | `taste-skill`（可省略）| 先跑 design system，再做頁面 |
-| 設計系統建立 | `ui-ux-pro-max` | `redesign-skill` | 整站 token 與規格先定義 |
 | 轉換漏斗優化 | `ux-strategy` | `frontend-design`（策略階段不改 code）| 先交付策略報告，確認後再開發 |
 | Landing Page CTA 文案 | `taste-skill` | `ux-strategy` | CTA 要有溫度，不要商業感過重 |
 | 手機版 RWD 修正 | `frontend-design` | — | 優先測試 375px 與 390px |
@@ -68,12 +67,23 @@
 
 ```
 1. 讀取 CLAUDE.md → 確認目前架構與禁止事項
-2. 讀取受影響的 src/pages/*.html → 理解現有內容結構
+2. 讀取受影響的 src/pages/*.astro → 理解現有內容結構
 3. 啟用 frontend-design → 確保 HTML/CSS 實作品質
 4. 啟用 taste-skill → 把關視覺品味，避免 generic UI
-5. 完成修改後，列出 changed files
-6. 提示使用者執行 python build.py
+5. 完成修改後列出 changed files
+6. 執行 npm run build 確認無錯誤
 7. 啟用 output-skill → 最終檢查：無 placeholder、互動完整、手機版正常
+```
+
+### 知識庫文章新增流程
+
+```
+1. 在 src/content/articles/ 新增 .mdx 檔
+2. 填寫 frontmatter（title、description、kicker、lead、tocItems、relatedArticles 等）
+3. 撰寫文章內文（<section class="article-section" id="..."> 包裝）
+4. 到 src/pages/pages/resources.astro 新增對應的 article-card
+5. npm run build 確認無錯誤
+6. git commit + push → Vercel 自動部署
 ```
 
 ### 頁面改版流程（針對既有頁面的大範圍改善）
@@ -92,15 +102,6 @@
 2. 使用者確認方向
 3. 啟用 frontend-design → 執行實作
 4. taste-skill + output-skill → 品質把關
-```
-
-### 後台 / 設計系統流程（未來才適用）
-
-```
-1. 啟用 ux-strategy → 確認後台使用者旅程與功能範圍
-2. 啟用 ui-ux-pro-max → 建立 design system tokens 與元件規格
-3. 啟用 frontend-design → 按規格實作
-4. output-skill → 最終輸出品質確認
 ```
 
 ---
@@ -146,9 +147,9 @@
 
 - 不要把 TBD Studio 設計成 Notion、Linear 或 Vercel 的感覺
 - 不要用卡片堆疊代替清楚的文字敘述
-- 不要引入新的 CSS framework 或 JS library
+- 不要引入新的 CSS framework 或 JS library（React、Vue、Alpine）
 - 不要在沒有被要求的情況下更改文案語氣或品牌調性
-- 不要在 build 產物（`pages/`、`index.html`）直接做修改
+- 不要直接修改 `dist/`（build 產物）
 
 ---
 
@@ -162,23 +163,3 @@
 | `redesign-skill` | 建議現在安裝 | P1 |
 | `ui-ux-pro-max` | 暫緩，後台開發後安裝 | P2 |
 | `ux-strategy` | 暫緩，IA 大改版時安裝 | P2 |
-
----
-
-## 安裝指令（確認後手動執行）
-
-> 以下為建議指令，請確認來源可信後自行執行，不要讓 Claude 自動執行。
-
-```bash
-# frontend-design（Anthropic 官方）
-# 請參考：https://github.com/anthropics/skills/tree/main/skills/frontend-design
-
-# taste-skill
-# 請參考：https://www.tasteskill.dev/
-
-# ui-ux-pro-max（暫緩）
-# 請參考：https://ui-ux-pro-max-skill.nextlevelbuilder.io/
-
-# ux-strategy（暫緩）
-# 請參考：https://mcpmarket.com/zh/tools/skills/ux-strategy
-```
