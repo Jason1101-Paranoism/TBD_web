@@ -157,6 +157,46 @@
       "source": "resources/github-portfolio.html",
       "output": "pages/resources/github-portfolio.html",
       "body_class": "sub-page article-page"
+    },
+    {
+      "id": "side-project-types",
+      "title": "高中生可以做哪些 Side Project？五大類型與科系對照｜TBD Studio",
+      "description": "Side Project 的五大類型、不同科系方向的具體建議、難度分級，以及什麼樣的作品真正有說服力。",
+      "source": "resources/side-project-types.html",
+      "output": "pages/resources/side-project-types.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "side-project-start",
+      "title": "Side Project 可以怎麼開始？如何從科系方向反推專案主題？｜TBD Studio",
+      "description": "為什麼學生卡在選題、最常見的錯誤開始方式，以及如何從申請科系反推出適合自己的 Side Project 題目。",
+      "source": "resources/side-project-start.html",
+      "output": "pages/resources/side-project-start.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "three-year-plan",
+      "title": "高中三年怎麼規劃？從探索到整理的完整框架｜TBD Studio",
+      "description": "高一探索、高二累積、高三整理——三個年級的核心目標不一樣，這篇說明每個階段應該做什麼、避免什麼。",
+      "source": "resources/three-year-plan.html",
+      "output": "pages/resources/three-year-plan.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "portfolio-website",
+      "title": "個人網站與 Portfolio 怎麼做？｜TBD Studio",
+      "description": "高中生適合哪些工具、Portfolio 的基本架構、最常見的問題，以及讓 Portfolio 真正有說服力的關鍵。",
+      "source": "resources/portfolio-website.html",
+      "output": "pages/resources/portfolio-website.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "competitions",
+      "title": "高中生競賽怎麼選？如何把競賽延伸成申請亮點？｜TBD Studio",
+      "description": "不同方向適合的競賽類型、競賽真正在培養什麼能力，以及如何把競賽成果延伸成學習歷程的長期主線。",
+      "source": "resources/competitions.html",
+      "output": "pages/resources/competitions.html",
+      "body_class": "sub-page article-page"
     }
   ]
 }
