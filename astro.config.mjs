@@ -16,6 +16,13 @@ export default defineConfig({
         !page.includes('/audience') &&
         !page.includes('/plans') &&
         !page.includes('/article-template'),
+      serialize(item) {
+        const root = 'https://tbd-web.vercel.app';
+        if (item.url !== root && item.url !== root + '/') {
+          item.url = item.url + '.html';
+        }
+        return item;
+      },
     }),
   ],
 });
