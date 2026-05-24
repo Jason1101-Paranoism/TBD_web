@@ -205,6 +205,38 @@
       "source": "resources/side-project-ai-era.html",
       "output": "pages/resources/side-project-ai-era.html",
       "body_class": "sub-page article-page"
+    },
+    {
+      "id": "reviewer-perspective",
+      "title": "教授 30 秒看備審，真正在評估什麼？｜TBD Studio",
+      "description": "書審委員的閱讀方式、評審在問的三個核心問題，以及讓備審真正有效的關鍵特徵。",
+      "source": "resources/reviewer-perspective.html",
+      "output": "pages/resources/reviewer-perspective.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "why-busy-not-strong",
+      "title": "為什麼活動很多，備審卻還是看起來很散？｜TBD Studio",
+      "description": "活動清單和申請故事的根本差別、備審「散」的三個原因，以及快速自我診斷的方法。",
+      "source": "resources/why-busy-not-strong.html",
+      "output": "pages/resources/why-busy-not-strong.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "parent-misconceptions",
+      "title": "家長最常誤解的備審準備方式｜TBD Studio",
+      "description": "四個家長最常有的誤解，以及家長真正能幫上忙的事情。",
+      "source": "resources/parent-misconceptions.html",
+      "output": "pages/resources/parent-misconceptions.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "side-project-from-zero",
+      "title": "從 0 到 1：Side Project 從題目到成果的完整流程｜TBD Studio",
+      "description": "定義問題、縮小範圍、做出第一版、得到反饋、整理展示——五個階段讓 Side Project 真正做得完。",
+      "source": "resources/side-project-from-zero.html",
+      "output": "pages/resources/side-project-from-zero.html",
+      "body_class": "sub-page article-page"
     }
   ]
 }
