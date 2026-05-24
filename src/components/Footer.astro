@@ -1,5 +1,5 @@
 ---
-import { site } from '../config/site';
+import { site, nav } from '../config/site';
 ---
 
 <footer class="site-footer">
@@ -25,9 +25,12 @@ import { site } from '../config/site';
     </section>
 
     <section class="site-footer-card">
-      <h4>服務地區</h4>
-      <p class="site-footer-large">服務範圍涵蓋 <strong>全台灣</strong></p>
-      <p>提供完整線上視訊諮詢與協作流程<br>不受地域限制，確保最高效率</p>
+      <h4>快速連結</h4>
+      <nav aria-label="頁腳導覽">
+        {nav.filter(item => item.id !== 'home').map(item => (
+          <p><a href={item.href}>{item.label}</a></p>
+        ))}
+      </nav>
     </section>
   </div>
   <div class="site-footer-bottom">© 2026 TBD Studio. All Rights Reserved.</div>

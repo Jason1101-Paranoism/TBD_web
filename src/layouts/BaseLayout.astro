@@ -8,9 +8,10 @@ interface Props {
   description: string;
   bodyClass?: string;
   canonicalUrl?: string;
+  ogType?: string;
 }
 
-const { title, description, bodyClass = '', canonicalUrl } = Astro.props;
+const { title, description, bodyClass = '', canonicalUrl, ogType = 'website' } = Astro.props;
 const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
 ---
 
@@ -49,7 +50,8 @@ const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
   </script>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="canonical" href={canonical}>
-  <meta property="og:type" content="website">
+  <meta property="og:type" content={ogType}>
+  <meta property="og:locale" content="zh_TW">
   <meta property="og:site_name" content="TBD Studio">
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
@@ -59,6 +61,16 @@ const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
   <meta name="twitter:title" content={title}>
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={site.ogImage}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "TBD Studio",
+    "url": site.siteUrl,
+    "email": site.email,
+    "description": "TBD Studio 協助學生進行志向探索、申請策略、備審面試與歷程規劃的專業升學顧問。",
+    "areaServed": "TW",
+    "availableLanguage": "zh-TW"
+  })} />
 </head>
 <body class={bodyClass}>
   <Nav />

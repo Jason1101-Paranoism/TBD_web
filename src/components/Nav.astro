@@ -1,6 +1,14 @@
 ---
 import { nav, site } from '../config/site';
 const currentPath = Astro.url.pathname;
+const navCta = `${site.lineUrl}?utm_source=website&utm_medium=nav&utm_campaign=nav-cta`;
+
+function isActive(item: { id: string; href: string }) {
+  if (currentPath === item.href) return true;
+  if (item.id === 'resources') return currentPath.includes('/resources');
+  if (item.id !== 'home') return currentPath.startsWith(item.href.replace('.html', ''));
+  return false;
+}
 ---
 
 <header class="site-header">
@@ -13,15 +21,15 @@ const currentPath = Astro.url.pathname;
       {nav.map(item => (
         <a
           href={item.href}
-          class={currentPath === item.href || (item.id === 'resources' && currentPath.includes('/resources')) ? 'is-active' : ''}
+          class={isActive(item) ? 'is-active' : ''}
           aria-current={currentPath === item.href ? 'page' : undefined}
         >{item.label}</a>
       ))}
     </div>
 
     <div class="site-nav-actions">
-      <a class="site-nav-cta site-nav-cta--mobile" href={site.lineUrl}>策略諮詢</a>
-      <a class="site-nav-cta site-nav-cta--desktop" href={site.lineUrl}>預約策略諮詢 →</a>
+      <a class="site-nav-cta site-nav-cta--mobile" href={navCta}>策略諮詢</a>
+      <a class="site-nav-cta site-nav-cta--desktop" href={navCta}>預約策略諮詢 →</a>
 
       <details class="site-menu" id="mobileMenu">
         <summary class="site-menu-button" aria-label="開啟導覽選單">
@@ -43,7 +51,7 @@ const currentPath = Astro.url.pathname;
             {nav.map(item => (
               <a href={item.href} data-menu-link>{item.label}</a>
             ))}
-            <a class="site-menu-cta" href={site.lineUrl} data-menu-link>預約策略諮詢 →</a>
+            <a class="site-menu-cta" href={navCta} data-menu-link>預約策略諮詢 →</a>
           </div>
         </div>
       </details>
