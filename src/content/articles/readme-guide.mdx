@@ -1,0 +1,97 @@
+---
+title: 如何寫出一份讓人看懂的 README？
+description: README 是評審對專案的第一印象。說明好的 README 應包含什麼、最常見的錯誤，以及 commit 紀錄的重要性。
+kicker: GitHub / Portfolio
+lead: README 幾乎是別人對你專案的唯一第一印象。評審不會讀你的程式碼，但他會看 README——這篇文章說明一份好的 README 應該包含什麼，以及最常見的錯誤。
+sidebarCtaText: 不確定你的 GitHub 能不能讓評審看懂你的能力？
+sidebarCtaUtm: article-readme
+bottomCtaH2: 不確定你的 GitHub 作品集能不能讓評審看懂？
+bottomCtaUtm: article-readme
+tocItems:
+  - href: "#why-readme"
+    label: 為什麼 README 比程式碼更重要
+  - href: "#structure"
+    label: 好的 README 包含什麼
+  - href: "#mistakes"
+    label: 最常見的問題
+  - href: "#commit-history"
+    label: Commit 紀錄也很重要
+  - href: "#template"
+    label: 最低可行版本
+relatedArticles:
+  - badge: GitHub
+    title: 一份強的 GitHub 作品集，長什麼樣子？
+    href: /pages/resources/github-portfolio.html
+    desc: README 只是其中一環，了解評審怎麼整體判斷一份 GitHub。
+  - badge: Side Project
+    title: 從 0 到 1：Side Project 從題目到成果的完整流程
+    href: /pages/resources/side-project-from-zero.html
+    desc: 寫 README 是整理成果的最後一步，了解完整流程。
+  - badge: Portfolio
+    title: 個人網站與 Portfolio 怎麼做？
+    href: /pages/resources/portfolio-website.html
+    desc: 把多個 GitHub 專案整合成一個有主線的作品集展示。
+---
+
+<section class="article-section" id="why-readme">
+## 為什麼 README 比程式碼更重要？
+
+很多學生花了幾週做完一個 Side Project，然後把程式碼推上 GitHub，README 只留下預設的空白模板或一行專案名稱。
+
+這是最常見也最可惜的問題。評審通常不會一行一行讀你的程式碼，也不會自己把環境設定好、把專案跑起來。他能快速判斷的只有一件事：README 說清楚了嗎？
+
+在很多情況下，**README 寫得好不好，甚至比程式碼本身的品質更影響評審的第一印象**。一個功能很簡單但 README 清楚完整的專案，比一個功能很複雜但完全沒有說明的專案更有說服力。
+</section>
+
+<section class="article-section" id="structure">
+## 一份好的 README 應該包含什麼？
+
+不需要每個欄位都做得很複雜，但以下幾個部分缺一不可：
+
+- **專案介紹（一到三句話）**：先回答「這個專案在解決什麼問題、給誰用的」。不需要長，但要讓完全不了解背景的人，讀完第一段就知道這個東西大概是什麼。
+- **Demo 或截圖**：這是最常被忽略、也最重要的部分。一張截圖、一個操作 GIF、或者一個可以點開的 live demo 連結，遠比任何文字說明都有效。評審沒有時間自己把你的專案跑起來，Demo 就是他能快速理解的唯一方式。
+- **功能列表**：條列這個專案能做哪些事。不用面面俱到，抓核心功能就好，三到五點通常已經夠了。
+- **使用技術（Tech Stack）**：列出主要用到的語言、框架、工具。這讓評審快速知道你的技術方向，也讓懂技術的人知道你做了哪些選擇。
+- **如何安裝或使用**：就算只有三行指令，也要寫。這件事代表你有考慮到「別人怎麼用你的東西」，是工程思維的基本體現。
+- **專案背景或動機（選填但推薦）**：「為什麼做這個」的一小段說明，通常是讓評審記住這個專案的關鍵。技術很多人都會，但你的問題意識和做這件事的原因是獨一無二的。
+</section>
+
+<section class="article-section" id="mistakes">
+## 最常見的 README 問題
+
+- **完全空白或只有預設模板**：GitHub 建立 repo 時自動產生的 README 什麼都沒有，很多學生就這樣推上去了。這是最快讓評審覺得「這個學生不在乎別人怎麼理解他的作品」的方式。
+- **只有程式碼說明，沒有「為什麼」**：README 只寫了安裝步驟和功能列表，但完全沒有說「為什麼做這個、這個問題從哪裡來」。沒有背景的說明讀起來像技術手冊，沒有人味。
+- **沒有 Demo 或截圖**：即使是一張很簡單的截圖也好。沒有任何視覺展示的 README，讓人完全無法想像這個東西長什麼樣、能做什麼。
+- **專案名稱很隨意**：`test123`、`project_final_v2_new`、`homework` 這類名稱，會讓人覺得這個專案是隨手做的，不值得認真對待。
+- **英文和中文混雜但沒有一致性**：如果你的目標是台灣的升學申請，選一種語言寫清楚就好。混雜而沒有組織，讀起來會很凌亂。
+</section>
+
+<section class="article-section" id="commit-history">
+## Commit 紀錄也是 README 的一部分
+
+很多學生最後一天把所有檔案一次性上傳，commit message 寫 `upload all files`。這件事會讓懂 GitHub 的評審注意到，因為它暗示：這個學生不是真的在用 GitHub 做版本控制，而是把它當成雲端硬碟。
+
+好的 commit 紀錄不需要非常頻繁，但應該讓人看到一個專案是怎麼逐步演進的。例如：
+
+- `Add basic chatbot logic`
+- `Fix API timeout issue`
+- `Improve response formatting`
+- `Add README with demo screenshots`
+
+這樣的 commit history 讓評審看到的不只是最終結果，而是你如何一步步把這個東西做出來。這種「過程可見」的特質，本身就是能力的展示。
+</section>
+
+<section class="article-section" id="template">
+## 高中生 README 的最低可行版本
+
+如果你從來沒寫過完整的 README，以下是一個可以直接套用的最小架構：
+
+- **第一段**：一到三句話說明這個專案是什麼、解決什麼問題。
+- **截圖或 Demo 連結**：一張截圖或一個可以點開的連結。
+- **功能列表**：三到五個重點功能，條列式。
+- **使用技術**：主要語言和框架，幾個詞就夠。
+- **安裝方式**：兩三行指令，說明怎麼跑起來。
+- **為什麼做這個（選填）**：一段話說明動機，這是讓人記住你的地方。
+
+這個版本花一到兩個小時就能完成，但它讓你的專案從「有程式碼但看不懂」變成「有說明、有展示、有完整度」——在備審和面試中的效果差距非常大。
+</section>

@@ -1,0 +1,34 @@
+---
+import { site } from '../config/site';
+---
+
+<footer class="site-footer">
+  <div class="site-footer-grid">
+    <section class="site-footer-card">
+      <h4>聯絡我們</h4>
+      <p>
+        <span>Email</span>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+      <p>
+        <span>Line ID</span>
+        <strong>{site.lineId}</strong>
+      </p>
+      <a class="site-footer-pill" href={site.lineUrl} target="_blank" rel="noopener noreferrer">👉 加入 LINE 官方帳號</a>
+    </section>
+
+    <section class="site-footer-card site-footer-brand">
+      <a href="/index.html" aria-label="TBD Studio 官方首頁">
+        <img src={site.logoDarkUrl} alt="TBD Studio Logo">
+      </a>
+      <p>{site.tagline}</p>
+    </section>
+
+    <section class="site-footer-card">
+      <h4>服務地區</h4>
+      <p class="site-footer-large">服務範圍涵蓋 <strong>全台灣</strong></p>
+      <p>提供完整線上視訊諮詢與協作流程<br>不受地域限制，確保最高效率</p>
+    </section>
+  </div>
+  <div class="site-footer-bottom">© 2026 TBD Studio. All Rights Reserved.</div>
+</footer>
