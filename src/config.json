@@ -197,6 +197,14 @@
       "source": "resources/competitions.html",
       "output": "pages/resources/competitions.html",
       "body_class": "sub-page article-page"
+    },
+    {
+      "id": "side-project-ai-era",
+      "title": "AI 時代為什麼 Side Project 越來越重要？｜TBD Studio",
+      "description": "頂尖大學 Holistic Review 的邏輯轉變、AI 時代真正稀缺的能力，以及 Side Project 如何成為可驗證的能力證明。",
+      "source": "resources/side-project-ai-era.html",
+      "output": "pages/resources/side-project-ai-era.html",
+      "body_class": "sub-page article-page"
     }
   ]
 }
