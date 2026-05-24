@@ -123,7 +123,7 @@ def build_subdir_pages():
 
 
 def generate_sitemap():
-    """Generate sitemap.xml from config pages + subdirectory pages."""
+    """Generate sitemap.xml. Pages with sitemap=false are excluded."""
     from datetime import date
     site_url = CONFIG["site"].get("site_url", "").rstrip("/")
     today = date.today().isoformat()
@@ -131,27 +131,31 @@ def generate_sitemap():
     seen = set()
     for page in CONFIG["pages"]:
         output = page["output"]
-        # Special-case homepage
-        if output == "index.html":
-            loc = f"{site_url}/"
-        else:
-            loc = f"{site_url}/{output}"
-        if output not in seen:
-            seen.add(output)
-            urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
+        seen.add(output)  # always mark seen so subdirectory scan skips it
+        if not page.get("sitemap", True):
+            continue
+        loc = f"{site_url}/" if output == "index.html" else f"{site_url}/{output}"
+        urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
     pages_dir = ROOT / "pages"
     for subpage in sorted(pages_dir.glob("*/*.html")):
         rel = subpage.relative_to(ROOT).as_posix()
         if rel not in seen:
             seen.add(rel)
-            loc = f"{site_url}/{rel}"
-            urls.append(f"  <url><loc>{loc}</loc><lastmod>{today}</lastmod></url>")
+            urls.append(f"  <url><loc>{site_url}/{rel}</loc><lastmod>{today}</lastmod></url>")
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     xml += "\n".join(urls)
     xml += "\n</urlset>\n"
     save(ROOT / "sitemap.xml", xml)
     print(f"Generated sitemap.xml with {len(urls)} URLs.")
+
+
+def generate_robots():
+    """Generate robots.txt pointing to sitemap."""
+    site_url = CONFIG["site"].get("site_url", "").rstrip("/")
+    content = f"User-agent: *\nAllow: /\n\nSitemap: {site_url}/sitemap.xml\n"
+    save(ROOT / "robots.txt", content)
+    print("Generated robots.txt.")
 
 
 def check_descriptions():
@@ -197,6 +201,7 @@ def main():
         print(f"Built {sub_built} subdir pages.")
 
     generate_sitemap()
+    generate_robots()
 
     warn_count = check_descriptions() + check_broken_links()
     if warn_count:
