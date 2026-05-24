@@ -92,6 +92,8 @@
 .article-card .card-desc { color: var(--tbd-mid); font-size: 0.9rem; flex: 1; }
 .article-status { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--tbd-mid); background: var(--tbd-light); padding: 0.2rem 0.6rem; border-radius: 999px; width: fit-content; }
 
+.section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tbd-accent); margin: 0 0 16px; }
+
 .breadcrumb { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--tbd-mid); margin-bottom: 1rem; }
 .breadcrumb a { color: var(--tbd-mid); text-decoration: none; }
 .breadcrumb a:hover { color: var(--tbd-accent); }

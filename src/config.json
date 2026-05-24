@@ -133,6 +133,30 @@
       "output": "pages/resources/article-template.html",
       "body_class": "sub-page article-page",
       "sitemap": false
+    },
+    {
+      "id": "side-project-why",
+      "title": "為什麼升學越來越重視 Side Project？｜TBD Studio",
+      "description": "了解評審邏輯的轉變，Side Project 在台灣升學中的定位，以及如何開始你的第一個 Side Project。",
+      "source": "resources/side-project-why.html",
+      "output": "pages/resources/side-project-why.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "learning-main-thread",
+      "title": "學習歷程主線是什麼？為什麼比活動數量更重要｜TBD Studio",
+      "description": "說明「申請主線」的概念，以及如何讓備審在短時間內讓評審看懂你是誰、你為什麼適合這個科系。",
+      "source": "resources/learning-main-thread.html",
+      "output": "pages/resources/learning-main-thread.html",
+      "body_class": "sub-page article-page"
+    },
+    {
+      "id": "github-portfolio",
+      "title": "一份強的 GitHub 作品集，長什麼樣子？｜TBD Studio",
+      "description": "GitHub 在升學申請中的角色、評審如何判斷一份作品集，以及不同方向學生的呈現重點。",
+      "source": "resources/github-portfolio.html",
+      "output": "pages/resources/github-portfolio.html",
+      "body_class": "sub-page article-page"
     }
   ]
 }
