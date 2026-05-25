@@ -1,0 +1,121 @@
+---
+title: GitHub Commit 與版本管理入門：從混亂到有結構
+description: Commit 不只是存檔，它記錄的是你的學習過程。說明怎麼寫出有意義的 commit、版本管理的基本邏輯，以及 commit history 為什麼是備審的隱形加分項。
+kicker: GitHub / Portfolio
+lead: 很多學生用 GitHub 只是為了「把程式碼放上去」，commit 訊息寫「update」或「fix」，最後一次性把所有東西推上去。這篇文章說明怎麼用 commit 真正記錄你的開發過程，以及為什麼這件事對備審和面試有實際的影響。
+sidebarCtaText: 想把你的 GitHub 整理成有說服力的作品集？
+sidebarCtaUtm: article-commit
+bottomCtaH2: 有 GitHub 但不知道怎麼讓它真正展示你的能力？
+bottomCtaUtm: article-commit
+tocItems:
+  - href: "#commit-is-not-save"
+    label: Commit 不只是存檔
+  - href: "#good-commit-message"
+    label: 怎麼寫好的 commit 訊息
+  - href: "#basic-workflow"
+    label: 基本的 Git 工作流程
+  - href: "#branch-basics"
+    label: Branch 的基本概念
+  - href: "#commit-as-evidence"
+    label: Commit history 是能力的間接證明
+relatedArticles:
+  - badge: GitHub / Portfolio
+    title: 一份強的 GitHub 作品集，長什麼樣子？
+    href: /pages/resources/github-portfolio.html
+    desc: Commit 是 GitHub 的基礎，這篇說明整體作品集的邏輯。
+  - badge: GitHub / Portfolio
+    title: 如何寫出一份讓人看懂的 README？
+    href: /pages/resources/readme-guide.html
+    desc: README 是 GitHub 的第一印象，Commit 是背後的細節。
+  - badge: Side Project 指南
+    title: 從 0 到 1：Side Project 從題目到成果的完整流程
+    href: /pages/resources/side-project-from-zero.html
+    desc: 把版本管理習慣放進 Side Project 的完整流程裡。
+---
+
+<section class="article-section" id="commit-is-not-save">
+## Commit 不只是存檔
+
+很多剛開始用 GitHub 的學生，把 commit 理解成「按 Ctrl+S」——做了一些修改，commit 一下，告訴系統我存檔了。
+
+但 commit 真正的功能不是存檔，而是**記錄一個有意義的變更**。每一個 commit，應該對應到一件你做完的具體事情：新增了一個功能、修好了一個 bug、重新整理了一段程式碼的結構。
+
+這個差別讓 commit history 從「一串沒有意義的存檔紀錄」，變成「你在這個專案裡做了什麼的時間軸」。一個看你 GitHub 的人，應該能夠從 commit history 大致理解：你從哪裡開始、你在過程裡做了什麼決定、你遇到了什麼問題並且解決了它。
+
+這件事對備審有直接的意義，後面會說明。
+</section>
+
+<section class="article-section" id="good-commit-message">
+## 怎麼寫好的 commit 訊息
+
+**不好的 commit 訊息：**
+- `update`
+- `fix`
+- `changes`
+- `asdf`
+- `final version`
+- `final version 2`
+
+這些訊息對任何看這個 repository 的人（包括幾個月後的你自己）都沒有任何資訊。
+
+**好的 commit 訊息：**
+- `Add user login with email/password`
+- `Fix navbar not showing on mobile`
+- `Refactor data processing to use pandas`
+- `Add README with installation instructions`
+- `Fix bug: API returns 500 when input is empty`
+
+好的 commit 訊息有幾個特徵：**用動詞開頭**（Add、Fix、Update、Remove、Refactor）、**說明做了什麼**（不是說明改了哪個檔案，而是說明這個變更的功能或目的）、**夠短但夠清楚**（通常一行 50 個字元以內就夠了）。
+
+如果一個 commit 需要更多說明，可以在第一行之後空一行，加上更詳細的描述。但第一行要能讓人在 commit list 裡快速理解這個 commit 在做什麼。
+
+實際寫的時候，先問自己：「如果我六個月後看到這個 commit，我能知道當時做了什麼事嗎？」如果答案是不確定，就再把訊息寫清楚一點。
+</section>
+
+<section class="article-section" id="basic-workflow">
+## 基本的 Git 工作流程
+
+如果你剛開始用 Git，最基本的工作流程只需要四個指令：
+
+```
+git add .              # 把修改的檔案加入準備 commit 的列表
+git commit -m "說明"   # 建立一個 commit，附上說明
+git push               # 把 commit 推到 GitHub
+git pull               # 把 GitHub 上的最新版本拉到本機
+```
+
+每次工作的節奏大概是：做一件具體的事 → `git add` → `git commit` → 繼續做下一件事。不需要每改一行就 commit，但也不需要等到整個功能全部做完才 commit。**一個合理的 commit 大小，是你能用一句話說清楚的工作量**。
+
+比較常見的錯誤是做了很多事之後才一次性 commit，然後寫 `update all files`。這樣的 commit history 沒有辦法告訴任何人你在過程中做了什麼決定。
+</section>
+
+<section class="article-section" id="branch-basics">
+## Branch 的基本概念
+
+Branch（分支）讓你可以在不影響主要版本的情況下，試做一個新功能或實驗一個新方向。
+
+基本概念：你的主線叫做 `main`（或 `master`），它應該保持在一個可以運作的狀態。當你想做一個新功能，你建立一個新的 branch，在上面開發，做好之後再合併回 `main`。
+
+```
+git checkout -b feature/new-login    # 建立並切換到新 branch
+# ... 做一些修改，commit ...
+git checkout main                    # 切回 main
+git merge feature/new-login          # 把新 branch 合併進來
+```
+
+對於個人的 Side Project，branch 不是必須的——你可以直接在 `main` 上開發。但當你開始有隊友合作，或者你想嘗試一個可能失敗的方向，branch 就非常有用。了解它的概念，讓你在需要的時候有工具可以用。
+</section>
+
+<section class="article-section" id="commit-as-evidence">
+## Commit history 是能力的間接證明
+
+當有人看你的 GitHub（教授、面試官、或未來的合作夥伴），他們看的不只是程式碼本身，還包括：
+
+**這個人是不是長期投入在這個專案裡？** 如果你的 commit history 只有幾次，或者日期都集中在某幾天，很難讓人相信這是一個認真做了幾個月的作品。如果 commit history 分散在好幾個月，顯示的是你真正持續在維護這個專案。
+
+**這個人做事有沒有結構？** Commit 訊息清楚、功能有邏輯地分批 commit，代表這個人做事有一定的條理，不只是把東西堆上去。
+
+**這個人有沒有在修正和迭代？** 有 commit 在 fix bug、在 refactor、在改進原本的設計，代表這個人不只是做完就算，而是在持續讓東西變更好。
+
+這些訊號加在一起，讓你的 GitHub 從「一個放程式碼的地方」，變成「一份真實能力的紀錄」。而這份紀錄，是任何備審描述都很難完全取代的東西——因為它是真實發生的時間軸，不是事後整理的說法。
+</section>
