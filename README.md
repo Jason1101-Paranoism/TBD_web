@@ -1,7 +1,7 @@
 # TBD Studio 官方網站
 
-> 版本：v2.4 | 最後更新：2026-05-26
-> 現況：正式營運型教育顧問官網，GA4 事件追蹤上線，SEO 結構化資料上線
+> 版本：v2.5 | 最後更新：2026-05-26
+> 現況：正式營運型教育顧問官網，SEO 結構化資料上線，主題指南 + 服務 Landing Page 上線
 
 ---
 
@@ -65,11 +65,22 @@ src/
         ├── process.astro      ← 合作流程與申請時程（泳道圖 + 時序圖）
         ├── plans.astro        ← 服務方案
         ├── audience.astro     ← 適合對象
-        ├── faq.astro          ← 常見問題
+        ├── faq.astro          ← 常見問題（含 FAQPage Schema）
         ├── search.astro       ← 知識庫搜尋（client-side）
         ├── index.astro        ← 服務總覽
-        ├── resources.astro    ← 知識庫首頁（側邊欄）
+        ├── resources.astro    ← 知識庫首頁（側邊欄 + 主題指南導流）
         ├── timeline.astro     ← redirect → /pages/process.html
+        ├── guides/            ← 主題指南頁（topic cluster）
+        │   ├── side-project.astro
+        │   ├── portfolio-prep.astro
+        │   ├── github.astro
+        │   ├── ai-era.astro
+        │   └── research.astro
+        ├── services/          ← 服務 Landing Page（按管道）
+        │   ├── college-application.astro
+        │   ├── special-admission.astro
+        │   ├── graduate.astro
+        │   └── interview-training.astro
         └── resources/
             └── [slug].astro   ← 動態路由，從 MDX 產生
 
@@ -167,6 +178,25 @@ Measurement ID：`G-J30L8GC4TT`（Vercel env var：`PUBLIC_GA_MEASUREMENT_ID`）
 ---
 
 ## 版本紀錄
+
+### v2.5 | 2026-05-26 — 主題指南 + 服務 Landing Page + 導流
+
+**主題指南（`/pages/guides/`）**：5 個 topic cluster 頁面，把現有文章整合成完整閱讀路徑
+- `side-project`（8 篇）、`portfolio-prep`（10 篇）、`github`（5 篇）、`ai-era`（7 篇）、`research`（7 篇）
+
+**服務 Landing Page（`/pages/services/`）**：4 個按升學管道的轉換頁
+- `college-application`、`special-admission`、`graduate`、`interview-training`
+- 每頁含 Service Schema、BreadcrumbList、適合對象、服務說明、案例佐證、FAQ、CTA
+
+**導流安排**：
+- `resources.astro`：側邊欄加「主題指南」區塊 + 主內容最頂新增指南卡片區
+- `services.astro`：章節 02/03 之間加服務說明頁入口（4 張卡片）
+- `index.astro`：DELIVERABLES 後加服務管道卡片；METHOD 後加知識庫指南卡片
+
+**Sitemap 修正**：
+- `portfolio-guide.html.html` → `portfolio-guide.html`（customPages 移除 `.html` 後綴，serialize 只加一次）
+- 新增 `/timeline`、`/pages` 到 sitemap filter 排除清單
+- `robots.txt` Sitemap 指向 `sitemap-index.xml`
 
 ### v2.4 | 2026-05-26 — SEO P0：結構化資料 + seoTitle + Sitemap
 
