@@ -249,18 +249,18 @@
     </article>
   </section>
 
-  <section class="rounded-3xl text-white p-8 lg:p-10" style="background:#142143;box-shadow:0 10px 30px rgba(20,33,67,.08)">
+  <section class="rounded-3xl text-white p-8 lg:p-10" style="background:var(--tbd-dark);box-shadow:var(--tbd-shadow)">
     <div class="grid lg:grid-cols-12 gap-8 items-center">
       <div class="lg:col-span-5 space-y-4">
-        <span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-[#FAB748]" style="background:rgba(255,255,255,.1)">評審教授內心話</span>
+        <span class="kicker" style="background:rgba(255,255,255,.1);color:var(--tbd-yellow);border-color:rgba(255,255,255,.18)">評審教授內心話</span>
         <h2 class="text-2xl sm:text-3xl font-extrabold leading-snug text-white">空洞的包裝，不如真實的反思。</h2>
         <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,.75)">很多學生放滿證書與漂亮排版，但教授真正想確認的是：你遇到什麼問題、如何學會方法、如何修正錯誤，以及下一步想走向哪裡。</p>
       </div>
       <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold text-[#FAB748]">與挫折共處</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">比起完美成果，更重要的是你如何處理 bug、失敗與限制。</p></div>
-        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold text-[#FAB748]">學習歷程一致</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">主線不能像臨時拼湊，而要看得出長期累積。</p></div>
-        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold text-[#FAB748]">實務操作素養</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">程式碼、數據、影片、實驗紀錄都能提高可信度。</p></div>
-        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold text-[#FAB748]">學科熱情</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">熱情不是口號，而是你願意投入時間找資料、做測試、修正方向。</p></div>
+        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold" style="color:var(--tbd-yellow)">與挫折共處</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">比起完美成果，更重要的是你如何處理 bug、失敗與限制。</p></div>
+        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold" style="color:var(--tbd-yellow)">學習歷程一致</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">主線不能像臨時拼湊，而要看得出長期累積。</p></div>
+        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold" style="color:var(--tbd-yellow)">實務操作素養</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">程式碼、數據、影片、實驗紀錄都能提高可信度。</p></div>
+        <div class="rounded-2xl p-5" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)"><h3 class="font-extrabold" style="color:var(--tbd-yellow)">學科熱情</h3><p class="mt-2 text-xs leading-relaxed" style="color:rgba(255,255,255,.7)">熱情不是口號，而是你願意投入時間找資料、做測試、修正方向。</p></div>
       </div>
     </div>
   </section>
@@ -763,26 +763,19 @@
 </div><!-- /grid -->
 
 <!-- ═══ BOTTOM CTA ═══ -->
-<section class="mt-16 mb-20 lg:mb-28">
-  <div class="relative overflow-hidden rounded-[28px] bg-white" style="border:1px solid rgba(208,206,219,.7);box-shadow:0 10px 30px rgba(20,33,67,.08)">
-    <div class="absolute" style="right:-6rem;top:-6rem;width:18rem;height:18rem;border-radius:9999px;background:rgba(26,93,148,.1);filter:blur(2.5rem)"></div>
-    <div class="absolute" style="left:-6rem;bottom:-6rem;width:18rem;height:18rem;border-radius:9999px;background:rgba(250,183,72,.2);filter:blur(2.5rem)"></div>
-    <div class="relative grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center p-8 sm:p-10 lg:p-12">
-      <div class="space-y-4">
-        <div class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold tracking-wide" style="background:rgba(26,93,148,.1);color:#1A5D94">Portfolio Strategy</div>
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#142143] leading-snug">
-          不知道如何把「散亂經歷」<br class="hidden sm:block">
-          包裝成「高分主線」？
-        </h2>
-        <p class="text-sm sm:text-base text-[#767995] leading-relaxed max-w-2xl">TBD Studio 協助高中生梳理自主學習、專題成果與活動經歷，將零散素材整理成教授看得懂的個人敘事與作品集架構。</p>
-      </div>
-      <div class="lg:justify-self-end w-full lg:w-auto">
-        <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=portfolio-guide" target="_blank" rel="noopener noreferrer" class="group w-full lg:w-auto inline-flex items-center justify-center gap-2 rounded-xl px-6 sm:px-8 py-4 text-sm font-extrabold text-white transition-all duration-300" style="background:#1A5D94">
-          <span>預約策略諮詢</span>
-          <span style="transition:transform .3s">→</span>
-        </a>
-        <p class="mt-3 text-center lg:text-left text-xs text-[#767995]">初談後可協助判斷是否需要作品集、備審或面試陪跑。</p>
-      </div>
+<section class="cta mb-20 lg:mb-28" style="margin-top:4rem">
+  <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center">
+    <div class="space-y-4">
+      <span class="kicker" style="background:rgba(255,255,255,.1);color:var(--tbd-yellow);border-color:rgba(255,255,255,.18)">Portfolio Strategy</span>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-snug">
+        不知道如何把「散亂經歷」<br class="hidden sm:block">
+        包裝成「高分主線」？
+      </h2>
+      <p class="text-sm sm:text-base leading-relaxed max-w-2xl">TBD Studio 協助高中生梳理自主學習、專題成果與活動經歷，將零散素材整理成教授看得懂的個人敘事與作品集架構。</p>
+    </div>
+    <div class="lg:justify-self-end w-full lg:w-auto">
+      <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=portfolio-guide" target="_blank" rel="noopener noreferrer" class="button w-full lg:w-auto text-center" data-ga-event="click_line_portfolio_guide_bottom">預約策略諮詢 →</a>
+      <p class="mt-3 text-center lg:text-left text-xs" style="color:rgba(255,255,255,.6)">初談後可協助判斷是否需要作品集、備審或面試陪跑。</p>
     </div>
   </div>
 </section>
@@ -790,7 +783,7 @@
 </div><!-- /max-w-7xl -->
 
 <!-- Toast notification -->
-<div id="pg-toast" class="fixed bottom-5 right-5 rounded-xl text-white px-5 py-3 text-sm font-bold hidden" style="background:#142143;box-shadow:0 25px 50px rgba(0,0,0,.25);z-index:70" aria-live="polite"></div>
+<div id="pg-toast" class="fixed bottom-5 right-5 rounded-xl text-white px-5 py-3 text-sm font-bold hidden" style="background:var(--tbd-dark);box-shadow:0 25px 50px rgba(0,0,0,.25);z-index:70" aria-live="polite"></div>
 
 <script src="/js/portfolio-guide.js"></script>
 </section>
