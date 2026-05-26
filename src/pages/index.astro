@@ -230,17 +230,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
         </article>
 
-        <aside class="grid gap-4">
-          <div class="rounded-2xl border border-tbd-light/80 bg-tbd-light/30 p-6">
-            <div class="text-xs font-bold text-tbd-accent uppercase tracking-widest">Before</div>
-            <h3 class="mt-2 text-xl font-bold text-tbd-dark">素材很多，但教授看不到主線</h3>
-            <p class="mt-3 text-sm text-tbd-mid">競賽、專題與跨域興趣都存在，但缺少能被審查委員快速理解的定位與證據鏈。</p>
-          </div>
-          <div class="rounded-2xl border border-tbd-light/80 bg-white p-6 shadow-soft">
-            <div class="text-xs font-bold text-tbd-accent uppercase tracking-widest">After</div>
-            <h3 class="mt-2 text-xl font-bold text-tbd-dark">從獎項清單，變成可答辯的工程敘事</h3>
-            <p class="mt-3 text-sm text-tbd-mid">文件與口條共同對齊：為什麼選這個學程、如何理解機械領域、自己如何從競賽走向工程問題。</p>
-          </div>
+        <aside class="flex flex-col">
+          <article class="flex-1 overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft p-6 sm:p-7 flex flex-col justify-between gap-5">
+            <div>
+              <div class="inline-flex items-center gap-2 rounded-full bg-tbd-accent/10 border border-tbd-accent/20 px-3 py-1 text-xs font-bold text-tbd-accent mb-4">大學個人申請｜機械工程組</div>
+              <h3 class="text-xl font-bold text-tbd-dark leading-snug">從樂高到機器人競賽，整合成中原機械的入學論述</h3>
+              <p class="mt-3 text-sm text-tbd-mid leading-relaxed">學生有豐富競賽資歷，但主線發散、工程價值說不清楚。TBD 協助建立「樂高→機器人→醫療應用→汽車設計」成長敘事，並以逐字稿修正強化面試口條。</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[11px] font-bold text-tbd-accent bg-tbd-accent/10 px-2 py-1 rounded">國際機器人大賽</span>
+              <span class="text-[11px] font-bold text-tbd-accent bg-tbd-accent/10 px-2 py-1 rounded">程式設計自學</span>
+              <span class="text-[11px] font-bold text-tbd-accent bg-tbd-accent/10 px-2 py-1 rounded">醫療機器人跨域</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-sm">
+              <div class="rounded-xl bg-tbd-light/50 border border-tbd-light/80 p-3">
+                <div class="text-tbd-mid/60 text-[10px] uppercase tracking-widest">Period</div>
+                <div class="mt-1 font-bold text-tbd-dark">約 24 週</div>
+              </div>
+              <div class="rounded-xl bg-tbd-accent/5 border border-tbd-accent/20 p-3">
+                <div class="text-tbd-mid/60 text-[10px] uppercase tracking-widest">Result</div>
+                <div class="mt-1 font-bold text-tbd-dark text-xs">中原大學<br>機械工程學系</div>
+              </div>
+            </div>
+            <a href="/pages/cases.html" class="inline-flex items-center justify-center border border-tbd-accent text-tbd-accent px-4 py-2.5 rounded-md text-sm font-bold hover:bg-tbd-accent hover:text-white transition">
+              閱讀案例拆解 →
+            </a>
+          </article>
         </aside>
       </div>
     </div>
