@@ -12,11 +12,13 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      customPages: ['https://tbd-web.vercel.app/pages/portfolio-guide.html'],
+      customPages: ['https://tbd-web.vercel.app/pages/portfolio-guide'],
       filter: (page) =>
         !page.includes('/audience') &&
         !page.includes('/plans') &&
-        !page.includes('/article-template'),
+        !page.includes('/article-template') &&
+        !page.includes('/timeline') &&
+        !page.endsWith('/pages'),
       serialize(item) {
         const root = 'https://tbd-web.vercel.app';
         if (item.url !== root && item.url !== root + '/') {
