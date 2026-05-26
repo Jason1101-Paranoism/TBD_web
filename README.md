@@ -167,10 +167,18 @@ Measurement ID：`G-J30L8GC4TT`（Vercel env var：`PUBLIC_GA_MEASUREMENT_ID`）
 
 ## 版本紀錄
 
-### v2.2 | 2026-05-26 — 雙案例展示
+### v2.3 | 2026-05-26 — CSS 設計系統統一 + 真實信任素材
+
+- portfolio-guide.html：評審教授內心話 block 及 Portfolio Strategy CTA 改以 CSS 變數統一（--tbd-dark、--tbd-yellow 等），移除硬編 hex 色碼
+- Portfolio Strategy CTA 改用 .cta 類別（深色背景，符合全站 CTA 規範），移除 blur 裝飾，新增 GA4 事件屬性
+- cases.astro Tab 1 家長回饋：替換 placeholder，改為宥榕媽媽訪談金句「這不是幫他考上，而是讓他知道自己是誰。」
+
+### v2.2 | 2026-05-26 — 雙案例展示 + 導覽統一
 
 - 成功案例 Tab 2（大學個申）上線：有程（25-1-YC），中原機械，約 24 週
 - 首頁成功案例區右欄改為 有程 compact 案例卡，移除重複 Before/After 內容
+- portfolio-guide.html 補齊 Nav（7 項）、Footer（快速連結）
+- 側邊欄統一：ArticleLayout TOC 與 portfolio-guide Guide Menu 共用 .pg-sidebar CSS 元件
 - 待補：Tab 3（國外研究所）暫維持 pending 卡片，祐熲案例進行中
 
 ### v2.1 | 2026-05-26 — 事件追蹤 + 品牌頁
