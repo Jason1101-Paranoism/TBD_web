@@ -25,7 +25,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="resources-sidebar-inner">
       <p class="sidebar-nav-label">文章分類</p>
       <nav>
-        <a href="#side-project" class="sidebar-nav-link active">Side Project 指南</a>
+        <a href="#guides" class="sidebar-nav-link active">主題指南</a>
+        <a href="#side-project" class="sidebar-nav-link">Side Project 指南</a>
         <a href="#portfolio-history" class="sidebar-nav-link">學習歷程與備審</a>
         <a href="#competitions" class="sidebar-nav-link">競賽與能力累積</a>
         <a href="#research" class="sidebar-nav-link">研究、自學與能力建立</a>
@@ -34,11 +35,58 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <a href="#departments" class="sidebar-nav-link">科系申請指南</a>
         <a href="#ai-era" class="sidebar-nav-link">AI 時代觀點</a>
       </nav>
+
+      <p class="sidebar-nav-label" style="margin-top: 24px;">主題指南</p>
+      <nav>
+        <a href="/pages/guides/side-project.html" class="sidebar-nav-link">Side Project 完整指南 →</a>
+        <a href="/pages/guides/portfolio-prep.html" class="sidebar-nav-link">備審與學習歷程 →</a>
+        <a href="/pages/guides/github.html" class="sidebar-nav-link">GitHub & Portfolio →</a>
+        <a href="/pages/guides/ai-era.html" class="sidebar-nav-link">AI 時代能力建立 →</a>
+        <a href="/pages/guides/research.html" class="sidebar-nav-link">研究、自學與能力 →</a>
+      </nav>
     </div>
   </aside>
 
   <!-- 主內容 -->
   <div class="resources-content">
+
+    <section class="section" id="guides">
+      <h2 class="section-label">主題指南</h2>
+      <p style="margin-bottom: 16px; color: var(--tbd-mid);">把相關文章整合成完整閱讀路徑，從概念到實作一次掌握。</p>
+      <div class="card-grid">
+
+        <article class="card article-card">
+          <span class="badge">Side Project</span>
+          <h3><a class="text-link" href="/pages/guides/side-project.html">Side Project 升學完整指南</a></h3>
+          <p class="card-desc">從為什麼重要到選題、執行、展示的完整閱讀路徑，涵蓋 8 篇系列文章。</p>
+        </article>
+
+        <article class="card article-card">
+          <span class="badge">備審</span>
+          <h3><a class="text-link" href="/pages/guides/portfolio-prep.html">備審資料與學習歷程完整指南</a></h3>
+          <p class="card-desc">評審邏輯、三年規劃、主線建立到素材整理，10 篇系列完整收錄。</p>
+        </article>
+
+        <article class="card article-card">
+          <span class="badge">GitHub</span>
+          <h3><a class="text-link" href="/pages/guides/github.html">GitHub 作品集與 Portfolio 建置指南</a></h3>
+          <p class="card-desc">Commit 規範、README 撰寫到作品集架構，5 篇系列一次掌握。</p>
+        </article>
+
+        <article class="card article-card">
+          <span class="badge">AI 時代</span>
+          <h3><a class="text-link" href="/pages/guides/ai-era.html">AI 時代升學能力建立指南</a></h3>
+          <p class="card-desc">執行力、跨域整合、個人品牌與 AI 工具，7 篇觀點系列。</p>
+        </article>
+
+        <article class="card article-card">
+          <span class="badge">研究</span>
+          <h3><a class="text-link" href="/pages/guides/research.html">研究、自學與能力累積指南</a></h3>
+          <p class="card-desc">接觸研究、自學 SOP、競賽延伸，7 篇能力建立系列。</p>
+        </article>
+
+      </div>
+    </section>
 
     <section class="section" id="side-project">
       <h2 class="section-label">Side Project 指南</h2>
