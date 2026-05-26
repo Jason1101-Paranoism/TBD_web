@@ -23,7 +23,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </button>
       <button class="cases-tab" data-tab="personal" role="tab" aria-selected="false">
         <span class="badge">大學個人申請</span>
-        <span class="tab-subtitle">學習歷程整合 → 二階面試</span>
+        <span class="tab-subtitle">機器人競賽 → 中原機械系</span>
       </button>
       <button class="cases-tab" data-tab="grad" role="tab" aria-selected="false">
         <span class="badge">國外研究所申請</span>
@@ -137,34 +137,94 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </section>
     </div>
 
-    <!-- Tab 2: 大學個人申請（整理中） -->
+    <!-- Tab 2: 大學個人申請（有程，25-1-YC） -->
     <div class="cases-panel" id="tab-personal" role="tabpanel">
-      <div class="case-pending-card">
-        <div class="case-summary-grid">
-          <div class="card case-profile-card">
-            <span class="badge">大學個人申請</span>
-            <h2>從學習歷程到面試，協助普通高中生整理三年軌跡。</h2>
-            <div class="case-tags">
-              <span>課程學習成果</span>
-              <span>社團幹部經歷</span>
-              <span>個人申請二階</span>
-            </div>
-            <p>學生具備課程學習成果與社團幹部經歷，但散落各處、缺乏主軸。合作重點在整合歷程、建立科系連結，並針對二階面試進行追問訓練。</p>
+      <section class="section case-summary-grid" id="case-breakdown">
+        <div class="card case-profile-card">
+          <span class="badge">學生輪廓</span>
+          <h2>競賽資歷豐富，但需要把機器人經歷轉成有邏輯的工程師敘事。</h2>
+          <div class="case-tags">
+            <span>國際機器人大賽參賽者</span>
+            <span>程式設計自學者</span>
+            <span>醫療機器人跨域背景</span>
+            <span>設計工程師志向明確</span>
           </div>
-          <div class="card case-kpi-card">
-            <span class="badge">案例資訊</span>
-            <dl>
-              <div><dt>申請類型</dt><dd>大學個人申請（一至二階）</dd></div>
-              <div><dt>主要服務</dt><dd>學習歷程整理、自傳重構、面試訓練</dd></div>
-              <div><dt>合作時長</dt><dd>約 12 週</dd></div>
-              <div><dt>進度</dt><dd>去識別化整理中</dd></div>
-            </dl>
-          </div>
+          <p>學生具備高強度實作與競賽經歷，但在申請初期，問題不是「沒有素材」，而是素材太多、主線發散，且尚未連結到教授評估的工程設計循環與跨域學習動機。</p>
         </div>
-        <div class="case-pending-notice">
-          <span>完整案例拆解正在整理去識別化版本，預計近期更新。</span>
+
+        <div class="card case-kpi-card">
+          <span class="badge">合作成果</span>
+          <dl>
+            <div><dt>錄取結果</dt><dd>中原大學機械工程學系</dd></div>
+            <div><dt>合作時長</dt><dd>約 24 週（1 月 → 6 月）</dd></div>
+            <div><dt>溝通頻率</dt><dd>每週 1 次課程＋每日面試訓練</dd></div>
+            <div><dt>申請類型</dt><dd>個人申請：書面審查＋個人面試</dd></div>
+          </dl>
         </div>
-      </div>
+      </section>
+
+      <section class="section before-after-panel">
+        <div class="case-ba before">
+          <div class="case-ba-title">Before｜合作前痛點</div>
+          <ul>
+            <li>經歷豐富（競賽、樂高、國際賽），但內容偏「流水帳」，缺乏主線。</li>
+            <li>知道喜歡機械，但「工程價值」與「未來應用」說不清楚。</li>
+            <li>自我介紹偏描述經歷，缺乏動機推進與反思深度。</li>
+            <li>英文與口語能力具基礎，但邏輯鬆散、句構不穩。</li>
+            <li>醫療機器人跨域經驗存在，但沒有被轉化為申請優勢。</li>
+          </ul>
+        </div>
+        <div class="case-ba after">
+          <div class="case-ba-title">After｜合作後成果</div>
+          <ul>
+            <li>建立「樂高 → 機器人 → 醫療應用 → 汽車設計」完整成長路徑。</li>
+            <li>定位為「競賽型＋實作型工程學生」，與純學科型學生明確區隔。</li>
+            <li>自我介紹升級為「興趣啟蒙 → 技術累積 → 跨域思考 → 未來應用」結構。</li>
+            <li>醫療機器人經驗轉譯為「工程解決真實問題能力」的具體論據。</li>
+            <li>建立「自我學習＋反思＋表達」系統，涵蓋程式、英文、數理整合。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>從流水帳到可答辯的申請系統：五個階段讓素材對齊校系期待。</h2>
+        <div class="case-process-grid">
+          <article class="case-step-card">
+            <span>Phase 1</span>
+            <h3>策略定位</h3>
+            <p>建立落點分析報告，確認學生在機械工程申請池的競爭層級，釐清優勢與需補強的方向。</p>
+          </article>
+          <article class="case-step-card">
+            <span>Phase 2</span>
+            <h3>素材工程</h3>
+            <p>提取 Robofest、競賽、自學教學等關鍵經歷，拆解為「可用故事單元」，建立素材庫。</p>
+          </article>
+          <article class="case-step-card">
+            <span>Phase 3</span>
+            <h3>文件系統</h3>
+            <p>將素材整合為書審內容，確保自傳、申請動機書呈現完整的工程設計閉環敘事。</p>
+          </article>
+          <article class="case-step-card">
+            <span>Phase 4</span>
+            <h3>應答強化</h3>
+            <p>以逐字稿修正與每日面試訓練，將口語表達從「我做過什麼」升級為「我怎麼思考問題」。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section case-method-panel">
+        <div>
+          <span class="kicker">策略主軸</span>
+          <h2>三大策略柱：讓豐富的競賽素材成為可閱讀、可答辯的申請系統。</h2>
+          <p>本案例的核心挑戰不是素材不足，而是素材尚未被轉化為申請邏輯。TBD 以三大策略柱整合全案：素材庫盤點（將散落的競賽、教學、樂高經歷拆解為可用故事單元）、敘事架構重組（用「經歷 → 問題 → 解法 → 反思」重寫自傳與面試腳本）、口條精準升級（從「只說結果」升級為「說清楚怎麼思考問題、怎麼解決問題」）。</p>
+        </div>
+        <div class="sari-grid">
+          <div><strong>①</strong><span>素材庫盤點<br>可用故事單元</span></div>
+          <div><strong>②</strong><span>敘事架構重組<br>問題→解法→反思</span></div>
+          <div><strong>③</strong><span>口條精準升級<br>從結果到思考</span></div>
+          <div><strong>④</strong><span>校系對齊<br>夢想連結課程需求</span></div>
+        </div>
+      </section>
     </div>
 
     <!-- Tab 3: 國外研究所（整理中） -->
