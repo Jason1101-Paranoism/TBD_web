@@ -65,13 +65,15 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
       </article>
 
       <aside class="article-sidebar">
-        <div class="sidebar-toc card">
-          <h3>本文目錄</h3>
-          <ul>
+        <div class="sidebar-toc">
+          <div class="sidebar-toc-head">
+            <span class="sidebar-toc-label">本文目錄</span>
+          </div>
+          <nav>
             {tocItems.map(item => (
-              <li><a href={item.href}>{item.label}</a></li>
+              <a href={item.href}>{item.label}</a>
             ))}
-          </ul>
+          </nav>
         </div>
 
         <div class="sidebar-cta card">
@@ -104,4 +106,20 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
       </div>
     </section>
   </main>
+  <script>
+    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.sidebar-toc a'));
+    const sections = tocLinks
+      .map(a => document.querySelector(a.getAttribute('href') ?? ''))
+      .filter((el): el is Element => el !== null);
+
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.find(e => e.isIntersecting);
+      if (!visible) return;
+      tocLinks.forEach(a => a.classList.remove('toc-active'));
+      const link = document.querySelector<HTMLAnchorElement>(`.sidebar-toc a[href="#${visible.target.id}"]`);
+      link?.classList.add('toc-active');
+    }, { rootMargin: '-10% 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
 </BaseLayout>
