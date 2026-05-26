@@ -2,32 +2,294 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="合作流程｜TBD Studio" description="TBD Studio 升學輔導合作流程：從初談、狀況診斷、資料盤點、備審製作到面試訓練，八個步驟協助學生完成申請準備。" bodyClass="sub-page">
+<BaseLayout title="合作流程與申請時程｜TBD Studio" description="TBD Studio 合作流程說明：申請時程與 TBD 合作 SOP 整合呈現，含泳道圖與各升學管道時序。" bodyClass="sub-page process-page">
 <section class="hero">
-  <span class="kicker">合作流程</span>
-  <h1>從第一次諮詢到正式送件，我們會一步步協助學生完成準備。</h1>
-  <p class="lead">每位學生的狀況不同，我們會先判斷目前最該處理的問題，再安排合適的準備順序。</p>
+  <span class="kicker">合作流程與申請時程</span>
+  <h1>知道該做什麼、知道什麼時候做，準備才不會亂。</h1>
+  <p class="lead">申請時程說明各升學管道的關鍵節點；合作流程說明 TBD 在這些節點協助你做什麼、你需要準備什麼。</p>
+  <div class="button-row">
+    <a class="button secondary" href="/pages/services.html">了解服務內容</a>
+    <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=process" target="_blank" rel="noopener noreferrer">預約策略諮詢</a>
+  </div>
 </section>
 
 <main>
-  <section class="section timeline">
-    <div class="timeline-item"><div class="timeline-time">Step 1</div><div><h3>初步了解</h3><p>確認年級、升學管道、目標校系、目前卡點。</p></div></div>
-    <div class="timeline-item"><div class="timeline-time">Step 2</div><div><h3>狀況診斷</h3><p>判斷目前最需要處理的是方向、備審、面試還是時程。</p></div></div>
-    <div class="timeline-item"><div class="timeline-time">Step 3</div><div><h3>資料盤點</h3><p>整理成績、課程、活動、專題、競賽、作品。</p></div></div>
-    <div class="timeline-item"><div class="timeline-time">Step 4</div><div><h3>申請主軸設計</h3><p>建立個人特色、科系連結與申請故事線。</p></div></div>
-    <div class="timeline-item"><div class="timeline-time">Step 5</div><div><h3>文件製作／修改</h3><p>完成自傳、申請動機、讀書計畫、研究計畫等。</p></div></div>
-    <div class="timeline-item"><div class="timeline-time">Step 6</div><div><h3>面試準備</h3><p>設計題庫、模擬面試、修正回答方式。</p></div></div>
-    <div class="timeline-item"><div class="timeline-time">Step 7</div><div><h3>最終檢查</h3><p>檢查送件格式、內容一致性、面試風險。</p></div></div>
-    <div class="timeline-item"><div class="timeline-time">Step 8</div><div><h3>後續策略</h3><p>志願序、備取、教授聯絡或下一階段規劃。</p></div></div>
+
+  <!-- ── 申請時程（時序圖）── -->
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">01 申請時程</span>
+      <h2>各升學管道的關鍵節點</h2>
+      <p class="services-chapter-desc">不同管道的準備節奏不一樣。找到你的路線，確認目前應該在哪個階段。</p>
+    </div>
+
+    <div class="track-tabs" style="margin-top: 24px;">
+      <nav class="track-tab-nav" role="tablist">
+        <button class="track-tab active" data-track="personal" role="tab">大學個人申請</button>
+        <button class="track-tab" data-track="grad" role="tab">研究所推甄</button>
+        <button class="track-tab" data-track="special" role="tab">特殊選才</button>
+      </nav>
+
+      <!-- 大學個人申請 -->
+      <div class="track-panel active" id="track-personal" role="tabpanel">
+        <div class="track-timeline">
+          <div class="track-milestone">
+            <div class="milestone-time">高二下 ～ 高三上</div>
+            <div class="milestone-card">
+              <h3>累積與盤點期</h3>
+              <p>學習歷程整理、科系探索、多元表現盤點。</p>
+              <div class="tbd-tip">← TBD 最佳切入時機</div>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">高三 1 月</div>
+            <div class="milestone-card">
+              <h3>學測前後</h3>
+              <p>申請方向初判、落點預估。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">高三 2 月</div>
+            <div class="milestone-card">
+              <h3>學測成績公布</h3>
+              <p>選校策略確認、申請校系定案。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">高三 3 月</div>
+            <div class="milestone-card">
+              <h3>一階篩選</h3>
+              <p>針對通過校系客製備審。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">高三 4 月</div>
+            <div class="milestone-card milestone-card--highlight">
+              <h3>備審上傳期</h3>
+              <p>自傳、申請動機、讀書計畫、學習歷程自述。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">高三 5 月</div>
+            <div class="milestone-card milestone-card--highlight">
+              <h3>二階面試</h3>
+              <p>模擬面試、教授追問、臨場表達。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">高三 6 月</div>
+            <div class="milestone-card">
+              <h3>志願序與放榜</h3>
+              <p>志願排序、備取判斷。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 研究所推甄 -->
+      <div class="track-panel" id="track-grad" role="tabpanel">
+        <div class="track-timeline">
+          <div class="track-milestone">
+            <div class="milestone-time">大三下 ～ 暑假</div>
+            <div class="milestone-card">
+              <h3>前置準備</h3>
+              <p>履歷、自傳、研究方向確認、教授名單。</p>
+              <div class="tbd-tip">← TBD 最佳切入時機</div>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">7 ～ 8 月</div>
+            <div class="milestone-card">
+              <h3>材料初稿</h3>
+              <p>研究計畫、讀書計畫、專題整理。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">9 ～ 10 月</div>
+            <div class="milestone-card milestone-card--highlight">
+              <h3>報名期</h3>
+              <p>書審資料定稿、教授聯絡。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">10 ～ 11 月</div>
+            <div class="milestone-card milestone-card--highlight">
+              <h3>面試期</h3>
+              <p>模擬面試、研究計畫答辯。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">11 ～ 12 月</div>
+            <div class="milestone-card">
+              <h3>放榜期</h3>
+              <p>備取策略、後續聯繫。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 特殊選才 -->
+      <div class="track-panel" id="track-special" role="tabpanel">
+        <div class="track-timeline">
+          <div class="track-milestone">
+            <div class="milestone-time">高二 ～ 高三上</div>
+            <div class="milestone-card">
+              <h3>經歷累積</h3>
+              <p>競賽、專題、作品、證明資料。</p>
+              <div class="tbd-tip">← TBD 最佳切入時機</div>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">9 ～ 10 月</div>
+            <div class="milestone-card">
+              <h3>簡章公告</h3>
+              <p>校系篩選、資格確認。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">10 ～ 11 月</div>
+            <div class="milestone-card milestone-card--highlight">
+              <h3>書審報名</h3>
+              <p>自傳、成果集、申請動機。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">11 ～ 12 月</div>
+            <div class="milestone-card milestone-card--highlight">
+              <h3>面試／甄試</h3>
+              <p>作品答辯、特殊經歷說明。</p>
+            </div>
+          </div>
+          <div class="track-milestone">
+            <div class="milestone-time">12 ～ 1 月</div>
+            <div class="milestone-card">
+              <h3>放榜</h3>
+              <p>後續升學規劃。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 合作流程（泳道圖）── -->
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">02 合作 SOP</span>
+      <h2>從初談到送件，TBD 在每個環節做什麼</h2>
+      <p class="services-chapter-desc">每個階段都有明確的學生行動與 TBD 交付物，讓準備有節點、有成果。</p>
+    </div>
+
+    <div class="swimlane" style="margin-top: 24px;">
+      <div class="swimlane-header">
+        <div class="lane-label">學生</div>
+        <div class="lane-label lane-label--tbd">TBD Studio</div>
+      </div>
+
+      <div class="swim-row">
+        <div class="swim-cell">
+          <div class="swim-phase-tag">Phase 1</div>
+          <h3>說明現況</h3>
+          <p>說明年級、升學管道、目標校系，描述目前最大卡點。</p>
+        </div>
+        <div class="swim-cell swim-cell--tbd">
+          <div class="swim-phase-tag">策略諮詢</div>
+          <h3>評估與診斷</h3>
+          <p>60 分鐘初談，輸出申請策略診斷報告（可追蹤、可帶走）。</p>
+        </div>
+      </div>
+
+      <div class="swim-row">
+        <div class="swim-cell">
+          <div class="swim-phase-tag">Phase 2</div>
+          <h3>提供原始資料</h3>
+          <p>提供成績單、活動清單、作品、競賽紀錄等原始素材。</p>
+        </div>
+        <div class="swim-cell swim-cell--tbd">
+          <div class="swim-phase-tag">素材盤點</div>
+          <h3>系統整理</h3>
+          <p>建立經歷素材盤點表，標記申請價值與可延伸方向。</p>
+        </div>
+      </div>
+
+      <div class="swim-row">
+        <div class="swim-cell">
+          <div class="swim-phase-tag">Phase 3</div>
+          <h3>參與共創討論</h3>
+          <p>與 TBD 共同確認申請主線、敘事角度與校系定位。</p>
+        </div>
+        <div class="swim-cell swim-cell--tbd">
+          <div class="swim-phase-tag">主軸設計</div>
+          <h3>敘事定位圖</h3>
+          <p>建立個人申請主線，確立能力主軸與校系連結邏輯。</p>
+        </div>
+      </div>
+
+      <div class="swim-row">
+        <div class="swim-cell">
+          <div class="swim-phase-tag">Phase 4</div>
+          <h3>提供草稿與回饋</h3>
+          <p>提交自傳草稿，說明方向確認或修改需求。</p>
+        </div>
+        <div class="swim-cell swim-cell--tbd">
+          <div class="swim-phase-tag">文件製作</div>
+          <h3>多版本協作</h3>
+          <p>自傳、申請動機、讀書計畫多版本管理，確保邏輯一致性。</p>
+        </div>
+      </div>
+
+      <div class="swim-row">
+        <div class="swim-cell">
+          <div class="swim-phase-tag">Phase 5</div>
+          <h3>模擬面試練習</h3>
+          <p>根據客製題庫反覆練習，接受 TBD 追問與結構調整。</p>
+        </div>
+        <div class="swim-cell swim-cell--tbd">
+          <div class="swim-phase-tag">面試訓練</div>
+          <h3>題庫與回饋報告</h3>
+          <p>設計校系專屬題庫，每次模擬附結構化回饋報告。</p>
+        </div>
+      </div>
+
+      <div class="swim-row swim-row--last">
+        <div class="swim-cell">
+          <div class="swim-phase-tag">Phase 6</div>
+          <h3>確認送件材料</h3>
+          <p>確認所有文件格式與內容，準備上傳或遞送。</p>
+        </div>
+        <div class="swim-cell swim-cell--tbd">
+          <div class="swim-phase-tag">收尾確認</div>
+          <h3>最終風險掃描</h3>
+          <p>內容一致性確認、面試風險提醒、志願序策略建議。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top: 16px;">
+      各 Phase 的實際順序與深度依學生狀況調整——有些學生從 Phase 3 切入，有些從 Phase 5 開始。初談後 TBD 會說明最適合的切入點。
+    </div>
   </section>
 
   <section class="section cta">
-    <h2>準備好了，但不確定下一步？</h2>
-    <p>TBD 的第一次策略諮詢會先依據學生的升學管道、競爭力與目前最該補強的環節進行評估與建議，線上與您一起討論可能合作方案，決定是否需要文件重構、面試訓練或全程陪跑。</p>
+    <h2>不確定現在應該從哪個 Phase 開始？</h2>
+    <p>TBD 的第一次策略諮詢會依據你的年級、升學管道與目前進度，說明哪個環節現在最需要處理。</p>
     <div class="button-row">
       <a class="button secondary" href="/pages/services.html">了解服務內容</a>
       <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=process" target="_blank" rel="noopener noreferrer">預約策略諮詢</a>
     </div>
   </section>
+
 </main>
+
+<script>
+  document.querySelectorAll('.track-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const track = btn.dataset.track;
+      document.querySelectorAll('.track-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.track-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('track-' + track)?.classList.add('active');
+    });
+  });
+</script>
 </BaseLayout>

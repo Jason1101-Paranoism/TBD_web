@@ -132,51 +132,103 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="services-chapter-header">
       <span class="kicker">02</span>
       <h2>我們具體做什麼</h2>
-      <p class="services-chapter-desc">TBD 會依照學生目前階段，判斷最需要先處理的是方向、材料、表達，還是時程管理。服務項目依需求組合，不是固定套餐。</p>
+      <p class="services-chapter-desc">依你的升學管道找到對應的服務項目。同一個服務（如自傳、面試訓練）在不同管道有不同的重點——初談後 TBD 會說明最適合你的組合。</p>
     </div>
 
-    <div class="section table-wrap" style="margin-top: 20px;">
-      <table>
-        <thead>
-          <tr>
-            <th>服務項目</th>
-            <th>內容說明</th>
-            <th>適合對象</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>升學方向諮詢</td><td>釐清目標科系、升學管道、準備節奏。</td><td>還不確定方向的學生</td></tr>
-          <tr><td>經歷盤點</td><td>整理課程、活動、專題、競賽、幹部、實習經驗。</td><td>所有申請型學生</td></tr>
-          <tr><td>學習歷程整理</td><td>協助挑選成果、撰寫反思、連結科系。</td><td>高中個人申請</td></tr>
-          <tr><td>自傳優化</td><td>建立個人故事線與能力主軸。</td><td>高中、大學、研究所申請</td></tr>
-          <tr><td>申請動機撰寫</td><td>連結學生經歷、科系特色與未來目標。</td><td>所有申請型學生</td></tr>
-          <tr><td>讀書計畫／學習計畫</td><td>規劃入學後課程、能力養成與發展方向。</td><td>大學申請、研究所推甄</td></tr>
-          <tr><td>多元表現綜整</td><td>將活動與經歷轉化成能力證明。</td><td>高中申請、特殊選才</td></tr>
-          <tr><td>作品集／專題整理</td><td>整理專題、作品、研究成果。</td><td>高職、設計、工程、資訊、特選</td></tr>
-          <tr><td>研究計畫</td><td>協助研究題目、動機、文獻、方法架構。</td><td>研究所推甄</td></tr>
-          <tr><td>面試訓練</td><td>模擬面試、教授追問、口語表達訓練。</td><td>所有需要二階面試者</td></tr>
-          <tr><td>教授聯絡策略</td><td>協助信件方向、研究室媒合、溝通重點。</td><td>研究所推甄</td></tr>
-          <tr><td>志願序／選校策略</td><td>協助評估錄取機率與志願排序。</td><td>個人申請、科大甄選、研究所</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="services-by-audience" style="margin-top: 24px;">
 
-    <div class="grid grid-3" style="margin-top: 18px;">
-      <div class="card">
-        <span class="badge">文件</span>
-        <h3>自傳、動機、計畫</h3>
-        <p>重點不是寫得華麗，而是讓每一段都能回答「你為什麼適合這個科系」。</p>
+      <div class="audience-group">
+        <div class="audience-group-header">
+          <span class="kicker">適用所有管道</span>
+          <h3>通用服務</h3>
+        </div>
+        <div class="audience-services">
+          <div class="service-item">
+            <strong>升學方向諮詢</strong>
+            <span>釐清目標科系、升學管道、準備節奏。適合還不確定方向或需要重新定向的學生。</span>
+          </div>
+          <div class="service-item">
+            <strong>經歷盤點</strong>
+            <span>系統整理課程、活動、專題、競賽、幹部、實習經驗，建立素材庫。</span>
+          </div>
+          <div class="service-item">
+            <strong>自傳優化</strong>
+            <span>建立個人故事線與能力主軸，讓自傳回答「你為什麼適合這個科系」。</span>
+          </div>
+          <div class="service-item">
+            <strong>申請動機撰寫</strong>
+            <span>連結學生經歷、科系特色與未來目標，做出有說服力的動機陳述。</span>
+          </div>
+          <div class="service-item">
+            <strong>面試訓練</strong>
+            <span>模擬面試、教授追問、口語表達訓練，附結構化回饋報告。</span>
+          </div>
+          <div class="service-item">
+            <strong>志願序／選校策略</strong>
+            <span>協助評估錄取機率與志願排序，避免高估或低估自己的競爭位置。</span>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <span class="badge">成果</span>
-        <h3>專題、作品、歷程</h3>
-        <p>把零散經歷整理成主軸明確、證據清楚、教授能快速理解的成果展示。</p>
+
+      <div class="audience-group">
+        <div class="audience-group-header">
+          <span class="kicker">大學個人申請</span>
+          <h3>高中個申專屬</h3>
+        </div>
+        <div class="audience-services">
+          <div class="service-item">
+            <strong>學習歷程整理</strong>
+            <span>挑選成果、撰寫反思、與科系連結——讓每份上傳文件都有說服力。</span>
+          </div>
+          <div class="service-item">
+            <strong>讀書計畫／學習計畫</strong>
+            <span>規劃入學後的課程方向、能力養成目標，展示你對科系的理解深度。</span>
+          </div>
+          <div class="service-item">
+            <strong>多元表現綜整</strong>
+            <span>將活動與課外經歷轉化成能力證明，而不只是一份活動清單。</span>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <span class="badge">表達</span>
-        <h3>面試與追問</h3>
-        <p>從自我介紹到專業題，訓練學生用穩定架構回答，而不是臨場亂背。</p>
+
+      <div class="audience-group">
+        <div class="audience-group-header">
+          <span class="kicker">特殊選才 / 高職科大甄選</span>
+          <h3>作品與成果整理</h3>
+        </div>
+        <div class="audience-services">
+          <div class="service-item">
+            <strong>作品集／專題整理</strong>
+            <span>整理專題、作品、研究成果，讓評審在有限時間內快速理解你的核心能力。</span>
+          </div>
+          <div class="service-item">
+            <strong>個人品牌定位</strong>
+            <span>從競賽、特殊經歷、跨域背景中找到申請主線，建立可答辯的申請敘事。</span>
+          </div>
+        </div>
       </div>
+
+      <div class="audience-group">
+        <div class="audience-group-header">
+          <span class="kicker">研究所推甄</span>
+          <h3>研究方向與教授聯絡</h3>
+        </div>
+        <div class="audience-services">
+          <div class="service-item">
+            <strong>研究計畫</strong>
+            <span>協助研究題目確立、動機陳述、文獻回顧架構與研究方法說明。</span>
+          </div>
+          <div class="service-item">
+            <strong>教授聯絡策略</strong>
+            <span>協助確認信件方向、研究室媒合邏輯與後續溝通重點。</span>
+          </div>
+          <div class="service-item">
+            <strong>讀書計畫（研究所版）</strong>
+            <span>說明研究所期間的學習規劃與研究方向發展，配合目標實驗室的期待。</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
