@@ -17,4 +17,5 @@ export const nav = [
   { id: 'process',   label: '合作流程', href: '/pages/process.html' },
   { id: 'resources', label: '知識庫',   href: '/pages/resources.html' },
   { id: 'faq',       label: 'FAQ',      href: '/pages/faq.html' },
+  { id: 'about',     label: '關於',     href: '/pages/about.html' },
 ];
