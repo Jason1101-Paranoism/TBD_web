@@ -65,13 +65,13 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
       </article>
 
       <aside class="article-sidebar">
-        <div class="sidebar-toc">
-          <div class="sidebar-toc-head">
-            <span class="sidebar-toc-label">本文目錄</span>
+        <div class="pg-sidebar">
+          <div class="pg-sidebar-head">
+            <span class="pg-sidebar-kicker">本文目錄</span>
           </div>
-          <nav>
+          <nav class="pg-sidebar-nav">
             {tocItems.map(item => (
-              <a href={item.href}>{item.label}</a>
+              <a href={item.href} class="pg-sidebar-link">{item.label}</a>
             ))}
           </nav>
         </div>
@@ -107,7 +107,7 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
     </section>
   </main>
   <script>
-    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.sidebar-toc a'));
+    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.pg-sidebar-link'));
     const sections = tocLinks
       .map(a => document.querySelector(a.getAttribute('href') ?? ''))
       .filter((el): el is Element => el !== null);
@@ -115,9 +115,9 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
     const observer = new IntersectionObserver(entries => {
       const visible = entries.find(e => e.isIntersecting);
       if (!visible) return;
-      tocLinks.forEach(a => a.classList.remove('toc-active'));
-      const link = document.querySelector<HTMLAnchorElement>(`.sidebar-toc a[href="#${visible.target.id}"]`);
-      link?.classList.add('toc-active');
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector<HTMLAnchorElement>(`.pg-sidebar-link[href="#${visible.target.id}"]`);
+      link?.classList.add('active');
     }, { rootMargin: '-10% 0px -60% 0px', threshold: 0 });
 
     sections.forEach(s => observer.observe(s));

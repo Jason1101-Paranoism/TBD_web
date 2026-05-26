@@ -108,22 +108,22 @@
 <div class="grid lg:grid-cols-[260px_1fr] gap-8 items-start">
 
 <!-- ═══ SIDEBAR ═══ -->
-<aside class="lg:sticky lg:top-24">
-  <div class="rounded-2xl border border-[#D0CEDB] bg-white p-4" style="border-color:rgba(208,206,219,.7)">
-    <div class="px-3 pb-3 border-b" style="border-color:rgba(208,206,219,.5)">
-      <p class="text-[11px] font-extrabold text-[#1A5D94] tracking-widest uppercase">Guide Menu</p>
-      <h2 class="mt-1 text-lg font-extrabold text-[#142143]">Portfolio 指南</h2>
+<aside style="position:sticky;top:5rem;align-self:start;">
+  <div class="pg-sidebar">
+    <div class="pg-sidebar-head">
+      <span class="pg-sidebar-kicker">Guide Menu</span>
+      <span class="pg-sidebar-title">Portfolio 指南</span>
     </div>
-    <nav class="mt-3 space-y-1">
-      <button type="button" data-tab="home"      class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">首頁</button>
-      <button type="button" data-tab="concept"   class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">Portfolio 是什麼</button>
-      <button type="button" data-tab="step"      class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">從 0 開始建立</button>
-      <button type="button" data-tab="templates" class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">架構模板</button>
-      <button type="button" data-tab="tools"     class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">工具指南</button>
-      <button type="button" data-tab="cases"     class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">真實案例</button>
-      <button type="button" data-tab="mistakes"  class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">常見錯誤</button>
-      <button type="button" data-tab="resources" class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">精選 Portfolio 資源</button>
-      <button type="button" data-tab="faq"       class="pg-nav-btn w-full text-left rounded-xl px-3 py-2.5 text-sm font-bold transition text-[#767995]">FAQ</button>
+    <nav class="pg-sidebar-nav">
+      <button type="button" data-tab="home"      class="pg-nav-btn pg-sidebar-btn">首頁</button>
+      <button type="button" data-tab="concept"   class="pg-nav-btn pg-sidebar-btn">Portfolio 是什麼</button>
+      <button type="button" data-tab="step"      class="pg-nav-btn pg-sidebar-btn">從 0 開始建立</button>
+      <button type="button" data-tab="templates" class="pg-nav-btn pg-sidebar-btn">架構模板</button>
+      <button type="button" data-tab="tools"     class="pg-nav-btn pg-sidebar-btn">工具指南</button>
+      <button type="button" data-tab="cases"     class="pg-nav-btn pg-sidebar-btn">真實案例</button>
+      <button type="button" data-tab="mistakes"  class="pg-nav-btn pg-sidebar-btn">常見錯誤</button>
+      <button type="button" data-tab="resources" class="pg-nav-btn pg-sidebar-btn">精選 Portfolio 資源</button>
+      <button type="button" data-tab="faq"       class="pg-nav-btn pg-sidebar-btn">FAQ</button>
     </nav>
   </div>
 </aside>

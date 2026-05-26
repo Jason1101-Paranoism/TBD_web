@@ -49,11 +49,7 @@
     var panel = document.getElementById('pg-tab-' + id);
     if (panel) panel.classList.remove('hidden');
     document.querySelectorAll('.pg-nav-btn').forEach(function (btn) {
-      var active = btn.dataset.tab === id;
-      btn.classList.toggle('bg-[#1A5D94]', active);
-      btn.classList.toggle('text-white', active);
-      btn.classList.toggle('shadow-soft', active);
-      btn.classList.toggle('text-[#767995]', !active);
+      btn.classList.toggle('active', btn.dataset.tab === id);
     });
     state.tab = id;
     window.scrollTo({ top: 0, behavior: 'smooth' });
