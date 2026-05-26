@@ -7,6 +7,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <span class="kicker">TBD Studio 知識庫</span>
   <h1>升學路上，你需要知道的事。</h1>
   <p class="lead">彙整 Side Project、學習歷程、備審策略、競賽能力與 AI 時代升學觀點，幫助你做出更清楚的準備決策。</p>
+  <form class="resources-search-bar" action="/pages/search.html" method="get">
+    <div class="resources-search-wrap">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tbd-mid); flex-shrink: 0;">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="search" name="q" placeholder="搜尋文章關鍵字…" class="resources-search-input" autocomplete="off">
+      <button type="submit" class="resources-search-btn">搜尋</button>
+    </div>
+  </form>
 </section>
 
 <div class="resources-main">

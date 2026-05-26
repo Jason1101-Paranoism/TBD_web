@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('articles');
+const articleData = articles.map(a => ({
+  title: a.data.title,
+  kicker: a.data.kicker,
+  description: a.data.description,
+  href: `/pages/resources/${a.slug}.html`,
+}));
+
+const kickers = [...new Set(articles.map(a => a.data.kicker))].sort();
+---
+
+<BaseLayout title="搜尋知識庫｜TBD Studio" description="搜尋 TBD Studio 升學知識庫中的所有文章，支援關鍵字搜尋與分類篩選。" bodyClass="sub-page search-page">
+
+<section class="search-hero">
+  <span class="kicker">知識庫搜尋</span>
+  <h1>找你需要的文章</h1>
+  <form class="search-form-large" id="search-form" autocomplete="off">
+    <div class="search-input-wrap">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        type="search"
+        id="search-input"
+        class="search-input-field"
+        placeholder="輸入關鍵字，例如：面試、Side Project、GitHub…"
+        aria-label="搜尋文章"
+      >
+      <button type="submit" class="search-submit-btn">搜尋</button>
+    </div>
+  </form>
+</section>
+
+<main class="search-main">
+
+  <div class="search-filter-bar">
+    <button class="filter-pill active" data-kicker="">全部文章</button>
+    {kickers.map(k => (
+      <button class="filter-pill" data-kicker={k}>{k}</button>
+    ))}
+  </div>
+
+  <div class="search-results-header">
+    <p id="results-count" class="results-count"></p>
+    <a href="/pages/resources.html" class="text-link">← 瀏覽所有文章</a>
+  </div>
+
+  <div id="results-grid" class="card-grid"></div>
+
+  <div id="no-results" class="search-empty" hidden>
+    <p id="no-results-msg">找不到符合的文章，試試其他關鍵字或分類。</p>
+    <a href="/pages/resources.html" class="button secondary" style="margin-top: 12px; display: inline-flex;">瀏覽所有文章</a>
+  </div>
+
+</main>
+
+<script is:inline define:vars={{ articleData, kickers }}>
+(function() {
+  var data = articleData;
+  var currentQuery = '';
+  var currentKicker = '';
+
+  var searchInput = document.getElementById('search-input');
+  var resultsGrid = document.getElementById('results-grid');
+  var noResults = document.getElementById('no-results');
+  var noResultsMsg = document.getElementById('no-results-msg');
+  var resultsCount = document.getElementById('results-count');
+
+  function highlight(text, query) {
+    if (!query) return escapeHtml(text);
+    var escaped = escapeHtml(text);
+    var escapedQuery = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return escaped.replace(new RegExp('(' + escapedQuery + ')', 'gi'), '<mark>$1</mark>');
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function searchArticles(query, kicker) {
+    var q = (query || '').toLowerCase().trim();
+    return data.filter(function(a) {
+      var matchesQuery = !q ||
+        a.title.toLowerCase().includes(q) ||
+        a.kicker.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q);
+      var matchesKicker = !kicker || a.kicker === kicker;
+      return matchesQuery && matchesKicker;
+    });
+  }
+
+  function renderResults(results) {
+    var total = results.length;
+    var q = currentQuery;
+
+    if (total === 0) {
+      resultsGrid.innerHTML = '';
+      noResults.hidden = false;
+      noResultsMsg.textContent = q
+        ? '找不到關於「' + q + '」的文章，試試其他關鍵字或分類。'
+        : '這個分類目前沒有文章。';
+      resultsCount.textContent = '';
+      return;
+    }
+
+    noResults.hidden = true;
+    var label = currentKicker ? '「' + currentKicker + '」' : '';
+    resultsCount.textContent = (q ? '「' + q + '」' : '') + label + ' 共 ' + total + ' 篇文章';
+
+    resultsGrid.innerHTML = results.map(function(a) {
+      var titleHtml = highlight(a.title, q);
+      var descHtml = highlight(a.description, q);
+      return '<article class="card article-card">' +
+        '<span class="badge">' + escapeHtml(a.kicker) + '</span>' +
+        '<h3><a class="text-link" href="' + escapeHtml(a.href) + '">' + titleHtml + '</a></h3>' +
+        '<p class="card-desc">' + descHtml + '</p>' +
+        '</article>';
+    }).join('');
+  }
+
+  function updateURL() {
+    var url = new URL(window.location.href);
+    if (currentQuery) url.searchParams.set('q', currentQuery);
+    else url.searchParams.delete('q');
+    if (currentKicker) url.searchParams.set('kicker', currentKicker);
+    else url.searchParams.delete('kicker');
+    window.history.replaceState({}, '', url.toString());
+  }
+
+  function runSearch() {
+    var results = searchArticles(currentQuery, currentKicker);
+    renderResults(results);
+    updateURL();
+  }
+
+  // Debounce input
+  var timer;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      currentQuery = searchInput.value.trim();
+      runSearch();
+    }, 200);
+  });
+
+  // Form submit
+  document.getElementById('search-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    currentQuery = searchInput.value.trim();
+    runSearch();
+  });
+
+  // Tag filter pills
+  document.querySelectorAll('.filter-pill').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-pill').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentKicker = btn.dataset.kicker || '';
+      runSearch();
+    });
+  });
+
+  // Init from URL params
+  var params = new URLSearchParams(window.location.search);
+  var initQuery = params.get('q') || '';
+  var initKicker = params.get('kicker') || '';
+
+  if (initQuery) {
+    searchInput.value = initQuery;
+    currentQuery = initQuery;
+  }
+  if (initKicker) {
+    currentKicker = initKicker;
+    document.querySelectorAll('.filter-pill').forEach(function(btn) {
+      btn.classList.toggle('active', (btn.dataset.kicker || '') === initKicker);
+    });
+  }
+
+  runSearch();
+})();
+</script>
+
+</BaseLayout>
