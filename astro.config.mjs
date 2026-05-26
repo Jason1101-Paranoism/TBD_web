@@ -12,6 +12,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
+      customPages: ['https://tbd-web.vercel.app/pages/portfolio-guide.html'],
       filter: (page) =>
         !page.includes('/audience') &&
         !page.includes('/plans') &&

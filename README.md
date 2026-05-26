@@ -1,7 +1,7 @@
 # TBD Studio 官方網站
 
-> 版本：v2.2 | 最後更新：2026-05-26
-> 現況：正式營運型教育顧問官網，GA4 事件追蹤上線，雙案例展示上線
+> 版本：v2.4 | 最後更新：2026-05-26
+> 現況：正式營運型教育顧問官網，GA4 事件追蹤上線，SEO 結構化資料上線
 
 ---
 
@@ -102,7 +102,8 @@ dist/                          ← Build 產物（gitignore，由 Vercel 自動�
 
 ```yaml
 ---
-title: 文章標題
+title: 文章標題（H1，品牌語氣）
+seoTitle: 搜尋意圖標題（可選，用於 <title> 標籤與 OG；省略時與 title 相同）
 description: 頁面 meta description
 kicker: 分類標籤
 lead: 文章導言
@@ -166,6 +167,15 @@ Measurement ID：`G-J30L8GC4TT`（Vercel env var：`PUBLIC_GA_MEASUREMENT_ID`）
 ---
 
 ## 版本紀錄
+
+### v2.4 | 2026-05-26 — SEO P0：結構化資料 + seoTitle + Sitemap
+
+- `BaseLayout.astro`：新增 `seoTitle` prop（`<title>`/OG 與 H1 分離）；全站 Schema（`EducationalOrganization` + `WebSite` + `SearchAction`）；per-page schema slot
+- `ArticleLayout.astro`：每篇文章注入 `Article` + `BreadcrumbList` Schema
+- `faq.astro`：新增 `FAQPage` Schema（10 組 Q&A）
+- 7 篇高搜尋意圖文章加入 `seoTitle` frontmatter（搜尋關鍵字優化版標題）
+- `astro.config.mjs`：`portfolio-guide.html` 加入 sitemap `customPages`
+- `content/config.ts`：articles schema 新增 optional `seoTitle` 欄位
 
 ### v2.3 | 2026-05-26 — CSS 設計系統統一 + 真實信任素材
 

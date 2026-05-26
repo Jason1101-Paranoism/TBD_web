@@ -10,10 +10,41 @@ interface Props {
   bodyClass?: string;
   canonicalUrl?: string;
   ogType?: string;
+  seoTitle?: string;
+  schema?: object;
 }
 
-const { title, description, bodyClass = '', canonicalUrl, ogType = 'website' } = Astro.props;
+const { title, description, bodyClass = '', canonicalUrl, ogType = 'website', seoTitle, schema } = Astro.props;
 const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
+const pageTitle = seoTitle ?? title;
+
+const siteSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "TBD Studio",
+      "url": site.siteUrl,
+      "email": site.email,
+      "description": "TBD Studio 協助學生進行志向探索、申請策略、備審面試與歷程規劃的專業升學顧問。",
+      "areaServed": "TW",
+      "availableLanguage": "zh-TW"
+    },
+    {
+      "@type": "WebSite",
+      "name": "TBD Studio",
+      "url": site.siteUrl,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${site.siteUrl}/pages/search.html?q={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+};
 ---
 
 <!doctype html>
@@ -21,7 +52,7 @@ const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{title}</title>
+  <title>{pageTitle}</title>
   <meta name="description" content={description}>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,24 +87,16 @@ const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
   <meta property="og:type" content={ogType}>
   <meta property="og:locale" content="zh_TW">
   <meta property="og:site_name" content="TBD Studio">
-  <meta property="og:title" content={title}>
+  <meta property="og:title" content={pageTitle}>
   <meta property="og:description" content={description}>
   <meta property="og:image" content={site.ogImage}>
   <meta property="og:url" content={canonical}>
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content={title}>
+  <meta name="twitter:title" content={pageTitle}>
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={site.ogImage}>
-  <script type="application/ld+json" is:inline set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "TBD Studio",
-    "url": site.siteUrl,
-    "email": site.email,
-    "description": "TBD Studio 協助學生進行志向探索、申請策略、備審面試與歷程規劃的專業升學顧問。",
-    "areaServed": "TW",
-    "availableLanguage": "zh-TW"
-  })} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(siteSchema)} />
+  {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
 </head>
 <body class={bodyClass}>
   <Nav />
