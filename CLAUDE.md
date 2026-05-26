@@ -22,7 +22,7 @@
 **修改前必須做的事：**
 
 1. 確認受影響的檔案類型（見下方結構說明）
-2. CSS 改 `css/` 目錄的對應檔案（同時也要改 `public/css/` 的同名檔案，或只改 `css/` 再手動同步）
+2. CSS 只改 `public/css/` 對應檔案（`css/` 目錄已不存在，`public/css/` 是唯一來源）
 3. 修改後執行 `npm run build` 確認無錯誤
 4. **不要修改 `dist/`**，那是 build 產物
 
@@ -41,40 +41,67 @@
 ```
 src/
 ├── components/
-│   ├── Nav.astro          ← 全站導覽列
-│   └── Footer.astro       ← 全站頁腳
+│   ├── Nav.astro              ← 全站導覽列
+│   ├── Footer.astro           ← 全站頁腳
+│   └── GoogleAnalytics.astro  ← GA4 追蹤元件（讀 PUBLIC_GA_MEASUREMENT_ID env var）
 ├── config/
-│   └── site.ts            ← 站台常數（logo、LINE URL、nav 項目）
+│   └── site.ts                ← 站台常數（logo、LINE URL、nav 7 項）
 ├── content/
-│   └── articles/          ← 知識庫文章（MDX Content Collections）
-│       └── *.mdx          ← 每篇文章一個 .mdx 檔
+│   └── articles/              ← 知識庫文章（MDX Content Collections）
+│       └── *.mdx              ← 每篇文章一個 .mdx 檔
 ├── layouts/
-│   ├── BaseLayout.astro   ← 全站 HTML shell（head、nav、footer）
-│   └── ArticleLayout.astro ← 知識庫文章版型（hero、側欄、CTA）
+│   ├── BaseLayout.astro       ← 全站 HTML shell（head、nav、footer、GA4）
+│   └── ArticleLayout.astro    ← 知識庫文章版型（hero、側欄、CTA）
 └── pages/
-    ├── index.astro        ← 首頁
+    ├── index.astro            ← 首頁
     └── pages/
-        ├── cases.astro
-        ├── services.astro
-        ├── process.astro
-        ├── timeline.astro
-        ├── plans.astro
-        ├── audience.astro
-        ├── index.astro    ← 服務總覽
-        ├── resources.astro ← 知識庫首頁
+        ├── about.astro        ← 關於 TBD Studio
+        ├── cases.astro        ← 成功案例（3-tab）
+        ├── services.astro     ← 服務內容（情境入口 + 依對象分組）
+        ├── process.astro      ← 合作流程與申請時程（泳道圖 + 時序圖）
+        ├── plans.astro        ← 服務方案
+        ├── audience.astro     ← 適合對象
+        ├── faq.astro          ← 常見問題
+        ├── search.astro       ← 知識庫搜尋（client-side，URL params）
+        ├── index.astro        ← 服務總覽導覽頁
+        ├── resources.astro    ← 知識庫首頁（側邊欄 + 分主題）
+        ├── timeline.astro     ← 舊頁面，已轉為 redirect → /pages/process.html
         └── resources/
-            └── [slug].astro ← 動態路由，從 MDX Content Collections 產生
+            └── [slug].astro   ← 動態路由，從 MDX Content Collections 產生
 
 public/
-├── css/                   ← CSS 靜態檔案（5 個檔案 + style.css 入口）
-├── js/                    ← main.js、portfolio-guide.js
+├── css/                       ← CSS 唯一來源（5 個模組 + style.css @import 入口）
+├── js/                        ← main.js（含 GA4 事件追蹤）、portfolio-guide.js
 ├── assets/images/
 └── pages/
-    └── portfolio-guide.html ← 獨立 React/Babel 頁面，直接靜態服務
+    └── portfolio-guide.html   ← 獨立 vanilla JS 頁面，直接靜態服務
 
-css/                       ← CSS 原始碼（與 public/css/ 保持同步）
-src/_fragments/            ← 舊 HTML 片段備份，僅供參考，不會被 build
+.env                           ← 本地環境變數（gitignore，不 commit）
 ```
+
+---
+
+## GA4 事件追蹤
+
+所有 LINE CTA 連結已加上 `data-ga-event` 屬性，`main.js` 會在 click 時呼叫 `gtag('event', ...)`.
+
+| 事件名稱 | 位置 |
+|---------|------|
+| `click_line_footer` | 頁腳 |
+| `click_line_home_pricing` | 首頁定價區 |
+| `click_line_about` | 關於頁 CTA |
+| `click_line_services` | 服務頁 Hero |
+| `click_line_services_situation` | 服務頁情境卡 |
+| `click_line_services_bottom` | 服務頁底部 |
+| `click_line_process` / `_bottom` | 合作流程頁 |
+| `click_line_faq` / `_bottom` | FAQ 頁 |
+| `click_line_cases` / `_bottom` | 成功案例頁 |
+| `click_line_resources` | 知識庫頁 |
+| `click_line_article_sidebar` / `_bottom` | 文章頁 |
+| `search_resources` | 知識庫搜尋（附 search_term） |
+
+新增 LINE CTA 時，記得加上對應的 `data-ga-event` 屬性。  
+Vercel 環境變數：`PUBLIC_GA_MEASUREMENT_ID=G-J30L8GC4TT`（已設定）。
 
 ---
 
@@ -150,18 +177,18 @@ relatedArticles:
 ## 樣式層級
 
 ```
-css/tbd-theme.css      ← 品牌色、字體、設計 tokens
-css/tbd-base.css       ← reset、全站基礎
-css/tbd-layout.css     ← nav、footer、全站 layout
-css/tbd-components.css ← button、card、table、timeline、cta
-css/tbd-pages.css      ← 各頁差異樣式
+public/css/tbd-theme.css      ← 品牌色、字體、設計 tokens（--tbd-* 變數）
+public/css/tbd-base.css       ← reset、全站基礎
+public/css/tbd-layout.css     ← nav、footer、全站 layout
+public/css/tbd-components.css ← button、card、table、timeline、cta
+public/css/tbd-pages.css      ← 各頁差異樣式（about、swimlane、search、resources 等）
+public/css/style.css          ← @import 入口，不直接寫樣式
 ```
 
-- 修改按鈕 → `tbd-components.css`
-- 修改品牌色 → `tbd-theme.css`
-- 修改某一頁特定樣式 → `tbd-pages.css`
-- 不要把新樣式寫進 `style.css`（它只是 CSS @import 入口）
-- 改 `css/` 後也要同步更新 `public/css/` 的同名檔案
+- 修改按鈕 → `public/css/tbd-components.css`
+- 修改品牌色 → `public/css/tbd-theme.css`
+- 修改某一頁特定樣式 → `public/css/tbd-pages.css`
+- **`css/` 目錄已不存在**，`public/css/` 是唯一 CSS 來源，不需要雙份同步
 
 ---
 
@@ -172,6 +199,7 @@ css/tbd-pages.css      ← 各頁差異樣式
 - 避免「一鍵解決」、「極致體驗」等誇大詞彙
 - CTA 應明確但不強迫（「預約策略諮詢」比「立即購買」好）
 - 信任感來自案例的真實性，不來自設計炫技
+- 核心語氣原則：「共創，不代筆；引導，不操控；如實呈現，不憑空捏造。」
 
 ---
 
@@ -181,8 +209,8 @@ css/tbd-pages.css      ← 各頁差異樣式
 ## 修改內容
 
 ### 變更檔案
-- `src/content/articles/xxx.mdx`：說明改了什麼
-- `css/tbd-components.css` + `public/css/tbd-components.css`：說明改了什麼
+- `src/pages/pages/xxx.astro`：說明改了什麼
+- `public/css/tbd-pages.css`：說明改了什麼
 
 ### 測試方式
 1. 執行 `npm run build`
@@ -200,3 +228,5 @@ css/tbd-pages.css      ← 各頁差異樣式
 - 移除或覆蓋現有內容，改成 AI 生成的 placeholder
 - 直接修改 `dist/` 目錄（build 產物）
 - 下載或執行第三方安裝腳本
+- 在 `css/` 目錄寫 CSS（該目錄已不存在）
+- commit `.env` 檔案（已加入 .gitignore）
