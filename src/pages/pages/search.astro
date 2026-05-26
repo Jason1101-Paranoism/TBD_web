@@ -135,6 +135,9 @@ const kickers = [...new Set(articles.map(a => a.data.kicker))].sort();
     var results = searchArticles(currentQuery, currentKicker);
     renderResults(results);
     updateURL();
+    if (currentQuery && typeof window.gtag === 'function') {
+      window.gtag('event', 'search_resources', { search_term: currentQuery });
+    }
   }
 
   // Debounce input

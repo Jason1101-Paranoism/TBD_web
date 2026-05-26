@@ -14,3 +14,13 @@
     link.addEventListener('click', close);
   });
 })();
+
+(function() {
+  document.querySelectorAll('[data-ga-event]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', el.dataset.gaEvent, { event_category: 'cta' });
+      }
+    });
+  });
+})();
