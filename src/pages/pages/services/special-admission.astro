@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '特殊選才申請策略與備審輔導';
+const description = '特殊選才不看學測分數，看的是你和別人不同的地方。TBD 協助有特殊背景或自主學習經歷的學生，定位申請優勢、整理備審、準備面試。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=service-special`;
+const ctaLinkBottom = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=service-special-bottom`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": title,
+      "description": description,
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "TBD Studio",
+        "url": site.siteUrl
+      },
+      "areaServed": "TW",
+      "availableLanguage": "zh-TW"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "服務內容", "item": `${site.siteUrl}/pages/services.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/services/special-admission.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page service-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/services.html">服務內容</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">特殊選才</span>
+  <h1>{title}</h1>
+  <p class="lead">特殊選才管道給了那些不適合用成績衡量的學生一條出路——但這也代表你需要清楚說明「你的特殊性是什麼」以及「為什麼這個科系需要你」。TBD 幫你找到這個答案，並讓備審和面試都能如實呈現。</p>
+  <div class="button-row">
+    <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_service_special">預約策略諮詢</a>
+    <a class="button secondary" href="/pages/services.html">查看服務方案</a>
+  </div>
+</section>
+
+<main>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">適合你嗎？</span>
+      <h2>這個管道適合有特殊積累的學生</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>有自主研究或 Side Project 經歷</h3>
+        <p>高中期間有接觸研究、自學特定領域，或完成過有深度的 Side Project，但不確定如何在申請中呈現它的價值。</p>
+      </div>
+      <div class="faq-item">
+        <h3>有競賽或特殊活動背景</h3>
+        <p>參加過科展、全國性競賽、國際交流或特殊計畫，有具體成果，但沒有把它轉化成申請故事。</p>
+      </div>
+      <div class="faq-item">
+        <h3>成績不是強項，但能力很明確</h3>
+        <p>學測分數不突出，但在特定領域有明確的積累和動機——特殊選才是為這樣的學生設計的管道。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">服務說明</span>
+      <h2>特選申請的三個關鍵工作</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>① 特殊性定位</h3>
+        <p>找出你的材料在特選管道的實際競爭力——你的特殊性是什麼、哪些校系最適合你的 profile，以及申請策略的優先順序。</p>
+      </div>
+      <div class="faq-item">
+        <h3>② 備審整理</h3>
+        <p>特選備審強調自主學習的深度和問題意識。TBD 幫你把研究經歷、Side Project 和獨特動機整合成一份有說服力的申請文件。</p>
+      </div>
+      <div class="faq-item">
+        <h3>③ 面試答辯準備</h3>
+        <p>特選面試通常比個申更深入——教授會直接追問你的研究細節和動機。TBD 幫你建立答辯邏輯、準備追問題庫，確保面試時能清楚說明自己的材料。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">案例佐證</span>
+      <h2>宥榕的特殊選才之路</h2>
+    </div>
+    <div class="card-grid" style="margin-top: 24px;">
+      <div class="card">
+        <span class="badge">陽明交大百川書院</span>
+        <p style="margin-top: 12px;">約 20 週全程陪跑。透過方向探索找到申請主線、整理自主學習經歷、完成面試訓練，最終錄取。特殊選才的關鍵不是活動多少，而是能不能說清楚「你為什麼是這個科系需要的人」。</p>
+      </div>
+      <div class="card">
+        <span class="badge">家長回饋</span>
+        <blockquote style="margin-top: 12px; font-style: italic; color: var(--tbd-dark);">「這不是幫他考上，而是讓他知道自己是誰。」</blockquote>
+        <p style="margin-top: 8px;">宥榕媽媽在結案訪談分享，比起錄取結果，她更在乎孩子在過程中建立的自信和方向感。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">常見問題</span>
+      <h2>關於特殊選才申請</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>我的材料夠「特殊」嗎？</h3>
+        <p>這正是初談要評估的事。特殊不一定是國際競賽或頂尖成果，更重要的是有沒有清楚的自主學習動機和深度。初談時 TBD 會給你誠實的評估。</p>
+      </div>
+      <div class="faq-item">
+        <h3>什麼時候開始準備最合適？</h3>
+        <p>特選申請通常在高三上學期，但建議高二下就開始整理方向，確保最後一年的活動有策略地累積。</p>
+      </div>
+      <div class="faq-item">
+        <h3>個申和特選可以同時準備嗎？</h3>
+        <p>可以。兩個管道的備審策略有重疊，但特選更強調特殊性和深度，個申更強調主線和完整性。TBD 可以幫你設計同時兼顧的準備策略。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>想知道你的材料在特選管道有多大勝算？</h2>
+    <p>第一步是一次 60 分鐘的策略諮詢，TBD 會幫你評估材料的競爭力、找到最適合的校系方向，以及設計準備策略。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/cases.html">看成功案例</a>
+      <a class="button" href={ctaLinkBottom} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_service_special_bottom">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>

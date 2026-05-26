@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '研究、自學與能力累積指南';
+const description = '高中生如何開始接觸研究、提升自學能力、參加競賽並讓這些經歷真正對申請有說服力——TBD Studio 能力建立系列文章完整收錄。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-research`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": title,
+      "description": description,
+      "url": `${site.siteUrl}/pages/guides/research.html`,
+      "inLanguage": "zh-TW"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "知識庫", "item": `${site.siteUrl}/pages/resources.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/guides/research.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page guide-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">主題指南</span>
+  <h1>{title}</h1>
+  <p class="lead">有系統的自學、研究接觸與競賽參與，是高中階段能力累積最有效率的三條路。這個頁面收錄 TBD Studio 所有關於研究、自學與競賽的文章，幫你在課業之外建立真實且可展示的能力。</p>
+</section>
+
+<main>
+
+  <section class="section" id="research">
+    <h2>接觸研究：從高中生到研究環境</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">研究與申請</span>
+        <h3><a class="text-link" href="/pages/resources/research-find-professor.html">高中生怎麼開始接觸研究、聯繫教授？</a></h3>
+        <p class="card-desc">為什麼高中生值得接觸研究、怎麼找到適合聯繫的教授、信怎麼寫，以及進入研究環境後怎麼讓它有申請價值。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="self-learning">
+    <h2>自學：從沒有方向到做出成果</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">學習策略</span>
+        <h3><a class="text-link" href="/pages/resources/self-learning-sop.html">高中生自學 SOP：怎麼從不會到做出成果？</a></h3>
+        <p class="card-desc">自學最難的不是找資源，而是維持方向感和完成一件事的能力。一個可複製的五階段流程。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">學習策略</span>
+        <h3><a class="text-link" href="/pages/resources/time-management-skills.html">高中生怎麼在課業之外累積能力？</a></h3>
+        <p class="card-desc">能力累積不需要大量時間，需要正確的節奏。三個時間配置原則讓課業和準備真正並行。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">工具指南</span>
+        <h3><a class="text-link" href="/pages/resources/notion-system.html">高中生怎麼用 Notion 整理學習歷程和 Side Project？</a></h3>
+        <p class="card-desc">Notion 最實用的架構設計，讓素材整理、專案管理和備審準備都在同一個地方。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="competitions">
+    <h2>競賽：怎麼選、怎麼讓它真正有申請價值</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">競賽</span>
+        <h3><a class="text-link" href="/pages/resources/competitions.html">高中生競賽怎麼選？如何把競賽延伸成申請亮點？</a></h3>
+        <p class="card-desc">不同方向適合的競賽類型、競賽真正在培養什麼能力，以及如何把成果延伸成長期主線。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">競賽策略</span>
+        <h3><a class="text-link" href="/pages/resources/competition-to-project.html">如何把競賽延伸成長期專案？</a></h3>
+        <p class="card-desc">競賽結束後，大多數人什麼都沒留下。三種把競賽成果轉化成長期主線的具體方式。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">競賽指南</span>
+        <h3><a class="text-link" href="/pages/resources/hackathon-guide.html">Hackathon 參加指南：高中生怎麼找、怎麼準備、怎麼讓它有申請價值？</a></h3>
+        <p class="card-desc">台灣高中生可以參加的 Hackathon、第一次參加怎麼準備，以及讓 Hackathon 有申請價值的做法。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>想開始累積，但不確定從哪條路切入最值得？</h2>
+    <p>TBD 的策略諮詢會根據你的科系目標、目前的學習狀態和可投入的時間，幫你找到最有效率的能力建立路徑。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_guide_research">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>

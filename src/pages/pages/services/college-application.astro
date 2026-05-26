@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '個人申請備審整理與輔導';
+const description = '協助高三生把三年的學習歷程整理成有主線、有說服力的備審資料。從素材盤點到文件重構，線上進行，不代寫。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=service-college`;
+const ctaLinkBottom = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=service-college-bottom`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": title,
+      "description": description,
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "TBD Studio",
+        "url": site.siteUrl
+      },
+      "areaServed": "TW",
+      "availableLanguage": "zh-TW"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "服務內容", "item": `${site.siteUrl}/pages/services.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/services/college-application.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page service-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/services.html">服務內容</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">個人申請</span>
+  <h1>{title}</h1>
+  <p class="lead">你有三年的活動、作品和學習紀錄，但不知道怎麼讓它們說出一個清楚的故事。TBD 的備審整理服務從素材盤點開始，幫你找到申請主線、整理文件架構，讓評審在 30 秒內讀懂你是誰。</p>
+  <div class="button-row">
+    <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_service_college">預約策略諮詢</a>
+    <a class="button secondary" href="/pages/services.html">查看服務方案</a>
+  </div>
+</section>
+
+<main>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">適合你嗎？</span>
+      <h2>這個服務適合這樣的學生</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>有活動，但不知道怎麼整理</h3>
+        <p>參加過社團、競賽、自學課程，但備審資料看起來就是活動清單，沒有邏輯和主線。</p>
+      </div>
+      <div class="faq-item">
+        <h3>成績達標，但備審沒把握</h3>
+        <p>學測或統測成績進得了一階，但不確定備審是否有競爭力，也不清楚自己的弱點在哪裡。</p>
+      </div>
+      <div class="faq-item">
+        <h3>截止日近，需要快速整理</h3>
+        <p>離個申截止日還有一到兩個月，需要快速把材料梳理清楚，而不是從頭重寫。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">服務說明</span>
+      <h2>TBD 備審整理的四個步驟</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>① 素材盤點</h3>
+        <p>整理你三年的所有活動、作品和學習紀錄，找出哪些材料有申請價值、哪些可以捨棄，以及目前缺少什麼。</p>
+      </div>
+      <div class="faq-item">
+        <h3>② 主線建立</h3>
+        <p>從盤點結果中找到最有說服力的申請故事——不是最多的活動，而是最有邏輯的一條脈絡。</p>
+      </div>
+      <div class="faq-item">
+        <h3>③ 文件重構</h3>
+        <p>根據目標科系的評審邏輯，調整備審的架構與呈現方式。文字和想法來自你，TBD 負責讓它更清楚。</p>
+      </div>
+      <div class="faq-item">
+        <h3>④ 閱讀測試</h3>
+        <p>完成後進行模擬閱讀：從教授視角確認備審是否在 30 秒內傳達到核心訊息，並給出最終結構性建議。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">案例佐證</span>
+      <h2>有程的個申準備</h2>
+    </div>
+    <div class="card-grid" style="margin-top: 24px;">
+      <div class="card">
+        <span class="badge">中原大學機械工程</span>
+        <p style="margin-top: 12px;">理工背景但缺乏實作作品，透過 24 週全程陪跑，建立 Side Project 主線、完成備審整理，最終錄取目標科系。備審的核心問題不是「做了什麼」，而是「為什麼選擇這個方向」——這正是整理過程最需要釐清的事。</p>
+      </div>
+      <div class="card">
+        <span class="badge">家長回饋</span>
+        <blockquote style="margin-top: 12px; font-style: italic; color: var(--tbd-dark);">「這不是幫他考上，而是讓他知道自己是誰。」</blockquote>
+        <p style="margin-top: 8px;">特殊選才案例，宥榕媽媽在結案訪談分享，她更在乎孩子在過程中建立自信、找到方向。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">常見問題</span>
+      <h2>關於個申備審輔導</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>TBD 會替我寫備審嗎？</h3>
+        <p>不會。TBD 負責架構、邏輯和表達方式的調整，文字和想法都來自你本人。這樣做有很實際的原因：面試時教授會依備審追問，如果材料不是你真正的想法，臨場答不出來的代價很高。</p>
+      </div>
+      <div class="faq-item">
+        <h3>高幾開始最合適？</h3>
+        <p>高三上是個申備審的核心期，但高二下就開始梳理方向和素材效果最好。如果你現在高三，還來得及——但需要先評估目前的材料狀況。</p>
+      </div>
+      <div class="faq-item">
+        <h3>費用怎麼計算？</h3>
+        <p>初談費 NT$3,500，初談後決定合作可全額折抵。備審整理的正式方案依實際狀況報價，初談時 TBD 會給你誠實的評估。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>準備好開始整理了嗎？</h2>
+    <p>第一步是一次 60 分鐘的策略諮詢。TBD 會了解你的目標科系、目前的材料狀況，以及最需要補強的環節，給你一份具體的準備建議——不管後續有沒有繼續合作都帶得走。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/faq.html">常見問題</a>
+      <a class="button" href={ctaLinkBottom} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_service_college_bottom">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>

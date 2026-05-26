@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '研究所推甄備審與研究計畫輔導';
+const description = '協助大三、大四生準備研究所推甄：研究計畫書撰寫、學術自傳整理、教授聯繫策略與面試答辯準備。線上進行，全程文件版本追蹤。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=service-graduate`;
+const ctaLinkBottom = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=service-graduate-bottom`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": title,
+      "description": description,
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "TBD Studio",
+        "url": site.siteUrl
+      },
+      "areaServed": "TW",
+      "availableLanguage": "zh-TW"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "服務內容", "item": `${site.siteUrl}/pages/services.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/services/graduate.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page service-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/services.html">服務內容</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">研究所推甄</span>
+  <h1>{title}</h1>
+  <p class="lead">研究所推甄和大學個申不同——評審更在乎你的研究問題意識、學術成熟度，以及你和教授的研究方向是否真的契合。TBD 幫你整理大學四年的研究和學習脈絡，寫出一份說服教授「你值得進來」的申請文件。</p>
+  <div class="button-row">
+    <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_service_graduate">預約策略諮詢</a>
+    <a class="button secondary" href="/pages/services.html">查看服務方案</a>
+  </div>
+</section>
+
+<main>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">適合你嗎？</span>
+      <h2>研究所推甄的準備挑戰</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>不知道研究計畫書怎麼寫</h3>
+        <p>研究計畫書不是論文計畫，也不是讀書心得。很多學生不確定該寫到什麼深度、怎麼表達問題意識，以及如何和目標教授的研究方向接軌。</p>
+      </div>
+      <div class="faq-item">
+        <h3>學術自傳不知道重點在哪裡</h3>
+        <p>四年的課程、實習、研究助理、社團——哪些對推甄有說服力、哪些可以捨棄，以及怎麼串成一條有方向感的故事。</p>
+      </div>
+      <div class="faq-item">
+        <h3>不確定要聯繫哪些教授</h3>
+        <p>推甄前聯繫指導教授可以大幅提高錄取率，但很多學生不知道怎麼找到適合聯繫的教授，或信件寫了沒有回音。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">服務說明</span>
+      <h2>研究所推甄的四個核心準備</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>① 研究方向定位</h3>
+        <p>確認你的學術背景和興趣和哪些研究所方向最契合，以及哪些教授的研究和你的問題意識最相關。</p>
+      </div>
+      <div class="faq-item">
+        <h3>② 研究計畫書撰寫</h3>
+        <p>從研究問題的定義、文獻脈絡到預期研究方法，TBD 幫你把還沒成形的想法寫成有學術說服力的計畫書框架。</p>
+      </div>
+      <div class="faq-item">
+        <h3>③ 學術自傳與教授聯繫信</h3>
+        <p>整理大學四年的研究積累，撰寫有主線的學術自傳；同時準備教授聯繫信，提高在推甄前建立聯繫的機率。</p>
+      </div>
+      <div class="faq-item">
+        <h3>④ 口試答辯準備</h3>
+        <p>研究所口試教授會追問研究計畫的細節和你的學術動機。TBD 幫你整理可能被問到的問題，以及如何清楚、誠實地回答。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">時間規劃</span>
+      <h2>什麼時候開始準備？</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>大三下：方向確認與教授接觸</h3>
+        <p>這是開始整理研究方向和聯繫目標教授的最佳時機。早一步接觸，讓教授在收到推甄資料前就知道你是誰。</p>
+      </div>
+      <div class="faq-item">
+        <h3>大四上：文件撰寫與口試準備</h3>
+        <p>推甄資料繳交通常在大四上學期，研究計畫書和學術自傳需要充分的時間迭代修改，建議至少留 2 個月。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">常見問題</span>
+      <h2>關於研究所推甄輔導</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 24px;">
+      <div class="faq-item">
+        <h3>我還沒有很明確的研究方向，適合找 TBD 嗎？</h3>
+        <p>適合。「不確定研究方向」本身就是初談要解決的問題。TBD 會幫你從大學四年的學習脈絡找到最有說服力的申請方向，不需要在找 TBD 之前就想清楚。</p>
+      </div>
+      <div class="faq-item">
+        <h3>我申請的是台灣研究所還是國外？</h3>
+        <p>目前 TBD 主要協助台灣研究所推甄。國外研究所申請（SOP、推薦信）因地區和學校差異較大，請在初談時說明你的目標，TBD 會評估是否適合協助。</p>
+      </div>
+      <div class="faq-item">
+        <h3>費用怎麼計算？</h3>
+        <p>初談費 NT$3,500，初談後決定合作可全額折抵。研究所推甄的正式方案依需求範圍報價，初談時 TBD 會說明建議方案和費用範圍。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>大四推甄，準備從哪裡開始？</h2>
+    <p>一次 60 分鐘的策略諮詢，TBD 會幫你評估目前的研究積累和申請競爭力，以及設計一份有優先順序的準備計畫。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/faq.html">常見問題</a>
+      <a class="button" href={ctaLinkBottom} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_service_graduate_bottom">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>

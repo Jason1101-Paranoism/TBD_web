@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = 'AI 時代升學能力建立指南';
+const description = '在 AI 工具普及的時代，什麼能力真正稀缺？執行力、跨域整合、個人品牌與公開學習——TBD Studio AI 時代升學觀點系列完整收錄。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-ai-era`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": title,
+      "description": description,
+      "url": `${site.siteUrl}/pages/guides/ai-era.html`,
+      "inLanguage": "zh-TW"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "知識庫", "item": `${site.siteUrl}/pages/resources.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/guides/ai-era.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page guide-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">主題指南</span>
+  <h1>{title}</h1>
+  <p class="lead">AI 讓知識取得變得幾乎沒有門檻，但真正稀缺的能力反而更清晰了。這個頁面收錄 TBD Studio 所有 AI 時代升學觀點文章，幫助你理解什麼能力值得投資，以及如何在申請中展示它們。</p>
+</section>
+
+<main>
+
+  <section class="section" id="core-abilities">
+    <h2>AI 時代真正稀缺的能力</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">觀點</span>
+        <h3><a class="text-link" href="/pages/resources/execution-over-knowledge.html">AI 時代為什麼 Execution 比知識更重要？</a></h3>
+        <p class="card-desc">知識從來沒有像現在這樣容易取得，但能把事情做出來的人反而更稀少。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">AI 時代觀點</span>
+        <h3><a class="text-link" href="/pages/resources/skills-ai-cannot-replace.html">未來哪些能力最不容易被 AI 取代？</a></h3>
+        <p class="card-desc">AI 讓很多能力的門檻降低，但五種能力反而因此變得更稀缺，也更值得投資。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">AI 時代觀點</span>
+        <h3><a class="text-link" href="/pages/resources/cross-domain-integrator.html">為什麼未來最強的人通常是「跨域整合者」？</a></h3>
+        <p class="card-desc">單一領域的專精越來越容易被取代，但能把不同領域接起來的人，反而越來越稀缺。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="visibility">
+    <h2>讓對的人看見你：個人品牌與公開學習</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">AI 時代觀點</span>
+        <h3><a class="text-link" href="/pages/resources/personal-brand-ai.html">AI 時代的個人品牌：為什麼高中生也需要開始想這件事？</a></h3>
+        <p class="card-desc">個人品牌不是網紅才需要的事。說明它在升學申請和長期發展上的實際作用，以及怎麼開始。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">AI 時代觀點</span>
+        <h3><a class="text-link" href="/pages/resources/personal-website-digital-card.html">為什麼個人網站正在變成數位名片？</a></h3>
+        <p class="card-desc">AI 讓建站門檻幾乎消失，但有沒有個人網站正在成為能力和主動性的指標。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">AI 時代觀點</span>
+        <h3><a class="text-link" href="/pages/resources/build-in-public.html">Build in Public：公開學習與公開成長的力量</a></h3>
+        <p class="card-desc">在做的過程中就公開分享——不只讓你被看見，還讓你學得更快、備審素材更真實。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <h2>AI 工具怎麼用才有幫助？</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">工具指南</span>
+        <h3><a class="text-link" href="/pages/resources/ai-tools-guide.html">高中生 AI 工具實用指南：哪些工具真的值得用？</a></h3>
+        <p class="card-desc">學習、Side Project、研究、備審各階段最實用的 AI 工具，以及哪些用法會讓你退步。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>知道 AI 時代需要這些能力，但不確定怎麼讓它出現在備審裡？</h2>
+    <p>TBD 的策略諮詢幫你釐清目前的材料哪些真的有說服力、哪些只是湊字數，以及哪個方向最值得在高中階段投入。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_guide_ai_era">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>
