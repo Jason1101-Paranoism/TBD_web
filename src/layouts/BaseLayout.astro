@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import { site } from '../config/site';
 
 interface Props {
@@ -49,6 +50,7 @@ const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
     }
   </script>
   <link rel="stylesheet" href="/css/style.css">
+  <GoogleAnalytics />
   <meta name="google-site-verification" content="google524eb5b6fa89d030">
   <link rel="canonical" href={canonical}>
   <meta property="og:type" content={ogType}>

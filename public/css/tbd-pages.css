@@ -189,6 +189,7 @@
 .swim-cell h3 { font-size: 15px; font-weight: 800; color: var(--tbd-dark); margin: 0 0 6px; }
 .swim-cell p { font-size: 13px; color: var(--tbd-mid); margin: 0; line-height: 1.65; }
 .swim-cell--tbd h3 { color: var(--tbd-accent); }
+.swim-deliverable { margin-top: 10px; display: inline-block; font-size: 11px; font-weight: 700; color: var(--tbd-accent); background: rgba(26,93,148,.08); border: 1px solid rgba(26,93,148,.2); border-radius: 4px; padding: 3px 8px; letter-spacing: .03em; }
 @media (max-width: 640px) {
   .swimlane-header, .swim-row { grid-template-columns: 1fr; }
   .swim-cell { border-right: none; border-bottom: 1px solid var(--tbd-line); }
