@@ -15,7 +15,6 @@ export const nav = [
   { id: 'cases',     label: '成功案例', href: '/pages/cases.html' },
   { id: 'services',  label: '服務內容', href: '/pages/services.html' },
   { id: 'process',   label: '合作流程', href: '/pages/process.html' },
+  { id: 'timeline',  label: '申請時程', href: '/pages/resources/senior-year-timeline.html' },
   { id: 'resources', label: '知識庫',   href: '/pages/resources.html' },
-  { id: 'faq',       label: 'FAQ',      href: '/pages/faq.html' },
-  { id: 'about',     label: '關於',     href: '/pages/about.html' },
 ];

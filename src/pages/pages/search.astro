@@ -3,14 +3,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const articles = await getCollection('articles');
-const articleData = articles.map(a => ({
+const mdxData = articles.map(a => ({
   title: a.data.title,
   kicker: a.data.kicker,
   description: a.data.description,
   href: `/pages/resources/${a.slug}.html`,
 }));
 
-const kickers = [...new Set(articles.map(a => a.data.kicker))].sort();
+const staticPages = [
+  {
+    title: 'Portfolio 指南：高中生從 0 建立個人作品集',
+    kicker: 'Portfolio 指南',
+    description: '什麼是 Portfolio、為什麼高中生需要、如何從零開始建立個人網站作品集，含架構模板、工具選擇與真實案例。',
+    href: '/pages/portfolio-guide.html',
+  },
+];
+
+const articleData = [...mdxData, ...staticPages];
+const kickers = [...new Set(articleData.map(a => a.kicker))].sort();
 ---
 
 <BaseLayout title="搜尋知識庫｜TBD Studio" description="搜尋 TBD Studio 升學知識庫中的所有文章，支援關鍵字搜尋與分類篩選。" bodyClass="sub-page search-page">

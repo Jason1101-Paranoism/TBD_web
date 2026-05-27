@@ -253,6 +253,16 @@
       });
     });
 
+    /* Guide Menu collapse toggle (mobile) */
+    var guideToggle = document.getElementById('pg-guide-menu-toggle');
+    if (guideToggle) {
+      var guideSidebar = guideToggle.closest('.pg-sidebar');
+      guideToggle.addEventListener('click', function () {
+        var isOpen = guideSidebar.classList.toggle('open');
+        guideToggle.querySelector('.pg-guide-toggle-text').textContent = isOpen ? '收起' : '展開';
+      });
+    }
+
     /* Set initial states */
     switchTab('home');
     switchMockupTab('projects');
