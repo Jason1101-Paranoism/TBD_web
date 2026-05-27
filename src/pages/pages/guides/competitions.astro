@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '高中生競賽完整指南';
+const description = '競賽怎麼選、參加之後怎麼延伸成申請主線、Hackathon 怎麼準備——TBD Studio 競賽系列文章完整收錄。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-competitions`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": title,
+      "description": description,
+      "url": `${site.siteUrl}/pages/guides/competitions.html`,
+      "inLanguage": "zh-TW"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "知識庫", "item": `${site.siteUrl}/pages/resources.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/guides/competitions.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page guide-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">主題指南</span>
+  <h1>{title}</h1>
+  <p class="lead">競賽得獎不等於申請加分。真正有說服力的競賽，是那些讓你能說清楚「遇到什麼問題、怎麼解決、學到什麼」的過程。這個頁面收錄 TBD Studio 所有競賽相關文章，幫助你選對競賽、用對方式準備，並在比賽結束後把成果延伸成長期申請主線。</p>
+</section>
+
+<main>
+
+  <section class="section" id="choose">
+    <h2>選擇與規劃</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">競賽</span>
+        <h3><a class="text-link" href="/pages/resources/competitions.html">高中生競賽怎麼選？如何把競賽延伸成申請亮點？</a></h3>
+        <p class="card-desc">不同方向適合的競賽類型、競賽真正在培養什麼能力，以及評審看到競賽成果時真正在評估的是什麼。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="extend">
+    <h2>競賽結束後怎麼延伸</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">競賽</span>
+        <h3><a class="text-link" href="/pages/resources/competition-to-project.html">如何把競賽延伸成長期專案？</a></h3>
+        <p class="card-desc">競賽最有價值的部分不是獎狀，而是準備過程建立的能力。三種把競賽成果轉化成 Side Project、作品集或研究題目的具體方式。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="hackathon">
+    <h2>Hackathon 指南</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">競賽</span>
+        <h3><a class="text-link" href="/pages/resources/hackathon-guide.html">Hackathon 參加指南：高中生怎麼找、怎麼準備、怎麼讓它有申請價值？</a></h3>
+        <p class="card-desc">什麼是 Hackathon、台灣高中生可以參加哪些、第一次參加要怎麼準備，以及如何讓 Hackathon 經歷成為備審的有效素材。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>有競賽經歷，但不確定怎麼整理成備審故事？</h2>
+    <p>TBD 協助學生把競賽的過程和成果整理成清楚的申請主線，包括競賽敘事框架、備審說明邏輯，以及如何在面試中深度展開競賽經歷。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_guide_competitions">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>

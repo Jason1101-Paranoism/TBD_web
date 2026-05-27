@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '各科系備審準備指南';
+const description = '資工/AI、商管社科、醫學生科、設計、理工、人文外文、藝術——各科系的評審邏輯不同，準備方向也不同。TBD Studio 科系申請指南完整收錄。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-departments`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": title,
+      "description": description,
+      "url": `${site.siteUrl}/pages/guides/departments.html`,
+      "inLanguage": "zh-TW"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "知識庫", "item": `${site.siteUrl}/pages/resources.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/guides/departments.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page guide-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">主題指南</span>
+  <h1>{title}</h1>
+  <p class="lead">每個科系的評審在看的東西不一樣。資工系想看到問題意識和作品，設計系想看到思維過程，醫學系想看到真實動機和科學思維。這個頁面收錄各科系備審的準備邏輯，幫助你把力氣花在評審真正在意的地方。</p>
+</section>
+
+<main>
+
+  <section class="section" id="stem">
+    <h2>理工、資訊、工程方向</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">科系申請指南</span>
+        <h3><a class="text-link" href="/pages/resources/cs-ai-application.html">申請資工/AI 科系，備審要展示什麼？</a></h3>
+        <p class="card-desc">評審不是在找技術清單，而是在找有問題意識的學生。說明最有說服力的材料與最常見的四個失誤。</p>
+      </article>
+
+      <article class="card article-card">
+        <span class="badge">科系申請指南</span>
+        <h3><a class="text-link" href="/pages/resources/stem-application.html">理工科系備審如何呈現研究與技術經驗？</a></h3>
+        <p class="card-desc">理工科系不只看成績，更看你有沒有真正動手做過東西、遇到問題怎麼解決。說明如何有效呈現研究和技術經驗。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="business-social">
+    <h2>商管、社科方向</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">科系申請指南</span>
+        <h3><a class="text-link" href="/pages/resources/business-application.html">商管、社科科系備審怎麼規劃主線？</a></h3>
+        <p class="card-desc">商管社科備審的常見問題不是活動太少，而是活動太多卻沒有主線。說明如何從真實好奇心出發，整理出有說服力的申請主線。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="medical">
+    <h2>醫學、藥學、生命科學方向</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">科系申請指南</span>
+        <h3><a class="text-link" href="/pages/resources/medical-application.html">醫學、藥學、生命科學科系備審要展示什麼？</a></h3>
+        <p class="card-desc">醫療生科的評審不只看成績，更在找有清楚動機、同理心基礎和科學思維的申請者。說明各科系的評審邏輯。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="design">
+    <h2>設計、傳播方向</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">科系申請指南</span>
+        <h3><a class="text-link" href="/pages/resources/design-application.html">設計科系備審要展示什麼？從作品到思維的準備指南</a></h3>
+        <p class="card-desc">設計備審評估的不只是作品的美感，更是你的設計思維——你怎麼定義問題、做決策、從失敗中調整。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="humanities">
+    <h2>人文、外文、社會方向</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">科系申請指南</span>
+        <h3><a class="text-link" href="/pages/resources/humanities-application.html">人文、外文、社會科系備審要展示什麼？</a></h3>
+        <p class="card-desc">評審不是在找讀了很多書的學生，而是在找有真實問題意識和文字思考能力的申請者。說明最有說服力的材料與常見誤區。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="arts">
+    <h2>藝術、音樂、戲劇方向</h2>
+    <div class="card-grid">
+
+      <article class="card article-card">
+        <span class="badge">科系申請指南</span>
+        <h3><a class="text-link" href="/pages/resources/arts-application.html">藝術、音樂、戲劇科系備審怎麼準備？</a></h3>
+        <p class="card-desc">藝術類科系的備審邏輯和一般科系不同——評審在看的不只是技術高低，更是創作動機、審美觀點和持續積累的創作紀錄。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>不確定你的材料在目標科系夠不夠有說服力？</h2>
+    <p>TBD 針對你的目標科系提供備審方向評估，說明評審實際在看什麼，以及你現有材料的強弱和補強方向。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_guide_departments">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>
