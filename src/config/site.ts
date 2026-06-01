@@ -3,6 +3,7 @@ export const site = {
   logoUrl: '/assets/images/tbd_logo_lighttransparent_.png',
   logoDarkUrl: '/assets/images/tbd-logo-dark.png',
   lineUrl: 'https://lin.ee/9ciZvbA',
+  igUrl: 'https://www.instagram.com/_tbd_studio/',
   email: 'tbd.consulting.studio@gmail.com',
   lineId: '@756etimx',
   tagline: 'Define, Design, Deliver Your Next Move.',

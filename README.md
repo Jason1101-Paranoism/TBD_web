@@ -153,7 +153,7 @@ relatedArticles:
 - 要改品牌色：改 `public/css/tbd-theme.css`
 - 要改卡片、按鈕：改 `public/css/tbd-components.css`
 - 要改某頁樣式：改 `public/css/tbd-pages.css`
-- 新增 LINE CTA：記得加 `data-ga-event="click_line_xxx"` 屬性
+- 新增 CTA：加 `data-track-event="click_consultation_cta"`（或對應的標準事件）即可被追蹤
 
 **重要：**
 - 不要直接修改 `dist/`（build 產物）
@@ -172,8 +172,15 @@ relatedArticles:
 
 Measurement ID：`G-J30L8GC4TT`（Vercel env var：`PUBLIC_GA_MEASUREMENT_ID`）
 
-所有 LINE CTA 連結標記 `data-ga-event` 屬性，`main.js` 統一處理 click 事件。  
-在 GA4 後台將 `click_line_*` 設為 Key Event 即可追蹤轉換漏斗。
+`public/js/main.js` 全站統一追蹤，自動送出 8 個標準 Key Event：
+`click_line_cta`、`click_ig_cta`、`click_consultation_cta`、`view_service_page`、
+`view_article`、`scroll_75`、`download_resource`、`submit_contact_form`。
+
+新 CTA 用 `data-track-event="<event>"` 明確指定；舊的 `data-ga-event` 會自動 fallback。
+本機或網址加 `?ga_debug=1` 可在 GA4 DebugView 即時驗證（事件帶 `debug_mode`）。
+在 GA4 後台把 `click_line_cta` / `click_ig_cta` / `click_consultation_cta` / `submit_contact_form` 標為 Key Event。
+
+詳見 `CLAUDE.md` 的「GA4 事件追蹤」段落。
 
 ---
 

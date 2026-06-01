@@ -28,8 +28,8 @@ function isActive(item: { id: string; href: string }) {
     </div>
 
     <div class="site-nav-actions">
-      <a class="site-nav-cta site-nav-cta--mobile" href={navCta}>策略諮詢</a>
-      <a class="site-nav-cta site-nav-cta--desktop" href={navCta}>預約策略諮詢 →</a>
+      <a class="site-nav-cta site-nav-cta--mobile" href={navCta} data-track-event="click_consultation_cta" data-ga-event="click_line_nav">策略諮詢</a>
+      <a class="site-nav-cta site-nav-cta--desktop" href={navCta} data-track-event="click_consultation_cta" data-ga-event="click_line_nav">預約策略諮詢 →</a>
 
       <details class="site-menu" id="mobileMenu">
         <summary class="site-menu-button" aria-label="開啟導覽選單">
@@ -51,7 +51,7 @@ function isActive(item: { id: string; href: string }) {
             {nav.map(item => (
               <a href={item.href} data-menu-link>{item.label}</a>
             ))}
-            <a class="site-menu-cta" href={navCta} data-menu-link>預約策略諮詢 →</a>
+            <a class="site-menu-cta" href={navCta} data-menu-link data-track-event="click_consultation_cta" data-ga-event="click_line_menu">預約策略諮詢 →</a>
           </div>
         </div>
       </details>

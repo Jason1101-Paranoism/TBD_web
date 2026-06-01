@@ -81,27 +81,35 @@ public/
 
 ---
 
-## GA4 事件追蹤
+## GA4 事件追蹤（v1.2 Key Event）
 
-所有 LINE CTA 連結已加上 `data-ga-event` 屬性，`main.js` 會在 click 時呼叫 `gtag('event', ...)`.
+`public/js/main.js` 是全站統一的事件追蹤 script（在每頁 `</body>` 前載入），會自動把點擊／瀏覽行為對應到 8 個標準 Key Event：
 
-| 事件名稱 | 位置 |
-|---------|------|
-| `click_line_footer` | 頁腳 |
-| `click_line_home_pricing` | 首頁定價區 |
-| `click_line_about` | 關於頁 CTA |
-| `click_line_services` | 服務頁 Hero |
-| `click_line_services_situation` | 服務頁情境卡 |
-| `click_line_services_bottom` | 服務頁底部 |
-| `click_line_process` / `_bottom` | 合作流程頁 |
-| `click_line_faq` / `_bottom` | FAQ 頁 |
-| `click_line_cases` / `_bottom` | 成功案例頁 |
-| `click_line_resources` | 知識庫頁 |
-| `click_line_article_sidebar` / `_bottom` | 文章頁 |
-| `search_resources` | 知識庫搜尋（附 search_term） |
+| 標準事件 | 觸發方式 |
+|---------|---------|
+| `click_line_cta` | 點擊純加 LINE 好友連結（頁腳「加入 LINE 官方帳號」、或無 cta/nav utm 的 lin.ee 連結） |
+| `click_ig_cta` | 點擊 Instagram 連結（頁腳「追蹤 Instagram」、或任何 `instagram.com` 連結） |
+| `click_consultation_cta` | 點擊「預約策略諮詢」類 CTA（帶 `utm_medium=cta` 或 `nav` 的 LINE 連結、或舊有 `data-ga-event="click_line_*"`） |
+| `view_service_page` | 進入 `/pages/services...` 任一服務頁 |
+| `view_article` | 進入 `/pages/resources/<slug>` 文章頁 |
+| `scroll_75` | 頁面捲動超過 75%（每頁一次） |
+| `download_resource` | 點擊 `.pdf/.zip/.doc/.xls/.ppt/.csv` 等下載連結 |
+| `submit_contact_form` | 任一 `<form>` 送出（未來新增表單時自動生效；用 `data-no-track` 可排除） |
 
-新增 LINE CTA 時，記得加上對應的 `data-ga-event` 屬性。  
+**事件如何決定**（`resolveClickEvent`）：
+1. 元素上的 `data-track-event="<event>"` → 直接用該值（最明確，新 CTA 建議用這個）。
+2. 否則看舊有的 `data-ga-event`（`click_line_footer`→line、`click_ig_*`→ig、其餘 `click_line_*`→consultation）。
+3. 否則依 `href` 自動推斷（instagram / 下載副檔名 / lin.ee）。
+
+每個事件都會附帶 `page_path`，點擊事件再附 `link_url`、`link_text`、`cta_id`（原 `data-ga-event` 值，保留細分粒度）。
+
+**新增 CTA 時**：直接加 `data-track-event="click_consultation_cta"`（或對應事件）即可；舊的 `data-ga-event` 可留可不留，script 會自動 fallback。
+
+**測試 / DebugView**：本機 `localhost` 或網址加 `?ga_debug=1` 時，事件會帶 `debug_mode: true` 並在 console 印出 `[ga] ...`，可在 GA4 DebugView 即時驗證。
+
 Vercel 環境變數：`PUBLIC_GA_MEASUREMENT_ID=G-J30L8GC4TT`（已設定）。
+
+**GA4 後台**：在「管理 → 事件」把 `click_line_cta`、`click_ig_cta`、`click_consultation_cta`、`submit_contact_form` 標記為 Key Event（轉換）。
 
 ---
 
