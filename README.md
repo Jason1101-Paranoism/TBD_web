@@ -184,6 +184,60 @@ Measurement ID：`G-J30L8GC4TT`（Vercel env var：`PUBLIC_GA_MEASUREMENT_ID`）
 
 ---
 
+## 未來方向（規劃中，尚未開工）
+
+### TBD Growth Operating System — 成長週報自動化
+
+把目前分散的成長渠道（IG / Threads 內容 → 官網知識庫/Landing Page → LINE / 初談 CTA → 成交）串成「內容成效 → 官網轉換 → 下週行動」的閉環，每週自動產出可據以決策的報告。
+
+**已決定的方向：混合架構（自動收集 + 網站後台呈現）**
+
+```
+Vercel Cron（每週一）
+   └─ /api/cron/weekly-snapshot（service account 抓 GA4 + GSC）
+        └─ 計算當週數據 + 規則建議 → 寫入資料庫
+             └─ /admin 儀表板（SSR、密碼保護）隨時可看
+```
+
+**技術選型（已拍板）**
+- 資料庫：**Vercel Postgres (Neon)**
+- 後台登入：**單一密碼 + 簽名 cookie session**
+- 對官網影響：Astro 維持 `output: 'static'`，行銷頁全靜態不變；只有 `/admin`、`/api/*` 走 server（`prerender = false`）
+- Google 端用 **service account**（加進 GA4 property 當 Viewer、加進 GSC 當使用者），免互動式登入
+- Meta（IG / Threads）token 較麻煩，放後面階段
+
+**追蹤的資料源**
+- GA4 Data API：流量、key events（已埋好的 8 個事件）、轉換
+- Google Search Console：clicks / impressions / CTR / position / 查詢字詞
+- Instagram Graph API（後期）：貼文觸及、互動、saves、website clicks
+- Threads API（後期）：views、replies、reposts、quotes
+
+**分階段**
+
+| 階段 | 內容 | 狀態 |
+|---|---|---|
+| A 地基 | Astro 轉 hybrid、`/admin` + 登入、接 Neon、定 schema | 規劃中 |
+| B 收集 | service account + Vercel Cron + GA4/GSC 快照寫入 DB | 規劃中 |
+| C 儀表板 | 流量趨勢、Key Events、Top Pages/Queries、規則建議 | 規劃中 |
+| D 社群 | Instagram / Threads | 後期 |
+| E AI 摘要 | 自然語言週報 + 下週行動建議 | 最後 |
+
+先做 A + B + C＝可用的混合 MVP。
+
+**開工前的前置作業（Phase 0，需人工）**
+- 建 GCP 專案 + service account，授權到 GA4 / GSC
+- 提供 GA4 property ID（GSC property 已知：`https://tbd-web.vercel.app/`）
+- Vercel 建 Neon DB，設定 `DATABASE_URL`、`ADMIN_PASSWORD`、`SESSION_SECRET`
+
+**MVP 成功標準**
+- 每週一自動把當週 GA4 + GSC 數據寫進 DB
+- `/admin` 看得到 Top Pages、Top Queries、Key Events、週對比
+- 自動列出 3–5 個下週優化建議
+
+> 備註：原始評估曾考慮純 Google Apps Script + Sheet + Doc 版本（開發量小、零基礎設施），最後選擇混合版，因為它能整合進品牌化後台，並可作為未來「學生後台 / CRM」的地基。
+
+---
+
 ## 版本紀錄
 
 ### v2.5 | 2026-05-26 — 主題指南 + 服務 Landing Page + 導流
