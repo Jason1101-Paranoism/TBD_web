@@ -19,5 +19,5 @@ export const nav = [
   { id: 'timeline',  label: '申請時程', href: '/pages/resources/senior-year-timeline.html' },
   { id: 'resources', label: '知識庫',   href: '/pages/resources.html' },
   { id: 'faq',       label: 'FAQ',      href: '/pages/faq.html' },
-  { id: 'about',     label: '關於',     href: '/pages/about.html' },
+  { id: 'about',     label: '關於TBD',  href: '/pages/about.html' },
 ];

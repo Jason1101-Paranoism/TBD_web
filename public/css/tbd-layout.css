@@ -75,7 +75,8 @@
 .site-footer-card p span { display: block; margin-bottom: 4px; color: rgba(255,255,255,.4); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
 .site-footer-card a { color: rgba(255,255,255,.85); text-decoration: underline; text-underline-offset: 4px; word-break: break-word; }
 .site-footer-card a:hover { color: var(--tbd-yellow); }
-.site-footer-pill { margin-top: 4px; display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(250,183,72,.3); color: var(--tbd-yellow) !important; text-decoration: none !important; font-size: 12px; font-weight: 800; transition: all .2s ease; }
+.site-footer-socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 4px; }
+.site-footer-pill { display: inline-flex; align-items: center; gap: 6px; justify-content: center; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(250,183,72,.3); color: var(--tbd-yellow) !important; text-decoration: none !important; font-size: 12px; font-weight: 800; transition: all .2s ease; }
 .site-footer-pill:hover { background: var(--tbd-yellow); color: var(--tbd-dark) !important; }
 .site-footer-brand { justify-content: center; }
 .site-footer-brand img { height: 64px; width: auto; margin: 0 auto 8px; object-fit: contain; }
