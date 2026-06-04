@@ -1,8 +1,11 @@
 .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
-.button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 999px; background: var(--tbd-accent); color: #fff; font-weight: 800; box-shadow: var(--tbd-shadow); }
+.button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 999px; background: var(--tbd-accent); color: #fff; font-weight: 800; box-shadow: var(--tbd-shadow); transition: opacity .15s; }
+.button:hover { opacity: .88; }
 .button.secondary { background: transparent; color: var(--tbd-dark); border: 1px solid var(--tbd-line); box-shadow: none; }
 .kicker, .badge, .tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--tbd-line); background: rgba(26,93,148,.08); color: var(--tbd-accent); border-radius: 999px; font-size: 13px; font-weight: 800; letter-spacing: .03em; }
 .card, .hero-card { background: #fff; border: 1px solid var(--tbd-line); border-radius: 24px; padding: 26px; box-shadow: var(--tbd-shadow); }
+.card ul { list-style: disc; padding-left: 1.25rem; margin: 8px 0 0; }
+.card li { margin-bottom: 4px; color: var(--tbd-mid); font-size: 0.9rem; }
 .note { background: rgba(208,206,219,.36); border-left: 5px solid var(--tbd-yellow); border-radius: 16px; padding: 18px 20px; color: var(--tbd-dark); font-weight: 700; }
 .cta { margin-top: 20px; background: var(--tbd-dark); color: #fff; border-radius: 28px; padding: 30px 36px; display: grid; gap: 12px; overflow: hidden; }
 .cta p { color: rgba(255,255,255,.82); }
