@@ -270,15 +270,33 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </main>
 
 <script>
+  function activateTab(tabId) {
+    const btn = document.querySelector(`.cases-tab[data-tab="${tabId}"]`);
+    const panel = document.getElementById('tab-' + tabId);
+    if (!btn || !panel) return false;
+    document.querySelectorAll('.cases-tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+    document.querySelectorAll('.cases-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    panel.classList.add('active');
+    return true;
+  }
+
   document.querySelectorAll('.cases-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       const tabId = btn.dataset.tab;
-      document.querySelectorAll('.cases-tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
-      document.querySelectorAll('.cases-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      document.getElementById('tab-' + tabId)?.classList.add('active');
+      if (activateTab(tabId)) {
+        history.replaceState(null, '', '#tab-' + tabId);
+      }
     });
   });
+
+  // 支援從外部連結帶 hash（如首頁「閱讀案例拆解」）直接開對應 tab
+  function activateFromHash() {
+    const id = location.hash.replace('#tab-', '');
+    if (id) activateTab(id);
+  }
+  activateFromHash();
+  window.addEventListener('hashchange', activateFromHash);
 </script>
 </BaseLayout>

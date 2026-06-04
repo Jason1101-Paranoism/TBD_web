@@ -136,6 +136,10 @@
 
 .text-link { color: var(--tbd-accent); text-decoration: none; font-size: 0.875rem; font-weight: 600; }
 .text-link:hover { text-decoration: underline; }
+
+/* 文章卡片標題：常駐箭頭提示可點，hover 時右移 */
+.article-card h3 a::after { content: " →"; display: inline-block; color: var(--tbd-accent); font-weight: 700; transition: transform .15s; }
+.article-card h3 a:hover::after { transform: translateX(3px); }
 .article-hero { /* modifier for article page hero — extend as needed */ }
 
 .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1rem 0; }
@@ -241,7 +245,8 @@
 .resources-sidebar { position: sticky; top: 80px; }
 .resources-sidebar-inner { padding: 18px; background: var(--tbd-light); border-radius: 12px; border: 1px solid var(--tbd-line); }
 .sidebar-nav-label { font-size: 11px; font-weight: 800; letter-spacing: .08em; color: var(--tbd-mid); text-transform: uppercase; margin: 0 0 10px; display: block; }
-.sidebar-divider { border: none; border-top: 1px solid var(--tbd-line); margin: 16px 0 20px; }
+.sidebar-group { background: #fff; border: 1px solid var(--tbd-line); border-radius: 10px; padding: 14px 14px 10px; }
+.sidebar-group + .sidebar-group { margin-top: 14px; }
 .sidebar-nav-link { display: block; padding: 7px 10px; border-radius: 7px; font-size: 13px; color: var(--tbd-mid); text-decoration: none; line-height: 1.45; margin-bottom: 2px; transition: background 0.12s, color 0.12s; }
 .sidebar-nav-link:hover { color: var(--tbd-dark); background: rgba(20,33,67,.06); }
 .sidebar-nav-link.active { color: var(--tbd-accent); background: rgba(26,93,148,.09); font-weight: 700; }
@@ -252,6 +257,7 @@
   .resources-main { grid-template-columns: 1fr; padding-top: 0; }
   .resources-sidebar { position: static; }
   .resources-sidebar-inner { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .sidebar-group { display: contents; }
   .sidebar-nav-label { margin: 0; white-space: nowrap; }
   .sidebar-nav-link { padding: 5px 10px; border: 1px solid var(--tbd-line); border-radius: 999px; white-space: nowrap; margin: 0; background: #fff; font-size: 12px; }
   .sidebar-nav-link.active { background: rgba(26,93,148,.09); }
