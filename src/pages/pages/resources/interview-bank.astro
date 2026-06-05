@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '大學面試題庫｜TBD Studio';
+const description = '個人申請二階與特殊選才面試常見問題整理，依題型分類，每題附上「評審想看什麼」，並收錄各科系常見追問。幫你準備有方向的答題素材。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=interview-bank`;
+
+// 通用題型（依題型篩選）
+const types = ['動機與自我介紹', '學習歷程與作品', '專業與科系認識', '情境與價值觀', '反問教授'];
+
+const questions = [
+  // 動機與自我介紹
+  { type: '動機與自我介紹', q: '請用兩到三分鐘介紹你自己。', hint: '評審想快速抓到你是誰、做過什麼、為什麼適合這個科系——要有主線，不是流水帳。' },
+  { type: '動機與自我介紹', q: '你為什麼想念這個科系？', hint: '要具體、要真實。評審想聽到一個由經歷支撐的動機，而不是「我有興趣、我有熱忱」。' },
+  { type: '動機與自我介紹', q: '為什麼選我們學校／這個系，而不是其他間？', hint: '評審想知道你有沒有做功課，了解這個系的特色與資源，以及它和你目標的契合。' },
+  { type: '動機與自我介紹', q: '你覺得自己最大的優點和缺點是什麼？', hint: '優點要有事例佐證；缺點要誠實，並說出你怎麼面對或改善它。' },
+
+  // 學習歷程與作品
+  { type: '學習歷程與作品', q: '請介紹一個你最有成就感的作品或專題。', hint: '評審想看你的思考過程：為什麼做、怎麼做、遇到什麼困難、學到什麼——不只是成果。' },
+  { type: '學習歷程與作品', q: '這個專案中你遇到最大的困難是什麼？怎麼解決的？', hint: '評審在評估你的解決問題能力與韌性。具體描述卡關與突破的過程。' },
+  { type: '學習歷程與作品', q: '這個作品是團隊完成的，你負責哪個部分？', hint: '誠實說明你的角色與貢獻。評審能分辨真實參與和掛名。' },
+  { type: '學習歷程與作品', q: '如果這個專案重做一次，你會怎麼改進？', hint: '展現反思能力——你看得出自己作品的不足，並知道怎麼變更好。' },
+  { type: '學習歷程與作品', q: '你的備審裡提到 ___，可以多說一點嗎？', hint: '備審寫的每件事都要能延伸講清楚。確保沒有自己講不出來的內容。' },
+
+  // 專業與科系認識
+  { type: '專業與科系認識', q: '你知道這個系畢業後通常往哪些方向發展嗎？', hint: '評審想確認你對科系的了解是真實的，而不是憑想像。' },
+  { type: '專業與科系認識', q: '你對這個領域最近的哪個議題或發展有興趣？', hint: '展現你對領域的持續關注，而不只是為了申請臨時準備。' },
+  { type: '專業與科系認識', q: '這個科系有哪些必修課？你最期待哪一門？', hint: '看你有沒有研究過課程地圖，以及你的興趣是否對得上科系實際內容。' },
+  { type: '專業與科系認識', q: '你覺得讀這個科系需要具備什麼特質？你符合嗎？', hint: '把科系需要的特質和你自己的經歷連起來，用事例證明。' },
+
+  // 情境與價值觀
+  { type: '情境與價值觀', q: '如果錄取了，但發現和你想像的不一樣，你會怎麼辦？', hint: '評審想看你的成熟度與調適能力，而不是聽到「不可能」這種回答。' },
+  { type: '情境與價值觀', q: '你怎麼安排課業和課外活動的時間？', hint: '展現你的自我管理能力，最好有具體的方法或例子。' },
+  { type: '情境與價值觀', q: '遇到和你意見不同的隊友，你會怎麼處理？', hint: '評估你的溝通與協作能力。描述一個真實的處理方式。' },
+  { type: '情境與價值觀', q: '如果這次沒有錄取，你有什麼打算？', hint: '展現你的方向感與韌性——你的準備不會因為單一結果而停止。' },
+
+  // 反問教授
+  { type: '反問教授', q: '（教授問）你有沒有什麼想問我們的？', hint: '一定要準備一兩個有水準的問題，展現你的興趣與用心。避免問網站上就有答案的問題。' },
+  { type: '反問教授', q: '可以問：系上有沒有讓大學部參與研究／專題的機會？', hint: '這類問題顯示你重視實作與深入學習，是不錯的提問方向。' },
+  { type: '反問教授', q: '可以問：以老師的觀察，適合這個系的學生通常有什麼特質？', hint: '真誠的提問，也能讓你得到對未來有用的資訊。' },
+];
+
+// 各科系常見追問
+const deptQuestions = [
+  { group: '理工 / 資工', items: ['你寫過哪些程式？最複雜的一個做了什麼？', '你怎麼自學一個新技術？', '解釋一個你用過的演算法或方法的原理。'] },
+  { group: '醫藥衛生', items: ['你為什麼想走醫療相關領域？', '志工經歷中，哪一刻讓你印象最深？', '你怎麼看醫療人員面對的壓力？'] },
+  { group: '商管財經', items: ['舉一個你觀察到的有趣商業現象，並分析它。', '你用過哪些方式了解一個產業？', '如果要你經營一個小生意，你會怎麼開始？'] },
+  { group: '人文社科', items: ['最近讀的一本書，對你有什麼啟發？', '針對某個社會議題，說說你的看法與不同立場。', '你怎麼判斷一則資訊的可信度？'] },
+  { group: '設計傳播', items: ['介紹你作品集裡最滿意的一件，並說明你的設計決策。', '你覺得什麼是好設計？', '你平常從哪裡獲得靈感？'] },
+  { group: '教育', items: ['你有沒有教過別人的經驗？怎麼讓對方聽懂？', '你覺得一位好老師最重要的特質是什麼？', '面對學不會的學生，你會怎麼做？'] },
+  { group: '法政公共事務', items: ['針對某個爭議，請說出正反雙方的理由。', '你怎麼看待法律與道德的關係？', '你關注哪個公共議題？為什麼？'] },
+  { group: '農生環境', items: ['你做過哪些觀察或實驗？怎麼記錄的？', '你關注哪個環境或農業議題？', '你怎麼用科學方法驗證一個想法？'] },
+];
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page resources-page">
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>面試題庫</span>
+  </nav>
+  <span class="kicker">面試題庫</span>
+  <h1>大學面試常見問題題庫</h1>
+  <p class="lead">面試問題有固定的結構與邏輯。這裡整理個申二階與特殊選才常見的問題，依題型分類，每題附上「評審想看什麼」，並收錄各科系的常見追問。準備的重點不是背答案，而是針對每個題型備好你自己的真實素材。</p>
+  <div class="button-row" style="margin-top: 8px;">
+    <a class="button secondary" href="/pages/resources/interview-prep.html">先看：面試前必做的五件事</a>
+  </div>
+</section>
+
+<main class="search-main">
+
+  <div class="search-filters">
+    <div class="search-filter-group">
+      <span class="search-filter-label">題型</span>
+      <div class="filter-pill-row" data-dim="type">
+        <button class="filter-pill active" data-value="">全部</button>
+        {types.map((t) => (
+          <button class="filter-pill" data-value={t}>{t}</button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <p id="q-count" class="results-count" style="margin-bottom: 16px;"></p>
+
+  <div id="q-grid" class="card-grid">
+    {questions.map((item) => (
+      <article class="card article-card q-item" data-type={item.type}>
+        <span class="badge">{item.type}</span>
+        <h3 style="font-size: 17px; line-height: 1.5;">{item.q}</h3>
+        <p class="card-desc"><strong style="color: var(--tbd-ink);">評審想看：</strong>{item.hint}</p>
+      </article>
+    ))}
+  </div>
+
+  <section class="section" id="by-dept" style="margin-top: 48px;">
+    <h2 class="section-label">各科系常見追問</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">不同科系會針對專業延伸追問。先想好這些問題的答題素材，面試會更有底氣。</p>
+    <div class="card-grid">
+      {deptQuestions.map((d) => (
+        <article class="card article-card">
+          <span class="badge">{d.group}</span>
+          <ul style="margin: 8px 0 0; padding-left: 20px; color: var(--tbd-mid); line-height: 1.9;">
+            {d.items.map((q) => <li>{q}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>想針對你的目標科系做模擬面試？</h2>
+    <p>TBD 的面試訓練會依照你的備審與目標科系，模擬真實的問答情境，幫你把答題素材練到能自然說出口——而不是背稿。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html#interview">更多面試文章</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_interview_bank">預約面試訓練</a>
+    </div>
+  </section>
+
+</main>
+
+<script is:inline>
+(function() {
+  var items = Array.prototype.slice.call(document.querySelectorAll('.q-item'));
+  var countEl = document.getElementById('q-count');
+  var current = '';
+
+  function render() {
+    var shown = 0;
+    items.forEach(function(el) {
+      var match = !current || el.dataset.type === current;
+      el.style.display = match ? '' : 'none';
+      if (match) shown++;
+    });
+    countEl.textContent = (current ? '「' + current + '」' : '') + '共 ' + shown + ' 題';
+  }
+
+  document.querySelectorAll('.filter-pill-row[data-dim="type"] .filter-pill').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-pill-row[data-dim="type"] .filter-pill').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      current = btn.dataset.value || '';
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+</BaseLayout>
