@@ -256,10 +256,13 @@
 @media (max-width: 900px) {
   .resources-main { grid-template-columns: 1fr; padding-top: 0; }
   .resources-sidebar { position: static; }
-  .resources-sidebar-inner { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-  .sidebar-group { display: contents; }
-  .sidebar-nav-label { margin: 0; white-space: nowrap; }
+  .resources-sidebar-inner { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+  .sidebar-group { padding: 12px 14px; }
+  .sidebar-group + .sidebar-group { margin-top: 0; }
+  .sidebar-group nav { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sidebar-nav-label { margin: 0 0 10px; }
   .sidebar-nav-link { padding: 5px 10px; border: 1px solid var(--tbd-line); border-radius: 999px; white-space: nowrap; margin: 0; background: #fff; font-size: 12px; }
+  .sidebar-nav-link:hover { background: rgba(20,33,67,.06); }
   .sidebar-nav-link.active { background: rgba(26,93,148,.09); }
 }
 
