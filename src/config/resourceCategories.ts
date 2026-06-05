@@ -49,6 +49,13 @@ export const resourceCategories: ResourceCategory[] = [
     desc: '備審的原料從哪來——Side Project、競賽、自學、研究，如何有策略地累積有申請價值的材料。',
   },
   {
+    id: 'pre-college',
+    navLabel: '升大學前準備',
+    sectionLabel: '升大學前準備',
+    category: '升大學前準備',
+    desc: '不管是高中生想提早探索，還是準大一的暑假，升大學前真正該做的是探索、先修、作品與表達——而不是把大學課程提前念完。',
+  },
+  {
     id: 'interview',
     navLabel: '面試準備',
     sectionLabel: '面試準備',
