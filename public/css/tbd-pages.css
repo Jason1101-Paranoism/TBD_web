@@ -137,6 +137,27 @@
 .text-link { color: var(--tbd-accent); text-decoration: none; font-size: 0.875rem; font-weight: 600; }
 .text-link:hover { text-decoration: underline; }
 
+/* 內文連結：讓站內／站外連結在文章中清楚可見（全站 a 預設 color:inherit、無底線） */
+.article-section p a, .article-section li a {
+  color: var(--tbd-accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(26, 93, 148, 0.35);
+  transition: text-decoration-color .15s;
+}
+.article-section p a:hover, .article-section li a:hover { text-decoration-color: var(--tbd-accent); }
+/* 站外連結提示：開新分頁的連結加上箭頭 */
+.article-section p a[target="_blank"]::after,
+.article-section li a[target="_blank"]::after {
+  content: "↗";
+  font-size: 0.85em;
+  margin-left: 1px;
+  color: var(--tbd-mid);
+  text-decoration: none;
+}
+
 /* 文章卡片標題：常駐箭頭提示可點，hover 時右移 */
 .article-card h3 a::after { content: " →"; display: inline-block; color: var(--tbd-accent); font-weight: 700; transition: transform .15s; }
 .article-card h3 a:hover::after { transform: translateX(3px); }
