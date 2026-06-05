@@ -1,6 +1,13 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
+import { getCollection } from 'astro:content';
+
+// 研究所推甄 sub-section 由 taxonomy 自動生成（其餘區塊維持手刻編輯精選）
+const graduateCards = (await getCollection('articles'))
+  .filter((a) => a.data.category === '研究所推甄')
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((a) => ({ title: a.data.title, href: `/pages/resources/${a.slug}.html`, desc: a.data.description }));
 
 const title = '研究、自學與能力累積指南';
 const description = '高中生如何開始接觸研究、提升自學能力、參加競賽並讓這些經歷真正對申請有說服力——TBD Studio 能力建立系列文章完整收錄。';
@@ -58,27 +65,15 @@ const schema = {
   </section>
 
   <section class="section" id="graduate">
-    <h2>研究所推甄：時程、計畫書與口試</h2>
+    <h2>研究所推甄：從決策到口試的完整準備</h2>
     <div class="card-grid">
-
-      <article class="card article-card">
-        <span class="badge">研究所推甄</span>
-        <h3><a class="text-link" href="/pages/resources/graduate-timeline.html">研究所推甄時程規劃：大三下到大四上完整準備</a></h3>
-        <p class="card-desc">推甄準備不是大四上才開始。從大三下確認方向到大四上口試，每個階段的關鍵任務。</p>
-      </article>
-
-      <article class="card article-card">
-        <span class="badge">研究所推甄</span>
-        <h3><a class="text-link" href="/pages/resources/research-proposal.html">研究計畫書怎麼寫？研究所推甄的核心關卡</a></h3>
-        <p class="card-desc">研究計畫書不是文獻整理，是展示你能定義有意義的問題並有能力解決它。結構說明與常見錯誤。</p>
-      </article>
-
-      <article class="card article-card">
-        <span class="badge">研究所推甄</span>
-        <h3><a class="text-link" href="/pages/resources/graduate-oral-defense.html">研究所口試怎麼準備？答辯研究計畫書的完整邏輯</a></h3>
-        <p class="card-desc">研究所口試是學術對話，不是自我介紹的加強版。答辯邏輯、常見問題類型與準備策略。</p>
-      </article>
-
+      {graduateCards.map((card) => (
+        <article class="card article-card">
+          <span class="badge">研究所推甄</span>
+          <h3><a class="text-link" href={card.href}>{card.title}</a></h3>
+          <p class="card-desc">{card.desc}</p>
+        </article>
+      ))}
     </div>
   </section>
 
