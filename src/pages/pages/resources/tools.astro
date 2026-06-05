@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '升學工具與模板下載｜TBD Studio';
+const description = '可下載的升學準備模板：升大學前30天Checklist、備審主線整理表、科系探索訪談清單，以及可直接複製的紀錄卡與資料夾架構範本。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=tools`;
+
+const downloads = [
+  {
+    title: '升大學前 30 天 Checklist',
+    desc: '一個月四週的準備節奏：探索選題 → 做第一版 → 優化紀錄 → 整理表達。可勾選追蹤進度。',
+    file: '/assets/templates/pre-college-30day-checklist.csv',
+    article: '/pages/resources/pre-college-30-day-checklist.html',
+  },
+  {
+    title: '備審主線整理表',
+    desc: '把所有經歷攤開來，依「與目標科系的關聯」找出能串成一條主線的那幾項。',
+    file: '/assets/templates/admission-main-thread.csv',
+    article: '/pages/resources/scatter-to-story.html',
+  },
+  {
+    title: '科系探索訪談清單',
+    desc: '訪談學長姐或從業者時可直接用的問題表，附「對方回答」與「我的判斷」欄位。',
+    file: '/assets/templates/department-interview-questions.csv',
+    article: '/pages/resources/department-interview-questions.html',
+  },
+];
+
+const relatedArticles = [
+  {
+    badge: '工具指南',
+    title: '高中生怎麼用 Notion 整理學習歷程和 Side Project？',
+    href: '/pages/resources/notion-system.html',
+    desc: '把這些模板整合進一套你願意長期維護的 Notion 系統。',
+  },
+  {
+    badge: '升大學前準備',
+    title: '升大學前作品集資料夾怎麼整理？一套可複製的架構範例',
+    href: '/pages/resources/portfolio-folder-structure.html',
+    desc: '完整的資料夾架構與命名原則，搭配下方的紀錄卡範本使用。',
+  },
+  {
+    badge: '工具指南',
+    title: '高中生 AI 工具實用指南：哪些工具真的值得用？',
+    href: '/pages/resources/ai-tools-guide.html',
+    desc: '各準備階段最實用的 AI 工具，以及哪些用法反而會讓你退步。',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page resources-page">
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>工具與模板</span>
+  </nav>
+  <span class="kicker">工具與模板</span>
+  <h1>把準備變成可以動手的工具</h1>
+  <p class="lead">知識看完還是要動手。這裡整理了可以直接下載使用的升學準備模板，以及可複製的範本——挑一個現在最用得到的開始。CSV 檔可用 Excel 或 Google 試算表開啟。</p>
+</section>
+
+<main class="search-main">
+
+  <section class="section" id="downloads">
+    <h2 class="section-label">可下載模板</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">下載後可用 Excel / Numbers / Google 試算表開啟與編輯。</p>
+    <div class="card-grid">
+      {downloads.map((d) => (
+        <article class="card article-card">
+          <span class="badge">CSV 模板</span>
+          <h3>{d.title}</h3>
+          <p class="card-desc">{d.desc}</p>
+          <div class="button-row" style="margin-top: 16px;">
+            <a class="button" href={d.file} download data-track-event="download_resource">下載 CSV</a>
+            <a class="button secondary" href={d.article}>看使用說明</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="record-card">
+    <h2 class="section-label">可直接複製：經歷紀錄卡</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">每完成一個專案、競賽或經歷，趁記憶清楚時花五分鐘填一張。它是未來備審與面試最珍貴的原料。</p>
+    <pre><code>## 紀錄卡
+
+- 名稱：
+- 時間：
+- 我做了什麼（具體）：
+- 為什麼做這個：
+- 遇到的最大困難 / 怎麼解決：
+- 學到什麼 / 下次會怎麼做：
+- 相關連結 / 檔案位置：</code></pre>
+    <p style="margin-top: 16px; color: var(--tbd-mid);">完整的資料夾架構與命名原則，見 <a class="text-link" href="/pages/resources/portfolio-folder-structure.html">升大學前作品集資料夾怎麼整理</a>。</p>
+  </section>
+
+  <section class="section" id="related">
+    <h2 class="section-label">延伸：相關工具文章</h2>
+    <div class="card-grid">
+      {relatedArticles.map((a) => (
+        <article class="card article-card">
+          <span class="badge">{a.badge}</span>
+          <h3><a class="text-link" href={a.href}>{a.title}</a></h3>
+          <p class="card-desc">{a.desc}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>想要更完整的客製模板？</h2>
+    <p>實際合作時，我們會依照你的目標科系與現況，給你客製化的整理表與準備計畫。先從這些通用模板開始，需要更進一步時再聊。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_tools">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>
