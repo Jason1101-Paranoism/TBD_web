@@ -77,6 +77,13 @@ export const resourceCategories: ResourceCategory[] = [
     desc: '從時程規劃、研究計畫書到口試準備，研究所推甄的完整準備邏輯。',
   },
   {
+    id: 'parents',
+    navLabel: '給家長',
+    sectionLabel: '給家長',
+    category: '給家長',
+    desc: '108 課綱改變了升學準備的方式，家長的角色也需要跟著調整。從理解制度、陪伴選科系，到判斷備審品質與親子溝通，幫家長找到真正幫得上忙的位置。',
+  },
+  {
     id: 'tools',
     navLabel: '工具與延伸',
     sectionLabel: '工具與延伸閱讀',
