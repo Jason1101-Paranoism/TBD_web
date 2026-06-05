@@ -1,12 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { resourceCategories } from '../../config/resourceCategories';
 
 const articles = await getCollection('articles');
 const mdxData = articles.map(a => ({
   title: a.data.title,
   kicker: a.data.kicker,
   description: a.data.description,
+  category: a.data.category,
+  audience: a.data.audience ?? [],
+  dept: a.data.departmentGroup ?? '',
   href: `/pages/resources/${a.slug}.html`,
 }));
 
@@ -15,15 +19,35 @@ const staticPages = [
     title: 'Portfolio 指南：高中生從 0 建立個人作品集',
     kicker: 'Portfolio 指南',
     description: '什麼是 Portfolio、為什麼高中生需要、如何從零開始建立個人網站作品集，含架構模板、工具選擇與真實案例。',
+    category: '工具與延伸',
+    audience: [],
+    dept: '',
     href: '/pages/portfolio-guide.html',
   },
 ];
 
 const articleData = [...mdxData, ...staticPages];
-const kickers = [...new Set(articleData.map(a => a.kicker))].sort();
+
+// 篩選維度選項：依設定檔順序排列，只保留實際有文章的值
+const categoryOrder = resourceCategories.map(c => c.category);
+const categories = categoryOrder.filter(c => articleData.some(a => a.category === c));
+
+const audienceOrder = ['家長', '大學生', '研究所', '高一', '高二', '高三'];
+const presentAudiences = [...new Set(articleData.flatMap(a => a.audience))];
+const audiences = [
+  ...audienceOrder.filter(x => presentAudiences.includes(x)),
+  ...presentAudiences.filter(x => !audienceOrder.includes(x)),
+];
+
+const deptOrder = ['理工', '醫藥衛生', '商管財經', '人文社科', '設計傳播', '藝術'];
+const presentDepts = [...new Set(articleData.map(a => a.dept).filter(Boolean))];
+const departments = [
+  ...deptOrder.filter(x => presentDepts.includes(x)),
+  ...presentDepts.filter(x => !deptOrder.includes(x)),
+];
 ---
 
-<BaseLayout title="搜尋知識庫｜TBD Studio" description="搜尋 TBD Studio 升學知識庫中的所有文章，支援關鍵字搜尋與分類篩選。" bodyClass="sub-page search-page">
+<BaseLayout title="搜尋知識庫｜TBD Studio" description="搜尋 TBD Studio 升學知識庫中的所有文章，支援關鍵字搜尋與分類、目標讀者、科系群多維篩選。" bodyClass="sub-page search-page">
 
 <section class="search-hero">
   <span class="kicker">知識庫搜尋</span>
@@ -47,11 +71,40 @@ const kickers = [...new Set(articleData.map(a => a.kicker))].sort();
 
 <main class="search-main">
 
-  <div class="search-filter-bar">
-    <button class="filter-pill active" data-kicker="">全部文章</button>
-    {kickers.map(k => (
-      <button class="filter-pill" data-kicker={k}>{k}</button>
-    ))}
+  <div class="search-filters">
+    <div class="search-filter-group">
+      <span class="search-filter-label">分類</span>
+      <div class="filter-pill-row" data-dim="category">
+        <button class="filter-pill active" data-value="">全部</button>
+        {categories.map(c => (
+          <button class="filter-pill" data-value={c}>{c}</button>
+        ))}
+      </div>
+    </div>
+
+    {audiences.length > 0 && (
+      <div class="search-filter-group">
+        <span class="search-filter-label">目標讀者</span>
+        <div class="filter-pill-row" data-dim="audience">
+          <button class="filter-pill active" data-value="">全部</button>
+          {audiences.map(a => (
+            <button class="filter-pill" data-value={a}>{a}</button>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {departments.length > 0 && (
+      <div class="search-filter-group">
+        <span class="search-filter-label">科系群</span>
+        <div class="filter-pill-row" data-dim="dept">
+          <button class="filter-pill active" data-value="">全部</button>
+          {departments.map(d => (
+            <button class="filter-pill" data-value={d}>{d}</button>
+          ))}
+        </div>
+      </div>
+    )}
   </div>
 
   <div class="search-results-header">
@@ -68,17 +121,22 @@ const kickers = [...new Set(articleData.map(a => a.kicker))].sort();
 
 </main>
 
-<script is:inline define:vars={{ articleData, kickers }}>
+<script is:inline define:vars={{ articleData }}>
 (function() {
   var data = articleData;
   var currentQuery = '';
-  var currentKicker = '';
+  // 各維度目前選取的值（空字串 = 全部）
+  var filters = { category: '', audience: '', dept: '' };
 
   var searchInput = document.getElementById('search-input');
   var resultsGrid = document.getElementById('results-grid');
   var noResults = document.getElementById('no-results');
   var noResultsMsg = document.getElementById('no-results-msg');
   var resultsCount = document.getElementById('results-count');
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
 
   function highlight(text, query) {
     if (!query) return escapeHtml(text);
@@ -87,20 +145,25 @@ const kickers = [...new Set(articleData.map(a => a.kicker))].sort();
     return escaped.replace(new RegExp('(' + escapedQuery + ')', 'gi'), '<mark>$1</mark>');
   }
 
-  function escapeHtml(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  function matchesFilters(a) {
+    var q = (currentQuery || '').toLowerCase().trim();
+    var matchesQuery = !q ||
+      a.title.toLowerCase().includes(q) ||
+      a.kicker.toLowerCase().includes(q) ||
+      a.description.toLowerCase().includes(q) ||
+      (a.category || '').toLowerCase().includes(q);
+    var matchesCategory = !filters.category || a.category === filters.category;
+    var matchesAudience = !filters.audience || (a.audience || []).indexOf(filters.audience) !== -1;
+    var matchesDept = !filters.dept || a.dept === filters.dept;
+    return matchesQuery && matchesCategory && matchesAudience && matchesDept;
   }
 
-  function searchArticles(query, kicker) {
-    var q = (query || '').toLowerCase().trim();
-    return data.filter(function(a) {
-      var matchesQuery = !q ||
-        a.title.toLowerCase().includes(q) ||
-        a.kicker.toLowerCase().includes(q) ||
-        a.description.toLowerCase().includes(q);
-      var matchesKicker = !kicker || a.kicker === kicker;
-      return matchesQuery && matchesKicker;
-    });
+  function activeFilterLabel() {
+    var parts = [];
+    if (filters.category) parts.push(filters.category);
+    if (filters.audience) parts.push(filters.audience);
+    if (filters.dept) parts.push(filters.dept);
+    return parts.length ? '（' + parts.join(' · ') + '）' : '';
   }
 
   function renderResults(results) {
@@ -111,15 +174,14 @@ const kickers = [...new Set(articleData.map(a => a.kicker))].sort();
       resultsGrid.innerHTML = '';
       noResults.hidden = false;
       noResultsMsg.textContent = q
-        ? '找不到關於「' + q + '」的文章，試試其他關鍵字或分類。'
-        : '這個分類目前沒有文章。';
+        ? '找不到關於「' + q + '」的文章，試試其他關鍵字或調整篩選。'
+        : '目前的篩選條件下沒有文章，試試放寬條件。';
       resultsCount.textContent = '';
       return;
     }
 
     noResults.hidden = true;
-    var label = currentKicker ? '「' + currentKicker + '」' : '';
-    resultsCount.textContent = (q ? '「' + q + '」' : '') + label + ' 共 ' + total + ' 篇文章';
+    resultsCount.textContent = (q ? '「' + q + '」' : '') + activeFilterLabel() + ' 共 ' + total + ' 篇文章';
 
     resultsGrid.innerHTML = results.map(function(a) {
       var titleHtml = highlight(a.title, q);
@@ -134,23 +196,26 @@ const kickers = [...new Set(articleData.map(a => a.kicker))].sort();
 
   function updateURL() {
     var url = new URL(window.location.href);
-    if (currentQuery) url.searchParams.set('q', currentQuery);
-    else url.searchParams.delete('q');
-    if (currentKicker) url.searchParams.set('kicker', currentKicker);
-    else url.searchParams.delete('kicker');
+    function setParam(key, val) {
+      if (val) url.searchParams.set(key, val);
+      else url.searchParams.delete(key);
+    }
+    setParam('q', currentQuery);
+    setParam('category', filters.category);
+    setParam('audience', filters.audience);
+    setParam('dept', filters.dept);
     window.history.replaceState({}, '', url.toString());
   }
 
   function runSearch() {
-    var results = searchArticles(currentQuery, currentKicker);
-    renderResults(results);
+    renderResults(data.filter(matchesFilters));
     updateURL();
     if (currentQuery && typeof window.gtag === 'function') {
       window.gtag('event', 'search_resources', { search_term: currentQuery });
     }
   }
 
-  // Debounce input
+  // 關鍵字輸入（debounce）
   var timer;
   searchInput.addEventListener('input', function() {
     clearTimeout(timer);
@@ -160,38 +225,44 @@ const kickers = [...new Set(articleData.map(a => a.kicker))].sort();
     }, 200);
   });
 
-  // Form submit
   document.getElementById('search-form').addEventListener('submit', function(e) {
     e.preventDefault();
     currentQuery = searchInput.value.trim();
     runSearch();
   });
 
-  // Tag filter pills
-  document.querySelectorAll('.filter-pill').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.filter-pill').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      currentKicker = btn.dataset.kicker || '';
-      runSearch();
+  // 篩選 pill：每個維度各自單選
+  document.querySelectorAll('.filter-pill-row').forEach(function(row) {
+    var dim = row.dataset.dim;
+    row.querySelectorAll('.filter-pill').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        row.querySelectorAll('.filter-pill').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        filters[dim] = btn.dataset.value || '';
+        runSearch();
+      });
     });
   });
 
-  // Init from URL params
-  var params = new URLSearchParams(window.location.search);
-  var initQuery = params.get('q') || '';
-  var initKicker = params.get('kicker') || '';
-
-  if (initQuery) {
-    searchInput.value = initQuery;
-    currentQuery = initQuery;
-  }
-  if (initKicker) {
-    currentKicker = initKicker;
-    document.querySelectorAll('.filter-pill').forEach(function(btn) {
-      btn.classList.toggle('active', (btn.dataset.kicker || '') === initKicker);
+  function syncPills(dim) {
+    var row = document.querySelector('.filter-pill-row[data-dim="' + dim + '"]');
+    if (!row) return;
+    row.querySelectorAll('.filter-pill').forEach(function(btn) {
+      btn.classList.toggle('active', (btn.dataset.value || '') === filters[dim]);
     });
   }
+
+  // 從 URL params 初始化
+  var params = new URLSearchParams(window.location.search);
+  currentQuery = params.get('q') || '';
+  filters.category = params.get('category') || '';
+  filters.audience = params.get('audience') || '';
+  filters.dept = params.get('dept') || '';
+
+  if (currentQuery) searchInput.value = currentQuery;
+  syncPills('category');
+  syncPills('audience');
+  syncPills('dept');
 
   runSearch();
 })();

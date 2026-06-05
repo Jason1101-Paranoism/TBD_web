@@ -290,6 +290,11 @@
 /* Filter pills */
 .search-main { max-width: var(--tbd-container); margin: 0 auto; padding: 0 22px 72px; }
 .search-filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.search-filters { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+.search-filter-group { display: flex; align-items: flex-start; gap: 12px; }
+.search-filter-label { font-size: 12px; font-weight: 700; color: var(--tbd-mid); letter-spacing: .04em; padding-top: 7px; min-width: 56px; flex-shrink: 0; }
+.filter-pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 600px) { .search-filter-group { flex-direction: column; gap: 6px; } .search-filter-label { padding-top: 0; } }
 .filter-pill { padding: 6px 14px; border: 1px solid var(--tbd-line); border-radius: 999px; background: #fff; font-size: 13px; font-weight: 600; color: var(--tbd-mid); cursor: pointer; transition: all .15s; }
 .filter-pill:hover { border-color: var(--tbd-accent); color: var(--tbd-accent); }
 .filter-pill.active { background: var(--tbd-accent); border-color: var(--tbd-accent); color: #fff; font-weight: 700; }
