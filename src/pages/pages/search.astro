@@ -39,7 +39,7 @@ const audiences = [
   ...presentAudiences.filter(x => !audienceOrder.includes(x)),
 ];
 
-const deptOrder = ['理工', '醫藥衛生', '商管財經', '人文社科', '設計傳播', '藝術'];
+const deptOrder = ['理工', '醫藥衛生', '商管財經', '人文社科', '設計傳播', '藝術', '教育', '法政', '農生環境'];
 const presentDepts = [...new Set(articleData.map(a => a.dept).filter(Boolean))];
 const departments = [
   ...deptOrder.filter(x => presentDepts.includes(x)),
