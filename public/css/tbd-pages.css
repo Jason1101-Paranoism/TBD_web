@@ -303,8 +303,9 @@
 .situation-sub { color: var(--tbd-mid); font-size: 14px; margin: 6px 0 0; }
 
 .situation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-.situation-card { background: #fff; border: 1px solid var(--tbd-line); border-radius: 12px; padding: 22px 22px 18px; display: flex; flex-direction: column; transition: border-color .15s, box-shadow .15s, transform .15s; }
-.situation-card:hover { border-color: var(--tbd-accent); box-shadow: 0 6px 22px rgba(20,33,67,.08); transform: translateY(-2px); }
+/* 知識庫情境卡片：全部 scope 在 .situation-block 下，避免和 services 頁的 .card.situation-card 撞名 */
+.situation-block .situation-card { background: #fff; border: 1px solid var(--tbd-line); border-radius: 12px; padding: 22px 22px 18px; display: flex; flex-direction: column; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.situation-block .situation-card:hover { border-color: var(--tbd-accent); box-shadow: 0 6px 22px rgba(20,33,67,.08); transform: translateY(-2px); }
 .situation-card-title { font-size: 16px; font-weight: 800; color: var(--tbd-dark); line-height: 1.4; margin: 0; }
 .situation-card-desc { color: var(--tbd-mid); font-size: 13px; line-height: 1.6; margin: 8px 0 14px; }
 .situation-links { list-style: none; margin: auto 0 0; padding: 14px 0 0; border-top: 1px solid var(--tbd-soft); display: flex; flex-direction: column; gap: 2px; }
@@ -327,22 +328,18 @@
 .situation-block--search .situation-heading { font-size: clamp(18px, 2vw, 22px); }
 .situation-block--search { margin-bottom: 8px; }
 
+/* 知識庫首頁整合即時搜尋／篩選後的版面 */
+.resources-filters { margin-top: 16px; }
+.resources-search-results { max-width: var(--tbd-container); margin: 0 auto; padding-top: 18px; }
+.resources-search-results .search-main { padding-top: 0; }
+.back-to-browse { background: none; border: none; padding: 0; font: inherit; cursor: pointer; }
+
 @media (max-width: 640px) {
   .resources-intro { padding: 22px 18px 0; }
-  .situation-card { padding: 18px 18px 16px; }
+  .situation-block .situation-card { padding: 18px 18px 16px; }
 }
 
-/* Search page */
-.search-hero { max-width: var(--tbd-container); margin: 0 auto; padding: 76px 22px 36px; }
-.search-hero h1 { font-size: clamp(26px, 3.5vw, 38px); font-weight: 900; line-height: 1.18; margin: 14px 0 20px; letter-spacing: -0.03em; color: var(--tbd-dark); }
-.search-form-large { max-width: 640px; }
-.search-input-wrap { display: flex; align-items: center; gap: 10px; background: #fff; border: 2px solid var(--tbd-line); border-radius: 14px; padding: 12px 16px; box-shadow: 0 4px 20px rgba(20,33,67,.08); transition: border-color .15s; }
-.search-input-wrap:focus-within { border-color: var(--tbd-accent); }
-.search-icon { color: var(--tbd-mid); flex-shrink: 0; }
-.search-input-field { flex: 1; border: none; outline: none; font-size: 16px; color: var(--tbd-dark); background: transparent; min-width: 0; }
-.search-input-field::placeholder { color: var(--tbd-mid); opacity: .65; }
-.search-submit-btn { flex-shrink: 0; padding: 8px 20px; border-radius: 9px; background: var(--tbd-accent); color: #fff; border: none; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity .15s; }
-.search-submit-btn:hover { opacity: .88; }
+/* 搜尋結果區（整合進知識庫首頁，沿用以下篩選／結果樣式） */
 
 /* Filter pills */
 .search-main { max-width: var(--tbd-container); margin: 0 auto; padding: 0 22px 72px; }
@@ -366,12 +363,6 @@ mark { background: rgba(250,183,72,.4); color: inherit; border-radius: 2px; padd
 /* No results */
 .search-empty { text-align: center; padding: 48px 20px; }
 .search-empty p { color: var(--tbd-mid); font-size: 16px; }
-
-@media (max-width: 600px) {
-  .search-input-wrap { padding: 10px 12px; }
-  .search-input-field { font-size: 15px; }
-  .search-submit-btn { padding: 6px 14px; font-size: 13px; }
-}
 
 /* FAQ page — Accordion */
 .faq-list { display: flex; flex-direction: column; gap: 0; }
