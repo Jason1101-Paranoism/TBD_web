@@ -1,9 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SituationCards from '../../components/SituationCards.astro';
 import { getCollection } from 'astro:content';
 import { resourceCategories } from '../../config/resourceCategories';
+import { starterPath } from '../../config/resourceSituations';
 
 const articles = await getCollection('articles');
+
+// 新手必讀路線：把設定裡的 slug 解析成標題與連結（缺 slug 會警告但不中斷）
+const bySlug = new Map(articles.map((a) => [a.slug, a]));
+const starterSteps = starterPath
+  .map((step) => {
+    const a = bySlug.get(step.slug);
+    if (!a) {
+      console.warn(`[resources] 新手必讀路線找不到 slug：${step.slug}（已略過）`);
+      return null;
+    }
+    return { title: a.data.title, href: `/pages/resources/${a.slug}.html`, note: step.note };
+  })
+  .filter((x): x is { title: string; href: string; note: string } => x !== null);
 
 // 依設定檔分區，從 collection 自動分組並排序產生卡片
 const sections = resourceCategories.map((cat) => {
@@ -48,6 +63,30 @@ if (orphans.length > 0) {
     </div>
   </form>
 </section>
+
+<div class="resources-intro">
+  <SituationCards variant="home" />
+
+  {starterSteps.length > 0 && (
+    <section class="starter-path">
+      <div class="situation-head">
+        <h2 class="situation-heading">第一次來？照這條路線讀</h2>
+        <p class="situation-sub">五篇文章，從「升學在比什麼」到「教授怎麼看備審」，建立整體框架再深入細節。</p>
+      </div>
+      <ol class="starter-steps">
+        {starterSteps.map((step, i) => (
+          <li class="starter-step">
+            <span class="starter-num">{i + 1}</span>
+            <div class="starter-text">
+              <a class="starter-link" href={step.href} data-track-event="click_starter_path" data-ga-event={`starter-step-${i + 1}`}>{step.title}</a>
+              <p class="starter-note">{step.note}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+</div>
 
 <div class="resources-main">
 

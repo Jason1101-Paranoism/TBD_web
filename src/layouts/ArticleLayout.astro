@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { site } from '../config/site';
+import { resourceCategories } from '../config/resourceCategories';
 
 interface TocItem {
   href: string;
@@ -29,6 +30,7 @@ interface Props {
   relatedArticles: RelatedArticle[];
   slug: string;
   seoTitle?: string;
+  category?: string;
 }
 
 const {
@@ -36,7 +38,7 @@ const {
   bodyClass = 'sub-page article-page',
   sidebarCtaText, sidebarCtaUtm,
   bottomCtaH2, bottomCtaUtm,
-  tocItems, relatedArticles, slug, seoTitle,
+  tocItems, relatedArticles, slug, seoTitle, category,
 } = Astro.props;
 
 const articleSchema = {
@@ -62,7 +64,9 @@ const articleSchema = {
   ]
 };
 
-const bottomCtaP = Astro.props.bottomCtaP ?? 'TBD 的第一次策略諮詢會先依據學生的升學管道、競爭力與目前最該補強的環節進行評估與建議，線上與您一起討論可能合作方案，決定是否需要文件重構、面試訓練或全程陪跑。';
+// 結尾 CTA 段落 fallback 鏈：文章自訂 → 分類預設 → 全站通用
+const categoryCtaP = resourceCategories.find((c) => c.category === category)?.ctaParagraph;
+const bottomCtaP = Astro.props.bottomCtaP ?? categoryCtaP ?? 'TBD 的第一次策略諮詢會先依據學生的升學管道、競爭力與目前最該補強的環節進行評估與建議，線上與您一起討論可能合作方案，決定是否需要文件重構、面試訓練或全程陪跑。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=${sidebarCtaUtm}`;
 const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=${bottomCtaUtm}`;
 ---

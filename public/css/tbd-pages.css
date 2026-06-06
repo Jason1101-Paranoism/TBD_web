@@ -296,6 +296,42 @@
 .resources-search-btn { flex-shrink: 0; padding: 6px 16px; border-radius: 7px; background: var(--tbd-accent); color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity .15s; }
 .resources-search-btn:hover { opacity: .88; }
 
+/* ── 情境式入口 + 新手必讀路線 ── */
+.resources-intro { max-width: var(--tbd-container); margin: 0 auto; padding: 28px 22px 0; }
+.situation-head { margin-bottom: 18px; }
+.situation-heading { font-size: clamp(20px, 2.4vw, 26px); font-weight: 900; letter-spacing: -0.02em; color: var(--tbd-dark); margin: 0; }
+.situation-sub { color: var(--tbd-mid); font-size: 14px; margin: 6px 0 0; }
+
+.situation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.situation-card { background: #fff; border: 1px solid var(--tbd-line); border-radius: 12px; padding: 22px 22px 18px; display: flex; flex-direction: column; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.situation-card:hover { border-color: var(--tbd-accent); box-shadow: 0 6px 22px rgba(20,33,67,.08); transform: translateY(-2px); }
+.situation-card-title { font-size: 16px; font-weight: 800; color: var(--tbd-dark); line-height: 1.4; margin: 0; }
+.situation-card-desc { color: var(--tbd-mid); font-size: 13px; line-height: 1.6; margin: 8px 0 14px; }
+.situation-links { list-style: none; margin: auto 0 0; padding: 14px 0 0; border-top: 1px solid var(--tbd-soft); display: flex; flex-direction: column; gap: 2px; }
+.situation-links li { margin: 0; }
+.situation-links a { display: block; padding: 6px 8px; margin: 0 -8px; border-radius: 7px; font-size: 13.5px; font-weight: 600; color: var(--tbd-accent); text-decoration: none; line-height: 1.45; transition: background .12s; }
+.situation-links a::before { content: "→ "; color: var(--tbd-accent); font-weight: 700; }
+.situation-links a:hover { background: rgba(26,93,148,.07); }
+
+.starter-path { margin-top: 40px; }
+.starter-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.starter-step { display: flex; gap: 12px; align-items: flex-start; background: var(--tbd-light); border: 1px solid var(--tbd-line); border-radius: 12px; padding: 16px 16px 16px 14px; }
+.starter-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--tbd-accent); color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.starter-text { min-width: 0; }
+.starter-link { font-size: 14px; font-weight: 800; color: var(--tbd-dark); text-decoration: none; line-height: 1.35; }
+.starter-link:hover { color: var(--tbd-accent); text-decoration: underline; }
+.starter-note { color: var(--tbd-mid); font-size: 12.5px; line-height: 1.55; margin: 5px 0 0; }
+
+/* 搜尋頁空狀態的情境入口 */
+.search-default { margin-top: 8px; }
+.situation-block--search .situation-heading { font-size: clamp(18px, 2vw, 22px); }
+.situation-block--search { margin-bottom: 8px; }
+
+@media (max-width: 640px) {
+  .resources-intro { padding: 22px 18px 0; }
+  .situation-card { padding: 18px 18px 16px; }
+}
+
 /* Search page */
 .search-hero { max-width: var(--tbd-container); margin: 0 auto; padding: 76px 22px 36px; }
 .search-hero h1 { font-size: clamp(26px, 3.5vw, 38px); font-weight: 900; line-height: 1.18; margin: 14px 0 20px; letter-spacing: -0.03em; color: var(--tbd-dark); }
