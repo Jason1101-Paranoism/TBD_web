@@ -328,10 +328,13 @@
 .situation-block--search .situation-heading { font-size: clamp(18px, 2vw, 22px); }
 .situation-block--search { margin-bottom: 8px; }
 
-/* 知識庫首頁整合即時搜尋／篩選後的版面 */
-.resources-filters { margin-top: 16px; }
-.resources-search-results { max-width: var(--tbd-container); margin: 0 auto; padding-top: 18px; }
-.resources-search-results .search-main { padding-top: 0; }
+/* 知識庫首頁：常駐搜尋列 + 篩選，放在情境/必讀下方、文章區上方 */
+.resources-search-section { max-width: var(--tbd-container); margin: 0 auto; padding: 26px 22px 0; }
+.resources-search-section .resources-search-bar { margin-top: 0; }
+.resources-filters { margin-top: 14px; }
+/* 搜尋/篩選時：隱藏側邊欄，結果就地滿版顯示在篩選列正下方 */
+.resources-main.searching { grid-template-columns: 1fr; }
+.resources-main.searching .resources-sidebar { display: none; }
 .back-to-browse { background: none; border: none; padding: 0; font: inherit; cursor: pointer; }
 
 @media (max-width: 640px) {
