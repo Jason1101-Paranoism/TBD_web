@@ -96,7 +96,35 @@ const departments = [
   <span class="kicker">TBD Studio 知識庫</span>
   <h1>升學路上，你需要知道的事。</h1>
   <p class="lead">從管道選擇、備審整理、材料累積到面試準備，彙整各科系申請指南與研究所推甄策略，幫助你把力氣用在對的地方。</p>
+</section>
 
+<!-- 情境入口 + 新手必讀（常駐，最上方） -->
+<div class="resources-intro">
+  <SituationCards variant="home" />
+
+  {starterSteps.length > 0 && (
+    <section class="starter-path">
+      <div class="situation-head">
+        <h2 class="situation-heading">第一次來？照這條路線讀</h2>
+        <p class="situation-sub">五篇文章，從「升學在比什麼」到「教授怎麼看備審」，建立整體框架再深入細節。</p>
+      </div>
+      <ol class="starter-steps">
+        {starterSteps.map((step, i) => (
+          <li class="starter-step">
+            <span class="starter-num">{i + 1}</span>
+            <div class="starter-text">
+              <a class="starter-link" href={step.href} data-track-event="click_starter_path" data-ga-event={`starter-step-${i + 1}`}>{step.title}</a>
+              <p class="starter-note">{step.note}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+</div>
+
+<!-- 常駐搜尋 + 三維篩選：放在情境/必讀下方、文章區（grid 與側邊欄）上方 -->
+<section class="resources-search-section" id="search-section">
   <form class="resources-search-bar" id="search-form" autocomplete="off">
     <div class="resources-search-wrap">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tbd-mid); flex-shrink: 0;">
@@ -107,8 +135,7 @@ const departments = [
     </div>
   </form>
 
-  <!-- 三維篩選：瀏覽態收合，聚焦搜尋或有條件時展開，保持瀏覽畫面乾淨 -->
-  <div class="search-filters resources-filters" id="search-filters" hidden>
+  <div class="search-filters resources-filters" id="search-filters">
     <div class="search-filter-group">
       <span class="search-filter-label">分類</span>
       <div class="filter-pill-row" data-dim="category">
@@ -145,84 +172,58 @@ const departments = [
   </div>
 </section>
 
-<!-- 搜尋結果（有關鍵字或任一篩選時才顯示） -->
-<section class="resources-search-results" id="search-view" hidden>
-  <div class="search-main">
-    <div class="search-results-header">
-      <p id="results-count" class="results-count"></p>
-      <button type="button" id="back-to-browse" class="text-link back-to-browse">← 瀏覽所有文章</button>
-    </div>
-    <div id="results-grid" class="card-grid"></div>
-    <div id="no-results" class="search-empty" hidden>
-      <p id="no-results-msg">找不到符合的文章，試試其他關鍵字或分類。</p>
-    </div>
-  </div>
-</section>
+<!-- 文章區：側邊欄 + 內容；瀏覽分類 grid ↔ 搜尋/篩選結果，就地在同一塊切換 -->
+<div class="resources-main" id="resources-main">
 
-<!-- 瀏覽（預設顯示：情境入口 + 新手必讀 + 分類文章） -->
-<div id="browse-view">
-  <div class="resources-intro">
-    <SituationCards variant="home" />
-
-    {starterSteps.length > 0 && (
-      <section class="starter-path">
-        <div class="situation-head">
-          <h2 class="situation-heading">第一次來？照這條路線讀</h2>
-          <p class="situation-sub">五篇文章，從「升學在比什麼」到「教授怎麼看備審」，建立整體框架再深入細節。</p>
-        </div>
-        <ol class="starter-steps">
-          {starterSteps.map((step, i) => (
-            <li class="starter-step">
-              <span class="starter-num">{i + 1}</span>
-              <div class="starter-text">
-                <a class="starter-link" href={step.href} data-track-event="click_starter_path" data-ga-event={`starter-step-${i + 1}`}>{step.title}</a>
-                <p class="starter-note">{step.note}</p>
-              </div>
-            </li>
+  <!-- 側邊欄（搜尋/篩選時隱藏，讓結果滿版） -->
+  <aside class="resources-sidebar">
+    <div class="resources-sidebar-inner">
+      <div class="sidebar-group">
+        <p class="sidebar-nav-label">文章分類</p>
+        <nav>
+          {sections.map((s, i) => (
+            <a href={`#${s.id}`} class={`sidebar-nav-link${i === 0 ? ' active' : ''}`}>{s.navLabel}</a>
           ))}
-        </ol>
-      </section>
-    )}
-  </div>
-
-  <div class="resources-main">
-
-    <!-- 側邊欄 -->
-    <aside class="resources-sidebar">
-      <div class="resources-sidebar-inner">
-        <div class="sidebar-group">
-          <p class="sidebar-nav-label">文章分類</p>
-          <nav>
-            {sections.map((s, i) => (
-              <a href={`#${s.id}`} class={`sidebar-nav-link${i === 0 ? ' active' : ''}`}>{s.navLabel}</a>
-            ))}
-          </nav>
-        </div>
-
-        <div class="sidebar-group">
-          <p class="sidebar-nav-label">主題指南</p>
-          <nav>
-            <a href="/pages/guides/admission-overview.html" class="sidebar-nav-link">申請策略全局觀 →</a>
-            <a href="/pages/guides/pre-college.html" class="sidebar-nav-link">升大學前準備 →</a>
-            <a href="/pages/guides/portfolio-prep.html" class="sidebar-nav-link">備審與學習歷程 →</a>
-            <a href="/pages/guides/interview.html" class="sidebar-nav-link">升學面試準備 →</a>
-            <a href="/pages/guides/research.html" class="sidebar-nav-link">研究所推甄 →</a>
-            <a href="/pages/guides/side-project.html" class="sidebar-nav-link">Side Project 指南 →</a>
-            <a href="/pages/guides/github.html" class="sidebar-nav-link">GitHub & Portfolio →</a>
-            <a href="/pages/guides/competitions.html" class="sidebar-nav-link">競賽完整指南 →</a>
-            <a href="/pages/guides/departments.html" class="sidebar-nav-link">各科系申請指南 →</a>
-            <a href="/pages/guides/parents-guide.html" class="sidebar-nav-link">給家長完整指南 →</a>
-            <a href="/pages/guides/ai-era.html" class="sidebar-nav-link">AI 時代能力建立 →</a>
-            <a href="/pages/resources/tools.html" class="sidebar-nav-link">工具與模板下載 →</a>
-            <a href="/pages/resources/interview-bank.html" class="sidebar-nav-link">大學面試題庫 →</a>
-          </nav>
-        </div>
+        </nav>
       </div>
-    </aside>
 
-    <!-- 主內容（由 articles collection 自動生成） -->
-    <div class="resources-content">
+      <div class="sidebar-group">
+        <p class="sidebar-nav-label">主題指南</p>
+        <nav>
+          <a href="/pages/guides/admission-overview.html" class="sidebar-nav-link">申請策略全局觀 →</a>
+          <a href="/pages/guides/pre-college.html" class="sidebar-nav-link">升大學前準備 →</a>
+          <a href="/pages/guides/portfolio-prep.html" class="sidebar-nav-link">備審與學習歷程 →</a>
+          <a href="/pages/guides/interview.html" class="sidebar-nav-link">升學面試準備 →</a>
+          <a href="/pages/guides/research.html" class="sidebar-nav-link">研究所推甄 →</a>
+          <a href="/pages/guides/side-project.html" class="sidebar-nav-link">Side Project 指南 →</a>
+          <a href="/pages/guides/github.html" class="sidebar-nav-link">GitHub & Portfolio →</a>
+          <a href="/pages/guides/competitions.html" class="sidebar-nav-link">競賽完整指南 →</a>
+          <a href="/pages/guides/departments.html" class="sidebar-nav-link">各科系申請指南 →</a>
+          <a href="/pages/guides/parents-guide.html" class="sidebar-nav-link">給家長完整指南 →</a>
+          <a href="/pages/guides/ai-era.html" class="sidebar-nav-link">AI 時代能力建立 →</a>
+          <a href="/pages/resources/tools.html" class="sidebar-nav-link">工具與模板下載 →</a>
+          <a href="/pages/resources/interview-bank.html" class="sidebar-nav-link">大學面試題庫 →</a>
+        </nav>
+      </div>
+    </div>
+  </aside>
 
+  <div class="resources-content">
+
+    <!-- 搜尋/篩選結果（預設隱藏，就地取代下方分類 grid） -->
+    <div id="search-results" hidden>
+      <div class="search-results-header">
+        <p id="results-count" class="results-count"></p>
+        <button type="button" id="back-to-browse" class="text-link back-to-browse">← 清除，回到分類瀏覽</button>
+      </div>
+      <div id="results-grid" class="card-grid"></div>
+      <div id="no-results" class="search-empty" hidden>
+        <p id="no-results-msg">找不到符合的文章，試試其他關鍵字或分類。</p>
+      </div>
+    </div>
+
+    <!-- 分類瀏覽（預設顯示） -->
+    <div id="browse-grid">
       {sections.map((s) => (
         <section class="section" id={s.id}>
           <h2 class="section-label">{s.sectionLabel}</h2>
@@ -247,8 +248,8 @@ const departments = [
           <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=resources" target="_blank" rel="noopener noreferrer" data-ga-event="click_line_resources">預約策略諮詢</a>
         </div>
       </section>
-
     </div>
+
   </div>
 </div>
 
@@ -265,9 +266,10 @@ const departments = [
   var noResults = document.getElementById('no-results');
   var noResultsMsg = document.getElementById('no-results-msg');
   var resultsCount = document.getElementById('results-count');
-  var browseView = document.getElementById('browse-view');
-  var searchView = document.getElementById('search-view');
-  var filtersEl = document.getElementById('search-filters');
+  var searchResults = document.getElementById('search-results');
+  var browseGrid = document.getElementById('browse-grid');
+  var resourcesMain = document.getElementById('resources-main');
+  var searchSection = document.getElementById('search-section');
   var backBtn = document.getElementById('back-to-browse');
 
   function escapeHtml(str) {
@@ -337,12 +339,6 @@ const departments = [
     }).join('');
   }
 
-  // 篩選列：瀏覽態收合，聚焦搜尋框或有條件時展開
-  function updateFilterVisibility() {
-    var show = document.activeElement === searchInput || !isDefault();
-    filtersEl.hidden = !show;
-  }
-
   function updateURL() {
     var url = new URL(window.location.href);
     function setParam(key, val) {
@@ -356,21 +352,21 @@ const departments = [
     window.history.replaceState({}, '', url.toString());
   }
 
+  // 就地切換：搜尋/篩選結果 vs 分類瀏覽（同一塊文章區，篩選列就在正上方）
   function runSearch() {
-    // 預設態（沒有關鍵字也沒有任何篩選）：顯示瀏覽，不攤開搜尋結果
     if (isDefault()) {
-      browseView.hidden = false;
-      searchView.hidden = true;
+      searchResults.hidden = true;
+      browseGrid.hidden = false;
+      resourcesMain.classList.remove('searching');
       resultsGrid.innerHTML = '';
       noResults.hidden = true;
       resultsCount.textContent = '';
-      updateFilterVisibility();
       updateURL();
       return;
     }
-    browseView.hidden = true;
-    searchView.hidden = false;
-    filtersEl.hidden = false;
+    browseGrid.hidden = true;
+    searchResults.hidden = false;
+    resourcesMain.classList.add('searching');
     renderResults(data.filter(matchesFilters));
     updateURL();
     if (currentQuery && typeof window.gtag === 'function') {
@@ -387,8 +383,6 @@ const departments = [
       runSearch();
     }, 200);
   });
-  searchInput.addEventListener('focus', updateFilterVisibility);
-  searchInput.addEventListener('blur', function() { setTimeout(updateFilterVisibility, 150); });
 
   searchForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -417,7 +411,7 @@ const departments = [
     });
   }
 
-  // 回到瀏覽：清掉關鍵字與所有篩選
+  // 清除：清掉關鍵字與所有篩選，回到分類瀏覽
   if (backBtn) backBtn.addEventListener('click', function() {
     currentQuery = '';
     filters = { category: '', audience: '', dept: '' };
@@ -426,7 +420,7 @@ const departments = [
     syncPills('audience');
     syncPills('dept');
     runSearch();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (searchSection) searchSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   // 從 URL params 初始化（讓 ?q=、?category= 等可分享、可被舊 search 連結帶入）
@@ -448,7 +442,7 @@ const departments = [
 <script>
   // 瀏覽態側邊欄：捲動高亮目前分區
   const links = document.querySelectorAll('.sidebar-nav-link');
-  const sections = document.querySelectorAll('.resources-content .section[id]');
+  const sections = document.querySelectorAll('#browse-grid .section[id]');
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
