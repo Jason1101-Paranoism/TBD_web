@@ -1,0 +1,55 @@
+---
+// 情境式入口卡片區（共用）。
+// resources.astro（首頁）與 search.astro（搜尋頁空狀態）共用同一份呈現，
+// 自行從 articles collection 把 situations 設定裡的 slug 解析成標題與連結。
+import { getCollection } from 'astro:content';
+import { situations } from '../config/resourceSituations';
+
+interface Props {
+  /** home：知識庫首頁版（含標題說明）；search：搜尋頁空狀態版（精簡標題） */
+  variant?: 'home' | 'search';
+}
+const { variant = 'home' } = Astro.props;
+
+const articles = await getCollection('articles');
+const bySlug = new Map(articles.map((a) => [a.slug, a]));
+
+const resolved = situations.map((s) => {
+  const links = s.slugs
+    .slice(0, 3)
+    .map((slug) => {
+      const a = bySlug.get(slug);
+      if (!a) {
+        console.warn(`[situations] 處境「${s.title}」找不到 slug：${slug}（已略過）`);
+        return null;
+      }
+      return { title: a.data.title, href: `/pages/resources/${a.slug}.html` };
+    })
+    .filter((x): x is { title: string; href: string } => x !== null);
+  return { ...s, links };
+}).filter((s) => s.links.length > 0);
+
+const heading = variant === 'home' ? '依你的狀況找文章' : '不知道從哪開始？依你的狀況看看';
+---
+
+<section class={`situation-block situation-block--${variant}`}>
+  <div class="situation-head">
+    <h2 class="situation-heading">{heading}</h2>
+    {variant === 'home' && (
+      <p class="situation-sub">先選一個最像你現在的處境，我們幫你排好該先讀的幾篇。</p>
+    )}
+  </div>
+  <div class="situation-grid">
+    {resolved.map((s) => (
+      <article class="situation-card" id={`situation-${s.id}`}>
+        <h3 class="situation-card-title">{s.title}</h3>
+        <p class="situation-card-desc">{s.desc}</p>
+        <ul class="situation-links">
+          {s.links.map((l) => (
+            <li><a href={l.href} data-track-event="click_situation_article" data-ga-event={`situation-${s.id}`}>{l.title}</a></li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SituationCards from '../../components/SituationCards.astro';
 import { getCollection } from 'astro:content';
 import { resourceCategories } from '../../config/resourceCategories';
 
@@ -112,6 +113,10 @@ const departments = [
     <a href="/pages/resources.html" class="text-link">← 瀏覽所有文章</a>
   </div>
 
+  <div id="search-default" class="search-default">
+    <SituationCards variant="search" />
+  </div>
+
   <div id="results-grid" class="card-grid"></div>
 
   <div id="no-results" class="search-empty" hidden>
@@ -207,7 +212,20 @@ const departments = [
     window.history.replaceState({}, '', url.toString());
   }
 
+  var defaultBlock = document.getElementById('search-default');
+
   function runSearch() {
+    // 預設狀態（沒有關鍵字也沒有任何篩選）：顯示情境入口，不直接攤開全部文章
+    var isDefault = !currentQuery && !filters.category && !filters.audience && !filters.dept;
+    if (isDefault) {
+      if (defaultBlock) defaultBlock.hidden = false;
+      resultsGrid.innerHTML = '';
+      noResults.hidden = true;
+      resultsCount.textContent = '';
+      updateURL();
+      return;
+    }
+    if (defaultBlock) defaultBlock.hidden = true;
     renderResults(data.filter(matchesFilters));
     updateURL();
     if (currentQuery && typeof window.gtag === 'function') {
