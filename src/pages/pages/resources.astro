@@ -6,9 +6,9 @@ import { resourceCategories } from '../../config/resourceCategories';
 import { starterPath } from '../../config/resourceSituations';
 
 const articles = await getCollection('articles');
+const bySlug = new Map(articles.map((a) => [a.slug, a]));
 
 // 新手必讀路線：把設定裡的 slug 解析成標題與連結（缺 slug 會警告但不中斷）
-const bySlug = new Map(articles.map((a) => [a.slug, a]));
 const starterSteps = starterPath
   .map((step) => {
     const a = bySlug.get(step.slug);
@@ -20,7 +20,7 @@ const starterSteps = starterPath
   })
   .filter((x): x is { title: string; href: string; note: string } => x !== null);
 
-// 依設定檔分區，從 collection 自動分組並排序產生卡片
+// 瀏覽態的分類分區：從 collection 自動分組並排序產生卡片
 const sections = resourceCategories.map((cat) => {
   const articleCards = articles
     .filter((a) => a.data.category === cat.category)
@@ -46,115 +46,407 @@ if (orphans.length > 0) {
       orphans.map((a) => `${a.slug} (${a.data.category})`).join(', ')
   );
 }
+
+// ── 即時搜尋／三維篩選用資料（原 search.astro 的資料準備，整合進同一頁）──
+const mdxData = articles.map((a) => ({
+  title: a.data.title,
+  kicker: a.data.kicker,
+  description: a.data.description,
+  category: a.data.category,
+  audience: a.data.audience ?? [],
+  dept: a.data.departmentGroup ?? '',
+  href: `/pages/resources/${a.slug}.html`,
+}));
+
+const staticPages = [
+  {
+    title: 'Portfolio 指南：高中生從 0 建立個人作品集',
+    kicker: 'Portfolio 指南',
+    description: '什麼是 Portfolio、為什麼高中生需要、如何從零開始建立個人網站作品集，含架構模板、工具選擇與真實案例。',
+    category: '工具與延伸',
+    audience: [] as string[],
+    dept: '',
+    href: '/pages/portfolio-guide.html',
+  },
+];
+
+const articleData = [...mdxData, ...staticPages];
+
+// 篩選維度選項：依設定檔順序排列，只保留實際有文章的值
+const categoryOrder = resourceCategories.map((c) => c.category);
+const categories = categoryOrder.filter((c) => articleData.some((a) => a.category === c));
+
+const audienceOrder = ['家長', '大學生', '研究所', '高一', '高二', '高三'];
+const presentAudiences = [...new Set(articleData.flatMap((a) => a.audience))];
+const audiences = [
+  ...audienceOrder.filter((x) => presentAudiences.includes(x)),
+  ...presentAudiences.filter((x) => !audienceOrder.includes(x)),
+];
+
+const deptOrder = ['理工', '醫藥衛生', '商管財經', '人文社科', '設計傳播', '藝術', '教育', '法政', '農生環境'];
+const presentDepts = [...new Set(articleData.map((a) => a.dept).filter(Boolean))];
+const departments = [
+  ...deptOrder.filter((x) => presentDepts.includes(x)),
+  ...presentDepts.filter((x) => !deptOrder.includes(x)),
+];
 ---
 
-<BaseLayout title="升學知識庫｜TBD Studio" description="TBD Studio 升學知識文章：申請策略、備審製作、材料累積、面試準備、各科系指南與研究所推甄，幫助你做出更清楚的準備決策。" bodyClass="sub-page resources-page">
+<BaseLayout title="升學知識庫｜TBD Studio" description="TBD Studio 升學知識文章：申請策略、備審製作、材料累積、面試準備、各科系指南與研究所推甄，幫助你做出更清楚的準備決策。支援關鍵字搜尋與分類、目標讀者、科系群多維篩選。" bodyClass="sub-page resources-page">
 <section class="hero">
   <span class="kicker">TBD Studio 知識庫</span>
   <h1>升學路上，你需要知道的事。</h1>
   <p class="lead">從管道選擇、備審整理、材料累積到面試準備，彙整各科系申請指南與研究所推甄策略，幫助你把力氣用在對的地方。</p>
-  <form class="resources-search-bar" action="/pages/search.html" method="get">
+
+  <form class="resources-search-bar" id="search-form" autocomplete="off">
     <div class="resources-search-wrap">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tbd-mid); flex-shrink: 0;">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
-      <input type="search" name="q" placeholder="搜尋文章關鍵字…" class="resources-search-input" autocomplete="off">
+      <input type="search" id="search-input" name="q" placeholder="搜尋文章關鍵字，例如：面試、Side Project、GitHub…" class="resources-search-input" autocomplete="off" aria-label="搜尋文章">
       <button type="submit" class="resources-search-btn">搜尋</button>
     </div>
   </form>
-</section>
 
-<div class="resources-intro">
-  <SituationCards variant="home" />
-
-  {starterSteps.length > 0 && (
-    <section class="starter-path">
-      <div class="situation-head">
-        <h2 class="situation-heading">第一次來？照這條路線讀</h2>
-        <p class="situation-sub">五篇文章，從「升學在比什麼」到「教授怎麼看備審」，建立整體框架再深入細節。</p>
-      </div>
-      <ol class="starter-steps">
-        {starterSteps.map((step, i) => (
-          <li class="starter-step">
-            <span class="starter-num">{i + 1}</span>
-            <div class="starter-text">
-              <a class="starter-link" href={step.href} data-track-event="click_starter_path" data-ga-event={`starter-step-${i + 1}`}>{step.title}</a>
-              <p class="starter-note">{step.note}</p>
-            </div>
-          </li>
+  <!-- 三維篩選：瀏覽態收合，聚焦搜尋或有條件時展開，保持瀏覽畫面乾淨 -->
+  <div class="search-filters resources-filters" id="search-filters" hidden>
+    <div class="search-filter-group">
+      <span class="search-filter-label">分類</span>
+      <div class="filter-pill-row" data-dim="category">
+        <button type="button" class="filter-pill active" data-value="">全部</button>
+        {categories.map((c) => (
+          <button type="button" class="filter-pill" data-value={c}>{c}</button>
         ))}
-      </ol>
-    </section>
-  )}
-</div>
-
-<div class="resources-main">
-
-  <!-- 側邊欄 -->
-  <aside class="resources-sidebar">
-    <div class="resources-sidebar-inner">
-      <div class="sidebar-group">
-        <p class="sidebar-nav-label">文章分類</p>
-        <nav>
-          {sections.map((s, i) => (
-            <a href={`#${s.id}`} class={`sidebar-nav-link${i === 0 ? ' active' : ''}`}>{s.navLabel}</a>
-          ))}
-        </nav>
-      </div>
-
-      <div class="sidebar-group">
-        <p class="sidebar-nav-label">主題指南</p>
-        <nav>
-          <a href="/pages/guides/admission-overview.html" class="sidebar-nav-link">申請策略全局觀 →</a>
-          <a href="/pages/guides/pre-college.html" class="sidebar-nav-link">升大學前準備 →</a>
-          <a href="/pages/guides/portfolio-prep.html" class="sidebar-nav-link">備審與學習歷程 →</a>
-          <a href="/pages/guides/interview.html" class="sidebar-nav-link">升學面試準備 →</a>
-          <a href="/pages/guides/research.html" class="sidebar-nav-link">研究所推甄 →</a>
-          <a href="/pages/guides/side-project.html" class="sidebar-nav-link">Side Project 指南 →</a>
-          <a href="/pages/guides/github.html" class="sidebar-nav-link">GitHub & Portfolio →</a>
-          <a href="/pages/guides/competitions.html" class="sidebar-nav-link">競賽完整指南 →</a>
-          <a href="/pages/guides/departments.html" class="sidebar-nav-link">各科系申請指南 →</a>
-          <a href="/pages/guides/parents-guide.html" class="sidebar-nav-link">給家長完整指南 →</a>
-          <a href="/pages/guides/ai-era.html" class="sidebar-nav-link">AI 時代能力建立 →</a>
-          <a href="/pages/resources/tools.html" class="sidebar-nav-link">工具與模板下載 →</a>
-          <a href="/pages/resources/interview-bank.html" class="sidebar-nav-link">大學面試題庫 →</a>
-        </nav>
       </div>
     </div>
-  </aside>
 
-  <!-- 主內容（由 articles collection 自動生成） -->
-  <div class="resources-content">
-
-    {sections.map((s) => (
-      <section class="section" id={s.id}>
-        <h2 class="section-label">{s.sectionLabel}</h2>
-        <p style="margin-bottom: 16px; color: var(--tbd-mid);">{s.desc}</p>
-        <div class="card-grid">
-          {s.cards.map((card) => (
-            <article class="card article-card">
-              <span class="badge">{card.kicker}</span>
-              <h3><a class="text-link" href={card.href}>{card.title}</a></h3>
-              <p class="card-desc">{card.desc}</p>
-            </article>
+    {audiences.length > 0 && (
+      <div class="search-filter-group">
+        <span class="search-filter-label">目標讀者</span>
+        <div class="filter-pill-row" data-dim="audience">
+          <button type="button" class="filter-pill active" data-value="">全部</button>
+          {audiences.map((a) => (
+            <button type="button" class="filter-pill" data-value={a}>{a}</button>
           ))}
         </div>
-      </section>
-    ))}
-
-    <section class="section cta">
-      <h2>準備開始，但不確定下一步？</h2>
-      <p>TBD 的第一次策略諮詢從學生的升學管道、目前的材料狀況出發，評估最需要補強的環節，給你一份具體的準備建議——不管後續有沒有繼續合作都帶得走。</p>
-      <div class="button-row">
-        <a class="button secondary" href="/pages/services.html">了解服務內容</a>
-        <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=resources" target="_blank" rel="noopener noreferrer" data-ga-event="click_line_resources">預約策略諮詢</a>
       </div>
-    </section>
+    )}
 
+    {departments.length > 0 && (
+      <div class="search-filter-group">
+        <span class="search-filter-label">科系群</span>
+        <div class="filter-pill-row" data-dim="dept">
+          <button type="button" class="filter-pill active" data-value="">全部</button>
+          {departments.map((d) => (
+            <button type="button" class="filter-pill" data-value={d}>{d}</button>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<!-- 搜尋結果（有關鍵字或任一篩選時才顯示） -->
+<section class="resources-search-results" id="search-view" hidden>
+  <div class="search-main">
+    <div class="search-results-header">
+      <p id="results-count" class="results-count"></p>
+      <button type="button" id="back-to-browse" class="text-link back-to-browse">← 瀏覽所有文章</button>
+    </div>
+    <div id="results-grid" class="card-grid"></div>
+    <div id="no-results" class="search-empty" hidden>
+      <p id="no-results-msg">找不到符合的文章，試試其他關鍵字或分類。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 瀏覽（預設顯示：情境入口 + 新手必讀 + 分類文章） -->
+<div id="browse-view">
+  <div class="resources-intro">
+    <SituationCards variant="home" />
+
+    {starterSteps.length > 0 && (
+      <section class="starter-path">
+        <div class="situation-head">
+          <h2 class="situation-heading">第一次來？照這條路線讀</h2>
+          <p class="situation-sub">五篇文章，從「升學在比什麼」到「教授怎麼看備審」，建立整體框架再深入細節。</p>
+        </div>
+        <ol class="starter-steps">
+          {starterSteps.map((step, i) => (
+            <li class="starter-step">
+              <span class="starter-num">{i + 1}</span>
+              <div class="starter-text">
+                <a class="starter-link" href={step.href} data-track-event="click_starter_path" data-ga-event={`starter-step-${i + 1}`}>{step.title}</a>
+                <p class="starter-note">{step.note}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+  </div>
+
+  <div class="resources-main">
+
+    <!-- 側邊欄 -->
+    <aside class="resources-sidebar">
+      <div class="resources-sidebar-inner">
+        <div class="sidebar-group">
+          <p class="sidebar-nav-label">文章分類</p>
+          <nav>
+            {sections.map((s, i) => (
+              <a href={`#${s.id}`} class={`sidebar-nav-link${i === 0 ? ' active' : ''}`}>{s.navLabel}</a>
+            ))}
+          </nav>
+        </div>
+
+        <div class="sidebar-group">
+          <p class="sidebar-nav-label">主題指南</p>
+          <nav>
+            <a href="/pages/guides/admission-overview.html" class="sidebar-nav-link">申請策略全局觀 →</a>
+            <a href="/pages/guides/pre-college.html" class="sidebar-nav-link">升大學前準備 →</a>
+            <a href="/pages/guides/portfolio-prep.html" class="sidebar-nav-link">備審與學習歷程 →</a>
+            <a href="/pages/guides/interview.html" class="sidebar-nav-link">升學面試準備 →</a>
+            <a href="/pages/guides/research.html" class="sidebar-nav-link">研究所推甄 →</a>
+            <a href="/pages/guides/side-project.html" class="sidebar-nav-link">Side Project 指南 →</a>
+            <a href="/pages/guides/github.html" class="sidebar-nav-link">GitHub & Portfolio →</a>
+            <a href="/pages/guides/competitions.html" class="sidebar-nav-link">競賽完整指南 →</a>
+            <a href="/pages/guides/departments.html" class="sidebar-nav-link">各科系申請指南 →</a>
+            <a href="/pages/guides/parents-guide.html" class="sidebar-nav-link">給家長完整指南 →</a>
+            <a href="/pages/guides/ai-era.html" class="sidebar-nav-link">AI 時代能力建立 →</a>
+            <a href="/pages/resources/tools.html" class="sidebar-nav-link">工具與模板下載 →</a>
+            <a href="/pages/resources/interview-bank.html" class="sidebar-nav-link">大學面試題庫 →</a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主內容（由 articles collection 自動生成） -->
+    <div class="resources-content">
+
+      {sections.map((s) => (
+        <section class="section" id={s.id}>
+          <h2 class="section-label">{s.sectionLabel}</h2>
+          <p style="margin-bottom: 16px; color: var(--tbd-mid);">{s.desc}</p>
+          <div class="card-grid">
+            {s.cards.map((card) => (
+              <article class="card article-card">
+                <span class="badge">{card.kicker}</span>
+                <h3><a class="text-link" href={card.href}>{card.title}</a></h3>
+                <p class="card-desc">{card.desc}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <section class="section cta">
+        <h2>準備開始，但不確定下一步？</h2>
+        <p>TBD 的第一次策略諮詢從學生的升學管道、目前的材料狀況出發，評估最需要補強的環節，給你一份具體的準備建議——不管後續有沒有繼續合作都帶得走。</p>
+        <div class="button-row">
+          <a class="button secondary" href="/pages/services.html">了解服務內容</a>
+          <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=resources" target="_blank" rel="noopener noreferrer" data-ga-event="click_line_resources">預約策略諮詢</a>
+        </div>
+      </section>
+
+    </div>
   </div>
 </div>
 
+<script is:inline define:vars={{ articleData }}>
+(function() {
+  var data = articleData;
+  var currentQuery = '';
+  // 各維度目前選取的值（空字串 = 全部）
+  var filters = { category: '', audience: '', dept: '' };
+
+  var searchInput = document.getElementById('search-input');
+  var searchForm = document.getElementById('search-form');
+  var resultsGrid = document.getElementById('results-grid');
+  var noResults = document.getElementById('no-results');
+  var noResultsMsg = document.getElementById('no-results-msg');
+  var resultsCount = document.getElementById('results-count');
+  var browseView = document.getElementById('browse-view');
+  var searchView = document.getElementById('search-view');
+  var filtersEl = document.getElementById('search-filters');
+  var backBtn = document.getElementById('back-to-browse');
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function highlight(text, query) {
+    if (!query) return escapeHtml(text);
+    var escaped = escapeHtml(text);
+    var escapedQuery = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return escaped.replace(new RegExp('(' + escapedQuery + ')', 'gi'), '<mark>$1</mark>');
+  }
+
+  function hasActiveFilter() {
+    return !!(filters.category || filters.audience || filters.dept);
+  }
+  function isDefault() {
+    return !currentQuery && !hasActiveFilter();
+  }
+
+  function matchesFilters(a) {
+    var q = (currentQuery || '').toLowerCase().trim();
+    var matchesQuery = !q ||
+      a.title.toLowerCase().includes(q) ||
+      a.kicker.toLowerCase().includes(q) ||
+      a.description.toLowerCase().includes(q) ||
+      (a.category || '').toLowerCase().includes(q);
+    var matchesCategory = !filters.category || a.category === filters.category;
+    var matchesAudience = !filters.audience || (a.audience || []).indexOf(filters.audience) !== -1;
+    var matchesDept = !filters.dept || a.dept === filters.dept;
+    return matchesQuery && matchesCategory && matchesAudience && matchesDept;
+  }
+
+  function activeFilterLabel() {
+    var parts = [];
+    if (filters.category) parts.push(filters.category);
+    if (filters.audience) parts.push(filters.audience);
+    if (filters.dept) parts.push(filters.dept);
+    return parts.length ? '（' + parts.join(' · ') + '）' : '';
+  }
+
+  function renderResults(results) {
+    var total = results.length;
+    var q = currentQuery;
+
+    if (total === 0) {
+      resultsGrid.innerHTML = '';
+      noResults.hidden = false;
+      noResultsMsg.textContent = q
+        ? '找不到關於「' + q + '」的文章，試試其他關鍵字或調整篩選。'
+        : '目前的篩選條件下沒有文章，試試放寬條件。';
+      resultsCount.textContent = '';
+      return;
+    }
+
+    noResults.hidden = true;
+    resultsCount.textContent = (q ? '「' + q + '」' : '') + activeFilterLabel() + ' 共 ' + total + ' 篇文章';
+
+    resultsGrid.innerHTML = results.map(function(a) {
+      var titleHtml = highlight(a.title, q);
+      var descHtml = highlight(a.description, q);
+      return '<article class="card article-card">' +
+        '<span class="badge">' + escapeHtml(a.kicker) + '</span>' +
+        '<h3><a class="text-link" href="' + escapeHtml(a.href) + '">' + titleHtml + '</a></h3>' +
+        '<p class="card-desc">' + descHtml + '</p>' +
+        '</article>';
+    }).join('');
+  }
+
+  // 篩選列：瀏覽態收合，聚焦搜尋框或有條件時展開
+  function updateFilterVisibility() {
+    var show = document.activeElement === searchInput || !isDefault();
+    filtersEl.hidden = !show;
+  }
+
+  function updateURL() {
+    var url = new URL(window.location.href);
+    function setParam(key, val) {
+      if (val) url.searchParams.set(key, val);
+      else url.searchParams.delete(key);
+    }
+    setParam('q', currentQuery);
+    setParam('category', filters.category);
+    setParam('audience', filters.audience);
+    setParam('dept', filters.dept);
+    window.history.replaceState({}, '', url.toString());
+  }
+
+  function runSearch() {
+    // 預設態（沒有關鍵字也沒有任何篩選）：顯示瀏覽，不攤開搜尋結果
+    if (isDefault()) {
+      browseView.hidden = false;
+      searchView.hidden = true;
+      resultsGrid.innerHTML = '';
+      noResults.hidden = true;
+      resultsCount.textContent = '';
+      updateFilterVisibility();
+      updateURL();
+      return;
+    }
+    browseView.hidden = true;
+    searchView.hidden = false;
+    filtersEl.hidden = false;
+    renderResults(data.filter(matchesFilters));
+    updateURL();
+    if (currentQuery && typeof window.gtag === 'function') {
+      window.gtag('event', 'search_resources', { search_term: currentQuery });
+    }
+  }
+
+  // 關鍵字輸入（debounce）
+  var timer;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      currentQuery = searchInput.value.trim();
+      runSearch();
+    }, 200);
+  });
+  searchInput.addEventListener('focus', updateFilterVisibility);
+  searchInput.addEventListener('blur', function() { setTimeout(updateFilterVisibility, 150); });
+
+  searchForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    currentQuery = searchInput.value.trim();
+    runSearch();
+  });
+
+  // 篩選 pill：每個維度各自單選
+  document.querySelectorAll('.filter-pill-row').forEach(function(row) {
+    var dim = row.dataset.dim;
+    row.querySelectorAll('.filter-pill').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        row.querySelectorAll('.filter-pill').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        filters[dim] = btn.dataset.value || '';
+        runSearch();
+      });
+    });
+  });
+
+  function syncPills(dim) {
+    var row = document.querySelector('.filter-pill-row[data-dim="' + dim + '"]');
+    if (!row) return;
+    row.querySelectorAll('.filter-pill').forEach(function(btn) {
+      btn.classList.toggle('active', (btn.dataset.value || '') === filters[dim]);
+    });
+  }
+
+  // 回到瀏覽：清掉關鍵字與所有篩選
+  if (backBtn) backBtn.addEventListener('click', function() {
+    currentQuery = '';
+    filters = { category: '', audience: '', dept: '' };
+    searchInput.value = '';
+    syncPills('category');
+    syncPills('audience');
+    syncPills('dept');
+    runSearch();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // 從 URL params 初始化（讓 ?q=、?category= 等可分享、可被舊 search 連結帶入）
+  var params = new URLSearchParams(window.location.search);
+  currentQuery = params.get('q') || '';
+  filters.category = params.get('category') || '';
+  filters.audience = params.get('audience') || '';
+  filters.dept = params.get('dept') || '';
+
+  if (currentQuery) searchInput.value = currentQuery;
+  syncPills('category');
+  syncPills('audience');
+  syncPills('dept');
+
+  runSearch();
+})();
+</script>
+
 <script>
+  // 瀏覽態側邊欄：捲動高亮目前分區
   const links = document.querySelectorAll('.sidebar-nav-link');
   const sections = document.querySelectorAll('.resources-content .section[id]');
 
