@@ -160,6 +160,60 @@
     }
   }
 
+  /* ---- 交棒原料：把使用者的回答整理成可貼進 LINE 的摘要 ---- */
+  var ORIGIN_TEXT = {
+    assigned: '老師或家長要我做', self: '自己想做的',
+    friends: '朋友找我一起', forgot: '已經忘了當初為什麼'
+  };
+  var RUNWAY_TEXT = { far: '還很久', soon: '一年內', now: '就在眼前' };
+
+  function buildStorySummary(s) {
+    return [
+      '嗨，我在 TBD 的「看見」填了我的一段經歷，想聊聊怎麼把它說清楚：',
+      '',
+      '・做過的事：' + s.title,
+      '・當初為什麼做：' + (ORIGIN_TEXT[s.origin] || ''),
+      '・我實際做了：' + s.role,
+      '・距離申請：' + (RUNWAY_TEXT[s.runway] || ''),
+      '',
+      '想知道這段可以怎麼呈現／往哪走。'
+    ].join('\n');
+  }
+
+  function onCopied() {
+    var btn = document.getElementById('gc-copy');
+    var hint = document.getElementById('gc-copy-hint');
+    if (btn) btn.textContent = '已複製 ✓';
+    if (hint) hint.textContent = '打開 LINE 後，直接貼上就好。';
+    track('gc_copy_story', { gc_runway: state.runway });
+  }
+
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      onCopied();
+    } catch (e) {
+      var hint = document.getElementById('gc-copy-hint');
+      if (hint) { hint.style.color = '#c0392b'; hint.textContent = '複製失敗，請手動選取文字。'; }
+    }
+  }
+
+  function copyStory() {
+    var text = buildStorySummary(state);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onCopied, function () { fallbackCopy(text); });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
   /* ---- 第 4 階：依跑道調整交棒語氣（導航 vs 呈現）---- */
   function renderCta(s) {
     var h2 = document.getElementById('gc-cta-h2');
@@ -216,6 +270,8 @@
       show('gc-step-cta');
     });
 
+    document.getElementById('gc-copy').addEventListener('click', copyStory);
+
     function again() {
       track('gc_again');
       document.getElementById('gc-form').reset();
@@ -226,6 +282,10 @@
         sel[i].setAttribute('aria-checked', 'false');
       }
       document.getElementById('gc-error').textContent = '';
+      var copyBtn = document.getElementById('gc-copy');
+      var copyHint = document.getElementById('gc-copy-hint');
+      if (copyBtn) copyBtn.textContent = '把我的故事複製起來';
+      if (copyHint) { copyHint.textContent = ''; copyHint.style.color = ''; }
       show('gc-step-capture');
       document.getElementById('gc-title').focus();
     }

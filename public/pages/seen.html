@@ -127,7 +127,12 @@
       font-family:'EB Garamond','Noto Sans TC',serif; font-weight:600;
       font-size:clamp(24px,5vw,32px); line-height:1.35; margin:0 0 14px;
     }
-    .gc-cta-actions{ display:flex; flex-direction:column; gap:12px; margin:24px 0 30px; }
+    .gc-cta-actions{ display:flex; flex-direction:column; gap:12px; margin:18px 0 30px; }
+    .gc-btn--soft{ background:rgba(26,93,148,.08); color:var(--gc-accent); box-shadow:none; }
+    .gc-btn--soft:hover{ background:rgba(26,93,148,.14); transform:translateY(-1px); box-shadow:none; }
+    .gc-handoff{ background:#fff; border:1px dashed var(--gc-light); border-radius:15px; padding:16px 18px; margin:22px 0 0; }
+    .gc-handoff-title{ font-size:14px; font-weight:700; color:var(--gc-dark); margin:0 0 12px; line-height:1.6; }
+    .gc-handoff-hint{ font-size:13px; color:#06A050; font-weight:700; margin:10px 0 0; min-height:18px; }
     .gc-cases-label{ font-size:13px; font-weight:700; color:var(--gc-mid); letter-spacing:.04em; margin:0 0 12px; }
     .gc-case{
       display:block; text-decoration:none; background:#fff;
@@ -219,8 +224,14 @@
         <h2 class="gc-cta-h2" id="gc-cta-h2">你不是沒有故事，只是還沒被講出來。</h2>
         <p class="gc-sub" id="gc-cta-sub">其實大部分人卡的不是「沒有經歷」，是不知道怎麼把它說清楚、串成一條線。這一段，我們可以陪你。</p>
 
+        <div class="gc-handoff" id="gc-handoff">
+          <p class="gc-handoff-title">想讓顧問更快懂你？先把你剛剛講的一起帶過去：</p>
+          <button class="gc-btn gc-btn--soft" id="gc-copy" type="button">把我的故事複製起來</button>
+          <p class="gc-handoff-hint" id="gc-copy-hint" aria-live="polite"></p>
+        </div>
+
         <div class="gc-cta-actions">
-          <a class="gc-btn gc-btn--line" id="gc-line" href="https://lin.ee/9ciZvbA?utm_source=seen&utm_medium=cta&utm_campaign=gc-seen" target="_blank" rel="noopener noreferrer" data-track-event="click_consultation_cta">用 LINE 跟我們聊聊你的故事</a>
+          <a class="gc-btn gc-btn--line" id="gc-line" href="https://lin.ee/9ciZvbA?utm_source=seen&utm_medium=cta&utm_campaign=gc-seen" target="_blank" rel="noopener noreferrer" data-track-event="click_consultation_cta">打開 LINE，把故事貼上跟我們聊聊</a>
           <button class="gc-btn gc-btn--ghost" id="gc-again-2" type="button">＋ 再講一件事</button>
         </div>
 
