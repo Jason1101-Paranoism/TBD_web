@@ -6,6 +6,7 @@
   'use strict';
 
   var state = { title: '', origin: '', role: '', runway: '' };
+  var stories = []; // 本次 session 累積的經歷（跨 session 持久化＝後端 app 的事）
 
   /* ---- GA：內部步驟事件（CTA 由 main.js 經 data-track-event 處理）---- */
   function track(event, params) {
@@ -160,6 +161,21 @@
     }
   }
 
+  /* ---- 累積進度提示（開放迴圈：一個點畫不出主線，鼓勵多講幾件）---- */
+  function renderCount() {
+    var n = stories.length;
+    var el = document.getElementById('gc-seen-count');
+    if (el) {
+      if (n <= 1) el.textContent = '這是你講的第 1 件。再多講一兩件，我才看得出你的主線。';
+      else if (n === 2) el.textContent = '這是第 2 件——一條線開始浮現了。再加一件會更清楚。';
+      else el.textContent = '你已經講了 ' + n + ' 件，夠看出一條主線了。把它們一起帶去找顧問吧。';
+    }
+    var ht = document.getElementById('gc-handoff-title');
+    if (ht) ht.textContent = n > 1
+      ? '想讓顧問更快懂你？把你講的這 ' + n + ' 件一起帶過去：'
+      : '想讓顧問更快懂你？先把你剛剛講的一起帶過去：';
+  }
+
   /* ---- 交棒原料：把使用者的回答整理成可貼進 LINE 的摘要 ---- */
   var ORIGIN_TEXT = {
     assigned: '老師或家長要我做', self: '自己想做的',
@@ -167,17 +183,31 @@
   };
   var RUNWAY_TEXT = { far: '還很久', soon: '一年內', now: '就在眼前' };
 
-  function buildStorySummary(s) {
-    return [
-      '嗨，我在 TBD 的「看見」填了我的一段經歷，想聊聊怎麼把它說清楚：',
-      '',
-      '・做過的事：' + s.title,
-      '・當初為什麼做：' + (ORIGIN_TEXT[s.origin] || ''),
-      '・我實際做了：' + s.role,
-      '・距離申請：' + (RUNWAY_TEXT[s.runway] || ''),
-      '',
-      '想知道這段可以怎麼呈現／往哪走。'
-    ].join('\n');
+  function buildStorySummary(list) {
+    if (list.length <= 1) {
+      var s = list[0] || state;
+      return [
+        '嗨，我在 TBD 的「看見」填了我的一段經歷，想聊聊怎麼把它說清楚：',
+        '',
+        '・做過的事：' + s.title,
+        '・當初為什麼做：' + (ORIGIN_TEXT[s.origin] || ''),
+        '・我實際做了：' + s.role,
+        '・距離申請：' + (RUNWAY_TEXT[s.runway] || ''),
+        '',
+        '想知道這段可以怎麼呈現／往哪走。'
+      ].join('\n');
+    }
+    var lines = ['嗨，我在 TBD 的「看見」整理了 ' + list.length + ' 段經歷，想聊聊怎麼把它們串成一條主線：', ''];
+    for (var i = 0; i < list.length; i++) {
+      var e = list[i];
+      lines.push('【' + (i + 1) + '】' + e.title);
+      lines.push('　當初為什麼做：' + (ORIGIN_TEXT[e.origin] || ''));
+      lines.push('　我實際做了：' + e.role);
+      lines.push('');
+    }
+    lines.push('距離申請：' + (RUNWAY_TEXT[list[list.length - 1].runway] || ''));
+    lines.push('想知道這幾段的主線在哪、可以怎麼呈現／往哪走。');
+    return lines.join('\n');
   }
 
   function onCopied() {
@@ -206,7 +236,7 @@
   }
 
   function copyStory() {
-    var text = buildStorySummary(state);
+    var text = buildStorySummary(stories);
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(onCopied, function () { fallbackCopy(text); });
     } else {
@@ -259,8 +289,10 @@
     document.getElementById('gc-form').addEventListener('submit', function (e) {
       e.preventDefault();
       if (!validate()) return;
-      track('gc_capture_submit', { gc_origin: state.origin, gc_runway: state.runway });
+      stories.push({ title: state.title, origin: state.origin, role: state.role, runway: state.runway });
+      track('gc_capture_submit', { gc_origin: state.origin, gc_runway: state.runway, gc_count: stories.length });
       renderReflection(state);
+      renderCount();
       renderCta(state);
       show('gc-step-seen');
     });

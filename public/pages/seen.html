@@ -148,6 +148,7 @@
     .gc-foot a{ color:var(--gc-mid); }
 
     .gc-progress{ font-size:12px; color:var(--gc-mid); font-weight:600; letter-spacing:.04em; margin-bottom:14px; }
+    .gc-count{ font-size:14px; color:var(--gc-accent); font-weight:600; line-height:1.6; margin:0 0 18px; }
   </style>
 </head>
 
@@ -215,6 +216,7 @@
       <section class="gc-step" id="gc-step-seen" aria-label="我看到什麼">
         <span class="gc-kicker">我看到的是……</span>
         <div class="gc-seen-card" id="gc-seen-card"><!-- JS 填入 --></div>
+        <p class="gc-count" id="gc-seen-count"></p>
         <button class="gc-btn" id="gc-seen-continue" type="button">繼續 →</button>
         <div><button class="gc-btn gc-btn--ghost" id="gc-again" type="button">＋ 再講一件事</button></div>
       </section>
@@ -225,7 +227,7 @@
         <p class="gc-sub" id="gc-cta-sub">其實大部分人卡的不是「沒有經歷」，是不知道怎麼把它說清楚、串成一條線。這一段，我們可以陪你。</p>
 
         <div class="gc-handoff" id="gc-handoff">
-          <p class="gc-handoff-title">想讓顧問更快懂你？先把你剛剛講的一起帶過去：</p>
+          <p class="gc-handoff-title" id="gc-handoff-title">想讓顧問更快懂你？先把你剛剛講的一起帶過去：</p>
           <button class="gc-btn gc-btn--soft" id="gc-copy" type="button">把我的故事複製起來</button>
           <p class="gc-handoff-hint" id="gc-copy-hint" aria-live="polite"></p>
         </div>
