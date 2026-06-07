@@ -47,13 +47,30 @@ if (orphans.length > 0) {
   );
 }
 
-// ── 即時搜尋／三維篩選用資料（原 search.astro 的資料準備，整合進同一頁）──
+// 主題指南：深入單一主題的整合頁。原本散在側邊欄，改以卡片區呈現，
+// 每張卡只給一個連結到該主題指南頁，不再列出指南內的所有文章。
+const topicGuides = [
+  { title: '申請策略全局觀', href: '/pages/guides/admission-overview.html' },
+  { title: '升大學前準備', href: '/pages/guides/pre-college.html' },
+  { title: '備審與學習歷程', href: '/pages/guides/portfolio-prep.html' },
+  { title: '升學面試準備', href: '/pages/guides/interview.html' },
+  { title: '研究所推甄', href: '/pages/guides/research.html' },
+  { title: 'Side Project 指南', href: '/pages/guides/side-project.html' },
+  { title: 'GitHub & Portfolio', href: '/pages/guides/github.html' },
+  { title: '競賽完整指南', href: '/pages/guides/competitions.html' },
+  { title: '各科系申請指南', href: '/pages/guides/departments.html' },
+  { title: '給家長完整指南', href: '/pages/guides/parents-guide.html' },
+  { title: 'AI 時代能力建立', href: '/pages/guides/ai-era.html' },
+  { title: '工具與模板下載', href: '/pages/resources/tools.html' },
+  { title: '大學面試題庫', href: '/pages/resources/interview-bank.html' },
+];
+
+// ── 即時搜尋／篩選用資料（原 search.astro 的資料準備，整合進同一頁）──
 const mdxData = articles.map((a) => ({
   title: a.data.title,
   kicker: a.data.kicker,
   description: a.data.description,
   category: a.data.category,
-  audience: a.data.audience ?? [],
   dept: a.data.departmentGroup ?? '',
   href: `/pages/resources/${a.slug}.html`,
 }));
@@ -64,7 +81,6 @@ const staticPages = [
     kicker: 'Portfolio 指南',
     description: '什麼是 Portfolio、為什麼高中生需要、如何從零開始建立個人網站作品集，含架構模板、工具選擇與真實案例。',
     category: '工具與延伸',
-    audience: [] as string[],
     dept: '',
     href: '/pages/portfolio-guide.html',
   },
@@ -76,13 +92,6 @@ const articleData = [...mdxData, ...staticPages];
 const categoryOrder = resourceCategories.map((c) => c.category);
 const categories = categoryOrder.filter((c) => articleData.some((a) => a.category === c));
 
-const audienceOrder = ['家長', '大學生', '研究所', '高一', '高二', '高三'];
-const presentAudiences = [...new Set(articleData.flatMap((a) => a.audience))];
-const audiences = [
-  ...audienceOrder.filter((x) => presentAudiences.includes(x)),
-  ...presentAudiences.filter((x) => !audienceOrder.includes(x)),
-];
-
 const deptOrder = ['理工', '醫藥衛生', '商管財經', '人文社科', '設計傳播', '藝術', '教育', '法政', '農生環境'];
 const presentDepts = [...new Set(articleData.map((a) => a.dept).filter(Boolean))];
 const departments = [
@@ -91,21 +100,19 @@ const departments = [
 ];
 ---
 
-<BaseLayout title="升學知識庫｜TBD Studio" description="TBD Studio 升學知識文章：申請策略、備審製作、材料累積、面試準備、各科系指南與研究所推甄，幫助你做出更清楚的準備決策。支援關鍵字搜尋與分類、目標讀者、科系群多維篩選。" bodyClass="sub-page resources-page">
+<BaseLayout title="升學知識庫｜TBD Studio" description="TBD Studio 升學知識文章：申請策略、備審製作、材料累積、面試準備、各科系指南與研究所推甄，幫助你做出更清楚的準備決策。支援關鍵字搜尋與分類、科系群篩選。" bodyClass="sub-page resources-page">
 <section class="hero">
   <span class="kicker">TBD Studio 知識庫</span>
   <h1>升學路上，你需要知道的事。</h1>
   <p class="lead">從管道選擇、備審整理、材料累積到面試準備，彙整各科系申請指南與研究所推甄策略，幫助你把力氣用在對的地方。</p>
 </section>
 
-<!-- 情境入口 + 新手必讀（常駐，最上方） -->
+<!-- 引導區（常駐，最上方）：新手路線 → 主題指南 → 依狀況找文章 -->
 <div class="resources-intro">
-  <SituationCards variant="home" />
-
   {starterSteps.length > 0 && (
     <section class="starter-path">
       <div class="situation-head">
-        <h2 class="situation-heading">第一次來？照這條路線讀</h2>
+        <h2 class="situation-heading">對大學申請毫無頭緒？我們帶你看懂</h2>
         <p class="situation-sub">五篇文章，從「升學在比什麼」到「教授怎麼看備審」，建立整體框架再深入細節。</p>
       </div>
       <ol class="starter-steps">
@@ -121,6 +128,23 @@ const departments = [
       </ol>
     </section>
   )}
+
+  <section class="guide-index">
+    <div class="situation-head">
+      <h2 class="situation-heading">主題指南</h2>
+      <p class="situation-sub">想深入某個主題？每份指南把該主題的重點與相關文章整理成一條線，從這裡進去。</p>
+    </div>
+    <div class="guide-grid">
+      {topicGuides.map((g) => (
+        <a class="guide-card" href={g.href}>
+          <span class="guide-card-title">{g.title}</span>
+          <span class="guide-card-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <SituationCards variant="home" />
 </div>
 
 <!-- 常駐搜尋 + 三維篩選：放在情境/必讀下方、文章區（grid 與側邊欄）上方 -->
@@ -146,18 +170,6 @@ const departments = [
       </div>
     </div>
 
-    {audiences.length > 0 && (
-      <div class="search-filter-group">
-        <span class="search-filter-label">目標讀者</span>
-        <div class="filter-pill-row" data-dim="audience">
-          <button type="button" class="filter-pill active" data-value="">全部</button>
-          {audiences.map((a) => (
-            <button type="button" class="filter-pill" data-value={a}>{a}</button>
-          ))}
-        </div>
-      </div>
-    )}
-
     {departments.length > 0 && (
       <div class="search-filter-group">
         <span class="search-filter-label">科系群</span>
@@ -172,41 +184,8 @@ const departments = [
   </div>
 </section>
 
-<!-- 文章區：側邊欄 + 內容；瀏覽分類 grid ↔ 搜尋/篩選結果，就地在同一塊切換 -->
+<!-- 文章區：瀏覽分類 grid ↔ 搜尋/篩選結果，就地在同一塊切換 -->
 <div class="resources-main" id="resources-main">
-
-  <!-- 側邊欄（搜尋/篩選時隱藏，讓結果滿版） -->
-  <aside class="resources-sidebar">
-    <div class="resources-sidebar-inner">
-      <div class="sidebar-group">
-        <p class="sidebar-nav-label">文章分類</p>
-        <nav>
-          {sections.map((s, i) => (
-            <a href={`#${s.id}`} class={`sidebar-nav-link${i === 0 ? ' active' : ''}`}>{s.navLabel}</a>
-          ))}
-        </nav>
-      </div>
-
-      <div class="sidebar-group">
-        <p class="sidebar-nav-label">主題指南</p>
-        <nav>
-          <a href="/pages/guides/admission-overview.html" class="sidebar-nav-link">申請策略全局觀 →</a>
-          <a href="/pages/guides/pre-college.html" class="sidebar-nav-link">升大學前準備 →</a>
-          <a href="/pages/guides/portfolio-prep.html" class="sidebar-nav-link">備審與學習歷程 →</a>
-          <a href="/pages/guides/interview.html" class="sidebar-nav-link">升學面試準備 →</a>
-          <a href="/pages/guides/research.html" class="sidebar-nav-link">研究所推甄 →</a>
-          <a href="/pages/guides/side-project.html" class="sidebar-nav-link">Side Project 指南 →</a>
-          <a href="/pages/guides/github.html" class="sidebar-nav-link">GitHub & Portfolio →</a>
-          <a href="/pages/guides/competitions.html" class="sidebar-nav-link">競賽完整指南 →</a>
-          <a href="/pages/guides/departments.html" class="sidebar-nav-link">各科系申請指南 →</a>
-          <a href="/pages/guides/parents-guide.html" class="sidebar-nav-link">給家長完整指南 →</a>
-          <a href="/pages/guides/ai-era.html" class="sidebar-nav-link">AI 時代能力建立 →</a>
-          <a href="/pages/resources/tools.html" class="sidebar-nav-link">工具與模板下載 →</a>
-          <a href="/pages/resources/interview-bank.html" class="sidebar-nav-link">大學面試題庫 →</a>
-        </nav>
-      </div>
-    </div>
-  </aside>
 
   <div class="resources-content">
 
@@ -258,7 +237,7 @@ const departments = [
   var data = articleData;
   var currentQuery = '';
   // 各維度目前選取的值（空字串 = 全部）
-  var filters = { category: '', audience: '', dept: '' };
+  var filters = { category: '', dept: '' };
 
   var searchInput = document.getElementById('search-input');
   var searchForm = document.getElementById('search-form');
@@ -284,7 +263,7 @@ const departments = [
   }
 
   function hasActiveFilter() {
-    return !!(filters.category || filters.audience || filters.dept);
+    return !!(filters.category || filters.dept);
   }
   function isDefault() {
     return !currentQuery && !hasActiveFilter();
@@ -298,15 +277,13 @@ const departments = [
       a.description.toLowerCase().includes(q) ||
       (a.category || '').toLowerCase().includes(q);
     var matchesCategory = !filters.category || a.category === filters.category;
-    var matchesAudience = !filters.audience || (a.audience || []).indexOf(filters.audience) !== -1;
     var matchesDept = !filters.dept || a.dept === filters.dept;
-    return matchesQuery && matchesCategory && matchesAudience && matchesDept;
+    return matchesQuery && matchesCategory && matchesDept;
   }
 
   function activeFilterLabel() {
     var parts = [];
     if (filters.category) parts.push(filters.category);
-    if (filters.audience) parts.push(filters.audience);
     if (filters.dept) parts.push(filters.dept);
     return parts.length ? '（' + parts.join(' · ') + '）' : '';
   }
@@ -347,7 +324,6 @@ const departments = [
     }
     setParam('q', currentQuery);
     setParam('category', filters.category);
-    setParam('audience', filters.audience);
     setParam('dept', filters.dept);
     window.history.replaceState({}, '', url.toString());
   }
@@ -414,10 +390,9 @@ const departments = [
   // 清除：清掉關鍵字與所有篩選，回到分類瀏覽
   if (backBtn) backBtn.addEventListener('click', function() {
     currentQuery = '';
-    filters = { category: '', audience: '', dept: '' };
+    filters = { category: '', dept: '' };
     searchInput.value = '';
     syncPills('category');
-    syncPills('audience');
     syncPills('dept');
     runSearch();
     if (searchSection) searchSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -427,33 +402,14 @@ const departments = [
   var params = new URLSearchParams(window.location.search);
   currentQuery = params.get('q') || '';
   filters.category = params.get('category') || '';
-  filters.audience = params.get('audience') || '';
   filters.dept = params.get('dept') || '';
 
   if (currentQuery) searchInput.value = currentQuery;
   syncPills('category');
-  syncPills('audience');
   syncPills('dept');
 
   runSearch();
 })();
 </script>
 
-<script>
-  // 瀏覽態側邊欄：捲動高亮目前分區
-  const links = document.querySelectorAll('.sidebar-nav-link');
-  const sections = document.querySelectorAll('#browse-grid .section[id]');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        links.forEach(l => l.classList.remove('active'));
-        const link = document.querySelector(`.sidebar-nav-link[href="#${entry.target.id}"]`);
-        if (link) link.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-10% 0px -80% 0px' });
-
-  sections.forEach(s => observer.observe(s));
-</script>
 </BaseLayout>
