@@ -261,30 +261,13 @@
   .principle-num { font-size: 24px; min-width: 30px; }
 }
 
-/* Resources sidebar layout */
-.resources-main { max-width: var(--tbd-container); margin: 0 auto; padding: 20px 22px 72px; display: grid; grid-template-columns: 200px 1fr; gap: 40px; align-items: start; }
-.resources-sidebar { position: sticky; top: 80px; }
-.resources-sidebar-inner { padding: 18px; background: var(--tbd-light); border-radius: 12px; border: 1px solid var(--tbd-line); }
-.sidebar-nav-label { font-size: 11px; font-weight: 800; letter-spacing: .08em; color: var(--tbd-mid); text-transform: uppercase; margin: 0 0 10px; display: block; }
-.sidebar-group { background: #fff; border: 1px solid var(--tbd-line); border-radius: 10px; padding: 14px 14px 10px; }
-.sidebar-group + .sidebar-group { margin-top: 14px; }
-.sidebar-nav-link { display: block; padding: 7px 10px; border-radius: 7px; font-size: 13px; color: var(--tbd-mid); text-decoration: none; line-height: 1.45; margin-bottom: 2px; transition: background 0.12s, color 0.12s; }
-.sidebar-nav-link:hover { color: var(--tbd-dark); background: rgba(20,33,67,.06); }
-.sidebar-nav-link.active { color: var(--tbd-accent); background: rgba(26,93,148,.09); font-weight: 700; }
+/* Resources 文章區（單欄，側邊欄已移除，主題指南改置於上方引導區） */
+.resources-main { max-width: var(--tbd-container); margin: 0 auto; padding: 20px 22px 72px; }
 .resources-content { min-width: 0; }
 .resources-content .section { margin-top: 34px; }
 .resources-content .section:first-child { margin-top: 0; }
 @media (max-width: 900px) {
-  .resources-main { grid-template-columns: 1fr; padding-top: 0; }
-  .resources-sidebar { position: static; }
-  .resources-sidebar-inner { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
-  .sidebar-group { padding: 12px 14px; }
-  .sidebar-group + .sidebar-group { margin-top: 0; }
-  .sidebar-group nav { display: flex; flex-wrap: wrap; gap: 6px; }
-  .sidebar-nav-label { margin: 0 0 10px; }
-  .sidebar-nav-link { padding: 5px 10px; border: 1px solid var(--tbd-line); border-radius: 999px; white-space: nowrap; margin: 0; background: #fff; font-size: 12px; }
-  .sidebar-nav-link:hover { background: rgba(20,33,67,.06); }
-  .sidebar-nav-link.active { background: rgba(26,93,148,.09); }
+  .resources-main { padding-top: 0; }
 }
 
 /* ── Search system ── */
@@ -314,7 +297,10 @@
 .situation-links a::before { content: "→ "; color: var(--tbd-accent); font-weight: 700; }
 .situation-links a:hover { background: rgba(26,93,148,.07); }
 
-.starter-path { margin-top: 40px; }
+/* 引導區三段（新手路線 / 主題指南 / 依狀況找文章）的垂直節奏 */
+.resources-intro > section { margin-top: 44px; }
+.resources-intro > section:first-child { margin-top: 0; }
+
 .starter-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
 .starter-step { display: flex; gap: 12px; align-items: flex-start; background: var(--tbd-light); border: 1px solid var(--tbd-line); border-radius: 12px; padding: 16px 16px 16px 14px; }
 .starter-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--tbd-accent); color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
@@ -322,6 +308,14 @@
 .starter-link { font-size: 14px; font-weight: 800; color: var(--tbd-dark); text-decoration: none; line-height: 1.35; }
 .starter-link:hover { color: var(--tbd-accent); text-decoration: underline; }
 .starter-note { color: var(--tbd-mid); font-size: 12.5px; line-height: 1.55; margin: 5px 0 0; }
+
+/* 主題指南：每張卡片就是一個指向該指南頁的連結 */
+.guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.guide-card { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid var(--tbd-line); border-radius: 10px; padding: 14px 16px; text-decoration: none; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.guide-card:hover { border-color: var(--tbd-accent); box-shadow: 0 4px 16px rgba(20,33,67,.08); transform: translateY(-2px); }
+.guide-card-title { font-size: 14px; font-weight: 700; color: var(--tbd-dark); line-height: 1.4; }
+.guide-card-arrow { flex-shrink: 0; color: var(--tbd-accent); font-weight: 700; transition: transform .15s; }
+.guide-card:hover .guide-card-arrow { transform: translateX(3px); }
 
 /* 搜尋頁空狀態的情境入口 */
 .search-default { margin-top: 8px; }
@@ -332,9 +326,6 @@
 .resources-search-section { max-width: var(--tbd-container); margin: 0 auto; padding: 26px 22px 0; }
 .resources-search-section .resources-search-bar { margin-top: 0; }
 .resources-filters { margin-top: 14px; }
-/* 搜尋/篩選時：隱藏側邊欄，結果就地滿版顯示在篩選列正下方 */
-.resources-main.searching { grid-template-columns: 1fr; }
-.resources-main.searching .resources-sidebar { display: none; }
 .back-to-browse { background: none; border: none; padding: 0; font: inherit; cursor: pointer; }
 
 @media (max-width: 640px) {
