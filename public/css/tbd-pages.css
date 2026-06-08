@@ -112,6 +112,14 @@
 
 .article-sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 5rem; align-self: start; }
 
+/* 手機版：目錄移到文章上方、CTA 留在最後（display:contents 讓側欄子項直接參與 grid） */
+@media (max-width: 1023px) {
+  .article-sidebar { display: contents; }
+  .article-toc { order: -1; }
+  .article-body { order: 0; }
+  .article-sidebar .sidebar-cta { order: 1; }
+}
+
 /* ─── Unified sidebar navigation (.pg-sidebar): used in both article TOC and portfolio-guide ─── */
 .pg-sidebar { background: #fff; border: 1px solid var(--tbd-line); border-radius: 16px; overflow: hidden; box-shadow: var(--tbd-shadow); }
 .pg-sidebar-head { padding: 12px 16px; border-bottom: 1px solid var(--tbd-line); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -121,6 +129,8 @@
 .pg-sidebar-nav { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
 .pg-guide-toggle { display: none; align-items: center; gap: 4px; background: none; border: 1px solid var(--tbd-line); border-radius: 8px; padding: 5px 10px; font-family: inherit; font-size: 12px; font-weight: 700; color: var(--tbd-mid); cursor: pointer; transition: color .15s, background .15s; white-space: nowrap; flex-shrink: 0; }
 .pg-guide-toggle:hover { color: var(--tbd-accent); background: rgba(26,93,148,.06); }
+.pg-guide-toggle-chevron { display: inline-block; transition: transform .15s; }
+.pg-sidebar.open .pg-guide-toggle-chevron { transform: rotate(180deg); }
 @media (max-width: 1023px) {
   .pg-guide-toggle { display: flex; }
   .pg-sidebar-nav { display: none; }

@@ -92,12 +92,16 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
         <slot />
       </article>
 
-      <aside class="article-sidebar">
-        <div class="pg-sidebar">
+      <div class="article-sidebar">
+        <div class="pg-sidebar article-toc">
           <div class="pg-sidebar-head">
             <span class="pg-sidebar-kicker">本文目錄</span>
+            <button type="button" class="pg-guide-toggle" id="article-toc-toggle" aria-expanded="false" aria-controls="article-toc-nav" aria-label="展開或收起目錄">
+              <span class="pg-guide-toggle-text">展開</span>
+              <span class="pg-guide-toggle-chevron" aria-hidden="true">▾</span>
+            </button>
           </div>
-          <nav class="pg-sidebar-nav">
+          <nav class="pg-sidebar-nav" id="article-toc-nav">
             {tocItems.map(item => (
               <a href={item.href} class="pg-sidebar-link">{item.label}</a>
             ))}
@@ -108,7 +112,7 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
           <p>{sidebarCtaText}</p>
           <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_article_sidebar">預約策略諮詢</a>
         </div>
-      </aside>
+      </div>
 
     </div>
 
@@ -139,6 +143,20 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
     const sections = tocLinks
       .map(a => document.querySelector(a.getAttribute('href') ?? ''))
       .filter((el): el is Element => el !== null);
+
+    // 手機版目錄收合（桌面版一律展開，按鈕以 CSS 隱藏）
+    const toc = document.querySelector('.article-toc');
+    const tocToggle = document.getElementById('article-toc-toggle');
+    const tocToggleText = tocToggle?.querySelector('.pg-guide-toggle-text');
+    const setTocOpen = (open: boolean) => {
+      toc?.classList.toggle('open', open);
+      tocToggle?.setAttribute('aria-expanded', String(open));
+      if (tocToggleText) tocToggleText.textContent = open ? '收起' : '展開';
+    };
+    tocToggle?.addEventListener('click', () => setTocOpen(!toc?.classList.contains('open')));
+    // 點目錄連結跳轉後自動收起（僅手機）
+    const isMobile = () => window.matchMedia('(max-width: 1023px)').matches;
+    tocLinks.forEach(a => a.addEventListener('click', () => { if (isMobile()) setTocOpen(false); }));
 
     const observer = new IntersectionObserver(entries => {
       const visible = entries.find(e => e.isIntersecting);
