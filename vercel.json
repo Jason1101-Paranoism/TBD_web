@@ -7,6 +7,21 @@
       "source": "/pages/seen.html",
       "destination": "https://tbd-compass-app.vercel.app/seen.html",
       "permanent": false
+    },
+    {
+      "source": "/pages/plans.html",
+      "destination": "/pages/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/pages/audience.html",
+      "destination": "/pages/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/pages.html",
+      "destination": "/pages/services.html",
+      "permanent": true
     }
   ]
 }
