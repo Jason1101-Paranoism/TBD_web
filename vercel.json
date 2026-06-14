@@ -5,7 +5,7 @@
   "redirects": [
     {
       "source": "/pages/seen.html",
-      "destination": "https://tbd-compass-app.vercel.app/seen.html",
+      "destination": "https://tbd-compass-app.vercel.app/",
       "permanent": false
     },
     {
