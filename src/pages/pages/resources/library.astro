@@ -1,0 +1,247 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+const title = '社群資源庫｜TBD Studio';
+const description = 'TBD Studio 在社群分享過的升學懶人包總整理：學習歷程、大學面試、活動競賽與升學觀念，依主題分類，可直接開啟與下載。內容持續更新。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=library`;
+
+// 資料來源：Google Sheet「社群資產索引（整理版）」發布成 CSV。
+// gviz 端點不需另外「發布到網路」，只要該檔（或其所在資料夾）設成
+// 「知道連結的任何人 → 檢視者」即可被前端讀取。
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/1wwhuwgx8bWd2qkUzEfyMCkLJaNM_fP-F7E8L7OEBP4M/gviz/tq?tqx=out:csv';
+// 讀取失敗時，導去原始雲端資料夾，確保使用者永遠有路徑拿到資產。
+const DRIVE_FOLDER = 'https://drive.google.com/drive/folders/1S58hRy-2MvUdHoe3Dw825ZgjcI9PprWr';
+// 分類顯示順序（CSV 內出現但不在此列的分類，會接在後面）。
+const CATEGORY_ORDER = ['學習歷程', '面試', '其他'];
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page resources-page">
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>社群資源庫</span>
+  </nav>
+  <span class="kicker">社群資源庫</span>
+  <h1>我們在社群分享過的，都整理在這裡</h1>
+  <p class="lead">學習歷程、大學面試、活動競賽到升學觀念——把社群上發過的懶人包依主題收在一起，挑現在最用得到的開始看。每份都可直接開啟、下載。內容會持續更新。</p>
+</section>
+
+<main class="search-main">
+
+  <!-- 篩選：分類 pill + 關鍵字 -->
+  <section class="resources-search-section" id="library-controls" hidden>
+    <form class="resources-search-bar" id="library-search-form" autocomplete="off">
+      <div class="resources-search-wrap">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tbd-mid); flex-shrink: 0;">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="search" id="library-search-input" name="q" placeholder="搜尋懶人包關鍵字，例如：面試、自我介紹、競賽…" class="resources-search-input" autocomplete="off" aria-label="搜尋懶人包">
+      </div>
+    </form>
+    <div class="search-filters resources-filters">
+      <div class="search-filter-group">
+        <span class="search-filter-label">分類</span>
+        <div class="filter-pill-row" id="library-pills" data-dim="category">
+          <button type="button" class="filter-pill active" data-value="">全部</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 載入中 -->
+  <section class="section" id="library-loading">
+    <p style="color: var(--tbd-mid);">資源載入中…</p>
+  </section>
+
+  <!-- 載入失敗 -->
+  <section class="section" id="library-error" hidden>
+    <h2 class="section-label">資源暫時無法載入</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">可能是網路狀況或資料來源權限設定。你仍然可以直接到雲端資料夾瀏覽所有資產。</p>
+    <div class="button-row">
+      <a class="button" href={DRIVE_FOLDER} target="_blank" rel="noopener noreferrer">前往雲端資料夾</a>
+    </div>
+  </section>
+
+  <!-- 動態渲染區 -->
+  <div id="library-sections"></div>
+
+  <!-- 篩選後找不到 -->
+  <section class="section" id="library-empty" hidden>
+    <p style="color: var(--tbd-mid);">找不到符合的資源，試試其他關鍵字或分類。</p>
+  </section>
+
+  <section class="section cta">
+    <h2>看完想知道怎麼用在自己身上？</h2>
+    <p>懶人包能給你方法，但每個人的科系方向與材料狀況不同。TBD 的第一次策略諮詢會從你的現況出發，幫你判斷最該補強的環節，給你一份帶得走的準備建議——不管後續有沒有合作。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_library">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+
+<script is:inline define:vars={{ CSV_URL, CATEGORY_ORDER }}>
+(function () {
+  var loadingEl = document.getElementById('library-loading');
+  var errorEl = document.getElementById('library-error');
+  var controlsEl = document.getElementById('library-controls');
+  var sectionsEl = document.getElementById('library-sections');
+  var emptyEl = document.getElementById('library-empty');
+  var pillsEl = document.getElementById('library-pills');
+  var searchForm = document.getElementById('library-search-form');
+  var searchInput = document.getElementById('library-search-input');
+
+  var items = [];
+  var filters = { category: '', q: '' };
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // 容錯 CSV parser：處理引號、逗號、換行
+  function parseCSV(text) {
+    var rows = [], row = [], field = '', i = 0, inQ = false;
+    while (i < text.length) {
+      var c = text[i];
+      if (inQ) {
+        if (c === '"') {
+          if (text[i + 1] === '"') { field += '"'; i += 2; continue; }
+          inQ = false; i++; continue;
+        }
+        field += c; i++; continue;
+      }
+      if (c === '"') { inQ = true; i++; continue; }
+      if (c === ',') { row.push(field); field = ''; i++; continue; }
+      if (c === '\r') { i++; continue; }
+      if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; i++; continue; }
+      field += c; i++;
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows;
+  }
+
+  function showError() {
+    if (loadingEl) loadingEl.hidden = true;
+    if (controlsEl) controlsEl.hidden = true;
+    if (errorEl) errorEl.hidden = false;
+  }
+
+  // 欄位：0 分類, 1 貼文標題, 2 貼文連結, 3 懶人包標題, 4 懶人包連結, 5 站上完整文章
+  function toItems(rows) {
+    var out = [];
+    for (var r = 0; r < rows.length; r++) {
+      var row = rows[r];
+      var postUrl = (row[2] || '').trim();
+      if (!/^https?:\/\//i.test(postUrl)) continue; // 跳過表頭與空列
+      out.push({
+        category: (row[0] || '').trim() || '其他',
+        title: (row[1] || '').trim(),
+        postUrl: postUrl,
+        lpTitle: (row[3] || '').trim(),
+        lpUrl: (row[4] || '').trim(),
+        article: (row[5] || '').trim(),
+      });
+    }
+    return out;
+  }
+
+  function orderedCategories() {
+    var present = [];
+    items.forEach(function (it) { if (present.indexOf(it.category) === -1) present.push(it.category); });
+    var ordered = CATEGORY_ORDER.filter(function (c) { return present.indexOf(c) !== -1; });
+    present.forEach(function (c) { if (ordered.indexOf(c) === -1) ordered.push(c); });
+    return ordered;
+  }
+
+  function buildPills() {
+    var cats = orderedCategories();
+    cats.forEach(function (c) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'filter-pill';
+      btn.setAttribute('data-value', c);
+      btn.textContent = c;
+      pillsEl.appendChild(btn);
+    });
+    pillsEl.querySelectorAll('.filter-pill').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        pillsEl.querySelectorAll('.filter-pill').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        filters.category = btn.getAttribute('data-value') || '';
+        render();
+      });
+    });
+  }
+
+  function cardHtml(it) {
+    var html = '<article class="card article-card">';
+    html += '<span class="badge">' + escapeHtml(it.category) + '</span>';
+    html += '<h3>' + escapeHtml(it.title) + '</h3>';
+    html += '<div class="button-row" style="margin-top:16px;flex-wrap:wrap;">';
+    html += '<a class="button" href="' + escapeHtml(it.postUrl) + '" target="_blank" rel="noopener noreferrer" data-track-event="download_resource">開啟 / 下載</a>';
+    if (it.lpUrl) {
+      html += '<a class="button secondary" href="' + escapeHtml(it.lpUrl) + '" target="_blank" rel="noopener noreferrer" data-track-event="download_resource">懶人包：' + escapeHtml(it.lpTitle || '下載') + '</a>';
+    }
+    html += '</div>';
+    if (it.article) {
+      html += '<p style="margin-top:10px;"><a class="text-link" href="' + escapeHtml(it.article) + '">看站上完整文章 →</a></p>';
+    }
+    html += '</article>';
+    return html;
+  }
+
+  function matches(it) {
+    if (filters.category && it.category !== filters.category) return false;
+    if (filters.q) {
+      var q = filters.q.toLowerCase();
+      var hay = (it.title + ' ' + it.lpTitle + ' ' + it.category).toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  }
+
+  function render() {
+    var cats = orderedCategories();
+    var html = '';
+    var totalShown = 0;
+    cats.forEach(function (cat) {
+      var list = items.filter(function (it) { return it.category === cat && matches(it); });
+      if (!list.length) return;
+      totalShown += list.length;
+      html += '<section class="section">';
+      html += '<h2 class="section-label">' + escapeHtml(cat) + ' <span style="color:var(--tbd-mid);font-weight:500;">' + list.length + '</span></h2>';
+      html += '<div class="card-grid">' + list.map(cardHtml).join('') + '</div>';
+      html += '</section>';
+    });
+    sectionsEl.innerHTML = html;
+    emptyEl.hidden = totalShown !== 0;
+  }
+
+  searchForm.addEventListener('submit', function (e) { e.preventDefault(); });
+  var timer;
+  searchInput.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () { filters.q = searchInput.value.trim(); render(); }, 150);
+  });
+
+  fetch(CSV_URL)
+    .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); return res.text(); })
+    .then(function (text) {
+      items = toItems(parseCSV(text));
+      if (!items.length) { showError(); return; }
+      if (loadingEl) loadingEl.hidden = true;
+      if (controlsEl) controlsEl.hidden = false;
+      buildPills();
+      render();
+    })
+    .catch(function () { showError(); });
+})();
+</script>
+
+</BaseLayout>
