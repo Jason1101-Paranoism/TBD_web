@@ -84,11 +84,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- PAIN POINTS -->
   <section id="pain" class="py-14 sm:py-16 lg:py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 max-w-5xl text-center">
-      <h2 class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 lg:mb-12 text-tbd-dark">你是否也面臨這樣的升學焦慮？</h2>
+      <h2 data-reveal class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 lg:mb-12 text-tbd-dark">你是否也面臨這樣的升學焦慮？</h2>
 
-      <div class="grid md:grid-cols-3 gap-6 sm:gap-8 text-left">
+      <div data-reveal-stagger class="grid md:grid-cols-3 gap-6 sm:gap-8 text-left">
         <!-- card (reordered: 意見分歧 first) -->
-        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft">
+        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft hover-lift">
           <div class="flex items-center gap-2 mb-3">
             <span class="inline-block w-2 h-2 rounded-full bg-tbd-accent"></span>
             <h3 class="text-lg sm:text-xl font-bold">意見分歧，決策困難</h3>
@@ -98,7 +98,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </p>
         </div>
 
-        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft">
+        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft hover-lift">
           <div class="flex items-center gap-2 mb-3">
             <span class="inline-block w-2 h-2 rounded-full bg-tbd-accent"></span>
             <h3 class="text-lg sm:text-xl font-bold">經歷豐富，卻無法聚焦</h3>
@@ -108,7 +108,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </p>
         </div>
 
-        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft">
+        <div class="bg-white p-6 sm:p-8 rounded-xl border border-tbd-light/80 shadow-soft hover-lift">
           <div class="flex items-center gap-2 mb-3">
             <span class="inline-block w-2 h-2 rounded-full bg-tbd-accent"></span>
             <h3 class="text-lg sm:text-xl font-bold">成績優異，卻缺乏故事</h3>
@@ -124,14 +124,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- TRUST / DELIVERABLES -->
   <section id="deliverables" class="py-14 sm:py-16 lg:py-20 bg-tbd-light/40">
     <div class="container mx-auto px-4 sm:px-6 max-w-5xl">
-      <div class="text-center mb-10 sm:mb-12">
+      <div data-reveal class="text-center mb-10 sm:mb-12">
         <span class="inline-flex items-center rounded-full border border-tbd-light/80 bg-tbd-accent/10 px-3 py-1 text-xs font-bold text-tbd-accent">我們如何協助學生</span>
         <h2 class="mt-4 text-2xl sm:text-3xl font-bold text-tbd-dark">不是代寫，而是把資料整理成<br class="hidden sm:block">可被教授理解、可被面試答辯的申請系統</h2>
         <p class="mt-3 text-tbd-mid max-w-xl mx-auto">每一次合作，都會產出具體可檢視的交付物——讓你的準備有節點、有成果，而不是花了時間但說不清楚做了什麼。</p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-5 sm:gap-6">
-        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7">
+      <div data-reveal-stagger class="grid md:grid-cols-3 gap-5 sm:gap-6">
+        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7 hover-lift">
           <div class="w-10 h-10 rounded-lg bg-tbd-accent/10 flex items-center justify-center mb-4">
             <svg class="w-5 h-5 text-tbd-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -141,7 +141,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="text-tbd-mid text-sm leading-relaxed">初談後產出一份文件，說明你目前的競爭力定位、最適合的升學管道、以及建議的準備優先順序。是整個申請系統的起點。</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7">
+        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7 hover-lift">
           <div class="w-10 h-10 rounded-lg bg-tbd-accent/10 flex items-center justify-center mb-4">
             <svg class="w-5 h-5 text-tbd-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h10M4 18h6"/>
@@ -151,7 +151,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="text-tbd-mid text-sm leading-relaxed">系統化整理你的競賽、課程、專題、幹部、實習與自學成果，標記每項素材的申請價值與可延伸方向，讓備審撰寫有材料可用。</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7">
+        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7 hover-lift">
           <div class="w-10 h-10 rounded-lg bg-tbd-accent/10 flex items-center justify-center mb-4">
             <svg class="w-5 h-5 text-tbd-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3-3-3z"/>
@@ -167,11 +167,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- SERVICES BY CHANNEL -->
   <section class="py-12 sm:py-14 bg-tbd-light/30">
     <div class="container mx-auto px-4 sm:px-6 max-w-5xl">
-      <div class="text-center mb-8">
+      <div data-reveal class="text-center mb-8">
         <h2 class="text-xl sm:text-2xl font-bold text-tbd-dark">依你的升學管道找到對應服務</h2>
         <p class="mt-2 text-tbd-mid text-sm">選擇你的準備階段，了解 TBD 具體如何協助。</p>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div data-reveal-stagger class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <a href="/pages/services/college-application.html" class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-5 hover:border-tbd-accent/40 hover:shadow-md transition group" style="text-decoration: none;">
           <div class="text-xs font-bold text-tbd-accent bg-tbd-accent/10 rounded-full px-2 py-1 inline-block mb-3">個人申請</div>
           <h3 class="font-bold text-tbd-dark text-sm leading-snug">個人申請備審整理與輔導</h3>
@@ -199,13 +199,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- CASES -->
   <section id="cases" class="py-14 sm:py-16 lg:py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
-      <div class="mb-8 sm:mb-10 lg:mb-12">
+      <div data-reveal class="mb-8 sm:mb-10 lg:mb-12">
         <span class="inline-flex items-center rounded-full border border-tbd-light/80 bg-tbd-accent/10 px-3 py-1 text-xs font-bold text-tbd-accent">成功案例</span>
         <h2 class="mt-4 text-2xl sm:text-3xl font-bold text-tbd-dark">讓學生的故事，成為被錄取的理由</h2>
         <p class="mt-3 text-tbd-mid max-w-2xl">以下案例已去識別化處理，保留真實合作脈絡、交付方法與成果，避免揭露學生個資。</p>
       </div>
 
-      <div class="grid lg:grid-cols-[1.25fr_0.75fr] gap-6 sm:gap-8 items-stretch">
+      <div data-reveal-stagger class="grid lg:grid-cols-[1.25fr_0.75fr] gap-6 sm:gap-8 items-stretch">
         <article class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft">
           <div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-tbd-accent/10"></div>
           <div class="absolute right-10 top-12 w-24 h-24 rounded-full bg-tbd-yellow/20"></div>
@@ -305,7 +305,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
-      <div class="text-center mb-12 lg:mb-20">
+      <div data-reveal class="text-center mb-12 lg:mb-20">
         <h2 class="text-2xl sm:text-4xl font-bold mb-6 tracking-tight">
           我們不提供標準答案，<span class="text-tbd-yellow">我們設計一套可重現的成長流程</span>
         </h2>
@@ -315,7 +315,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
       </div>
 
-      <div class="flex flex-col lg:flex-row items-stretch justify-between gap-6 lg:gap-4">
+      <div data-reveal-stagger class="flex flex-col lg:flex-row items-stretch justify-between gap-6 lg:gap-4">
 
         <div class="flex-1 group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
           <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20">
@@ -378,7 +378,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <div class="mt-16 lg:mt-24 text-center">
+      <div data-reveal class="mt-16 lg:mt-24 text-center">
         <div class="inline-block relative">
           <span class="absolute -top-4 -left-6 text-4xl text-tbd-yellow opacity-30 font-serif">"</span>
           <p class="text-xl sm:text-2xl italic text-white/90">
@@ -393,7 +393,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- GUIDES -->
   <section class="py-12 sm:py-14 bg-white">
     <div class="container mx-auto px-4 sm:px-6 max-w-5xl">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+      <div data-reveal class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
         <div>
           <span class="inline-flex items-center rounded-full border border-tbd-light/80 bg-tbd-accent/10 px-3 py-1 text-xs font-bold text-tbd-accent">升學知識庫</span>
           <h2 class="mt-3 text-xl sm:text-2xl font-bold text-tbd-dark">先讀懂，再決定</h2>
@@ -401,7 +401,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <a href="/pages/resources.html" class="shrink-0 text-sm font-bold text-tbd-accent hover:underline">查看全部文章 →</a>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div data-reveal-stagger class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <a href="/pages/guides/side-project.html" class="bg-tbd-light/30 rounded-xl border border-tbd-light/80 p-5 hover:border-tbd-accent/40 hover:bg-white hover:shadow-soft transition" style="text-decoration: none;">
           <div class="text-xs font-bold text-tbd-mid mb-2">Side Project 指南</div>
           <h3 class="font-bold text-tbd-dark text-sm leading-snug">Side Project 升學完整指南</h3>
@@ -444,7 +444,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         預約一次 60 分鐘的升學策略諮詢，獲得一份客觀的策略建議報告。
       </p>
 
-      <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-soft inline-block text-left max-w-md w-full border border-tbd-light/80">
+      <div data-reveal class="bg-white p-6 sm:p-8 rounded-2xl shadow-soft inline-block text-left max-w-md w-full border border-tbd-light/80">
         <div class="flex items-start justify-between gap-4">
           <div>
             <h3 class="text-xl sm:text-2xl font-bold mb-1 text-tbd-dark">特質評估與升學策略規劃</h3>

@@ -130,4 +130,28 @@
       form_id: form.id || form.getAttribute('name') || undefined,
     });
   }, true);
+
+  // ---------------------------------------------------------------------------
+  // 進場淡入（scroll reveal）
+  // 元素標 data-reveal / data-reveal-stagger，進入視窗時加 .is-visible。
+  // 隱藏樣式只在 <html>.js-reveal 下生效（見 tbd-base.css），所以 no-JS 全顯示。
+  // 尊重 prefers-reduced-motion：直接全部顯示、不做動畫。
+  // ---------------------------------------------------------------------------
+  const revealEls = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+  if (revealEls.length) {
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      revealEls.forEach((el) => el.classList.add('is-visible'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+      revealEls.forEach((el) => io.observe(el));
+    }
+  }
 })();
