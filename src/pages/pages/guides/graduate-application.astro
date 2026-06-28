@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+import { getCollection } from 'astro:content';
+
+// 研究所推甄的七個準備階段，依「申請旅程」順序排列（非 resources 列表的 order 欄位）。
+// 每個階段對應一篇已發布的知識庫文章，這個指南把它們串成一條閱讀路徑。
+const STAGE_ORDER = [
+  { slug: 'graduate-recommend-vs-exam', role: '先決定要走推甄還是考試，再決定整個大四的準備策略。' },
+  { slug: 'graduate-timeline',          role: '確定路線後，把大三下到大四上的關鍵節點排進時程。' },
+  { slug: 'graduate-choose-lab',        role: '用「領域 → 實驗室 → 指導教授」三層邏輯，找出真正適合的目標。' },
+  { slug: 'graduate-contact-professor', role: '在送件前主動聯繫教授：套磁信怎麼寫、什麼時候寄。' },
+  { slug: 'research-proposal',          role: '推甄的核心關卡——把研究問題與方法寫成有說服力的計畫書。' },
+  { slug: 'graduate-cv',                role: '用自傳、CV 與資料整理，讓備審回答「我為什麼適合做研究」。' },
+  { slug: 'graduate-oral-defense',      role: '最後一關：用學術對話的邏輯，為自己的研究計畫答辯。' },
+];
+
+const bySlug = Object.fromEntries(
+  (await getCollection('articles')).map((a) => [a.slug, a])
+);
+const stages = STAGE_ORDER
+  .map((s, i) => {
+    const a = bySlug[s.slug];
+    if (!a) return null;
+    return { n: i + 1, role: s.role, title: a.data.title, href: `/pages/resources/${a.slug}.html` };
+  })
+  .filter(Boolean);
+
+const title = '研究所推甄完整指南';
+const description = '研究所推甄該從哪一步開始？這個指南把推甄流程拆成七個階段——從推甄與考試的抉擇、時程規劃、選校選所選教授、聯繫教授、研究計畫書，到備審與口試，帶你照順序一步步走完整個申請。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-application`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": title,
+      "description": description,
+      "url": `${site.siteUrl}/pages/guides/graduate-application.html`,
+      "inLanguage": "zh-TW"
+    },
+    {
+      "@type": "ItemList",
+      "name": "研究所推甄的七個準備階段",
+      "itemListElement": stages.map((s) => ({
+        "@type": "ListItem",
+        "position": s.n,
+        "name": s.title,
+        "item": `${site.siteUrl}${s.href}`
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "知識庫", "item": `${site.siteUrl}/pages/resources.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/guides/graduate-application.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page guide-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">主題指南</span>
+  <h1>{title}</h1>
+  <p class="lead">研究所推甄的準備不是七天就能完成，而是一連串環環相扣的決定。這個指南把推甄流程拆成七個階段，每個階段對應一篇完整文章。建議照順序讀一遍，先建立全貌，再回頭把你目前卡住的階段讀深。</p>
+</section>
+
+<main>
+
+  <section class="section" id="stages">
+    <h2>推甄準備的七個階段</h2>
+    <div class="card-grid">
+      {stages.map((s) => (
+        <article class="card article-card">
+          <span class="badge">階段 {s.n}</span>
+          <h3><a class="text-link" href={s.href}>{s.title}</a></h3>
+          <p class="card-desc">{s.role}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="cases">
+    <h2>看真實案例怎麼走完這條路</h2>
+    <div class="card-grid">
+      <article class="card article-card">
+        <span class="badge">成功案例</span>
+        <h3><a class="text-link" href="/pages/cases.html">TBD Studio 升學輔導案例（含研究所申請）</a></h3>
+        <p class="card-desc">去識別化的真實案例，看學生如何完成素材盤點、備審重構與面試訓練，把上面七個階段落實成錄取結果。</p>
+      </article>
+      <article class="card article-card">
+        <span class="badge">延伸主題</span>
+        <h3><a class="text-link" href="/pages/guides/research.html">研究與自學累積指南</a></h3>
+        <p class="card-desc">推甄的底氣來自更早的累積。想在大二、大三就開始接觸研究、提升自學力，從這個指南開始。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>照著階段走，但不確定自己的判斷對不對？</h2>
+    <p>TBD 的策略諮詢會依你的科系目標、在校成績與研究經歷，幫你檢視推甄路線、選校名單與研究計畫方向，找出目前最該補強的階段。線上進行、不代寫，過程文件可追蹤。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_guide_graduate">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>
