@@ -31,6 +31,8 @@ interface Props {
   slug: string;
   seoTitle?: string;
   category?: string;
+  publishDate: Date;
+  updatedDate?: Date;
 }
 
 const {
@@ -39,6 +41,7 @@ const {
   sidebarCtaText, sidebarCtaUtm,
   bottomCtaH2, bottomCtaUtm,
   tocItems, relatedArticles, slug, seoTitle, category,
+  publishDate, updatedDate,
 } = Astro.props;
 
 const articleSchema = {
@@ -49,6 +52,8 @@ const articleSchema = {
       "headline": title,
       "description": description,
       "url": `${site.siteUrl}/pages/resources/${slug}.html`,
+      "datePublished": publishDate.toISOString(),
+      "dateModified": (updatedDate ?? publishDate).toISOString(),
       "author": { "@type": "Organization", "name": "TBD Studio", "url": site.siteUrl },
       "publisher": { "@type": "Organization", "name": "TBD Studio", "url": site.siteUrl },
       "inLanguage": "zh-TW"

@@ -6,6 +6,9 @@ const articles = defineCollection({
     title: z.string(),
     seoTitle: z.string().optional(),
     description: z.string(),
+    // 發布日 / 最後更新日（給文章 schema 的 datePublished / dateModified）
+    publishDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
     kicker: z.string(),
     lead: z.string(),
 
