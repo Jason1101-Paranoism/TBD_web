@@ -13,4 +13,6 @@ node_modules/
 
 # Agent skills (vendored 第三方內容，以 skills-lock.json 還原；不入版控)
 .agents/
-.claude/skills/
+.claude/skills/*
+# 例外：自家專案 skill 要進版控
+!.claude/skills/tbd-seo-meta/
