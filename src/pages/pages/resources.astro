@@ -23,7 +23,8 @@ const starterSteps = starterPath
 // 瀏覽態的分類分區：從 collection 自動分組並排序產生卡片
 const sections = resourceCategories.map((cat) => {
   const articleCards = articles
-    .filter((a) => a.data.category === cat.category)
+    // 研究所推甄區只列通用文；分學群專屬文（帶 departmentGroup）走指南卡與科系群篩選，不灌爆瀏覽區
+    .filter((a) => a.data.category === cat.category && !(cat.category === '研究所推甄' && a.data.departmentGroup))
     .map((a) => ({
       kicker: a.data.kicker,
       title: a.data.title,

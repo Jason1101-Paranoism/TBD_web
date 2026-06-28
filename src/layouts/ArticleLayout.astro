@@ -59,9 +59,10 @@ const GUIDE_BY_CATEGORY: Record<string, { href: string; label: string }> = {
 const GUIDE_BY_DEPT: Record<string, { href: string; label: string }> = {
   '設計傳播': { href: '/pages/guides/graduate-design.html', label: '設計研究所申請指南' },
 };
-const guide = (category === '分科研究所申請'
-  ? (departmentGroup ? GUIDE_BY_DEPT[departmentGroup] : undefined)
-  : (category ? GUIDE_BY_CATEGORY[category] : undefined)) ?? null;
+// 研究所推甄文章若帶 departmentGroup（分學群專屬文）→ 連到該學群研究所指南；
+// 其餘（含通用研究所文、大學端各科系文）→ 連到該 category 的指南。
+const guide = ((category === '研究所推甄' && departmentGroup ? GUIDE_BY_DEPT[departmentGroup] : undefined)
+  ?? (category ? GUIDE_BY_CATEGORY[category] : undefined)) ?? null;
 
 // 麵包屑層級（含可選的指南層），同時供 HTML 與 BreadcrumbList schema 使用。
 const crumbs = [

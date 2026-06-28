@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 
 // 研究所推甄 sub-section 由 taxonomy 自動生成（其餘區塊維持手刻編輯精選）
 const graduateCards = (await getCollection('articles'))
-  .filter((a) => a.data.category === '研究所推甄')
+  .filter((a) => a.data.category === '研究所推甄' && !a.data.departmentGroup)
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
   .map((a) => ({ title: a.data.title, href: `/pages/resources/${a.slug}.html`, desc: a.data.description }));
 
