@@ -11,7 +11,7 @@ check_meta.py — TBD 知識庫文章 SEO meta 健檢
 因為 GitHub/CV/Side Project 這類半形詞只佔中文一半寬，碼點數會誤判。
 
 門檻(全形寬度，非碼點):
-    description  理想 150–180、可接受 140–320；<140 偏短(浪費 SERP 摘要)、>330 會被截
+    description  理想 150–180；<140 偏短(浪費摘要)、>210 桌機會明顯被截（SERP 約 160 寬填滿）
     seoTitle     >62 桌機會被截(含「｜TBD Studio」約 13 寬)
 退出碼 1 代表有「會被截斷 / 結構錯誤」等需處理的問題。
 """
@@ -53,8 +53,8 @@ def check_file(path: str):
         issues.append('缺 description')
     else:
         w = width(desc)
-        if w > 330:
-            issues.append(f'description 過長(寬{w})會被截，建議 ≤320')
+        if w > 210:
+            issues.append(f'description 過長(寬{w})桌機會明顯被截，建議壓到 ≤180')
         elif w < 140:
             warns.append(f'description 偏短(寬{w})，建議補到 150–180 填滿摘要')
         if re.search(r'[一-鿿],', desc) or re.search(r'[一-鿿]\.(\s|$)', desc):
