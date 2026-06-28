@@ -119,6 +119,20 @@
 .series-nav .button-row { flex-wrap: wrap; gap: 0.5rem; }
 .series-nav .button.secondary { font-size: 0.85rem; padding: 0.5rem 0.9rem; }
 
+/* 側欄：研究所階段列序號 */
+.series-rail-n { display: inline-flex; align-items: center; justify-content: center; width: 1.5em; height: 1.5em; margin-right: 0.5em; border-radius: 50%; background: var(--tbd-light); color: var(--tbd-dark); font-size: 0.72em; font-weight: 800; flex-shrink: 0; }
+.series-rail .pg-sidebar-link { display: flex; align-items: center; }
+.series-rail .pg-sidebar-link.active .series-rail-n { background: var(--tbd-accent); color: #fff; }
+
+/* 指南頁：7 階段 × 各軌 矩陣總表 */
+.series-matrix-hint { color: var(--tbd-mid); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; }
+.series-matrix-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.series-matrix { border-collapse: collapse; width: 100%; min-width: 460px; font-size: 0.9rem; }
+.series-matrix th, .series-matrix td { border: 1px solid var(--tbd-line); padding: 0.6rem 0.85rem; text-align: center; }
+.series-matrix thead th { background: var(--tbd-light); color: var(--tbd-dark); font-weight: 800; }
+.series-matrix th[scope="row"] { text-align: left; white-space: nowrap; font-weight: 600; color: var(--tbd-dark); background: rgba(208, 206, 219, .22); }
+.series-matrix-shared { color: var(--tbd-mid); font-size: 0.85em; }
+
 .article-sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 5rem; align-self: start; }
 
 /* 手機版：目錄移到文章上方、CTA 留在最後（display:contents 讓側欄子項直接參與 grid） */

@@ -77,11 +77,16 @@ const crumbs = [
 // ── 研究所申請系列：階段(縱) × 軌道(橫) 矩陣導覽 ──
 // 軌道 = departmentGroup（沒有就是「通用」）。縱向走同軌相鄰階段（該軌缺就回退通用），
 // 橫向列同階段的其他軌道版本。隨學群增加自動長出，不必手改舊文。
+const GRAD_STAGE_LABELS: Record<number, string> = {
+  1: '推甄 vs 考試', 2: '時程規劃', 3: '選校選教授', 4: '聯繫教授',
+  5: '研究計畫書', 6: '備審／作品集', 7: '口試',
+};
 let seriesNav: null | {
   track: string; stage: number;
   prev: { title: string; href: string } | null;
   next: { title: string; href: string } | null;
   others: { track: string; title: string; href: string }[];
+  stages: { n: number; label: string; href: string; current: boolean }[];
 } = null;
 if (gradStage) {
   const track = departmentGroup ?? '通用';
@@ -97,7 +102,14 @@ if (gradStage) {
     .filter((a) => a.data.gradStage === gradStage && trackOf(a) !== track)
     .sort((a, b) => (trackOf(a) === '通用' ? -1 : 1))
     .map((a) => ({ track: trackOf(a), title: a.data.title, href: `/pages/resources/${a.slug}.html` }));
-  seriesNav = { track, stage: gradStage, prev: link(prevA), next: link(nextA), others };
+  // 側欄用：當前軌的完整 7 階段（該軌缺則回退通用），標出目前所在
+  const stages = [1, 2, 3, 4, 5, 6, 7]
+    .map((n) => {
+      const a = cell(n, track) ?? cell(n, '通用');
+      return a ? { n, label: GRAD_STAGE_LABELS[n], href: `/pages/resources/${a.slug}.html`, current: n === gradStage } : null;
+    })
+    .filter((x): x is { n: number; label: string; href: string; current: boolean } => x !== null);
+  seriesNav = { track, stage: gradStage, prev: link(prevA), next: link(nextA), others, stages };
 }
 
 const articleSchema = {
@@ -167,6 +179,21 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
             ))}
           </nav>
         </div>
+
+        {seriesNav && (
+          <div class="pg-sidebar series-rail">
+            <div class="pg-sidebar-head">
+              <span class="pg-sidebar-kicker">研究所申請 · {seriesNav.track}軌</span>
+            </div>
+            <nav class="pg-sidebar-nav">
+              {seriesNav.stages.map((s) => (
+                <a href={s.href} class={s.current ? 'pg-sidebar-link active' : 'pg-sidebar-link'} aria-current={s.current ? 'page' : undefined}>
+                  <span class="series-rail-n">{s.n}</span>{s.label}
+                </a>
+              ))}
+            </nav>
+          </div>
+        )}
 
         <div class="sidebar-cta card">
           <p>{sidebarCtaText}</p>
