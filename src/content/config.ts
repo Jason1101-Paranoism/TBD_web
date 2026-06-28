@@ -20,6 +20,8 @@ const articles = defineCollection({
     stage: z.array(z.string()).default([]),
     audience: z.array(z.string()).default([]),
     departmentGroup: z.string().optional(),
+    // 研究所申請系列的階段（1–7），用來建立「階段 × 軌道」矩陣導覽
+    gradStage: z.number().optional(),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     updatedAt: z.string().optional(),

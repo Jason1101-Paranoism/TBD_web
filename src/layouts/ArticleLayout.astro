@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import { site } from '../config/site';
 import { resourceCategories } from '../config/resourceCategories';
+import { getCollection } from 'astro:content';
 
 interface TocItem {
   href: string;
@@ -32,6 +33,7 @@ interface Props {
   seoTitle?: string;
   category?: string;
   departmentGroup?: string;
+  gradStage?: number;
   publishDate: Date;
   updatedDate?: Date;
 }
@@ -41,7 +43,7 @@ const {
   bodyClass = 'sub-page article-page',
   sidebarCtaText, sidebarCtaUtm,
   bottomCtaH2, bottomCtaUtm,
-  tocItems, relatedArticles, slug, seoTitle, category, departmentGroup,
+  tocItems, relatedArticles, slug, seoTitle, category, departmentGroup, gradStage,
   publishDate, updatedDate,
 } = Astro.props;
 
@@ -71,6 +73,32 @@ const crumbs = [
   ...(guide ? [{ name: guide.label, url: `${site.siteUrl}${guide.href}`, href: guide.href }] : []),
   { name: title, url: `${site.siteUrl}/pages/resources/${slug}.html`, href: '' },
 ];
+
+// ── 研究所申請系列：階段(縱) × 軌道(橫) 矩陣導覽 ──
+// 軌道 = departmentGroup（沒有就是「通用」）。縱向走同軌相鄰階段（該軌缺就回退通用），
+// 橫向列同階段的其他軌道版本。隨學群增加自動長出，不必手改舊文。
+let seriesNav: null | {
+  track: string; stage: number;
+  prev: { title: string; href: string } | null;
+  next: { title: string; href: string } | null;
+  others: { track: string; title: string; href: string }[];
+} = null;
+if (gradStage) {
+  const track = departmentGroup ?? '通用';
+  const gradArticles = (await getCollection('articles'))
+    .filter((a) => a.data.category === '研究所推甄' && a.data.gradStage);
+  const trackOf = (a: any) => a.data.departmentGroup ?? '通用';
+  const cell = (stg: number, trk: string) =>
+    gradArticles.find((a) => a.data.gradStage === stg && trackOf(a) === trk);
+  const link = (a: any) => (a ? { title: a.data.title, href: `/pages/resources/${a.slug}.html` } : null);
+  const prevA = gradStage > 1 ? (cell(gradStage - 1, track) ?? cell(gradStage - 1, '通用')) : null;
+  const nextA = gradStage < 7 ? (cell(gradStage + 1, track) ?? cell(gradStage + 1, '通用')) : null;
+  const others = gradArticles
+    .filter((a) => a.data.gradStage === gradStage && trackOf(a) !== track)
+    .sort((a, b) => (trackOf(a) === '通用' ? -1 : 1))
+    .map((a) => ({ track: trackOf(a), title: a.data.title, href: `/pages/resources/${a.slug}.html` }));
+  seriesNav = { track, stage: gradStage, prev: link(prevA), next: link(nextA), others };
+}
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -147,6 +175,30 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
       </div>
 
     </div>
+
+    {seriesNav && (
+      <section class="section series-nav">
+        <h2>研究所申請系列導覽</h2>
+        <p class="series-nav-pos">你在「<strong>{seriesNav.track}</strong>」軌 · 階段 <strong>{seriesNav.stage}</strong>／7{guide && (<> · <a class="text-link" href={guide.href}>看完整 7 階段</a></>)}</p>
+        <div class="series-nav-axis">
+          <span class="series-nav-label">縱向 · 同軌相鄰階段</span>
+          <div class="button-row">
+            {seriesNav.prev && <a class="button secondary" href={seriesNav.prev.href}>← 階段 {seriesNav.stage - 1}：{seriesNav.prev.title}</a>}
+            {seriesNav.next && <a class="button secondary" href={seriesNav.next.href}>階段 {seriesNav.stage + 1}：{seriesNav.next.title} →</a>}
+          </div>
+        </div>
+        {seriesNav.others.length > 0 && (
+          <div class="series-nav-axis">
+            <span class="series-nav-label">橫向 · 這個階段的其他版本</span>
+            <div class="button-row">
+              {seriesNav.others.map((o) => (
+                <a class="button secondary" href={o.href}>{o.track}版：{o.title}</a>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+    )}
 
     <section class="section cta">
       <h2>{bottomCtaH2}</h2>

@@ -110,6 +110,15 @@
 .article-section ul, .article-section ol { padding-left: 1.25rem; }
 .article-section li { margin-bottom: 0.4rem; }
 
+/* 研究所申請系列：階段 × 軌道 矩陣導覽 */
+.series-nav { background: #fff; border: 1px solid var(--tbd-line); border-radius: 16px; padding: 1.5rem 1.75rem; box-shadow: var(--tbd-shadow); }
+.series-nav h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--tbd-dark); }
+.series-nav-pos { color: var(--tbd-mid); font-size: 0.9rem; margin-bottom: 0.5rem; }
+.series-nav-axis { margin-top: 1rem; }
+.series-nav-label { display: block; font-size: 0.78rem; font-weight: 800; color: var(--tbd-accent); letter-spacing: .04em; margin-bottom: 0.5rem; }
+.series-nav .button-row { flex-wrap: wrap; gap: 0.5rem; }
+.series-nav .button.secondary { font-size: 0.85rem; padding: 0.5rem 0.9rem; }
+
 .article-sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 5rem; align-self: start; }
 
 /* 手機版：目錄移到文章上方、CTA 留在最後（display:contents 讓側欄子項直接參與 grid） */
