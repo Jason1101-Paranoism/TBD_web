@@ -106,8 +106,8 @@
 .article-body { max-width: 100%; }
 .article-section { margin-bottom: 2.5rem; }
 .article-section h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--tbd-mid); }
-.article-section p, .article-section ul { color: var(--tbd-mid); line-height: 1.75; }
-.article-section ul { padding-left: 1.25rem; }
+.article-section p, .article-section ul, .article-section ol { color: var(--tbd-mid); line-height: 1.75; }
+.article-section ul, .article-section ol { padding-left: 1.25rem; }
 .article-section li { margin-bottom: 0.4rem; }
 
 .article-sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 5rem; align-self: start; }
