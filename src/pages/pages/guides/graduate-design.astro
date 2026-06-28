@@ -10,7 +10,8 @@ const STAGE_ORDER = [
   { slug: 'graduate-timeline',          tag: '通用',   role: '把大三下到大四上的關鍵節點排進時程。' },
   { slug: 'design-graduate-choose',     tag: '設計專屬', role: '分清學術型與實務型，依師資與作品方向選校選教授。' },
   { slug: 'graduate-contact-professor', tag: '通用',   role: '送件前聯繫教授：套磁信怎麼寫、什麼時候寄。' },
-  { slug: 'design-graduate-portfolio',  tag: '設計專屬', role: '把研究計畫與作品集整合成互相支撐的一份申請。' },
+  { slug: 'design-graduate-proposal',   tag: '設計專屬', role: '把模糊的設計興趣，收斂成一個值得做的研究計畫。' },
+  { slug: 'design-graduate-portfolio',  tag: '設計專屬', role: '作品集怎麼選件、排序、說明，並支撐你的研究計畫。' },
   { slug: 'design-graduate-oral',       tag: '設計專屬', role: '為作品答辯、面對講評，準備設計口試的現場對話。' },
 ];
 
@@ -26,7 +27,7 @@ const stages = STAGE_ORDER
   .filter(Boolean);
 
 const title = '設計研究所申請完整指南';
-const description = '設計研究所怎麼準備？這個指南依申請順序拆成六個階段——從推甄與考試、時程規劃，到設計專屬的選校（學術型vs實務型）、聯繫教授、研究計畫與作品集整合，以及口試與作品集講評。';
+const description = '設計研究所怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試、時程規劃，到設計專屬的選校（學術型vs實務型）、聯繫教授、研究計畫、作品集，以及口試與作品集講評。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-design`;
 
 const schema = {
@@ -41,7 +42,7 @@ const schema = {
     },
     {
       "@type": "ItemList",
-      "name": "設計研究所申請的六個階段",
+      "name": "設計研究所申請的七個階段",
       "itemListElement": stages.map((s) => ({
         "@type": "ListItem",
         "position": s.n,
@@ -72,13 +73,13 @@ const schema = {
   </nav>
   <span class="kicker">主題指南 · 設計類群</span>
   <h1>{title}</h1>
-  <p class="lead">設計研究所和其他領域不同——同樣是碩士，有學術型與實務型之分，作品集的份量也比多數學門更重。這個指南把申請拆成六個階段：通用的時程與套磁邏輯沿用研究所推甄文章，設計真正不同的環節（選校型態、研究計畫×作品集、口試講評）則有設計專屬深文。建議照順序讀一遍，再回頭把卡住的階段讀深。</p>
+  <p class="lead">設計研究所和其他領域不同——同樣是碩士，有學術型與實務型之分，作品集的份量也比多數學門更重。這個指南把申請拆成七個階段，和通用的研究所推甄指南同一套骨架：通用的時程與套磁沿用研究所推甄文章，設計真正不同的環節（選校型態、研究計畫、作品集、口試講評）則有設計專屬深文。建議照順序讀一遍，再回頭把卡住的階段讀深。</p>
 </section>
 
 <main>
 
   <section class="section" id="stages">
-    <h2>設計研究所申請的六個階段</h2>
+    <h2>設計研究所申請的七個階段</h2>
     <div class="card-grid">
       {stages.map((s) => (
         <article class="card article-card">
