@@ -10,7 +10,7 @@ const graduateCards = (await getCollection('articles'))
   .map((a) => ({ title: a.data.title, href: `/pages/resources/${a.slug}.html`, desc: a.data.description }));
 
 const title = '研究、自學與能力累積指南';
-const description = '高中生如何開始接觸研究、提升自學能力、參加競賽並讓這些經歷真正對申請有說服力——TBD Studio 能力建立系列文章完整收錄。';
+const description = '自學、研究接觸與競賽，是高中累積能力最有效率的三條路。這個頁面收錄 TBD Studio 關於研究、自學與能力建立的文章，從聯繫教授到提升自學力，幫你在課業之外建立可展示的真實能力。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-research`;
 
 const schema = {
