@@ -48,24 +48,43 @@ if (orphans.length > 0) {
   );
 }
 
-// 主題指南：深入單一主題的整合頁。原本散在側邊欄，改以卡片區呈現，
-// 每張卡只給一個連結到該主題指南頁，不再列出指南內的所有文章。
-const topicGuides = [
-  { title: '申請策略全局觀', href: '/pages/guides/admission-overview.html' },
-  { title: '升大學前準備', href: '/pages/guides/pre-college.html' },
-  { title: '備審與學習歷程', href: '/pages/guides/portfolio-prep.html' },
-  { title: '升學面試準備', href: '/pages/guides/interview.html' },
-  { title: '研究所推甄完整指南', href: '/pages/guides/graduate-application.html' },
-  { title: '研究與自學累積', href: '/pages/guides/research.html' },
-  { title: 'Side Project 指南', href: '/pages/guides/side-project.html' },
-  { title: 'GitHub & Portfolio', href: '/pages/guides/github.html' },
-  { title: '競賽完整指南', href: '/pages/guides/competitions.html' },
-  { title: '各科系申請指南', href: '/pages/guides/departments.html' },
-  { title: '給家長完整指南', href: '/pages/guides/parents-guide.html' },
-  { title: 'AI 時代能力建立', href: '/pages/guides/ai-era.html' },
-  { title: '工具與模板下載', href: '/pages/resources/tools.html' },
-  { title: '大學面試題庫', href: '/pages/resources/interview-bank.html' },
-  { title: '社群資源庫（懶人包總整理）', href: '/pages/resources/library.html' },
+// 主題指南：深入單一主題的整合頁。原本 15 張卡片平鋪造成首屏認知超載，
+// 改以「使用者旅程」為底層邏輯收斂成 3 個母分類 Tabs（策略→經歷→備審），
+// 每個 Tab 5 份指南，符合米勒法則 7±2 且彼此不重疊（MECE）。
+const guideTabs = [
+  {
+    id: 'strategy',
+    label: '策略與佈局',
+    guides: [
+      { title: '申請策略全局觀', href: '/pages/guides/admission-overview.html' },
+      { title: '各科系申請指南', href: '/pages/guides/departments.html' },
+      { title: '研究所推甄完整指南', href: '/pages/guides/graduate-application.html' },
+      { title: '給家長完整指南', href: '/pages/guides/parents-guide.html' },
+      { title: '升大學前準備', href: '/pages/guides/pre-college.html' },
+    ],
+  },
+  {
+    id: 'experience',
+    label: '經歷與專案',
+    guides: [
+      { title: '研究與自學累積', href: '/pages/guides/research.html' },
+      { title: 'Side Project 指南', href: '/pages/guides/side-project.html' },
+      { title: 'GitHub & Portfolio', href: '/pages/guides/github.html' },
+      { title: '競賽完整指南', href: '/pages/guides/competitions.html' },
+      { title: 'AI 時代能力建立', href: '/pages/guides/ai-era.html' },
+    ],
+  },
+  {
+    id: 'application',
+    label: '備審面試與資源',
+    guides: [
+      { title: '備審與學習歷程', href: '/pages/guides/portfolio-prep.html' },
+      { title: '升學面試準備', href: '/pages/guides/interview.html' },
+      { title: '大學面試題庫', href: '/pages/resources/interview-bank.html' },
+      { title: '工具與模板下載', href: '/pages/resources/tools.html' },
+      { title: '社群資源庫（懶人包總整理）', href: '/pages/resources/library.html' },
+    ],
+  },
 ];
 
 // ── 即時搜尋／篩選用資料（原 search.astro 的資料準備，整合進同一頁）──
@@ -135,16 +154,39 @@ const departments = [
   <section class="guide-index">
     <div class="situation-head">
       <h2 class="situation-heading">主題指南</h2>
-      <p class="situation-sub">想深入某個主題？每份指南把該主題的重點與相關文章整理成一條線，從這裡進去。</p>
+      <p class="situation-sub">想深入某個主題？依你目前的階段選一個分類，每份指南把該主題的重點與相關文章整理成一條線。</p>
     </div>
-    <div class="guide-grid">
-      {topicGuides.map((g) => (
-        <a class="guide-card" href={g.href}>
-          <span class="guide-card-title">{g.title}</span>
-          <span class="guide-card-arrow" aria-hidden="true">→</span>
-        </a>
+    <div class="guide-tabs" role="tablist" aria-label="主題指南分類">
+      {guideTabs.map((tab, i) => (
+        <button
+          type="button"
+          class={`guide-tab${i === 0 ? ' active' : ''}`}
+          role="tab"
+          id={`guide-tab-${tab.id}`}
+          aria-controls={`guide-panel-${tab.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          data-guide-tab={tab.id}
+        >{tab.label}</button>
       ))}
     </div>
+    {guideTabs.map((tab, i) => (
+      <div
+        class={`guide-tabpanel${i === 0 ? ' active' : ''}`}
+        role="tabpanel"
+        id={`guide-panel-${tab.id}`}
+        aria-labelledby={`guide-tab-${tab.id}`}
+        hidden={i !== 0}
+      >
+        <div class="guide-grid">
+          {tab.guides.map((g) => (
+            <a class="guide-card" href={g.href}>
+              <span class="guide-card-title">{g.title}</span>
+              <span class="guide-card-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
   </section>
 
   <SituationCards variant="home" />
@@ -160,6 +202,14 @@ const departments = [
       <input type="search" id="search-input" name="q" placeholder="搜尋文章關鍵字，例如：面試、Side Project、GitHub…" class="resources-search-input" autocomplete="off" aria-label="搜尋文章">
       <button type="submit" class="resources-search-btn">搜尋</button>
     </div>
+    {departments.length > 0 && (
+      <select id="dept-select" class="resources-dept-select" aria-label="依科系群篩選">
+        <option value="">所有科系</option>
+        {departments.map((d) => (
+          <option value={d}>{d}</option>
+        ))}
+      </select>
+    )}
   </form>
 
   <div class="search-filters resources-filters" id="search-filters">
@@ -172,18 +222,6 @@ const departments = [
         ))}
       </div>
     </div>
-
-    {departments.length > 0 && (
-      <div class="search-filter-group">
-        <span class="search-filter-label">科系群</span>
-        <div class="filter-pill-row" data-dim="dept">
-          <button type="button" class="filter-pill active" data-value="">全部</button>
-          {departments.map((d) => (
-            <button type="button" class="filter-pill" data-value={d}>{d}</button>
-          ))}
-        </div>
-      </div>
-    )}
   </div>
 </section>
 
@@ -194,9 +232,11 @@ const departments = [
 
     <!-- 搜尋/篩選結果（預設隱藏，就地取代下方分類 grid） -->
     <div id="search-results" hidden>
-      <div class="search-results-header">
-        <p id="results-count" class="results-count"></p>
-        <button type="button" id="back-to-browse" class="text-link back-to-browse">← 清除，回到分類瀏覽</button>
+      <div class="active-filter-bar" id="active-filter-bar">
+        <span class="active-filter-label" id="active-filter-label">篩選條件：</span>
+        <span class="active-filter-chips" id="active-filter-chips"></span>
+        <span class="active-filter-count" id="results-count"></span>
+        <button type="button" id="back-to-browse" class="active-filter-clear">清除全部，回到瀏覽</button>
       </div>
       <div id="results-grid" class="card-grid"></div>
       <div id="no-results" class="search-empty" hidden>
@@ -206,20 +246,31 @@ const departments = [
 
     <!-- 分類瀏覽（預設顯示） -->
     <div id="browse-grid">
-      {sections.map((s) => (
-        <section class="section" id={s.id}>
-          <h2 class="section-label">{s.sectionLabel}</h2>
-          <p style="margin-bottom: 16px; color: var(--tbd-mid);">{s.desc}</p>
-          <div class="card-grid">
-            {s.cards.map((card) => (
-              <article class="card article-card">
-                <span class="badge">{card.kicker}</span>
-                <h3><a class="text-link" href={card.href}>{card.title}</a></h3>
-                <p class="card-desc">{card.desc}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+      {sections.map((s, i) => (
+        <>
+          <section class="section" id={s.id}>
+            <h2 class="section-label">{s.sectionLabel}</h2>
+            <p style="margin-bottom: 16px; color: var(--tbd-mid);">{s.desc}</p>
+            <div class="card-grid">
+              {s.cards.map((card) => (
+                <article class="card article-card">
+                  <span class="badge">{card.kicker}</span>
+                  <h3><a class="text-link" href={card.href}>{card.title}</a></h3>
+                  <p class="card-desc">{card.desc}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+          {i === 4 && (
+            <aside class="inline-cta">
+              <div class="inline-cta-text">
+                <h3>看了很多文章，但不確定自己的經歷該怎麼串連？</h3>
+                <p>把現有的專題、競賽與自學經歷交給顧問看一遍，幫你找出個人主線與最該補強的環節。</p>
+              </div>
+              <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=resources-inline" target="_blank" rel="noopener noreferrer" data-track-event="click_consultation_cta" data-ga-event="resources-inline-cta">讓顧問幫你檢視現有材料 →</a>
+            </aside>
+          )}
+        </>
       ))}
 
       <section class="section cta">
@@ -253,6 +304,27 @@ const departments = [
   var resourcesMain = document.getElementById('resources-main');
   var searchSection = document.getElementById('search-section');
   var backBtn = document.getElementById('back-to-browse');
+  var deptSelect = document.getElementById('dept-select');
+  var filterChips = document.getElementById('active-filter-chips');
+  var filterLabel = document.getElementById('active-filter-label');
+
+  // 主題指南 3 分類 Tabs：純前端 DOM 抽換 + 淡入
+  var guideTabBtns = document.querySelectorAll('.guide-tab');
+  guideTabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = btn.dataset.guideTab;
+      guideTabBtns.forEach(function(b) {
+        var on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      document.querySelectorAll('.guide-tabpanel').forEach(function(panel) {
+        var on = panel.id === 'guide-panel-' + id;
+        panel.classList.toggle('active', on);
+        panel.hidden = !on;
+      });
+    });
+  });
 
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -284,16 +356,34 @@ const departments = [
     return matchesQuery && matchesCategory && matchesDept;
   }
 
-  function activeFilterLabel() {
-    var parts = [];
-    if (filters.category) parts.push(filters.category);
-    if (filters.dept) parts.push(filters.dept);
-    return parts.length ? '（' + parts.join(' · ') + '）' : '';
+  // 動態狀態列：把目前生效的篩選維度畫成可單獨解除的 [標籤 ✕] chip
+  var DIM_NAMES = { category: '分類', dept: '科系' };
+  function renderActiveFilters() {
+    if (!filterChips) return;
+    var html = '';
+    ['category', 'dept'].forEach(function(dim) {
+      if (filters[dim]) {
+        html += '<button type="button" class="filter-chip" data-clear-dim="' + dim + '">' +
+          escapeHtml(filters[dim]) + ' <span aria-hidden="true">✕</span></button>';
+      }
+    });
+    filterChips.innerHTML = html;
+    if (filterLabel) filterLabel.style.display = html ? '' : 'none';
+    filterChips.querySelectorAll('[data-clear-dim]').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        var dim = chip.dataset.clearDim;
+        filters[dim] = '';
+        if (dim === 'category') syncPills('category');
+        if (dim === 'dept' && deptSelect) deptSelect.value = '';
+        runSearch();
+      });
+    });
   }
 
   function renderResults(results) {
     var total = results.length;
     var q = currentQuery;
+    renderActiveFilters();
 
     if (total === 0) {
       resultsGrid.innerHTML = '';
@@ -306,7 +396,7 @@ const departments = [
     }
 
     noResults.hidden = true;
-    resultsCount.textContent = (q ? '「' + q + '」' : '') + activeFilterLabel() + ' 共 ' + total + ' 篇文章';
+    resultsCount.textContent = (q ? '「' + q + '」 ' : '') + '共 ' + total + ' 篇文章';
 
     resultsGrid.innerHTML = results.map(function(a) {
       var titleHtml = highlight(a.title, q);
@@ -390,13 +480,19 @@ const departments = [
     });
   }
 
+  // 科系群：降級為下拉選單（取代原本整排 Chips）
+  if (deptSelect) deptSelect.addEventListener('change', function() {
+    filters.dept = deptSelect.value || '';
+    runSearch();
+  });
+
   // 清除：清掉關鍵字與所有篩選，回到分類瀏覽
   if (backBtn) backBtn.addEventListener('click', function() {
     currentQuery = '';
     filters = { category: '', dept: '' };
     searchInput.value = '';
     syncPills('category');
-    syncPills('dept');
+    if (deptSelect) deptSelect.value = '';
     runSearch();
     if (searchSection) searchSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
@@ -409,7 +505,7 @@ const departments = [
 
   if (currentQuery) searchInput.value = currentQuery;
   syncPills('category');
-  syncPills('dept');
+  if (deptSelect) deptSelect.value = filters.dept;
 
   runSearch();
 })();

@@ -1,6 +1,6 @@
 .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
-.button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 999px; background: var(--tbd-accent); color: #fff; font-weight: 800; box-shadow: var(--tbd-shadow); transition: opacity .15s; }
-.button:hover { opacity: .88; }
+.button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 999px; background: var(--tbd-accent); color: #fff; font-weight: 800; box-shadow: var(--tbd-shadow); transition: transform .2s ease, box-shadow .2s ease, opacity .15s ease; }
+.button:hover { opacity: .92; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(26,93,148,.22); }
 .button.secondary { background: transparent; color: var(--tbd-dark); border: 1px solid var(--tbd-line); box-shadow: none; }
 .kicker, .badge, .tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--tbd-line); background: rgba(26,93,148,.08); color: var(--tbd-accent); border-radius: 999px; font-size: 13px; font-weight: 800; letter-spacing: .03em; }
 .card, .hero-card { background: #fff; border: 1px solid var(--tbd-line); border-radius: 24px; padding: 26px; box-shadow: var(--tbd-shadow); }

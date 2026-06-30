@@ -30,7 +30,7 @@ const TARGETS = [
   { path: '/index.html', name: '首頁' },
   { path: '/pages/cases.html', name: '成功案例（tab 切換）' },
   { path: '/pages/services.html', name: '服務頁' },
-  { path: '/pages/resources.html', name: '知識庫首頁' },
+  { path: '/pages/resources.html', name: '知識庫首頁（主題指南 Tabs）', guideTab: true },
   { path: '/pages/faq.html', name: 'FAQ' },
   { path: '/pages/resources/admission-channels-compare.html', name: '文章（無 series-rail）', toc: true },
   { path: '/pages/resources/design-graduate-choose.html', name: '文章（有 series-rail，回歸案例）', toc: true },
@@ -55,6 +55,15 @@ function harness() {
         var toc=document.querySelector('.article-toc');
         r.tocOpened=!!(toc&&toc.classList.contains('open'));
         r.tocNavAfter=disp(navSel);
+      }
+      var gtabs=document.querySelectorAll('.guide-tab');
+      if(gtabs.length>1){
+        var second=gtabs[1];
+        var panel=document.getElementById('guide-panel-'+second.getAttribute('data-guide-tab'));
+        r.guideTabBefore=panel?panel.hidden:null;
+        try{second.click();}catch(e){r.errors.push('guidetab:'+e.message);}
+        r.guideTabAfter=panel?panel.hidden:null;
+        r.guideTabActive=second.classList.contains('active');
       }
       var mt=${JSON.stringify('')};
       var mtBtn=document.getElementById('pg-guide-menu-toggle');
@@ -129,6 +138,11 @@ function evaluate(target, r) {
     if (r.tocNavAfter !== 'flex') fails.push(`點擊後目錄 nav display 應為 flex，實為 ${r.tocNavAfter}`);
   }
   if (target.menuToggle && r.menuOpened === false) fails.push('點擊指南選單按鈕後未展開');
+  if (target.guideTab) {
+    if (r.guideTabBefore !== true) fails.push(`主題指南第二個 Tab 面板初始應為 hidden，實為 ${r.guideTabBefore}`);
+    if (r.guideTabAfter !== false) fails.push('點擊第二個主題指南 Tab 後面板未顯示（切換失效）');
+    if (!r.guideTabActive) fails.push('點擊後該 Tab 未取得 .active 狀態');
+  }
   return fails;
 }
 

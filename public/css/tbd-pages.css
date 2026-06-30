@@ -132,6 +132,21 @@
 .series-matrix thead th { background: var(--tbd-light); color: var(--tbd-dark); font-weight: 800; }
 .series-matrix th[scope="row"] { text-align: left; white-space: nowrap; font-weight: 600; color: var(--tbd-dark); background: rgba(208, 206, 219, .22); }
 .series-matrix-shared { color: var(--tbd-mid); font-size: 0.85em; }
+/* 對照表錨點：加底線並用品牌主色，避免只靠顏色傳達（WCAG 視覺線索） */
+.series-matrix td a { color: var(--tbd-accent); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.series-matrix thead th { white-space: nowrap; }
+/* 窄螢幕水平滑動提示（表格可橫向捲動時才顯示） */
+.series-matrix-scrollhint { display: none; font-size: 12.5px; color: var(--tbd-mid); margin: 0 0 8px; text-align: center; }
+@media (max-width: 560px) { .series-matrix-scrollhint { display: block; } }
+
+/* 指南頁長頁面的中段微轉換錨點（卡片與對照表之間） */
+.guide-inline-cta { background: rgba(26,93,148,.06); border: 1px solid rgba(26,93,148,.18); border-radius: 12px; padding: 15px 20px; font-size: 15px; line-height: 1.6; color: var(--tbd-dark); font-weight: 600; margin: 8px 0 0; }
+.guide-inline-cta a { color: var(--tbd-accent); font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
+.guide-inline-cta a:hover { opacity: .85; }
+
+/* 研究所推甄指南：階段卡片視覺階層強化（高對比膠囊 + 粗標題） */
+.guide-page #stages .badge { background: rgba(26,93,148,.12); border-color: rgba(26,93,148,.28); color: var(--tbd-accent); }
+.guide-page #stages .article-card h3 { font-size: 1.18rem; }
 
 .article-sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 5rem; align-self: start; }
 
@@ -341,9 +356,11 @@
 .situation-card-desc { color: var(--tbd-mid); font-size: 13px; line-height: 1.6; margin: 8px 0 14px; }
 .situation-links { list-style: none; margin: auto 0 0; padding: 14px 0 0; border-top: 1px solid var(--tbd-soft); display: flex; flex-direction: column; gap: 2px; }
 .situation-links li { margin: 0; }
-.situation-links a { display: block; padding: 6px 8px; margin: 0 -8px; border-radius: 7px; font-size: 13.5px; font-weight: 600; color: var(--tbd-accent); text-decoration: none; line-height: 1.45; transition: background .12s; }
-.situation-links a::before { content: "→ "; color: var(--tbd-accent); font-weight: 700; }
+/* 行動端觸控熱區：垂直 padding 拉到 12px，整列點擊高度 ≈ 44px（WCAG 2.2） */
+.situation-links a { display: block; padding: 12px 8px; margin: 0 -8px; border-radius: 7px; font-size: 13.5px; font-weight: 600; color: var(--tbd-accent); text-decoration: none; line-height: 1.45; transition: background .12s; }
+.situation-links a::before { content: "→"; display: inline-block; margin-right: 6px; color: var(--tbd-accent); font-weight: 700; transition: transform .15s; }
 .situation-links a:hover { background: rgba(26,93,148,.07); }
+.situation-links a:hover::before { transform: translateX(4px); }
 
 /* 引導區三段（新手路線 / 主題指南 / 依狀況找文章）的垂直節奏 */
 .resources-intro > section { margin-top: 44px; }
@@ -364,6 +381,43 @@
 .guide-card-title { font-size: 14px; font-weight: 700; color: var(--tbd-dark); line-height: 1.4; }
 .guide-card-arrow { flex-shrink: 0; color: var(--tbd-accent); font-weight: 700; transition: transform .15s; }
 .guide-card:hover .guide-card-arrow { transform: translateX(3px); }
+
+/* 主題指南：15 張卡片收斂為 3 分類 Tabs（漸進式揭露，降低首屏認知負荷） */
+.guide-tabs { display: flex; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--tbd-line); margin-bottom: 18px; }
+.guide-tab { appearance: none; background: none; border: none; padding: 10px 18px; margin-bottom: -1px; font-size: 15px; font-weight: 700; color: var(--tbd-mid); cursor: pointer; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; }
+.guide-tab:hover { color: var(--tbd-accent); }
+.guide-tab.active { color: var(--tbd-accent); border-bottom-color: var(--tbd-accent); }
+.guide-tabpanel { animation: guidePanelFade .2s ease-in; }
+.guide-tabpanel[hidden] { display: none; }
+.guide-tabpanel .guide-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+@keyframes guidePanelFade { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 640px) { .guide-tab { padding: 9px 13px; font-size: 14px; } }
+
+/* 科系群篩選：整排 Chips 降級為搜尋框旁的下拉選單，釋放垂直空間 */
+.resources-search-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; max-width: 640px; }
+.resources-search-bar .resources-search-wrap { flex: 1 1 280px; }
+.resources-dept-select { appearance: none; -webkit-appearance: none; flex-shrink: 0; min-height: 44px; padding: 0 36px 0 14px; border: 1px solid var(--tbd-line); border-radius: 10px; background-color: #fff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23767995' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 13px center; font-size: 14px; font-weight: 600; color: var(--tbd-dark); cursor: pointer; box-shadow: 0 2px 8px rgba(20,33,67,.06); transition: border-color .15s; }
+.resources-dept-select:hover { border-color: var(--tbd-accent); }
+.resources-dept-select:focus { outline: none; border-color: var(--tbd-accent); }
+
+/* 動態狀態列：取代純文字「清除」，用 [標籤 ✕] chip 明示可單獨解除的過濾器 */
+.active-filter-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; background: var(--tbd-soft); border: 1px solid var(--tbd-line); border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; }
+.active-filter-label { font-size: 13px; font-weight: 700; color: var(--tbd-mid); }
+.active-filter-chips { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+.filter-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border: 1px solid var(--tbd-accent); border-radius: 999px; background: rgba(26,93,148,.08); color: var(--tbd-accent); font-size: 13px; font-weight: 700; cursor: pointer; transition: background .12s; }
+.filter-chip:hover { background: rgba(26,93,148,.16); }
+.filter-chip span { font-size: 11px; }
+.active-filter-count { font-size: 13.5px; color: var(--tbd-mid); font-weight: 600; }
+.active-filter-clear { margin-left: auto; background: none; border: none; padding: 4px 6px; font: inherit; font-size: 13px; font-weight: 600; color: var(--tbd-mid); cursor: pointer; text-decoration: underline; }
+.active-filter-clear:hover { color: var(--tbd-accent); }
+
+/* 長列表中段的 Inline CTA：在使用者焦慮最高漲處承接微轉換 */
+.inline-cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; background: rgba(26,93,148,.06); border: 1px solid rgba(26,93,148,.18); border-radius: 16px; padding: 26px 30px; margin: 8px 0 40px; }
+.inline-cta-text { min-width: 0; }
+.inline-cta-text h3 { font-size: 17px; font-weight: 800; color: var(--tbd-dark); line-height: 1.45; margin: 0; }
+.inline-cta-text p { font-size: 14px; color: var(--tbd-mid); line-height: 1.6; margin: 6px 0 0; }
+.inline-cta .button { flex-shrink: 0; white-space: nowrap; }
+@media (max-width: 600px) { .inline-cta { padding: 22px; } .inline-cta .button { width: 100%; } }
 
 /* 搜尋頁空狀態的情境入口 */
 .search-default { margin-top: 8px; }
