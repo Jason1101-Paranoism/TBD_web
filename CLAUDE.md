@@ -21,10 +21,18 @@
 
 **修改前必須做的事：**
 
-1. 確認受影響的檔案類型（見下方結構說明）
-2. CSS 只改 `public/css/` 對應檔案（`css/` 目錄已不存在，`public/css/` 是唯一來源）
-3. 修改後執行 `npm run build` 確認無錯誤
+1. 先寫清楚 Scope / **Non-scope**（不做什麼比做什麼更重要；預設紅線見 `docs/dev-workflow.md`）
+2. 確認受影響的檔案類型（見下方結構說明）
+3. CSS 只改 `public/css/` 對應檔案（`css/` 目錄已不存在，`public/css/` 是唯一來源）
 4. **不要修改 `dist/`**，那是 build 產物
+
+**修改後必須做的事（兩道獨立閘門，缺一不可）：**
+
+1. `npm run build` — 證明能編譯。
+2. `npm run verify` — 證明能在真瀏覽器跑（headless 行為煙霧測試：每頁零 JS 錯誤 + 目錄／選單 toggle 可展開）。**「build 通過」≠「完成」**：TOC 目錄事故就是 build 全綠卻在載入時 JS 崩潰，只有 verify 抓得到。
+3. 改了「會動的東西」就把它加進 `scripts/verify.mjs` 的測試清單，讓回歸測試跟著功能長大。
+
+> 完整流程（界定範圍 → 觀察 → 改 → build → verify → 證據式回報 → commit → push → 確認部署）見 **`docs/dev-workflow.md`**。`git push` 會觸發 Vercel 正式部署，屬「必須先確認」的高風險操作，除非本輪已獲明確授權。
 
 **禁止行為：**
 
@@ -220,12 +228,18 @@ public/css/style.css          ← @import 入口，不直接寫樣式
 - `src/pages/pages/xxx.astro`：說明改了什麼
 - `public/css/tbd-pages.css`：說明改了什麼
 
-### 測試方式
-1. 執行 `npm run build`
-2. 執行 `npm run preview` 開啟本地預覽
-3. 測試桌面版 (1280px) 與手機版 (375px)
-4. 確認 CTA 按鈕可點擊、nav 正常顯示
+### 驗證（三道證據，缺一不可）
+1. `npm run build`：通過 / 失敗
+2. `npm run verify`：通過 X/Y（headless 行為測試；失敗項貼出來）
+3. 人工目視：桌面 1280 / 手機 375 看過哪些頁、CTA 可點、nav 正常、版面無破
+
+### 範圍
+- 是否只動了 Scope 內的檔案、是否碰到 Non-scope
+
+### 待確認 / 風險（若有）
 ```
+
+> 完整 SOP（含 Scope/Non-scope 卡、操作分級、部署後抽查）見 `docs/dev-workflow.md`。
 
 ---
 
