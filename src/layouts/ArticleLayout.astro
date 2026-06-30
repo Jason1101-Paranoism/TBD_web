@@ -250,7 +250,10 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
     </section>
   </main>
   <script>
-    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.pg-sidebar-link'));
+    // 只取文章目錄內的錨點連結。.pg-sidebar-link 也被 series-rail 共用，
+    // 但那些連結的 href 是完整路徑（/pages/...），丟進 querySelector 會拋
+    // SyntaxError 並中斷整段腳本（連帶讓目錄展開按鈕失效），故限縮在 .article-toc。
+    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.article-toc .pg-sidebar-link'));
     const sections = tocLinks
       .map(a => document.querySelector(a.getAttribute('href') ?? ''))
       .filter((el): el is Element => el !== null);
