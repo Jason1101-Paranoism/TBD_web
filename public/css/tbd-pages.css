@@ -208,9 +208,32 @@
   text-decoration: none;
 }
 
-/* 文章卡片標題：常駐箭頭提示可點，hover 時右移 */
-.article-card h3 a::after { content: " →"; display: inline-block; color: var(--tbd-accent); font-weight: 700; transition: transform .15s; }
-.article-card h3 a:hover::after { transform: translateX(3px); }
+/* 文章卡片：標題尾端的 → 升級為右下角圓形按鈕（48px 觸控範圍，WCAG 2.2）。
+   只有含標題連結（h3 > a）的卡片才長出按鈕並預留空間；工具下載卡、題庫 Q 卡等
+   無連結卡（同樣用 .article-card）不會受影響、不會多出空白。 */
+.article-card { position: relative; }
+.article-card:has(> h3 > a) { padding-bottom: 76px; }
+.article-card h3 a::after {
+  content: "→";
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(26,93,148,.08);
+  border: 1px solid var(--tbd-line);
+  color: var(--tbd-accent);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+}
+.article-card:hover h3 a::after,
+.article-card h3 a:hover::after { background: var(--tbd-accent); border-color: var(--tbd-accent); color: #fff; transform: translateX(2px); }
 .article-hero { /* modifier for article page hero — extend as needed */ }
 
 .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1rem 0; }

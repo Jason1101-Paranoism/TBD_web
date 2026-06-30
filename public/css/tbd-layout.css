@@ -48,9 +48,9 @@
 .site-nav-links a { transition: color .2s ease; white-space: nowrap; }
 .site-nav-links a:hover, .site-nav-links a.is-active { color: var(--tbd-dark); font-weight: 700; }
 .site-nav-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex: 0 0 auto; }
-.site-nav-cta { display: inline-flex; align-items: center; justify-content: center; background: var(--tbd-accent); color: #fff; border-radius: 8px; font-size: 14px; font-weight: 700; box-shadow: var(--tbd-shadow); transition: opacity .2s ease; }
+.site-nav-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; background: var(--tbd-accent); color: #fff; border-radius: 8px; font-size: 14px; font-weight: 700; box-shadow: var(--tbd-shadow); transition: opacity .2s ease; }
 .site-nav-cta:hover { opacity: .9; }
-.site-nav-cta--mobile { min-height: 44px; padding: 8px 14px; }
+.site-nav-cta--mobile { padding: 8px 14px; }
 .site-nav-cta--desktop { display: none; padding: 10px 20px; }
 .site-menu { position: relative; display: block; }
 .site-menu summary { list-style: none; }
@@ -92,7 +92,7 @@
 }
 @media (max-width: 820px) {
   .site-footer-grid { grid-template-columns: 1fr; }
-  .site-nav { min-height: 64px; padding: 10px 16px; gap: 10px; }
+  .site-nav { min-height: 70px; padding: 8px 16px; gap: 10px; }
   .site-logo { width: 145px; max-width: 145px; min-width: 118px; }
   .site-logo img { height: 38px; max-height: 38px; }
 }
