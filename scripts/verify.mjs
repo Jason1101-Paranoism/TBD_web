@@ -33,6 +33,7 @@ const TARGETS = [
   { path: '/pages/resources.html', name: '知識庫首頁（主題指南 Tabs）', guideTab: true },
   { path: '/pages/faq.html', name: 'FAQ' },
   { path: '/pages/resources/admission-channels-compare.html', name: '文章（無 series-rail）', toc: true },
+  { path: '/pages/resources/lulu-preparation-system.html', name: '文章（含原創 CSS 圖示）', toc: true },
   { path: '/pages/resources/design-graduate-choose.html', name: '文章（有 series-rail，回歸案例）', toc: true },
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
 ];
@@ -47,6 +48,8 @@ function harness() {
     function disp(sel){var el=document.querySelector(sel);return el?getComputedStyle(el).display:null;}
     window.addEventListener('load',function(){setTimeout(function(){
       var r={errors:window.__errs.slice()};
+      var de=document.documentElement;
+      r.docOverflow=de.scrollWidth-de.clientWidth; // >0 代表頁面水平溢出（RWD 破版）
       var tocBtn=document.getElementById('article-toc-toggle');
       if(tocBtn){
         var navSel='.article-toc .pg-sidebar-nav';
@@ -132,6 +135,11 @@ async function probe(browser, tmp, target) {
 function evaluate(target, r) {
   const fails = [];
   if (r.errors && r.errors.length) fails.push(`載入時 JS 錯誤：${r.errors.join(' | ')}`);
+  // 手機寬度下不得有頁面級水平溢出（寬表格應在 .table-wrapper 內部捲動，而非撐寬整頁）。
+  // 容忍 1px 量測誤差；容器級（overflow:auto）的內部捲動不計入 documentElement。
+  if (typeof r.docOverflow === 'number' && r.docOverflow > 1) {
+    fails.push(`頁面水平溢出 ${r.docOverflow}px（RWD 破版；檢查是否有元素撐寬 .article-body 等 grid/flex 子項，需 min-width:0 或 overflow 容器）`);
+  }
   if (target.toc) {
     if (r.tocNavBefore !== 'none') fails.push(`目錄 nav 初始 display 應為 none，實為 ${r.tocNavBefore}`);
     if (!r.tocOpened) fails.push('點擊目錄按鈕後未加上 .open（toggle 失效）');
