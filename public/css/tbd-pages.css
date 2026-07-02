@@ -310,16 +310,18 @@
 
 /* 文章 FAQ（frontmatter faqItems 有填才渲染；<details> 內容仍在 DOM，利於 SEO） */
 .faq-list { display: flex; flex-direction: column; gap: 10px; }
-.faq-item { border: 1px solid var(--tbd-line); border-radius: 12px; background: #fff; }
+.faq-item { border: 1px solid var(--tbd-line); border-radius: 12px; background: #fff; min-width: 0; }
 .faq-item summary {
   cursor: pointer; list-style: none;
   padding: 15px 18px; font-weight: 800; color: var(--tbd-dark); line-height: 1.5;
-  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
 }
 .faq-item summary::-webkit-details-marker { display: none; }
-.faq-item summary::after { content: "+"; flex: none; color: var(--tbd-accent); font-size: 20px; font-weight: 700; }
+/* 問題文字自身可換行/斷字，長題或含英數也不撐破卡片（手機 RWD） */
+.faq-item summary { overflow-wrap: anywhere; word-break: break-word; }
+.faq-item summary::after { content: "+"; flex: none; margin-top: 1px; color: var(--tbd-accent); font-size: 20px; font-weight: 700; line-height: 1.3; }
 .faq-item[open] summary::after { content: "\2212"; }
-.faq-item p { margin: 0; padding: 0 18px 16px; color: var(--tbd-mid); line-height: 1.75; }
+.faq-item p { margin: 0; padding: 0 18px 16px; color: var(--tbd-mid); line-height: 1.75; overflow-wrap: anywhere; }
 
 /* Cases tab navigation */
 .cases-tabs { margin-top: 0; }
