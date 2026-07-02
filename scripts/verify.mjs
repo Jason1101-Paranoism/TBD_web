@@ -50,6 +50,10 @@ function harness() {
       var r={errors:window.__errs.slice()};
       var de=document.documentElement;
       r.docOverflow=de.scrollWidth-de.clientWidth; // >0 代表頁面水平溢出（RWD 破版）
+      // 文章對照表：手機下不得寬過容器（否則右欄被切、要在框內橫向捲動）。
+      // 這種內部捲動不會反映在 docOverflow，需單獨量：全域 table{min-width:760px} 曾是元凶。
+      var pt=document.querySelector('.plan-table');
+      if(pt){var wrap=pt.closest('.table-wrapper');r.tableOverflow=wrap?(pt.scrollWidth-wrap.clientWidth):0;}
       var tocBtn=document.getElementById('article-toc-toggle');
       if(tocBtn){
         var navSel='.article-toc .pg-sidebar-nav';
@@ -139,6 +143,9 @@ function evaluate(target, r) {
   // 容忍 1px 量測誤差；容器級（overflow:auto）的內部捲動不計入 documentElement。
   if (typeof r.docOverflow === 'number' && r.docOverflow > 1) {
     fails.push(`頁面水平溢出 ${r.docOverflow}px（RWD 破版；檢查是否有元素撐寬 .article-body 等 grid/flex 子項，需 min-width:0 或 overflow 容器）`);
+  }
+  if (typeof r.tableOverflow === 'number' && r.tableOverflow > 1) {
+    fails.push(`對照表寬過容器 ${r.tableOverflow}px（手機會橫向捲動、右欄被切；檢查 .plan-table 是否被全域 table{min-width:760px} 壓住，手機需 min-width:0 + table-layout:fixed）`);
   }
   if (target.toc) {
     if (r.tocNavBefore !== 'none') fails.push(`目錄 nav 初始 display 應為 none，實為 ${r.tocNavBefore}`);

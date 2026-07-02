@@ -250,7 +250,9 @@
    max-content 寬（每格不換行）並內部捲動；fixed 才會把欄寬均分並強制內容換行。
    放行 nowrap 讓標題與首欄可換行。欄數多的寬表格會變高但仍完整可讀、不需橫捲。 */
 @media (max-width: 640px) {
-  .plan-table { table-layout: fixed; }
+  /* 覆蓋 tbd-components.css 的全域 `table { min-width: 760px }`——那條才是手機表格
+     一直橫向捲動的真正元凶（min-width 會壓過 table-layout:fixed 與 width:100%）。 */
+  .plan-table { table-layout: fixed; min-width: 0; }
   .plan-table th, .plan-table td:first-child { white-space: normal; }
   .plan-table th, .plan-table td { word-break: break-word; overflow-wrap: anywhere; }
 }
