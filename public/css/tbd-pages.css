@@ -308,6 +308,19 @@
   color: var(--tbd-mid); font-size: 0.85rem; font-weight: 700;
 }
 
+/* 文章 FAQ（frontmatter faqItems 有填才渲染；<details> 內容仍在 DOM，利於 SEO） */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { border: 1px solid var(--tbd-line); border-radius: 12px; background: #fff; }
+.faq-item summary {
+  cursor: pointer; list-style: none;
+  padding: 15px 18px; font-weight: 800; color: var(--tbd-dark); line-height: 1.5;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; flex: none; color: var(--tbd-accent); font-size: 20px; font-weight: 700; }
+.faq-item[open] summary::after { content: "\2212"; }
+.faq-item p { margin: 0; padding: 0 18px 16px; color: var(--tbd-mid); line-height: 1.75; }
+
 /* Cases tab navigation */
 .cases-tabs { margin-top: 0; }
 .cases-tab-nav { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }

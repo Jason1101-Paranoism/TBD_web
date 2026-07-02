@@ -43,6 +43,11 @@ const articles = defineCollection({
       href: z.string(),
       desc: z.string(),
     })),
+    // 常見問題（可選）：填了就自動在文末渲染 FAQ 區塊 + FAQPage 結構化資料
+    faqItems: z.array(z.object({
+      q: z.string(),
+      a: z.string(),
+    })).optional(),
   }),
 });
 

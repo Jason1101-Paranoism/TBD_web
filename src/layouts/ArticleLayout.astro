@@ -29,6 +29,7 @@ interface Props {
   bottomCtaUtm: string;
   tocItems: TocItem[];
   relatedArticles: RelatedArticle[];
+  faqItems?: { q: string; a: string }[];
   slug: string;
   seoTitle?: string;
   category?: string;
@@ -43,7 +44,7 @@ const {
   bodyClass = 'sub-page article-page',
   sidebarCtaText, sidebarCtaUtm,
   bottomCtaH2, bottomCtaUtm,
-  tocItems, relatedArticles, slug, seoTitle, category, departmentGroup, gradStage,
+  tocItems, relatedArticles, faqItems, slug, seoTitle, category, departmentGroup, gradStage,
   publishDate, updatedDate,
 } = Astro.props;
 
@@ -131,7 +132,16 @@ const articleSchema = {
       "itemListElement": crumbs.map((c, i) => ({
         "@type": "ListItem", "position": i + 1, "name": c.name, "item": c.url
       }))
-    }
+    },
+    // FAQPage：有填 faqItems 才加，讓文末 FAQ 能被 Google 當結構化資料
+    ...(faqItems && faqItems.length ? [{
+      "@type": "FAQPage",
+      "mainEntity": faqItems.map((f) => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": { "@type": "Answer", "text": f.a },
+      })),
+    }] : []),
   ]
 };
 
@@ -224,6 +234,20 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
             </div>
           </div>
         )}
+      </section>
+    )}
+
+    {faqItems && faqItems.length > 0 && (
+      <section class="section article-faq" id="faq">
+        <h2>常見問題</h2>
+        <div class="faq-list">
+          {faqItems.map((f) => (
+            <details class="faq-item">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
       </section>
     )}
 

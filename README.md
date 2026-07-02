@@ -130,6 +130,9 @@ relatedArticles:
     title: 文章標題
     href: /pages/resources/slug.html
     desc: 簡短說明
+faqItems:              # 可選：填了就自動在文末渲染 FAQ 區塊 + FAQPage 結構化資料
+  - q: 問題？
+    a: 答案。
 ---
 ```
 
