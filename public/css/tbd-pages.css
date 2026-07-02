@@ -245,6 +245,15 @@
 .plan-table td { padding: 10px 14px; border-bottom: 1px solid var(--tbd-border); color: var(--tbd-mid); vertical-align: top; line-height: 1.55; }
 .plan-table tr:last-child td { border-bottom: none; }
 .plan-table td:first-child { white-space: nowrap; font-weight: 600; color: var(--tbd-dark); }
+/* 手機：讓表格真正縮到螢幕寬、不再水平捲動。
+   關鍵是 table-layout:fixed——否則 .table-wrapper 的 overflow:auto 會放任表格取
+   max-content 寬（每格不換行）並內部捲動；fixed 才會把欄寬均分並強制內容換行。
+   放行 nowrap 讓標題與首欄可換行。欄數多的寬表格會變高但仍完整可讀、不需橫捲。 */
+@media (max-width: 640px) {
+  .plan-table { table-layout: fixed; }
+  .plan-table th, .plan-table td:first-child { white-space: normal; }
+  .plan-table th, .plan-table td { word-break: break-word; overflow-wrap: anywhere; }
+}
 
 /* ── 文章原創圖示：figure + caption（TBD 圖片與引用規範：原創圖優先、每張圖有 caption） ── */
 .article-figure { margin: 1.25rem 0; }
