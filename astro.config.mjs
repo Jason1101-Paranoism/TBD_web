@@ -18,6 +18,8 @@ export default defineConfig({
         !page.includes('/plans') &&
         !page.includes('/article-template') &&
         !page.includes('/timeline') &&
+        !page.includes('/search') &&
+        !page.includes('/404') &&
         !page.endsWith('/pages'),
       serialize(item) {
         const root = 'https://tbd-web.vercel.app';

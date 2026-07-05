@@ -24,28 +24,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <div class="grid grid-2" style="margin-top: 20px; gap: 14px;">
-      <a href="#plans" class="card situation-card" style="text-decoration: none; cursor: pointer;">
+      <a href="#plan-c" class="card situation-card" style="text-decoration: none; cursor: pointer;">
         <span class="badge">高三</span>
         <h3 style="margin-top: 10px;">一階剛過，二階面試快到了</h3>
         <p>需要快速建立面試架構、練習追問應對。→ <strong>方案 C 面試訓練</strong></p>
       </a>
 
-      <a href="#plans" class="card situation-card" style="text-decoration: none; cursor: pointer;">
+      <a href="#plan-d" class="card situation-card" style="text-decoration: none; cursor: pointer;">
         <span class="badge">高二</span>
         <h3 style="margin-top: 10px;">還沒確定方向，不知道從哪開始</h3>
         <p>需要先釐清升學管道與個人定位，再規劃備審節奏。→ <strong>方案 D 全程陪跑</strong></p>
       </a>
 
-      <a href="#plans" class="card situation-card" style="text-decoration: none; cursor: pointer;">
+      <a href="#plan-b" class="card situation-card" style="text-decoration: none; cursor: pointer;">
         <span class="badge">研究所</span>
         <h3 style="margin-top: 10px;">準備推甄，需要研究計畫與教授信件</h3>
         <p>需要整理研究動機、研究計畫架構，以及找到適合實驗室的方式。→ <strong>方案 B 重構方案</strong></p>
       </a>
 
-      <a href="#plans" class="card situation-card" style="text-decoration: none; cursor: pointer;">
+      <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=services-situation-intl" target="_blank" rel="noopener noreferrer" class="card situation-card" style="text-decoration: none; cursor: pointer;" data-track-event="click_consultation_cta" data-ga-event="click_line_services_situation_intl">
         <span class="badge">國際班／海外</span>
         <h3 style="margin-top: 10px;">申請海外或國際大學，需要英文文書策略</h3>
-        <p>需要 Personal Statement、Activities List 與英文面試準備。→ <strong>預約初談確認</strong></p>
+        <p>需要 Personal Statement、Activities List 與英文面試準備。海外申請範圍差異大，直接以初談確認。→ <strong>用 LINE 預約初談</strong></p>
       </a>
 
       <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=services-situation" target="_blank" rel="noopener noreferrer" class="card situation-card" style="text-decoration: none; cursor: pointer; grid-column: span 2;" data-ga-event="click_line_services_situation">
@@ -64,7 +64,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p class="services-chapter-desc">只要升學管道需要書審或面試，就適合提早準備。第一步不是急著寫備審，而是先確認走的是哪一條申請路線。</p>
     </div>
 
-    <div class="section table-wrap" style="margin-top: 20px;">
+    <p class="scroll-hint" style="margin-top: 20px;">← 表格可左右滑動，看完整欄位 →</p>
+    <div class="section table-wrap" style="margin-top: 4px;">
       <table>
         <thead>
           <tr>
@@ -272,7 +273,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <div class="grid grid-2" style="margin-top: 20px;">
-      <div class="card">
+      <div class="card" id="plan-a">
         <span class="badge">方案 A</span>
         <h2 style="font-size: 22px; margin-top: 12px;">備審健檢方案</h2>
         <p><strong>適合：</strong>已經有初稿，但不確定內容是否有說服力的學生。</p>
@@ -285,7 +286,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </ul>
       </div>
 
-      <div class="card">
+      <div class="card" id="plan-b">
         <span class="badge">方案 B</span>
         <h2 style="font-size: 22px; margin-top: 12px;">備審重構方案</h2>
         <p><strong>適合：</strong>有經歷、有資料，但不知道怎麼整理成完整備審的學生。</p>
@@ -298,7 +299,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </ul>
       </div>
 
-      <div class="card">
+      <div class="card" id="plan-c">
         <span class="badge">方案 C</span>
         <h2 style="font-size: 22px; margin-top: 12px;">面試訓練方案</h2>
         <p><strong>適合：</strong>已經通過一階，或即將面試的學生。</p>
@@ -311,7 +312,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </ul>
       </div>
 
-      <div class="card services-plan-featured">
+      <div class="card services-plan-featured" id="plan-d">
         <span class="badge">方案 D</span>
         <h2 style="font-size: 22px; margin-top: 12px;">全程陪跑方案</h2>
         <p><strong>適合：</strong>還不確定方向、需要從選校到面試完整規劃的學生。</p>
@@ -327,6 +328,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <div class="note" style="margin-top: 18px;">
       方案是依學生狀況組合的起點，不是固定格式。初談後 TBD 會說明建議從哪個環節切入，以及大致所需時間。
+    </div>
+
+    <div class="card" id="pricing" style="margin-top: 18px;">
+      <span class="badge">費用怎麼計算</span>
+      <h3 style="margin-top: 12px;">先初談，再決定要不要往下走</h3>
+      <p>第一步是 60 分鐘的策略諮詢（NT$3,500）：盤點現況、判斷該走哪條路線，並給一份可帶走的具體建議。<strong>若決定正式合作，這筆費用可全額折抵方案費用</strong>；正式方案依合作範圍與時程報價，會在初談時說明清楚，沒有隱藏費用。</p>
     </div>
   </section>
 

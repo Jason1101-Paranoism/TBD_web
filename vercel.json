@@ -10,7 +10,7 @@
     },
     {
       "source": "/pages/plans.html",
-      "destination": "/pages/services.html",
+      "destination": "/pages/services.html#plans",
       "permanent": true
     },
     {

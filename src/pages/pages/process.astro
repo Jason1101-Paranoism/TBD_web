@@ -25,13 +25,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <div class="track-tabs" style="margin-top: 24px;">
       <nav class="track-tab-nav" role="tablist">
-        <button class="track-tab active" data-track="personal" role="tab">大學個人申請</button>
-        <button class="track-tab" data-track="grad" role="tab">研究所推甄</button>
-        <button class="track-tab" data-track="special" role="tab">特殊選才</button>
+        <button class="track-tab active" data-track="personal" role="tab" aria-selected="true">大學個人申請</button>
+        <button class="track-tab" data-track="grad" role="tab" aria-selected="false">研究所推甄</button>
+        <button class="track-tab" data-track="special" role="tab" aria-selected="false">特殊選才</button>
       </nav>
 
       <!-- 大學個人申請 -->
       <div class="track-panel active" id="track-personal" role="tabpanel">
+        <p class="scroll-hint">→ 時程軸可往右滑，看完整節點（含備審上傳與二階面試）</p>
         <div class="track-timeline">
           <div class="track-milestone">
             <div class="milestone-time">高二下 ～ 高三上</div>
@@ -88,6 +89,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
       <!-- 研究所推甄 -->
       <div class="track-panel" id="track-grad" role="tabpanel">
+        <p class="scroll-hint">→ 時程軸可往右滑，看完整節點</p>
         <div class="track-timeline">
           <div class="track-milestone">
             <div class="milestone-time">大三下 ～ 暑假</div>
@@ -130,6 +132,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
       <!-- 特殊選才 -->
       <div class="track-panel" id="track-special" role="tabpanel">
+        <p class="scroll-hint">→ 時程軸可往右滑，看完整節點</p>
         <div class="track-timeline">
           <div class="track-milestone">
             <div class="milestone-time">高二 ～ 高三上</div>
@@ -291,9 +294,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   document.querySelectorAll('.track-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       const track = btn.dataset.track;
-      document.querySelectorAll('.track-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.track-tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
       document.querySelectorAll('.track-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
       document.getElementById('track-' + track)?.classList.add('active');
     });
   });

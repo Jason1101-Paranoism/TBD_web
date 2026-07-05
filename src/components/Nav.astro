@@ -5,9 +5,9 @@ const navCta = `${site.lineUrl}?utm_source=website&utm_medium=nav&utm_campaign=n
 
 function isActive(item: { id: string; href: string }) {
   if (currentPath === item.href) return true;
+  if (item.id === 'home') return currentPath === '/' || currentPath === '/index.html';
   if (item.id === 'resources') return currentPath.includes('/resources');
-  if (item.id !== 'home') return currentPath.startsWith(item.href.replace('.html', ''));
-  return false;
+  return currentPath.startsWith(item.href.replace('.html', ''));
 }
 ---
 
@@ -22,7 +22,7 @@ function isActive(item: { id: string; href: string }) {
         <a
           href={item.href}
           class={isActive(item) ? 'is-active' : ''}
-          aria-current={currentPath === item.href ? 'page' : undefined}
+          aria-current={isActive(item) ? 'page' : undefined}
         >{item.label}</a>
       ))}
     </div>
@@ -49,7 +49,7 @@ function isActive(item: { id: string; href: string }) {
           </div>
           <div class="site-menu-links">
             {nav.map(item => (
-              <a href={item.href} data-menu-link>{item.label}</a>
+              <a href={item.href} class={isActive(item) ? 'is-active' : ''} aria-current={isActive(item) ? 'page' : undefined} data-menu-link>{item.label}</a>
             ))}
             <a class="site-menu-cta" href={navCta} data-menu-link data-track-event="click_consultation_cta" data-ga-event="click_line_menu">預約策略諮詢 →</a>
           </div>

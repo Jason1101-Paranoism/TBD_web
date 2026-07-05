@@ -1,5 +1,6 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: 90px; } /* fixed header 下錨點定位不被遮住 */
 body {
   margin: 0;
   font-family: var(--tbd-font-sans);
@@ -55,4 +56,23 @@ body.home-page { padding-top: 0; }
   }
   .hover-lift { transition: none; }
   .hover-lift:hover { transform: none; }
+  /* 補漏：位移/旋轉型 hover 與循環動畫一併停用 */
+  .button, .guide-card, .situation-card, .home-case-trigger,
+  .article-card h3 a::after, .faq-summary::after, .pg-guide-toggle-chevron { transition: none !important; }
+  .button:hover, .guide-card:hover, .situation-card:hover, .home-case-trigger:hover { transform: none !important; }
+  .guide-tabpanel, .animate-pulse { animation: none !important; }
 }
+
+/* 鍵盤可及性：全站可見焦點（沿用 rail 的規格）與 skip link */
+a:focus-visible, button:focus-visible, summary:focus-visible,
+select:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+  outline: var(--tbd-focus);
+  outline-offset: 2px;
+}
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--tbd-dark); color: #fff; padding: 10px 18px;
+  border-radius: 0 0 12px 0; font-weight: 700; text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+#main-content { outline: none; }

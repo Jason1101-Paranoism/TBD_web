@@ -741,6 +741,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const tabId = btn.dataset.tab;
       if (activateTab(tabId)) {
         history.replaceState(null, '', '#tab-' + tabId);
+        // 切換後回到案例頂部：使用者常在案例中段切 tab，不捲回會停在新案例的中段而不自知
+        const panel = document.getElementById('tab-' + tabId);
+        panel?.scrollIntoView({ block: 'start' });
       }
     });
   });

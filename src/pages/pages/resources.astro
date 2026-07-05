@@ -130,6 +130,7 @@ const departments = [
 </section>
 
 <!-- 引導區（常駐，最上方）：新手路線 → 主題指南 → 依狀況找文章 -->
+<main>
 <div class="resources-intro">
   {starterSteps.length > 0 && (
     <section class="starter-path">
@@ -235,7 +236,7 @@ const departments = [
       <div class="active-filter-bar" id="active-filter-bar">
         <span class="active-filter-label" id="active-filter-label">篩選條件：</span>
         <span class="active-filter-chips" id="active-filter-chips"></span>
-        <span class="active-filter-count" id="results-count"></span>
+        <span class="active-filter-count" id="results-count" role="status" aria-live="polite"></span>
         <button type="button" id="back-to-browse" class="active-filter-clear">清除全部，回到瀏覽</button>
       </div>
       <div id="results-grid" class="card-grid"></div>
@@ -285,6 +286,7 @@ const departments = [
 
   </div>
 </div>
+</main>
 
 <script is:inline define:vars={{ articleData }}>
 (function() {

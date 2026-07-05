@@ -1,6 +1,9 @@
 :root {
   --tbd-light: #D0CEDB;
-  --tbd-mid: #767995;
+  --tbd-mid: #6A6D89; /* 由 #767995 調暗：白底正文對比 4.25→4.9，過 WCAG AA */
+  --tbd-border: var(--tbd-line);
+  --tbd-bg: var(--tbd-soft);
+  --tbd-focus: 2px solid var(--tbd-accent);
   --tbd-accent: #1A5D94;
   --tbd-dark: #142143;
   --tbd-yellow: #FAB748;

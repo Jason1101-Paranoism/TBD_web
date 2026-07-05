@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config/site';
+
+const title = '找不到這個頁面｜TBD Studio';
+const description = '你要找的頁面可能已搬家或不存在。從首頁、服務內容、知識庫或常見問題重新出發，或直接透過 LINE 詢問我們。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=404`;
+
+const entries = [
+  { title: '回首頁', href: '/index.html', desc: '從頭認識 TBD Studio 的服務與方法。' },
+  { title: '服務內容', href: '/pages/services.html', desc: '依你的升學管道找到對應服務與方案。' },
+  { title: '升學知識庫', href: '/pages/resources.html', desc: '近百篇文章與主題指南，支援搜尋與分類篩選。' },
+  { title: '常見問題', href: '/pages/faq.html', desc: '費用、流程、合作方式，先看大家最常問的。' },
+];
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page" noindex={true}>
+<section class="hero">
+  <span class="kicker">404</span>
+  <h1>這個頁面搬家了，或不存在。</h1>
+  <p class="lead">網站近期改版過，你要找的內容可能換了位置。從下面的入口重新出發，或直接透過 LINE 告訴我們你在找什麼。</p>
+</section>
+
+<main>
+  <section class="section">
+    <div class="card-grid">
+      {entries.map((e) => (
+        <article class="card article-card">
+          <h3><a class="text-link" href={e.href}>{e.title}</a></h3>
+          <p class="card-desc">{e.desc}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>找不到你要的內容？</h2>
+    <p>直接用 LINE 告訴我們你原本想看什麼，我們把正確的連結找給你。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources.html">搜尋知識庫</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-track-event="click_consultation_cta" data-ga-event="click_line_404">用 LINE 詢問</a>
+    </div>
+  </section>
+</main>
+</BaseLayout>

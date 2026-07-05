@@ -62,20 +62,19 @@ src/
 │   └── ArticleLayout.astro    ← 知識庫文章版型（hero、側欄、CTA）
 └── pages/
     ├── index.astro            ← 首頁
+    ├── 404.astro              ← 自訂 404（品牌版，Vercel 自動採用 dist/404.html）
     └── pages/
         ├── about.astro        ← 關於 TBD Studio
-        ├── cases.astro        ← 成功案例（3-tab）
-        ├── services.astro     ← 服務內容（情境入口 + 依對象分組）
+        ├── cases.astro        ← 成功案例（7 案例 tab + hash 深連結）
+        ├── services.astro     ← 服務內容（情境入口 + 方案 A–D + 費用摘要；plans/audience 已併入）
+        ├── services/*.astro   ← 四個管道子頁（個申/特選/研究所/面試）
         ├── process.astro      ← 合作流程與申請時程（泳道圖 + 時序圖）
-        ├── plans.astro        ← 服務方案
-        ├── audience.astro     ← 適合對象
         ├── faq.astro          ← 常見問題
-        ├── search.astro       ← 知識庫搜尋（client-side，URL params）
-        ├── index.astro        ← 服務總覽導覽頁
-        ├── resources.astro    ← 知識庫首頁（側邊欄 + 分主題）
-        ├── timeline.astro     ← 舊頁面，已轉為 redirect → /pages/process.html
-        └── resources/
-            └── [slug].astro   ← 動態路由，從 MDX Content Collections 產生
+        ├── guides/*.astro     ← 主題指南（12 通用 + 分學群 graduate-*）
+        ├── resources.astro    ← 知識庫首頁（搜尋/篩選/主題指南 Tabs）
+        ├── resources/         ← tools / library / interview-bank / [slug] 動態文章路由
+        └── plans / audience / index / search / timeline .astro
+                               ← 皆為轉址頁（Vercel 308 或 meta-refresh，保留舊連結用，不要當內容頁改）
 
 public/
 ├── css/                       ← CSS 唯一來源（5 個模組 + style.css @import 入口）

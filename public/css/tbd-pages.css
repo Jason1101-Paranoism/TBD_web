@@ -75,7 +75,7 @@
 .case-more-type { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 999px; background: rgba(208,206,219,.36); color: var(--tbd-mid); font-size: 12px; font-weight: 800; letter-spacing: .06em; width: fit-content; }
 .case-more-card h3 { font-size: 18px; line-height: 1.42; color: var(--tbd-dark); margin: 0; }
 .case-more-card p { color: var(--tbd-mid); font-size: 14px; line-height: 1.7; margin: 0; flex: 1; }
-.case-more-status { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: rgba(118,121,149,.7); border-top: 1px solid var(--tbd-line); padding-top: 12px; margin-top: 4px; }
+.case-more-status { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--tbd-mid); border-top: 1px solid var(--tbd-line); padding-top: 12px; margin-top: 4px; }
 @media (max-width: 640px) { .case-more-grid { grid-template-columns: 1fr; } }
 
 /* Services integrated page */
@@ -90,11 +90,14 @@
 .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
 .article-card { display: flex; flex-direction: column; gap: 0.6rem; padding: 28px; }
 .article-card .card-desc { color: var(--tbd-mid); font-size: 0.9rem; flex: 1; }
-.article-status { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--tbd-mid); background: var(--tbd-light); padding: 0.2rem 0.6rem; border-radius: 999px; width: fit-content; }
+.article-status { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--tbd-dark); background: var(--tbd-soft); padding: 0.2rem 0.6rem; border-radius: 999px; width: fit-content; }
 
 .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tbd-accent); margin: 0 0 16px; }
 
-.breadcrumb { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--tbd-mid); margin-bottom: 1rem; }
+/* flex-wrap + nowrap：手機 4 層路徑時整項換行，杜絕「首/頁」逐字豎排破版。
+   最後一層（本頁長標題）除外，仍允許換行以免撐寬版面。 */
+.breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--tbd-mid); margin-bottom: 1rem; }
+.breadcrumb a, .breadcrumb span:not(:last-child) { white-space: nowrap; }
 .breadcrumb a { color: var(--tbd-mid); text-decoration: none; }
 .breadcrumb a:hover { color: var(--tbd-accent); }
 
@@ -399,8 +402,20 @@
 .track-panel.active { display: block; }
 
 /* Process page: horizontal timeline */
-.track-timeline { display: flex; gap: 0; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+.track-timeline {
+  display: flex; gap: 0; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch;
+  /* 捲動陰影：右緣有內容未顯示時出現漸層暗示（scrolling shadows） */
+  background:
+    linear-gradient(90deg, var(--tbd-white) 30%, rgba(255,255,255,0)) left/40px 100%,
+    linear-gradient(270deg, var(--tbd-white) 30%, rgba(255,255,255,0)) right/40px 100%,
+    radial-gradient(farthest-side at 0 50%, rgba(20,33,67,.16), transparent) left/16px 100%,
+    radial-gradient(farthest-side at 100% 50%, rgba(20,33,67,.16), transparent) right/16px 100%;
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+}
 .track-milestone { flex: 0 0 180px; display: flex; flex-direction: column; gap: 8px; position: relative; }
+/* 平板寬度：卡寬改比例值，保證最後一張永遠露出半張（避免 4 張剛好貼齊右緣像「到此為止」） */
+@media (min-width: 641px) and (max-width: 1023px) { .track-milestone { flex-basis: max(150px, 22%); } }
 .track-milestone:not(:last-child)::after { content: ""; position: absolute; top: 44px; right: -1px; width: 20px; height: 2px; background: var(--tbd-line); z-index: 1; }
 .milestone-time { font-size: 11px; font-weight: 800; color: var(--tbd-accent); letter-spacing: .06em; padding: 0 12px; white-space: nowrap; }
 .milestone-card { flex: 1; margin: 0 8px; padding: 14px; border: 1px solid var(--tbd-line); border-radius: 12px; background: #fff; }
@@ -530,7 +545,7 @@
 .resources-search-bar .resources-search-wrap { flex: 1 1 280px; }
 .resources-dept-select { appearance: none; -webkit-appearance: none; flex-shrink: 0; min-height: 44px; padding: 0 36px 0 14px; border: 1px solid var(--tbd-line); border-radius: 10px; background-color: #fff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23767995' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 13px center; font-size: 14px; font-weight: 600; color: var(--tbd-dark); cursor: pointer; box-shadow: 0 2px 8px rgba(20,33,67,.06); transition: border-color .15s; }
 .resources-dept-select:hover { border-color: var(--tbd-accent); }
-.resources-dept-select:focus { outline: none; border-color: var(--tbd-accent); }
+.resources-dept-select:focus { border-color: var(--tbd-accent); }
 
 /* 動態狀態列：取代純文字「清除」，用 [標籤 ✕] chip 明示可單獨解除的過濾器 */
 .active-filter-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; background: var(--tbd-soft); border: 1px solid var(--tbd-line); border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; }
@@ -592,10 +607,10 @@ mark { background: rgba(250,183,72,.4); color: inherit; border-radius: 2px; padd
 .search-empty { text-align: center; padding: 48px 20px; }
 .search-empty p { color: var(--tbd-mid); font-size: 16px; }
 
-/* FAQ page — Accordion */
-.faq-list { display: flex; flex-direction: column; gap: 0; }
-.faq-item { border-bottom: 1px solid var(--tbd-line); }
-.faq-item:first-child { border-top: 1px solid var(--tbd-line); }
+/* FAQ page — Accordion（scope 到 .faq-page：避免蓋掉文章版 .faq-list/.faq-item 的全框樣式） */
+.faq-page .faq-list { display: flex; flex-direction: column; gap: 0; }
+.faq-page .faq-item { border: none; border-radius: 0; border-bottom: 1px solid var(--tbd-line); }
+.faq-page .faq-item:first-child { border-top: 1px solid var(--tbd-line); }
 .faq-summary {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 20px 0; font-size: 17px; font-weight: 800; color: var(--tbd-dark);
@@ -604,12 +619,12 @@ mark { background: rgba(250,183,72,.4); color: inherit; border-radius: 2px; padd
 .faq-summary::-webkit-details-marker { display: none; }
 .faq-summary::after {
   content: '';
-  display: block; flex-shrink: 0; width: 18px; height: 18px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23767995' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E");
+  display: block; flex-shrink: 0; width: 22px; height: 22px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%231A5D94' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: center;
   transition: transform .2s ease;
 }
-details[open] .faq-summary::after { transform: rotate(90deg); }
+details[open] .faq-summary::after { transform: rotate(180deg); }
 details[open] .faq-summary { color: var(--tbd-accent); }
 .faq-body { padding: 0 0 20px; }
 .faq-body p { color: var(--tbd-mid); font-size: 15px; line-height: 1.75; margin: 0 0 10px; }

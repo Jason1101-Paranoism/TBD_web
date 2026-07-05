@@ -38,6 +38,8 @@ const TARGETS = [
   { path: '/pages/resources/engineering-graduate-timeline.html', name: '文章（理工軌 series-rail + 模板連結）', toc: true },
   { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（模板下載區）' },
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
+  { path: '/pages/process.html', name: '合作流程（track tabs + 時程軸）' },
+  { path: '/404.html', name: '自訂 404 頁' },
 ];
 
 // 注入頁面的探針：捕捉 uncaught error，並（若存在）測目錄/選單 toggle 行為。
