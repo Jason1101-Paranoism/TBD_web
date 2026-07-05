@@ -151,6 +151,35 @@
 .guide-page #stages .badge { background: rgba(26,93,148,.12); border-color: rgba(26,93,148,.28); color: var(--tbd-accent); }
 .guide-page #stages .article-card h3 { font-size: 1.18rem; }
 
+/* 學群指南「七階段地圖」：陪跑軌道。
+   縱向 rail 貫穿七階段（順序＝旅程），節點語意編碼重用架構：
+   實心節點＝該學群專屬深文、空心節點＝沿用通用文章。 */
+.guide-rail-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12.5px; color: var(--tbd-mid); margin: 0 0 10px; }
+.guide-rail-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.guide-rail-legend i { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+.guide-rail-legend i.own { background: var(--tbd-accent); }
+.guide-rail-legend i.reuse { background: var(--tbd-white); border: 2px solid var(--tbd-mid); }
+.guide-rail { --railnum: 44px; position: relative; margin-left: 6px; }
+.guide-rail::before { content: ""; position: absolute; left: calc(var(--railnum) + 22px); top: 14px; bottom: 14px; width: 2px; background: linear-gradient(var(--tbd-light), var(--tbd-accent) 65%, var(--tbd-yellow)); }
+.rail-stage { position: relative; display: grid; grid-template-columns: var(--railnum) 44px 1fr; align-items: start; padding: 16px 10px 16px 0; border-radius: 12px; text-decoration: none; color: inherit; transition: background .18s ease; }
+.rail-stage:hover { background: var(--tbd-soft); }
+.rail-stage:focus-visible { outline: 2px solid var(--tbd-accent); outline-offset: 2px; background: var(--tbd-soft); }
+.rail-stage .rs-num { font-family: var(--tbd-font-serif); font-style: italic; font-size: 34px; line-height: 1; color: var(--tbd-light); text-align: right; padding: 2px 6px 0 0; font-variant-numeric: tabular-nums; transition: color .18s ease; }
+.rail-stage:hover .rs-num { color: var(--tbd-accent); }
+.rail-stage .rs-node { position: relative; height: 100%; }
+.rail-stage .rs-node i { position: absolute; left: 15px; top: 8px; width: 13px; height: 13px; border-radius: 50%; background: var(--tbd-white); border: 2.5px solid var(--tbd-mid); }
+.rail-stage.own .rs-node i { background: var(--tbd-accent); border-color: var(--tbd-accent); box-shadow: 0 0 0 3px rgba(250, 183, 72, .4); }
+.rail-stage .rs-tag { font-size: 11px; letter-spacing: .12em; color: var(--tbd-mid); }
+.rail-stage.own .rs-tag { color: var(--tbd-accent); font-weight: 700; }
+.rail-stage .rs-title { display: block; font-size: 17px; font-weight: 700; line-height: 1.55; margin: 2px 0 3px; color: var(--tbd-dark); }
+.rail-stage:hover .rs-title { color: var(--tbd-accent); }
+.rail-stage .rs-role { display: block; font-size: 13.5px; color: var(--tbd-mid); max-width: 36em; }
+@media (max-width: 640px) {
+  .guide-rail { --railnum: 30px; }
+  .rail-stage .rs-num { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .rail-stage, .rail-stage .rs-num { transition: none; } }
+
 .article-sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 5rem; align-self: start; }
 
 /* 手機版：目錄移到文章上方（display:contents 讓側欄子項直接參與 grid）。

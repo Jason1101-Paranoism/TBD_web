@@ -142,13 +142,21 @@ const schema = {
 
   <section class="section" id="stages">
     <h2>理工研究所申請的七個階段</h2>
-    <div class="card-grid">
+    <div class="guide-rail-legend">
+      <span><i class="own"></i>理工專屬深文</span>
+      <span><i class="reuse"></i>沿用通用文章</span>
+    </div>
+    <div class="guide-rail">
       {stages.map((s) => (
-        <article class="card article-card">
-          <span class="badge">階段 {s.n}· {s.tag}</span>
-          <h3><a class="text-link" href={s.href}>{s.title}</a></h3>
-          <p class="card-desc">{s.role}</p>
-        </article>
+        <a class={`rail-stage${s.tag !== '通用' ? ' own' : ''}`} href={s.href}>
+          <span class="rs-num">{s.n}</span>
+          <span class="rs-node"><i></i></span>
+          <span class="rs-body">
+            <span class="rs-tag">{s.tag}</span>
+            <span class="rs-title">{s.title}</span>
+            <span class="rs-role">{s.role}</span>
+          </span>
+        </a>
       ))}
     </div>
   </section>
