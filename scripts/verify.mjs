@@ -35,6 +35,8 @@ const TARGETS = [
   { path: '/pages/resources/admission-channels-compare.html', name: '文章（無 series-rail）', toc: true },
   { path: '/pages/resources/lulu-preparation-system.html', name: '文章（含原創 CSS 圖示）', toc: true },
   { path: '/pages/resources/design-graduate-choose.html', name: '文章（有 series-rail，回歸案例）', toc: true },
+  { path: '/pages/resources/engineering-graduate-timeline.html', name: '文章（理工軌 series-rail + 模板連結）', toc: true },
+  { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（模板下載區）' },
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
 ];
 

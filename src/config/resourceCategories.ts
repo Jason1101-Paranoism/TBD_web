@@ -96,6 +96,13 @@ export const resourceCategories: ResourceCategory[] = [
         desc: '設計類群專屬：選校（學術型vs實務型）、研究計畫×作品集、口試講評，七階段一次看。',
         order: 8,
       },
+      {
+        kicker: '分學群指南',
+        title: '理工研究所申請指南',
+        href: '/pages/guides/graduate-engineering.html',
+        desc: '理工類群專屬：大二暑假起跑的時程、選實驗室、技術匹配計畫書、口試技術答辯，附五份模板。',
+        order: 8.1,
+      },
     ],
   },
   {
