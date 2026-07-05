@@ -49,7 +49,9 @@
     var panel = document.getElementById('pg-tab-' + id);
     if (panel) panel.classList.remove('hidden');
     document.querySelectorAll('.pg-nav-btn').forEach(function (btn) {
-      btn.classList.toggle('active', btn.dataset.tab === id);
+      var on = btn.dataset.tab === id;
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-current', on ? 'true' : 'false');
     });
     state.tab = id;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -74,6 +76,7 @@
   function setStep(index) {
     document.querySelectorAll('.pg-step-btn').forEach(function (btn, i) {
       var active = i === index;
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
       btn.classList.toggle('bg-[#1A5D94]', active);
       btn.classList.toggle('text-white', active);
       btn.classList.toggle('bg-white', !active);

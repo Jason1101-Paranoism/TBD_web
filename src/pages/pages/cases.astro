@@ -689,26 +689,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <section class="section">
     <h2>延伸閱讀：這些案例背後的方法</h2>
     <div class="card-grid">
-      <article class="card article-card">
+      <a class="card article-card card--link" href="/pages/guides/portfolio-prep.html">
         <span class="badge">主題指南</span>
-        <h3><a class="text-link" href="/pages/guides/portfolio-prep.html">備審與學習歷程完整指南</a></h3>
+        <h3>備審與學習歷程完整指南</h3>
         <p class="card-desc">案例裡的素材盤點、主線建構與文件重構，背後的方法都收錄在這個指南。</p>
-      </article>
-      <article class="card article-card">
+      </a>
+      <a class="card article-card card--link" href="/pages/guides/departments.html">
         <span class="badge">主題指南</span>
-        <h3><a class="text-link" href="/pages/guides/departments.html">各科系申請指南</a></h3>
+        <h3>各科系申請指南</h3>
         <p class="card-desc">資管、機械、藝術等不同科系的備審重點不同，先看你目標科系的評審邏輯。</p>
-      </article>
-      <article class="card article-card">
+      </a>
+      <a class="card article-card card--link" href="/pages/guides/graduate-application.html">
         <span class="badge">主題指南</span>
-        <h3><a class="text-link" href="/pages/guides/graduate-application.html">研究所推甄完整指南</a></h3>
+        <h3>研究所推甄完整指南</h3>
         <p class="card-desc">研究所申請案例對應的完整準備路徑：從選校、研究計畫到口試的七個階段。</p>
-      </article>
-      <article class="card article-card">
+      </a>
+      <a class="card article-card card--link" href="/pages/resources/reviewer-perspective.html">
         <span class="badge">備審策略</span>
-        <h3><a class="text-link" href="/pages/resources/reviewer-perspective.html">教授 30 秒看備審，真正在評估什麼？</a></h3>
+        <h3>教授 30 秒看備審，真正在評估什麼？</h3>
         <p class="card-desc">理解評審的閱讀邏輯，就懂這些案例為什麼這樣重構備審。</p>
-      </article>
+      </a>
     </div>
   </section>
 
@@ -746,6 +746,33 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         panel?.scrollIntoView({ block: 'start' });
       }
     });
+  });
+
+  // 每個案例底部加「看下一個案例」快捷：手機看完 9 屏不必捲回頂部，7 個案例才有機會被逐一看到
+  const tabOrder = Array.from(document.querySelectorAll('.cases-tab')).map(b => (b as HTMLElement).dataset.tab);
+  document.querySelectorAll('.cases-panel').forEach(panel => {
+    const id = panel.id.replace('tab-', '');
+    const idx = tabOrder.indexOf(id);
+    const nextId = tabOrder[(idx + 1) % tabOrder.length];
+    const nextBtn = document.querySelector(`.cases-tab[data-tab="${nextId}"]`);
+    if (!nextBtn || !nextId) return;
+    const clone = nextBtn.cloneNode(true) as HTMLElement;
+    clone.querySelector('.tab-subtitle')?.remove();
+    const label = (clone.textContent || '').trim();
+    const wrap = document.createElement('div');
+    wrap.className = 'case-next';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'button secondary';
+    btn.textContent = `看下一個案例：${label} →`;
+    btn.addEventListener('click', () => {
+      if (activateTab(nextId)) {
+        history.replaceState(null, '', '#tab-' + nextId);
+        document.getElementById('tab-' + nextId)?.scrollIntoView({ block: 'start' });
+      }
+    });
+    wrap.appendChild(btn);
+    panel.appendChild(wrap);
   });
 
   // 支援從外部連結帶 hash（如首頁「閱讀案例拆解」）直接開對應 tab

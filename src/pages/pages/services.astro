@@ -11,12 +11,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <a class="button secondary" href="/pages/process.html">了解合作流程</a>
     <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=services" target="_blank" rel="noopener noreferrer" data-ga-event="click_line_services">預約策略諮詢</a>
   </div>
+  <nav class="anchor-chips" aria-label="頁內導覽">
+    <a href="#situations">你的狀況</a>
+    <a href="#who">哪些學生適合</a>
+    <a href="#what">我們做什麼</a>
+    <a href="#plans">方案與費用</a>
+  </nav>
 </section>
 
 <main>
 
   <!-- ── 情境入口 ── -->
-  <section class="section" style="padding-bottom: 8px;">
+  <section class="section" id="situations" style="padding-bottom: 8px;">
     <div class="services-chapter-header">
       <span class="kicker">你的狀況</span>
       <h2>找到你現在的位置</h2>
@@ -24,31 +30,31 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <div class="grid grid-2" style="margin-top: 20px; gap: 14px;">
-      <a href="#plan-c" class="card situation-card" style="text-decoration: none; cursor: pointer;">
+      <a href="#plan-c" class="card situation-card card--link">
         <span class="badge">高三</span>
         <h3 style="margin-top: 10px;">一階剛過，二階面試快到了</h3>
         <p>需要快速建立面試架構、練習追問應對。→ <strong>方案 C 面試訓練</strong></p>
       </a>
 
-      <a href="#plan-d" class="card situation-card" style="text-decoration: none; cursor: pointer;">
+      <a href="#plan-d" class="card situation-card card--link">
         <span class="badge">高二</span>
         <h3 style="margin-top: 10px;">還沒確定方向，不知道從哪開始</h3>
         <p>需要先釐清升學管道與個人定位，再規劃備審節奏。→ <strong>方案 D 全程陪跑</strong></p>
       </a>
 
-      <a href="#plan-b" class="card situation-card" style="text-decoration: none; cursor: pointer;">
+      <a href="#plan-b" class="card situation-card card--link">
         <span class="badge">研究所</span>
         <h3 style="margin-top: 10px;">準備推甄，需要研究計畫與教授信件</h3>
         <p>需要整理研究動機、研究計畫架構，以及找到適合實驗室的方式。→ <strong>方案 B 重構方案</strong></p>
       </a>
 
-      <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=services-situation-intl" target="_blank" rel="noopener noreferrer" class="card situation-card" style="text-decoration: none; cursor: pointer;" data-track-event="click_consultation_cta" data-ga-event="click_line_services_situation_intl">
+      <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=services-situation-intl" target="_blank" rel="noopener noreferrer" class="card situation-card card--link" data-track-event="click_consultation_cta" data-ga-event="click_line_services_situation_intl">
         <span class="badge">國際班／海外</span>
         <h3 style="margin-top: 10px;">申請海外或國際大學，需要英文文書策略</h3>
         <p>需要 Personal Statement、Activities List 與英文面試準備。海外申請範圍差異大，直接以初談確認。→ <strong>用 LINE 預約初談</strong></p>
       </a>
 
-      <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=services-situation" target="_blank" rel="noopener noreferrer" class="card situation-card" style="text-decoration: none; cursor: pointer; grid-column: span 2;" data-ga-event="click_line_services_situation">
+      <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=services-situation" target="_blank" rel="noopener noreferrer" class="card situation-card card--link" style="grid-column: span 2;" data-ga-event="click_line_services_situation">
         <span class="badge">家長／還沒開始</span>
         <h3 style="margin-top: 10px;">孩子的方向還很模糊，想先了解 TBD 的方式</h3>
         <p>建議先預約一次 60 分鐘策略諮詢，由 TBD 評估現況並說明最適合的切入點。→ <strong>預約策略諮詢</strong></p>
@@ -57,7 +63,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </section>
 
   <!-- ── 章節 1：適合對象 ── -->
-  <section class="section">
+  <section class="section" id="who">
     <div class="services-chapter-header">
       <span class="kicker">01</span>
       <h2>哪些學生適合</h2>
@@ -129,7 +135,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </section>
 
   <!-- ── 章節 2：服務項目 ── -->
-  <section class="section">
+  <section class="section" id="what">
     <div class="services-chapter-header">
       <span class="kicker">02</span>
       <h2>我們具體做什麼</h2>
@@ -138,11 +144,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <div class="services-by-audience" style="margin-top: 24px;">
 
-      <div class="audience-group">
-        <div class="audience-group-header">
+      <details class="audience-group" open>
+        <summary class="audience-group-header">
           <span class="kicker">適用所有管道</span>
           <h3>通用服務</h3>
-        </div>
+        </summary>
         <div class="audience-services">
           <div class="service-item">
             <strong>升學方向諮詢</strong>
@@ -169,13 +175,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <span>協助評估錄取機率與志願排序，避免高估或低估自己的競爭位置。</span>
           </div>
         </div>
-      </div>
+      </details>
 
-      <div class="audience-group">
-        <div class="audience-group-header">
+      <details class="audience-group">
+        <summary class="audience-group-header">
           <span class="kicker">大學個人申請</span>
           <h3>高中個申專屬</h3>
-        </div>
+        </summary>
         <div class="audience-services">
           <div class="service-item">
             <strong>學習歷程整理</strong>
@@ -190,13 +196,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <span>將活動與課外經歷轉化成能力證明，而不只是一份活動清單。</span>
           </div>
         </div>
-      </div>
+      </details>
 
-      <div class="audience-group">
-        <div class="audience-group-header">
+      <details class="audience-group">
+        <summary class="audience-group-header">
           <span class="kicker">特殊選才 / 高職科大甄選</span>
           <h3>作品與成果整理</h3>
-        </div>
+        </summary>
         <div class="audience-services">
           <div class="service-item">
             <strong>作品集／專題整理</strong>
@@ -207,13 +213,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <span>從競賽、特殊經歷、跨域背景中找到申請主線，建立可答辯的申請敘事。</span>
           </div>
         </div>
-      </div>
+      </details>
 
-      <div class="audience-group">
-        <div class="audience-group-header">
+      <details class="audience-group">
+        <summary class="audience-group-header">
           <span class="kicker">研究所推甄</span>
           <h3>研究方向與教授聯絡</h3>
-        </div>
+        </summary>
         <div class="audience-services">
           <div class="service-item">
             <strong>研究計畫</strong>
@@ -228,7 +234,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <span>說明研究所期間的學習規劃與研究方向發展，配合目標實驗室的期待。</span>
           </div>
         </div>
-      </div>
+      </details>
 
     </div>
   </section>
@@ -241,22 +247,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p class="services-chapter-desc">依你的升學管道選擇對應的說明頁，了解具體流程、適合對象與常見問題。</p>
     </div>
     <div class="grid grid-2" style="margin-top: 20px;">
-      <a class="card" href="/pages/services/college-application.html" style="text-decoration: none; color: inherit;">
+      <a class="card card--link" href="/pages/services/college-application.html">
         <span class="badge">個人申請</span>
         <h3 style="margin-top: 10px;">個人申請備審整理與輔導</h3>
         <p>素材盤點、主線建立、文件重構——高三個申備審的完整準備流程。</p>
       </a>
-      <a class="card" href="/pages/services/special-admission.html" style="text-decoration: none; color: inherit;">
+      <a class="card card--link" href="/pages/services/special-admission.html">
         <span class="badge">特殊選才</span>
         <h3 style="margin-top: 10px;">特殊選才申請策略與備審輔導</h3>
         <p>特殊性定位、備審整理、面試答辯——讓你的獨特背景被評審看見。</p>
       </a>
-      <a class="card" href="/pages/services/graduate.html" style="text-decoration: none; color: inherit;">
+      <a class="card card--link" href="/pages/services/graduate.html">
         <span class="badge">研究所推甄</span>
         <h3 style="margin-top: 10px;">研究所推甄備審與研究計畫輔導</h3>
         <p>研究計畫書、學術自傳、教授聯繫策略與口試準備。</p>
       </a>
-      <a class="card" href="/pages/services/interview-training.html" style="text-decoration: none; color: inherit;">
+      <a class="card card--link" href="/pages/services/interview-training.html">
         <span class="badge">面試訓練</span>
         <h3 style="margin-top: 10px;">個人申請二階面試訓練</h3>
         <p>客製化題庫、模擬面試、結構化回饋——一階通過後的關鍵準備。</p>

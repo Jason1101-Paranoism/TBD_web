@@ -68,6 +68,20 @@ const GUIDE_BY_DEPT: Record<string, { href: string; label: string }> = {
 const guide = ((category === '研究所推甄' && departmentGroup ? GUIDE_BY_DEPT[departmentGroup] : undefined)
   ?? (category ? GUIDE_BY_CATEGORY[category] : undefined)) ?? null;
 
+// 文章 → 對應服務頁的就地連結（資料驅動，依 category 對應；沒有對應的分類就不顯示）。
+// 補上全站最弱的轉換路徑：讀者不必繞主導覽即可從內容走向服務。
+const SERVICE_BY_CATEGORY: Record<string, { href: string; label: string }> = {
+  '研究所推甄': { href: '/pages/services/graduate.html', label: '看研究所推甄服務' },
+  '面試準備': { href: '/pages/services/interview-training.html', label: '看面試訓練服務' },
+  '備審製作': { href: '/pages/services/college-application.html', label: '看備審輔導服務' },
+  '各科系指南': { href: '/pages/services/college-application.html', label: '看備審輔導服務' },
+  '申請策略': { href: '/pages/services.html', label: '看服務與方案' },
+  '升大學前準備': { href: '/pages/services.html', label: '看服務與方案' },
+  '材料累積': { href: '/pages/services.html', label: '看服務與方案' },
+  '給家長': { href: '/pages/services.html', label: '看服務與方案' },
+};
+const serviceLink = (category && SERVICE_BY_CATEGORY[category]) ?? null;
+
 // 麵包屑層級（含可選的指南層），同時供 HTML 與 BreadcrumbList schema 使用。
 const crumbs = [
   { name: '首頁', url: `${site.siteUrl}/index.html`, href: '/index.html' },
@@ -256,6 +270,7 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
       <h2>{bottomCtaH2}</h2>
       <p>{bottomCtaP}</p>
       <div class="button-row">
+        {serviceLink && <a class="button secondary" href={serviceLink.href}>{serviceLink.label}</a>}
         <a class="button secondary" href="/pages/resources.html">回知識庫</a>
         <a class="button" href={bottomCtaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_article_bottom">預約策略諮詢</a>
       </div>

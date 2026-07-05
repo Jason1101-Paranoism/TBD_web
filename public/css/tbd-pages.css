@@ -79,6 +79,19 @@
 @media (max-width: 640px) { .case-more-grid { grid-template-columns: 1fr; } }
 
 /* Services integrated page */
+/* 02 服務清單手風琴（details 化後的 summary 樣式與 chevron） */
+summary.audience-group-header { cursor: pointer; list-style: none; position: relative; padding-right: 56px; display: block; }
+summary.audience-group-header::-webkit-details-marker { display: none; }
+summary.audience-group-header::after { content: ''; position: absolute; right: 22px; top: 50%; width: 20px; height: 20px; margin-top: -10px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231A5D94' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center no-repeat; transition: transform .2s ease; }
+.audience-group[open] > summary.audience-group-header::after { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { summary.audience-group-header::after { transition: none; } }
+/* 知識庫分類瀏覽「展開全部」鈕 */
+.browse-more { display: block; margin: 16px auto 0; min-height: 44px; padding: 10px 22px; border: 1px solid var(--tbd-line); border-radius: 999px; background: #fff; color: var(--tbd-accent); font-weight: 700; font-size: 14px; cursor: pointer; }
+.browse-more:hover { border-color: var(--tbd-accent); }
+/* 長頁頁內錨點膠囊（hero 下方） */
+.anchor-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.anchor-chips a { display: inline-flex; align-items: center; min-height: 38px; padding: 6px 14px; border: 1px solid var(--tbd-line); border-radius: 999px; font-size: 13.5px; font-weight: 700; color: var(--tbd-dark); text-decoration: none; background: rgba(255,255,255,.7); }
+.anchor-chips a:hover { border-color: var(--tbd-accent); color: var(--tbd-accent); }
 .services-chapter-header { margin-bottom: 4px; }
 .services-chapter-header .kicker { background: rgba(20,33,67,.08); color: var(--tbd-dark); border-color: rgba(20,33,67,.14); font-size: 11px; letter-spacing: .12em; }
 .services-chapter-header h2 { margin-top: 10px; }
@@ -363,6 +376,7 @@
 .cases-tab.active { border-color: var(--tbd-accent); background: rgba(26,93,148,.06); box-shadow: 0 2px 12px rgba(26,93,148,.1); }
 .cases-tab .tab-subtitle { font-size: 12px; color: var(--tbd-mid); }
 .cases-tab.active .tab-subtitle { color: var(--tbd-accent); }
+.case-next { margin-top: 24px; text-align: center; }
 .cases-panel { display: none; }
 .cases-panel.active { display: block; }
 .case-pending-card { }
@@ -445,6 +459,10 @@
   .swim-cell--tbd { border-bottom: none; }
   .swim-row--last .swim-cell { border-bottom: 1px solid var(--tbd-line); }
   .swim-row--last .swim-cell--tbd { border-bottom: none; }
+  /* 單欄後雙色帶 header 失去對應，隱藏之；每格改用 ::before 自帶 lane 標記 */
+  .swimlane-header { display: none; }
+  .swim-cell::before { content: "學生"; display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .08em; color: #fff; background: var(--tbd-dark); border-radius: 4px; padding: 2px 8px; margin-bottom: 8px; }
+  .swim-cell--tbd::before { content: "TBD Studio"; background: var(--tbd-accent); }
 }
 
 /* About page */
