@@ -252,6 +252,19 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 .text-link { color: var(--tbd-accent); text-decoration: none; font-size: 0.875rem; font-weight: 600; }
 .text-link:hover { text-decoration: underline; }
 
+/* ─── 內容列表統一標記（v3 review C4，經核准全站統一）───
+   原生圓點 → 品牌色小菱形。只掛在內容容器上（文章、案例 Before/After、FAQ、卡片、
+   或手動加 .content-list）；nav / footer / situation-links 等 list-style:none 的
+   結構性列表與首頁自訂圓點列表不受影響。放檔尾以覆蓋前面各處的 list-style: disc。 */
+.article-section ul, .case-ba ul, .faq-body ul, .card ul, ul.content-list { list-style: none; padding-left: 2px; }
+.article-section ul > li, .case-ba ul > li, .faq-body ul > li, .card ul > li, ul.content-list > li { position: relative; padding-left: 1.3em; }
+.article-section ul > li::before, .case-ba ul > li::before, .faq-body ul > li::before, .card ul > li::before, ul.content-list > li::before {
+  content: ""; position: absolute; left: 2px; top: 0.68em; width: 6px; height: 6px;
+  background: var(--tbd-accent); border-radius: 1.5px; transform: rotate(45deg);
+}
+/* 有序清單維持數字，標記同步品牌色 */
+.article-section ol > li::marker, .faq-body ol > li::marker { color: var(--tbd-accent); font-weight: 700; }
+
 /* 內文連結：讓站內／站外連結在文章中清楚可見（全站 a 預設 color:inherit、無底線） */
 .article-section p a, .article-section li a {
   color: var(--tbd-accent);

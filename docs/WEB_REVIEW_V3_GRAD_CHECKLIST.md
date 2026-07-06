@@ -44,6 +44,7 @@
 - [x] **B14** 兩個指南 CTA 信任微文案「線上進行、不代寫，過程文件可追蹤」→ ✓ 三項並列樣式（`.cta-trust`）
 - [x] **B15** Sticky 目錄補完（後續追加）：桌面側欄原已 sticky＋捲動高亮，補「側欄過高時自身捲動」保護；手機新增目錄 FAB（`.toc-fab`，點外部/Esc/選段即關，active 高亮同步）→ `ArticleLayout.astro`、`tbd-pages.css`、verify.mjs 加 FAB 測項
 - [x] **B16** 預估閱讀時間（後續追加）：`[slug].astro` 以 `entry.body` 估算（中文 400 字/分＋英數 200 詞/分，去除標記語法），Meta bar 顯示「閱讀約 X 分鐘」→ `[slug].astro`、`ArticleLayout.astro`
+- [x] **B17** 內容列表自訂標記（後續核准，全站統一）：文章／案例 Before-After／FAQ／卡片列表的原生圓點改為品牌色小菱形（純 CSS `::before`，不用外部 icon），有序清單數字同步品牌色；結構性列表與首頁自訂列表不受影響 → `tbd-pages.css`、`tools.astro`、`interview-bank.astro`
 
 ## C. 不採納／延後（理由）
 
@@ -52,7 +53,7 @@
 | C1 | Sticky 側欄目錄＋手機 FAB | ~~延後~~ → 已執行（B15） | 桌面本已 sticky；補溢出保護＋手機 FAB |
 | C2 | 預估閱讀時間 | ~~延後~~ → 已執行（B16） | 改在 `[slug].astro` 用 `entry.body` 估算，不需 remark |
 | C3 | 指定色碼（#F4F7F9、#737373、深藍等） | 不採 | 一律映射既有 `--tbd-*` token，不引入新色；部分建議色對比低於現值 |
-| C4 | li 圓點改自訂 SVG icon | 不採 | 與站上簡潔風格不符，維持原生列點 |
+| C4 | li 圓點改自訂 SVG icon | ~~不採~~ → 已執行（B17，使用者核准全站統一） | 以純 CSS 品牌色小菱形實現（非 SVG），全站內容列表一致 |
 | C5 | 大數字絕對定位＋透明度 5–8% | 不採 | 現有 grid 已達成其目的（標題對齊）；數字色 `--tbd-light` 已是低權重 |
 | C6 | 8pt 網格全域重排 | 不採（局部採 B8） | 全域間距重排屬大改版，逾越本輪 scope |
 
