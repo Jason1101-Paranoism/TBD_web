@@ -9,7 +9,7 @@ const STAGE_ORDER = [
   { slug: 'graduate-recommend-vs-exam',      tag: '通用',   role: '先理解推甄與考試的差異；理工的路線判斷基準見下方快篩。' },
   { slug: 'engineering-graduate-timeline',   tag: '理工專屬', role: '理工的時間軸要提早到大二暑假——實驗成果不可控，備案要先排。' },
   { slug: 'engineering-graduate-choose',     tag: '理工專屬', role: '選所其實是選實驗室：查資源、判斷指導風格、看畢業去向。' },
-  { slug: 'graduate-contact-professor',      tag: '通用',   role: '送件前聯繫教授；理工版重點（附成果與數據）見下方要點。' },
+  { slug: 'graduate-contact-professor',      tag: '通用',   role: '送件前聯繫教授；理工要多做的三件事，直達文內〈理工專屬重點〉。', anchor: '#stem-tips' },
   { slug: 'engineering-graduate-proposal',   tag: '理工專屬', role: '用技術匹配度說服教授：從已掌握的工具延伸，和實驗室接軌。' },
   { slug: 'engineering-graduate-cv',         tag: '理工專屬', role: '把團隊專題寫成個人貢獻，讓瓶頸與除錯過程成為亮點。' },
   { slug: 'engineering-graduate-oral',       tag: '理工專屬', role: '面對技術追問的答辯：解釋數據、承認邊界、展示下一步。' },
@@ -22,7 +22,8 @@ const stages = STAGE_ORDER
   .map((s, i) => {
     const a = bySlug[s.slug];
     if (!a) return null;
-    return { n: i + 1, tag: s.tag, role: s.role, title: a.data.title, href: `/pages/resources/${a.slug}.html` };
+    // anchor：通用文內的理工專屬區塊（如 #stem-tips），總覽直接深連結到該段
+    return { n: i + 1, tag: s.tag, role: s.role, title: a.data.title, href: `/pages/resources/${a.slug}.html${'anchor' in s && s.anchor ? s.anchor : ''}` };
   })
   .filter(Boolean);
 
@@ -40,7 +41,7 @@ const templates = [
     desc: '六段信件結構＋寄信前檢核：用專題成果證明契合度，不是表達熱情。',
     csv: '/assets/templates/grad-engineering-contact-email.csv',
     md: '/assets/templates/grad-engineering-contact-email.md',
-    article: '/pages/resources/graduate-contact-professor.html',
+    article: '/pages/resources/graduate-contact-professor.html#stem-tips',
   },
   {
     title: '理工研究計畫書架構模板',
@@ -161,19 +162,8 @@ const schema = {
     </div>
   </section>
 
-  <section class="section" id="contact-tips">
-    <h2>階段 4 的理工要點：套磁信這樣寄</h2>
-    <p style="margin-bottom: 12px; color: var(--tbd-mid);">聯繫教授的通用寫法沿用<a class="text-link" href="/pages/resources/graduate-contact-professor.html">通用套磁文章</a>，理工學生要多做三件事：</p>
-    <ul style="color: var(--tbd-mid); line-height: 2;">
-      <li><strong>用專題成果證明契合度</strong>：直接切入核心專題，附上關鍵的模擬或實驗圖表、GitHub 或報告連結——具體數據比熱忱宣言有力。</li>
-      <li><strong>先讀教授近年的論文</strong>：信中具體說明你的專題如何與其研究接軌或延伸，泛用罐頭信一眼就會被看穿。</li>
-      <li><strong>抓對時機</strong>：建議在大三升大四暑假至推甄報名前（約 7–9 月）寄出——太晚教授可能已有名單，太早則還沒有成果可附。</li>
-    </ul>
-    <p style="margin-top: 12px; color: var(--tbd-mid);">完整的六段信件結構與寄信前檢核，直接用下方的「理工套磁信結構模板」。</p>
-  </section>
-
   <section class="section" id="templates">
-    <h2>可下載模板</h2>
+    <h2>理工推甄專屬工具包</h2>
     <p style="margin-bottom: 16px; color: var(--tbd-mid);">五份對應各階段的工具，兩種格式任選：<strong>CSV</strong> 用 Excel / Google 試算表開；<strong>Markdown</strong> 可一鍵匯入 Notion。</p>
     <div class="card-grid">
       {templates.map((t) => (
@@ -209,9 +199,10 @@ const schema = {
 
   <section class="section cta">
     <h2>理工推甄的時程、實驗室名單與研究計畫，想找人一起盤點？</h2>
-    <p>TBD 的策略諮詢會依你的系排現況、專題累積與目標實驗室，幫你判斷推甄與考試的路線配比、檢視研究計畫書的技術匹配度，找出目前最該補強的階段。線上進行、不代寫，過程文件可追蹤。</p>
+    <p>TBD 的策略諮詢會依你的系排現況、專題累積與目標實驗室，幫你判斷推甄與考試的路線配比、檢視研究計畫書的技術匹配度，找出目前最該補強的階段。</p>
+    <p class="cta-trust"><span>✓ 線上進行</span><span>✓ 不代寫</span><span>✓ 過程文件可追蹤</span></p>
     <div class="button-row">
-      <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+      <a class="button secondary" href="/pages/services/graduate.html">看研究所推甄服務</a>
       <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_guide_graduate_engineering">預約策略諮詢</a>
     </div>
   </section>

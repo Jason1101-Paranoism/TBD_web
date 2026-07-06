@@ -21,6 +21,10 @@
 .cta p { color: rgba(255,255,255,.82); }
 .cta .button { background: var(--tbd-yellow); color: var(--tbd-dark); }
 .cta .button.secondary { background: transparent; border-color: rgba(255,255,255,.32); color: #fff; }
+/* CTA 信任微文案：主按鈕前的最後信任訊號（線上進行／不代寫／可追蹤） */
+.cta-trust { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; font-size: 14px; font-weight: 700; }
+.cta .cta-trust { color: var(--tbd-yellow); }
+.cta-trust span { display: inline-flex; align-items: center; white-space: nowrap; }
 .table-wrap {
   overflow-x: auto; border: 1px solid var(--tbd-line); border-radius: 20px; box-shadow: var(--tbd-shadow);
   /* 捲動陰影：表格寬過容器時，邊緣漸層暗示可橫向滑動（scrolling shadows） */

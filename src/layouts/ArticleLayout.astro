@@ -165,6 +165,10 @@ const categoryCtaP = resourceCategories.find((c) => c.category === category)?.ct
 const bottomCtaP = Astro.props.bottomCtaP ?? categoryCtaP ?? 'TBD 的第一次策略諮詢會先依據學生的升學管道、競爭力與目前最該補強的環節進行評估與建議，線上與您一起討論可能合作方案，決定是否需要文件重構、面試訓練或全程陪跑。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=${sidebarCtaUtm}`;
 const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=${bottomCtaUtm}`;
+
+// Hero meta bar：作者背書＋時效訊號（v3 review 通用規範）
+const metaDate = updatedDate ?? publishDate;
+const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 月`;
 ---
 
 <BaseLayout title={title} description={description} bodyClass={bodyClass} ogType="article" seoTitle={seoTitle} schema={articleSchema}>
@@ -179,6 +183,7 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
     </nav>
     <span class="kicker">{kicker}</span>
     <h1>{title}</h1>
+    <p class="article-meta"><span>TBD Studio 編輯團隊</span><span aria-hidden="true">·</span><span>{updatedDate ? '更新於' : '發布於'} {metaDateLabel}</span></p>
     <p class="lead">{lead}</p>
   </section>
 
@@ -271,7 +276,8 @@ const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_cam
       <p>{bottomCtaP}</p>
       <div class="button-row">
         {serviceLink && <a class="button secondary" href={serviceLink.href}>{serviceLink.label}</a>}
-        <a class="button secondary" href="/pages/resources.html">回知識庫</a>
+        {/* 推甄系列拿掉「回知識庫」：轉換終端只留服務＋諮詢，避免低價值選項稀釋（v3 review P0） */}
+        {category !== '研究所推甄' && <a class="button secondary" href="/pages/resources.html">回知識庫</a>}
         <a class="button" href={bottomCtaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_article_bottom">預約策略諮詢</a>
       </div>
     </section>

@@ -123,7 +123,7 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
    overflow-x:auto）會把整個 .article-body 撐寬、造成頁面水平溢出（grid/flex 子項
    預設 min-width:auto 的經典陷阱）。 */
 .article-body { max-width: 100%; min-width: 0; }
-.article-section { margin-bottom: 2.5rem; }
+.article-section { margin-bottom: 3rem; } /* 48px 章節節奏（v3 review：H2 上方留白） */
 .article-section h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--tbd-mid); }
 .article-section p, .article-section ul, .article-section ol { color: var(--tbd-mid); line-height: 1.75; }
 .article-section ul, .article-section ol { padding-left: 1.25rem; }
@@ -185,7 +185,7 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 .rail-stage .rs-node { position: relative; height: 100%; }
 .rail-stage .rs-node i { position: absolute; left: 15px; top: 8px; width: 13px; height: 13px; border-radius: 50%; background: var(--tbd-white); border: 2.5px solid var(--tbd-mid); }
 .rail-stage.own .rs-node i { background: var(--tbd-accent); border-color: var(--tbd-accent); box-shadow: 0 0 0 3px rgba(250, 183, 72, .4); }
-.rail-stage .rs-tag { font-size: 11px; letter-spacing: .12em; color: var(--tbd-mid); }
+.rail-stage .rs-tag { font-size: 11px; letter-spacing: .12em; color: var(--tbd-mid); font-weight: 600; } /* 通用軌標籤字重強化（色碼已過 AA） */
 .rail-stage.own .rs-tag { color: var(--tbd-accent); font-weight: 700; }
 .rail-stage .rs-title { display: block; font-size: 17px; font-weight: 700; line-height: 1.55; margin: 2px 0 3px; color: var(--tbd-dark); }
 .rail-stage:hover .rs-title { color: var(--tbd-accent); }
@@ -215,7 +215,7 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 .pg-sidebar-kicker { display: block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--tbd-accent); }
 .pg-sidebar-title { display: block; margin-top: 4px; font-size: 15px; font-weight: 800; color: var(--tbd-dark); }
 .pg-sidebar-nav { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
-.pg-guide-toggle { display: none; align-items: center; gap: 4px; background: none; border: 1px solid var(--tbd-line); border-radius: 8px; padding: 5px 10px; font-family: inherit; font-size: 12px; font-weight: 700; color: var(--tbd-mid); cursor: pointer; transition: color .15s, background .15s; white-space: nowrap; flex-shrink: 0; }
+.pg-guide-toggle { display: none; align-items: center; gap: 4px; background: none; border: 1px solid var(--tbd-line); border-radius: 8px; padding: 8px 14px; min-height: 44px; font-family: inherit; font-size: 12px; font-weight: 700; color: var(--tbd-mid); cursor: pointer; transition: color .15s, background .15s; white-space: nowrap; flex-shrink: 0; }
 .pg-guide-toggle:hover { color: var(--tbd-accent); background: rgba(26,93,148,.06); }
 .pg-guide-toggle-chevron { display: inline-block; transition: transform .15s; }
 .pg-sidebar.open .pg-guide-toggle-chevron { transform: rotate(180deg); }
@@ -283,6 +283,10 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 .article-card:hover h3 a::after,
 .article-card h3 a:hover::after { background: var(--tbd-accent); border-color: var(--tbd-accent); color: #fff; transform: translateX(2px); }
 .article-hero { /* modifier for article page hero — extend as needed */ }
+/* Hero meta bar：作者背書＋更新時間（v3 review：信任與時效訊號） */
+.article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -4px 0 14px; font-size: 13px; color: var(--tbd-mid); }
+/* 引言升級摘要卡：淺底＋左側品牌色邊，成為視線起點（v3 review P1） */
+.article-hero .lead { background: var(--tbd-soft); border-left: 4px solid var(--tbd-accent); padding: 14px 18px; border-radius: 0 14px 14px 0; }
 
 .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1rem 0; }
 .plan-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
@@ -366,6 +370,13 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 .faq-item summary { overflow-wrap: anywhere; word-break: break-word; }
 .faq-item summary::after { content: "+"; flex: none; margin-top: 1px; color: var(--tbd-accent); font-size: 20px; font-weight: 700; line-height: 1.3; }
 .faq-item[open] summary::after { content: "\2212"; }
+/* 開合回饋：hover 提示可點、展開時內容淡入（v3 review P1；reduced-motion 豁免） */
+.faq-item summary { border-radius: 12px; transition: background .15s ease; }
+.faq-item summary:hover { background: var(--tbd-soft); }
+.faq-item[open] summary { border-radius: 12px 12px 0 0; }
+@keyframes faq-open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.faq-item[open] p { animation: faq-open .25s ease; }
+@media (prefers-reduced-motion: reduce) { .faq-item summary { transition: none; } .faq-item[open] p { animation: none; } }
 .faq-item p { margin: 0; padding: 0 18px 16px; color: var(--tbd-mid); line-height: 1.75; overflow-wrap: anywhere; }
 
 /* Cases tab navigation */

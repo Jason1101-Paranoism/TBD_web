@@ -35,8 +35,16 @@ const TARGETS = [
   { path: '/pages/resources/admission-channels-compare.html', name: '文章（無 series-rail）', toc: true },
   { path: '/pages/resources/lulu-preparation-system.html', name: '文章（含原創 CSS 圖示）', toc: true },
   { path: '/pages/resources/design-graduate-choose.html', name: '文章（有 series-rail，回歸案例）', toc: true },
-  { path: '/pages/resources/engineering-graduate-timeline.html', name: '文章（理工軌 series-rail + 模板連結）', toc: true },
-  { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（模板下載區）' },
+  { path: '/pages/resources/engineering-graduate-timeline.html', name: '文章（理工軌 series-rail + 模板連結）', toc: true,
+    mustContain: ['guide-inline-cta'] },
+  // v3 review 回歸：推甄文章底部 CTA 不得再出現「回知識庫」，中段要有 inline CTA
+  { path: '/pages/resources/graduate-timeline.html', name: '文章（通用時程：inline CTA＋無回知識庫）', toc: true,
+    mustContain: ['guide-inline-cta'], mustNotContain: ['回知識庫'] },
+  // v3 review 回歸：理工套磁要點移入通用套磁文（#stem-tips 錨點＋情境化模板下載）
+  { path: '/pages/resources/graduate-contact-professor.html', name: '文章（套磁：理工專屬重點＋模板）', toc: true,
+    mustContain: ['id="stem-tips"', 'grad-engineering-contact-email.md'] },
+  { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（工具包＋stem-tips 錨點）',
+    mustContain: ['理工推甄專屬工具包', 'graduate-contact-professor.html#stem-tips'], mustNotContain: ['id="contact-tips"'] },
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
   { path: '/pages/process.html', name: '合作流程（track tabs + 時程軸）' },
   { path: '/404.html', name: '自訂 404 頁' },
@@ -126,6 +134,10 @@ async function probe(browser, tmp, target) {
   const res = await fetch(ORIGIN + target.path);
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${target.path}`);
   let html = await res.text();
+  // 靜態內容斷言：驗證關鍵區塊存在／已移除（不需進瀏覽器，直接對 build 產物檢查）
+  const staticFails = [];
+  for (const s of target.mustContain ?? []) if (!html.includes(s)) staticFails.push(`缺少必要內容片段：${s}`);
+  for (const s of target.mustNotContain ?? []) if (html.includes(s)) staticFails.push(`仍含應移除的內容片段：${s}`);
   html = html.replace(/<head([^>]*)>/i, `<head$1><base href="${ORIGIN}/">`);
   html = html.replace(/<\/body>/i, harness() + '</body>');
   const file = join(tmp, target.path.replace(/[\\/]/g, '_') + '.html');
@@ -137,11 +149,14 @@ async function probe(browser, tmp, target) {
   ], { encoding: 'utf8', timeout: 30000, maxBuffer: 64 * 1024 * 1024 });
   const m = out.match(/@@VERIFY@@(.*?)@@END@@/);
   if (!m) throw new Error('探針未回傳結果（頁面可能在載入早期就崩潰）');
-  return JSON.parse(Buffer.from(m[1], 'base64').toString('utf8'));
+  const r = JSON.parse(Buffer.from(m[1], 'base64').toString('utf8'));
+  r.staticFails = staticFails;
+  return r;
 }
 
 function evaluate(target, r) {
   const fails = [];
+  if (r.staticFails && r.staticFails.length) fails.push(...r.staticFails);
   if (r.errors && r.errors.length) fails.push(`載入時 JS 錯誤：${r.errors.join(' | ')}`);
   // 手機寬度下不得有頁面級水平溢出（寬表格應在 .table-wrapper 內部捲動，而非撐寬整頁）。
   // 容忍 1px 量測誤差；容器級（overflow:auto）的內部捲動不計入 documentElement。
