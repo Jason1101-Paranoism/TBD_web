@@ -75,6 +75,13 @@ function harness() {
         r.tocOpened=!!(toc&&toc.classList.contains('open'));
         r.tocNavAfter=disp(navSel);
       }
+      // 手機目錄 FAB（文章頁）：點擊後面板應開啟
+      var fab=document.getElementById('toc-fab');
+      if(fab){
+        try{fab.click();}catch(e){r.errors.push('fabclick:'+e.message);}
+        var fp=document.getElementById('toc-fab-panel');
+        r.fabOpened=!!(fp&&!fp.hidden);
+      }
       var gtabs=document.querySelectorAll('.guide-tab');
       if(gtabs.length>1){
         var second=gtabs[1];
@@ -170,6 +177,7 @@ function evaluate(target, r) {
     if (r.tocNavBefore !== 'none') fails.push(`目錄 nav 初始 display 應為 none，實為 ${r.tocNavBefore}`);
     if (!r.tocOpened) fails.push('點擊目錄按鈕後未加上 .open（toggle 失效）');
     if (r.tocNavAfter !== 'flex') fails.push(`點擊後目錄 nav display 應為 flex，實為 ${r.tocNavAfter}`);
+    if (r.fabOpened !== true) fails.push('手機目錄 FAB 點擊後面板未開啟');
   }
   if (target.menuToggle && r.menuOpened === false) fails.push('點擊指南選單按鈕後未展開');
   if (target.guideTab) {

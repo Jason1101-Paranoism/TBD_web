@@ -295,6 +295,21 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
       </div>
     </section>
   </main>
+
+  {/* 手機目錄 FAB：長文捲到中段也能開目錄跳段（桌面由 sticky 側欄涵蓋，CSS 隱藏本元件） */}
+  {tocItems.length > 0 && (
+    <div class="toc-fab-wrap">
+      <div class="toc-fab-panel" id="toc-fab-panel" hidden>
+        <div class="toc-fab-head">本文目錄</div>
+        <nav>
+          {tocItems.map(item => (
+            <a href={item.href} class="toc-fab-link">{item.label}</a>
+          ))}
+        </nav>
+      </div>
+      <button type="button" class="toc-fab" id="toc-fab" aria-expanded="false" aria-controls="toc-fab-panel">☰ 目錄</button>
+    </div>
+  )}
   <script>
     // 只取文章目錄內的錨點連結。.pg-sidebar-link 也被 series-rail 共用，
     // 但那些連結的 href 是完整路徑（/pages/...），丟進 querySelector 會拋
@@ -318,12 +333,27 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
     const isMobile = () => window.matchMedia('(max-width: 1023px)').matches;
     tocLinks.forEach(a => a.addEventListener('click', () => { if (isMobile()) setTocOpen(false); }));
 
+    // 手機目錄 FAB：開合面板（點外部、Esc、點連結皆關閉）
+    const fab = document.getElementById('toc-fab');
+    const fabPanel = document.getElementById('toc-fab-panel');
+    const fabLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc-fab-link'));
+    const setFabOpen = (open: boolean) => {
+      if (!fab || !fabPanel) return;
+      fabPanel.hidden = !open;
+      fab.setAttribute('aria-expanded', String(open));
+    };
+    fab?.addEventListener('click', (e) => { e.stopPropagation(); setFabOpen(!!fabPanel?.hidden); });
+    fabPanel?.addEventListener('click', (e) => e.stopPropagation());
+    fabLinks.forEach(a => a.addEventListener('click', () => setFabOpen(false)));
+    document.addEventListener('click', () => setFabOpen(false));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setFabOpen(false); });
+
     const observer = new IntersectionObserver(entries => {
       const visible = entries.find(e => e.isIntersecting);
       if (!visible) return;
-      tocLinks.forEach(a => a.classList.remove('active'));
-      const link = document.querySelector<HTMLAnchorElement>(`.pg-sidebar-link[href="#${visible.target.id}"]`);
-      link?.classList.add('active');
+      [...tocLinks, ...fabLinks].forEach(a => a.classList.remove('active'));
+      document.querySelectorAll<HTMLAnchorElement>(`.pg-sidebar-link[href="#${visible.target.id}"], .toc-fab-link[href="#${visible.target.id}"]`)
+        .forEach(l => l.classList.add('active'));
     }, { rootMargin: '-10% 0px -60% 0px', threshold: 0 });
 
     sections.forEach(s => observer.observe(s));
