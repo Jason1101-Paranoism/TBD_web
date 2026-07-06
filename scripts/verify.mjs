@@ -39,7 +39,7 @@ const TARGETS = [
     mustContain: ['guide-inline-cta'] },
   // v3 review 回歸：推甄文章底部 CTA 不得再出現「回知識庫」，中段要有 inline CTA
   { path: '/pages/resources/graduate-timeline.html', name: '文章（通用時程：inline CTA＋無回知識庫）', toc: true,
-    mustContain: ['guide-inline-cta'], mustNotContain: ['回知識庫'] },
+    mustContain: ['guide-inline-cta', '閱讀約'], mustNotContain: ['回知識庫'] },
   // v3 review 回歸：理工套磁要點移入通用套磁文（#stem-tips 錨點＋情境化模板下載）
   { path: '/pages/resources/graduate-contact-professor.html', name: '文章（套磁：理工專屬重點＋模板）', toc: true,
     mustContain: ['id="stem-tips"', 'grad-engineering-contact-email.md'] },

@@ -37,6 +37,7 @@ interface Props {
   gradStage?: number;
   publishDate: Date;
   updatedDate?: Date;
+  readingMinutes?: number;
 }
 
 const {
@@ -45,7 +46,7 @@ const {
   sidebarCtaText, sidebarCtaUtm,
   bottomCtaH2, bottomCtaUtm,
   tocItems, relatedArticles, faqItems, slug, seoTitle, category, departmentGroup, gradStage,
-  publishDate, updatedDate,
+  publishDate, updatedDate, readingMinutes,
 } = Astro.props;
 
 // 各 category（分科研究所再依 departmentGroup）對應的主題指南。
@@ -183,7 +184,7 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
     </nav>
     <span class="kicker">{kicker}</span>
     <h1>{title}</h1>
-    <p class="article-meta"><span>TBD Studio 編輯團隊</span><span aria-hidden="true">·</span><span>{updatedDate ? '更新於' : '發布於'} {metaDateLabel}</span></p>
+    <p class="article-meta"><span>TBD Studio 編輯團隊</span><span aria-hidden="true">·</span><span>{updatedDate ? '更新於' : '發布於'} {metaDateLabel}</span>{readingMinutes && (<><span aria-hidden="true">·</span><span>閱讀約 {readingMinutes} 分鐘</span></>)}</p>
     <p class="lead">{lead}</p>
   </section>
 

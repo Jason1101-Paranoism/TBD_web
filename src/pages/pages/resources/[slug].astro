@@ -13,6 +13,16 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 const fm = entry.data;
+
+// 預估閱讀時間：layout 拿不到 slot 內文，改在這裡用 MDX 原始碼估算。
+// 去掉標記語法後，中文字以 400 字/分、英數詞以 200 詞/分計，向上取整。
+const plain = entry.body
+  .replace(/<[^>]+>/g, ' ')                 // HTML/JSX 標籤
+  .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')  // markdown 連結留錨文字
+  .replace(/[#*`>|_~-]/g, ' ');             // 其餘 markdown 符號
+const cjkCount = (plain.match(/[一-鿿㐀-䶿]/g) ?? []).length;
+const wordCount = (plain.replace(/[一-鿿㐀-䶿]/g, ' ').match(/[A-Za-z0-9]+/g) ?? []).length;
+const readingMinutes = Math.max(1, Math.ceil(cjkCount / 400 + wordCount / 200));
 ---
 
 <ArticleLayout
@@ -36,6 +46,7 @@ const fm = entry.data;
   relatedArticles={fm.relatedArticles}
   faqItems={fm.faqItems}
   slug={entry.slug}
+  readingMinutes={readingMinutes}
 >
   <Content />
 </ArticleLayout>
