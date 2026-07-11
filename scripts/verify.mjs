@@ -46,6 +46,8 @@ const TARGETS = [
   { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（工具包＋stem-tips 錨點）',
     mustContain: ['理工推甄專屬工具包', 'graduate-contact-professor.html#stem-tips'], mustNotContain: ['id="contact-tips"'] },
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
+  { path: '/pages/grad-path-quiz.html', name: '推甄vs考試測驗（vanilla JS）', gpq: true,
+    mustContain: ['id="gpq-card"', 'grad-path-quiz.js'] },
   { path: '/pages/process.html', name: '合作流程（track tabs + 時程軸）' },
   { path: '/404.html', name: '自訂 404 頁' },
 ];
@@ -98,6 +100,14 @@ function harness() {
         var side=mtBtn.closest('.pg-sidebar');
         try{mtBtn.click();}catch(e){r.errors.push('menuclick:'+e.message);}
         r.menuOpened=!!(side&&side.classList.contains('open'));
+      }
+      // 推甄vs考試測驗：點「開始測驗」後，測驗卡 data-screen 應從 intro 進到題目（q0…）
+      var gpq=document.getElementById('gpq-card');
+      if(gpq){
+        r.gpqStart=gpq.getAttribute('data-screen');
+        var gpqStartBtn=document.getElementById('gpq-start');
+        if(gpqStartBtn){try{gpqStartBtn.click();}catch(e){r.errors.push('gpqstart:'+e.message);}}
+        r.gpqAfterStart=gpq.getAttribute('data-screen');
       }
       // 標記用拼接組出，避免本 <script> 原始碼（會被 dump-dom 一併序列化）
       // 自身含有完整 token，導致解析時誤抓到腳本內文而非輸出結果。
@@ -180,6 +190,12 @@ function evaluate(target, r) {
     if (r.fabOpened !== true) fails.push('手機目錄 FAB 點擊後面板未開啟');
   }
   if (target.menuToggle && r.menuOpened === false) fails.push('點擊指南選單按鈕後未展開');
+  if (target.gpq) {
+    if (r.gpqStart !== 'intro') fails.push(`測驗卡初始 data-screen 應為 intro，實為 ${r.gpqStart}`);
+    if (!(typeof r.gpqAfterStart === 'string' && r.gpqAfterStart.charAt(0) === 'q')) {
+      fails.push(`點「開始測驗」後應進入題目畫面（data-screen=q0…），實為 ${r.gpqAfterStart}`);
+    }
+  }
   if (target.guideTab) {
     if (r.guideTabBefore !== true) fails.push(`主題指南第二個 Tab 面板初始應為 hidden，實為 ${r.guideTabBefore}`);
     if (r.guideTabAfter !== false) fails.push('點擊第二個主題指南 Tab 後面板未顯示（切換失效）');
