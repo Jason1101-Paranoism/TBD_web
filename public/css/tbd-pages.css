@@ -330,7 +330,7 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
   color: var(--tbd-accent); background: rgba(26,93,148,.09); padding: 5px 11px; border-radius: 999px; }
 
 /* Intro */
-.gpq-h1 { font-size: clamp(26px, 5.4vw, 34px); line-height: 1.28; margin: 16px 0 12px; text-wrap: balance; letter-spacing: -.01em; color: var(--tbd-dark); }
+.gpq-h1 { font-size: clamp(26px, 5.4vw, 34px); line-height: 1.28; margin: 16px 0 12px; letter-spacing: -.01em; color: var(--tbd-dark); }
 .gpq-lead { color: var(--tbd-mid); font-size: 15.5px; margin: 0 0 24px; line-height: 1.75; }
 .gpq-meta { display: flex; gap: 18px; flex-wrap: wrap; padding: 16px 0 22px; border-top: 1px solid rgba(208,206,219,.55); margin-bottom: 6px; }
 .gpq-m { display: flex; flex-direction: column; gap: 2px; }
@@ -345,7 +345,7 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 
 /* Question */
 .gpq-qlabel { font-size: 12px; font-weight: 800; letter-spacing: .04em; color: var(--tbd-mid); margin-bottom: 8px; }
-.gpq-qtitle { font-size: clamp(19px, 4.2vw, 23px); line-height: 1.42; margin: 0 0 22px; text-wrap: balance; letter-spacing: -.01em; color: var(--tbd-dark); }
+.gpq-qtitle { font-size: clamp(19px, 4.2vw, 23px); line-height: 1.42; margin: 0 0 22px; letter-spacing: -.01em; color: var(--tbd-dark); }
 .gpq-qe { margin-left: 6px; }
 .gpq-opts { display: flex; flex-direction: column; gap: 11px; }
 .gpq-opt { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; cursor: pointer;
@@ -381,7 +381,7 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 .gpq-result { --rc: var(--tbd-accent); --rc-soft: rgba(26,93,148,.10); }
 .gpq-rbadge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em;
   color: #fff; background: var(--rc); padding: 5px 12px; border-radius: 999px; }
-.gpq-rtitle { font-size: clamp(23px, 5vw, 30px); line-height: 1.25; margin: 14px 0 6px; letter-spacing: -.01em; text-wrap: balance; color: var(--tbd-dark); }
+.gpq-rtitle { font-size: clamp(23px, 5vw, 30px); line-height: 1.25; margin: 14px 0 6px; letter-spacing: -.01em; color: var(--tbd-dark); }
 .gpq-disc { font-size: 12.5px; color: var(--tbd-mid); margin: 0 0 20px; }
 .gpq-tally { display: flex; gap: 10px; margin: 0 0 22px; }
 .gpq-t { flex: 1; border: 1px solid var(--tbd-line); border-radius: 12px; padding: 11px 14px; background: #F8FAFC; text-align: center; }
