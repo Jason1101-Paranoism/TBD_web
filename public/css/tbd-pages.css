@@ -817,3 +817,67 @@ details[open] .faq-summary { color: var(--tbd-accent); }
 @media (max-width: 820px) {
   .situation-card[style*="grid-column: span 2"] { grid-column: span 1 !important; }
 }
+
+/* process 頁：階段交付物範例（去識別化） */
+.deliv-intro { color: var(--tbd-mid); font-size: 15px; max-width: 62ch; margin: 8px 0 0; }
+.deliv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 24px; }
+@media (max-width: 820px) { .deliv-grid { grid-template-columns: 1fr; } }
+.deliv-card { border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-md); background: #fff; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.deliv-card--wide { grid-column: span 2; }
+@media (max-width: 820px) { .deliv-card--wide { grid-column: span 1; } }
+.deliv-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.deliv-phase { font-size: 12px; font-weight: 800; letter-spacing: .04em; color: var(--tbd-mid); }
+.deliv-card h3 { margin: 4px 0 0; font-size: 16px; font-weight: 800; color: var(--tbd-dark); line-height: 1.35; }
+.deliv-deid { font-size: 11px; font-weight: 800; color: var(--tbd-accent); background: rgba(26,93,148,.08); border: 1px solid rgba(26,93,148,.2); border-radius: 999px; padding: 3px 9px; white-space: nowrap; flex: 0 0 auto; }
+.deliv-excerpt { font-size: 14px; color: var(--tbd-mid); line-height: 1.65; }
+.deliv-excerpt b { color: var(--tbd-dark); }
+.deliv-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.deliv-gate { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; color: var(--tbd-mid); border: 1px dashed var(--tbd-line); border-radius: 999px; padding: 5px 12px; text-decoration: none; transition: color .18s, border-color .18s; }
+a.deliv-gate:hover { color: var(--tbd-accent); border-color: var(--tbd-accent); }
+.deliv-tag { display: inline-flex; align-items: center; font-size: 12px; font-weight: 700; color: var(--tbd-dark); background: rgba(26,93,148,.08); border: 1px solid var(--tbd-line); border-radius: 999px; padding: 4px 11px; }
+
+/* 迷你盤點表 */
+.deliv-mini-wrap { overflow-x: auto; }
+table.deliv-mini { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 380px; }
+table.deliv-mini th, table.deliv-mini td { text-align: left; padding: 9px 12px; border-bottom: 1px solid rgba(208,206,219,.5); vertical-align: top; }
+table.deliv-mini th { font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--tbd-mid); font-weight: 800; }
+table.deliv-mini td b { color: var(--tbd-dark); }
+.deliv-rel { display: inline-block; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.deliv-rel.hi { color: #1f7a5a; background: rgba(31,122,90,.1); }
+.deliv-rel.mid { color: #9a5b1e; background: rgba(154,91,30,.1); }
+
+/* 敘事定位主線 */
+.deliv-thesis { font-size: 15px; line-height: 1.7; color: var(--tbd-dark); border-left: 3px solid var(--tbd-accent); padding: 2px 0 2px 16px; margin: 0; }
+
+/* 版本變更紀錄 */
+.deliv-changelog { display: flex; flex-direction: column; gap: 12px; }
+.deliv-cl { display: grid; grid-template-columns: 74px 1fr; gap: 14px; align-items: start; }
+.deliv-cl .v { font-size: 11.5px; font-weight: 800; color: var(--tbd-accent); font-variant-numeric: tabular-nums; padding-top: 2px; letter-spacing: .03em; }
+.deliv-cl .c { font-size: 13.5px; color: var(--tbd-mid); line-height: 1.55; }
+.deliv-cl .c b { color: var(--tbd-dark); }
+
+/* 面試回饋 */
+.deliv-fb { display: flex; flex-direction: column; gap: 8px; }
+.deliv-fb-row { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--tbd-mid); }
+.deliv-st { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 6px; white-space: nowrap; flex: 0 0 auto; }
+.deliv-st.ok { color: #1f7a5a; background: rgba(31,122,90,.1); }
+.deliv-st.adj { color: #9a5b1e; background: rgba(154,91,30,.1); }
+
+/* 送件檢查清單 */
+.deliv-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; }
+@media (max-width: 520px) { .deliv-checks { grid-template-columns: 1fr; } }
+.deliv-chk { display: flex; gap: 9px; align-items: flex-start; font-size: 13.5px; color: var(--tbd-mid); }
+.deliv-chk .box { flex: 0 0 auto; width: 15px; height: 15px; border-radius: 4px; border: 1.5px solid var(--tbd-accent); margin-top: 3px; display: inline-flex; align-items: center; justify-content: center; color: var(--tbd-accent); font-size: 10px; font-weight: 900; }
+
+/* Before -> After */
+.deliv-ba { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .deliv-ba { grid-template-columns: 1fr; } }
+.deliv-ba-col { border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-sm); padding: 16px; background: #fff; }
+.deliv-ba-col.is-after { border-color: rgba(26,93,148,.28); background: rgba(26,93,148,.05); }
+.deliv-ba-lbl { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+.deliv-ba-col.is-before .deliv-ba-lbl { color: var(--tbd-mid); }
+.deliv-ba-col.is-after .deliv-ba-lbl { color: var(--tbd-accent); }
+.deliv-ba-col p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--tbd-mid); }
+.deliv-ba-col.is-after p { color: var(--tbd-dark); }
+.deliv-ba-note { font-size: 13px; color: var(--tbd-mid); line-height: 1.6; margin: 16px 0 0; }
+.deliv-ba-note b { color: var(--tbd-accent); }
