@@ -103,6 +103,13 @@ export const resourceCategories: ResourceCategory[] = [
         desc: '理工類群專屬：大二暑假起跑的時程、選實驗室、技術匹配計畫書、口試技術答辯，附五份模板。',
         order: 8.1,
       },
+      {
+        kicker: '分學群指南',
+        title: '生醫與公衛研究所申請指南',
+        href: '/pages/guides/graduate-biomed.html',
+        desc: '生醫與公衛類群專屬：雙軌時程、選實驗室、可行性研究計畫書、研究誠信備審與研究限制答辯，附五份模板。',
+        order: 8.2,
+      },
     ],
   },
   {
