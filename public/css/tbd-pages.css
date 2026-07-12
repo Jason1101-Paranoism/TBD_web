@@ -544,6 +544,18 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 @keyframes hc-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .case-pending-notice { margin-top: 18px; padding: 14px 20px; border-radius: 10px; background: rgba(208,206,219,.25); border: 1px solid var(--tbd-line); color: var(--tbd-mid); font-size: 14px; }
 
+/* 首頁案例：頂部結構化晶片列（素材盤點 / 主線定位 / 錄取） */
+.home-case-detail .hc-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(26,93,148,.08); color: var(--tbd-dark); font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--tbd-line); white-space: nowrap; }
+
+/* 首頁案例：顧問觀察手記（人味注入） */
+.home-case-detail .hc-note { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--tbd-line); }
+.home-case-detail .hc-note-label { font-size: 11px; font-weight: 800; letter-spacing: .04em; color: var(--tbd-accent); margin-bottom: 6px; }
+.home-case-detail .hc-note p { margin: 0; font-style: italic; font-size: 14px; line-height: 1.75; color: #4B5563; }
+
+/* 首頁交付物卡：統一 padding 24px、極淡陰影、標準交付物標籤 */
+.deliverable-card { position: relative; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+.deliverable-tag { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .02em; color: var(--tbd-accent); background: rgba(26,93,148,.08); border-radius: 6px; padding: 3px 8px; margin-bottom: 12px; }
+
 /* Services by audience */
 .services-by-audience { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--tbd-line); border-radius: 16px; overflow: hidden; }
 .audience-group { border-bottom: 1px solid var(--tbd-line); }

@@ -33,19 +33,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             讓每一步準備都可追蹤、可驗收。
           </h2>
 
-          <!-- CTAs: stack on mobile -->
+          <!-- CTA: single high-contrast primary action -->
           <div class="pt-2">
-            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-              <a href="#cases"
-                 class="inline-flex items-center justify-center border border-tbd-light/80 bg-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-medium text-tbd-dark hover:opacity-90 transition">
-                先看成功案例
-              </a>
-              <a href="#contact"
-                 class="inline-flex items-center justify-center bg-tbd-accent text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-medium hover:opacity-90 transition shadow-soft">
-                預約策略諮詢 →
-              </a>
-            </div>
-            <p class="mt-2 text-xs sm:text-sm text-tbd-mid">NT$3,500 策略諮詢，正式合作可全額折抵。<a href="#contact" class="underline underline-offset-2 hover:text-tbd-accent">看費用與內容 →</a></p>
+            <a href="#contact"
+               class="inline-flex items-center justify-center bg-tbd-accent text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-bold hover:opacity-90 transition shadow-soft">
+              預約策略諮詢 →
+            </a>
+            <p class="mt-4 text-[15px] font-semibold text-[#374151]">NT$3,500 策略諮詢，正式合作可全額折抵。<a href="#contact" class="underline underline-offset-2 hover:text-tbd-accent">看費用與內容 →</a></p>
           </div>
         </div>
 
@@ -82,10 +76,253 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </header>
 
   <main>
-  <!-- PAIN POINTS -->
+  <!-- CASES —— 口碑破題：緊接 Hero，作為滾動後第一個信任落地點 -->
+  <section id="cases" class="py-14 sm:py-16 lg:py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
+      <div data-reveal class="mb-8 sm:mb-10 lg:mb-12">
+        <span class="inline-flex items-center rounded-full border border-tbd-light/80 bg-tbd-accent/10 px-3 py-1 text-xs font-bold text-tbd-accent">精選成功案例</span>
+        <h2 class="mt-4 text-2xl sm:text-3xl font-bold text-tbd-dark">讓學生的故事，成為被錄取的理由。</h2>
+        <p class="mt-3 text-tbd-mid max-w-2xl">以下案例已去識別化處理，保留真實合作脈絡、交付方法與成果，避免揭露學生個資。</p>
+      </div>
+
+      <!-- 四張平分觸發卡：點一張就在下方共用區展開成精選大卡 -->
+      <div data-reveal-stagger class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button type="button" class="home-case-trigger active" data-case="special" aria-expanded="true">
+          <span class="hc-type">特殊選才｜機械工程</span>
+          <h3>從競賽型學生，到能說清楚研究動機的工程申請者</h3>
+          <div class="hc-meta"><strong>約 20 週</strong> · 陽明交大百川</div>
+        </button>
+        <button type="button" class="home-case-trigger" data-case="personal" aria-expanded="false">
+          <span class="hc-type">大學個人申請｜機械工程</span>
+          <h3>從樂高到機器人競賽，整合成中原機械的入學論述</h3>
+          <div class="hc-meta"><strong>約 24 週</strong> · 中原機械</div>
+        </button>
+        <button type="button" class="home-case-trigger" data-case="mis" aria-expanded="false">
+          <span class="hc-type">大學個人申請｜資訊管理</span>
+          <h3>把社團、活動與醫療背景，串成一條資管申請主線</h3>
+          <div class="hc-meta"><strong>約 6 週</strong> · 政大資管</div>
+        </button>
+        <button type="button" class="home-case-trigger" data-case="art" aria-expanded="false">
+          <span class="hc-type">備審策略諮詢｜藝術設計</span>
+          <h3>作品很多卻缺能力證據，升級成校系要的特質</h3>
+          <div class="hc-meta"><strong>約 1 天</strong> · 東華藝創</div>
+        </button>
+      </div>
+
+      <div data-reveal class="mt-6 sm:mt-8">
+        <!-- special -->
+        <div class="home-case-detail active" data-case="special">
+          <div class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft grid md:grid-cols-[0.9fr_1.1fr]">
+            <div class="bg-tbd-dark p-6 sm:p-8 text-white flex flex-col justify-between gap-8">
+              <div>
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs font-bold text-tbd-yellow">特殊選才｜機械工程組</div>
+                <h3 class="mt-5 text-xl sm:text-2xl font-bold leading-snug">把「做過很多事」轉化為「我為什麼適合這個學程」</h3>
+              </div>
+              <div class="grid grid-cols-2 gap-3 text-sm">
+                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Period</div><div class="mt-1 font-bold">約 20 週</div></div>
+                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Mode</div><div class="mt-1 font-bold">視訊＋文件協作</div></div>
+              </div>
+            </div>
+            <div class="p-6 sm:p-8 flex flex-col gap-5">
+              <div class="flex flex-wrap gap-2">
+                <span class="hc-chip">素材盤點 100+</span>
+                <span class="hc-chip">主線定位：跨域工程</span>
+                <span class="hc-chip">錄取：陽明交大百川</span>
+              </div>
+              <div>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">VEX 世界賽代表</span>
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">機電自學</span>
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">跨域工程動機</span>
+                </div>
+                <p class="text-tbd-mid text-sm sm:text-base leading-relaxed">學生原有豐富競賽與跨域素材，但主線發散、面試容易只停在成果陳述。TBD 以競爭力定位、素材庫盤點、SARI 敘事與模擬面試覆盤，協助他把競賽經歷連回工程學習動機。</p>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                <a href="/pages/cases.html#tab-special" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-5 py-3 rounded-md text-sm font-bold hover:opacity-90 transition shadow-soft">閱讀完整案例拆解 →</a>
+                <div class="flex-1 rounded-xl border border-tbd-accent/20 bg-tbd-accent/5 px-4 py-2.5">
+                  <div class="text-tbd-mid/70 text-[10px] uppercase tracking-widest">錄取結果</div>
+                  <div class="mt-0.5 font-bold text-tbd-dark text-sm">陽明交通大學百川學士學位學程</div>
+                </div>
+              </div>
+              <div class="hc-note">
+                <div class="hc-note-label">顧問觀察手記 · Consultant's Note</div>
+                <p>剛開始他能列出一長串競賽，卻說不清為什麼要念工程。我們陪他把每一段經歷攤開、反覆追問動機，才把獎狀變成一條說得通的申請主線。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- personal -->
+        <div class="home-case-detail" data-case="personal">
+          <div class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft grid md:grid-cols-[0.9fr_1.1fr]">
+            <div class="bg-tbd-dark p-6 sm:p-8 text-white flex flex-col justify-between gap-8">
+              <div>
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs font-bold text-tbd-yellow">大學個人申請｜機械工程組</div>
+                <h3 class="mt-5 text-xl sm:text-2xl font-bold leading-snug">把分散的競賽資歷，整合成一條工程成長敘事</h3>
+              </div>
+              <div class="grid grid-cols-2 gap-3 text-sm">
+                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Period</div><div class="mt-1 font-bold">約 24 週</div></div>
+                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Mode</div><div class="mt-1 font-bold">每週課程＋面試衝刺</div></div>
+              </div>
+            </div>
+            <div class="p-6 sm:p-8 flex flex-col gap-5">
+              <div class="flex flex-wrap gap-2">
+                <span class="hc-chip">競賽資歷整合</span>
+                <span class="hc-chip">主線定位：工程成長敘事</span>
+                <span class="hc-chip">錄取：中原機械</span>
+              </div>
+              <div>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">國際機器人大賽</span>
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">程式設計自學</span>
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">醫療機器人跨域</span>
+                </div>
+                <p class="text-tbd-mid text-sm sm:text-base leading-relaxed">競賽資歷豐富但主線發散、工程價值說不清楚。建立「樂高→機器人→醫療應用→汽車設計」成長敘事，並以逐字稿修正與每日面試訓練強化口條。</p>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                <a href="/pages/cases.html#tab-personal" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-5 py-3 rounded-md text-sm font-bold hover:opacity-90 transition shadow-soft">閱讀完整案例拆解 →</a>
+                <div class="flex-1 rounded-xl border border-tbd-accent/20 bg-tbd-accent/5 px-4 py-2.5">
+                  <div class="text-tbd-mid/70 text-[10px] uppercase tracking-widest">錄取結果</div>
+                  <div class="mt-0.5 font-bold text-tbd-dark text-sm">中原大學機械工程學系</div>
+                </div>
+              </div>
+              <div class="hc-note">
+                <div class="hc-note-label">顧問觀察手記 · Consultant's Note</div>
+                <p>他的競賽資歷很滿，工程價值卻一直說不清楚。我們陪他把「樂高→機器人→醫療應用」重新排成一條成長線，再靠逐字稿與每天的面試訓練，把口條練穩。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- mis -->
+        <div class="home-case-detail" data-case="mis">
+          <div class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft grid md:grid-cols-[0.9fr_1.1fr]">
+            <div class="bg-tbd-dark p-6 sm:p-8 text-white flex flex-col justify-between gap-8">
+              <div>
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs font-bold text-tbd-yellow">大學個人申請｜資訊管理</div>
+                <h3 class="mt-5 text-xl sm:text-2xl font-bold leading-snug">從真實問題出發，用資訊與管理把經歷串成主線</h3>
+              </div>
+              <div class="grid grid-cols-2 gap-3 text-sm">
+                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Period</div><div class="mt-1 font-bold">約 6 週</div></div>
+                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Mode</div><div class="mt-1 font-bold">線上密集衝刺</div></div>
+              </div>
+            </div>
+            <div class="p-6 sm:p-8 flex flex-col gap-5">
+              <div class="flex flex-wrap gap-2">
+                <span class="hc-chip">跨域經歷盤點</span>
+                <span class="hc-chip">主線定位：系統思維</span>
+                <span class="hc-chip">錄取：政大資管</span>
+              </div>
+              <div>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">跨域探索</span>
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">醫療 × 資訊</span>
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">系統思維</span>
+                </div>
+                <p class="text-tbd-mid text-sm sm:text-base leading-relaxed">社團、活動與醫療家庭背景豐富卻發散。透過問題意識挖掘與經驗轉譯，把活動管理、RPG 劇本設計讀成系統思維，6 週密集完成備審與面試。</p>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                <a href="/pages/cases.html#tab-mis" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-5 py-3 rounded-md text-sm font-bold hover:opacity-90 transition shadow-soft">閱讀完整案例拆解 →</a>
+                <div class="flex-1 rounded-xl border border-tbd-accent/20 bg-tbd-accent/5 px-4 py-2.5">
+                  <div class="text-tbd-mid/70 text-[10px] uppercase tracking-widest">錄取結果</div>
+                  <div class="mt-0.5 font-bold text-tbd-dark text-sm">政治大學資訊管理學系</div>
+                </div>
+              </div>
+              <div class="hc-note">
+                <div class="hc-note-label">顧問觀察手記 · Consultant's Note</div>
+                <p>社團、活動、醫療家庭背景很多卻很散。我們花時間陪他把活動管理、劇本設計讀成「系統思維」，六週內把零散經歷收斂成一條資管主線。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- art -->
+        <div class="home-case-detail" data-case="art">
+          <div class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft grid md:grid-cols-[0.9fr_1.1fr]">
+            <div class="bg-tbd-dark p-6 sm:p-8 text-white flex flex-col justify-between gap-8">
+              <div>
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs font-bold text-tbd-yellow">備審策略諮詢｜藝術設計</div>
+                <h3 class="mt-5 text-xl sm:text-2xl font-bold leading-snug">不是補作品，而是把現有經歷重講成校系要的能力</h3>
+              </div>
+              <div class="grid grid-cols-2 gap-3 text-sm">
+                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Period</div><div class="mt-1 font-bold">約 1 天密集</div></div>
+                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Mode</div><div class="mt-1 font-bold">重點 3 小時＋線上來回</div></div>
+              </div>
+            </div>
+            <div class="p-6 sm:p-8 flex flex-col gap-5">
+              <div class="flex flex-wrap gap-2">
+                <span class="hc-chip">作品重講</span>
+                <span class="hc-chip">主線定位：能力證據</span>
+                <span class="hc-chip">錄取：東華藝創</span>
+              </div>
+              <div>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">美展競賽</span>
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">展場設計</span>
+                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">跨域藝術</span>
+                </div>
+                <p class="text-tbd-mid text-sm sm:text-base leading-relaxed">作品多但停在展示、缺能力證據。以校系評分邏輯逆向拆解與 STAR 敘事重構，一天密集把美展、展場與見學經歷整合成一致主線。</p>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                <a href="/pages/cases.html#tab-art" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-5 py-3 rounded-md text-sm font-bold hover:opacity-90 transition shadow-soft">閱讀完整案例拆解 →</a>
+                <div class="flex-1 rounded-xl border border-tbd-accent/20 bg-tbd-accent/5 px-4 py-2.5">
+                  <div class="text-tbd-mid/70 text-[10px] uppercase tracking-widest">錄取結果</div>
+                  <div class="mt-0.5 font-bold text-tbd-dark text-sm">東華大學藝術創意產業學系（另錄取華梵文創）</div>
+                </div>
+              </div>
+              <div class="hc-note">
+                <div class="hc-note-label">顧問觀察手記 · Consultant's Note</div>
+                <p>他不缺作品，缺的是把作品講成能力的語言。我們用校系評分邏輯逆向拆解，一天內把美展與展場經歷，重講成校系真正想看的特質。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var triggers = Array.prototype.slice.call(document.querySelectorAll('.home-case-trigger'));
+      var details = Array.prototype.slice.call(document.querySelectorAll('.home-case-detail'));
+      if (!triggers.length) return;
+      function activate(key) {
+        triggers.forEach(function (t) {
+          var on = t.getAttribute('data-case') === key;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-expanded', on ? 'true' : 'false');
+        });
+        details.forEach(function (d) {
+          d.classList.toggle('active', d.getAttribute('data-case') === key);
+        });
+      }
+      triggers.forEach(function (t) {
+        t.addEventListener('click', function () { activate(t.getAttribute('data-case')); });
+      });
+    })();
+  </script>
+
+  <!-- PARENT BANNER —— 家長專屬引導（獨立通欄、去專業術語、建立安全感） -->
+  <section class="parent-banner bg-[#F9FAFB] border-y border-tbd-light/60">
+    <div class="container mx-auto px-4 sm:px-6 max-w-5xl py-12 sm:py-16">
+      <div data-reveal class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div class="max-w-2xl">
+          <span class="inline-flex items-center rounded-full border border-tbd-light/80 bg-white px-3 py-1 text-xs font-bold text-tbd-accent mb-4">給家長</span>
+          <h2 class="text-[24px] font-bold text-tbd-dark leading-snug">陪孩子準備升學的完整指南</h2>
+          <p class="mt-3 text-[16px] text-tbd-mid leading-relaxed">從看懂現行制度、判斷孩子現在缺什麼，到家長真正幫得上忙的位置——聽聽 TBD 想對家長說的話。</p>
+        </div>
+        <a href="/pages/guides/parents-guide.html" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-7 py-3.5 rounded-md text-base font-bold hover:opacity-90 transition shadow-soft">閱讀家長指南 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN POINTS + DELIVERABLES —— 焦慮診斷與交付物系統（Sync then Fix） -->
   <section id="pain" class="py-14 sm:py-16 lg:py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 max-w-5xl text-center">
-      <h2 data-reveal class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 lg:mb-12 text-tbd-dark">你是否也面臨這樣的升學焦慮？</h2>
+      <div data-reveal class="mb-8 sm:mb-10 lg:mb-12">
+        <span class="inline-flex items-center rounded-full mb-4" style="background:#EFF6FF;color:#1E40AF;padding:4px 8px;font-size:12px;font-weight:600;">常見升學摩擦點</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-tbd-dark">你是否也面臨這樣的升學焦慮？</h2>
+      </div>
 
       <div data-reveal-stagger class="grid md:grid-cols-3 gap-6 sm:gap-8 text-left">
         <!-- card (reordered: 意見分歧 first) -->
@@ -128,11 +365,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div data-reveal class="text-center mb-10 sm:mb-12">
         <span class="inline-flex items-center rounded-full border border-tbd-light/80 bg-tbd-accent/10 px-3 py-1 text-xs font-bold text-tbd-accent">我們如何協助學生</span>
         <h2 class="mt-4 text-2xl sm:text-3xl font-bold text-tbd-dark">不是代寫，而是把資料整理成<br class="hidden sm:block">可被教授理解、可被面試答辯的申請系統</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-tbd-dark/85 text-base sm:text-lg italic leading-relaxed">「我們不替學生代寫，因為捏造的過去經不起考驗；但我們承諾，我們會坐在你的身旁，把零散的經歷梳理成教授聽得懂的語言。」</p>
         <p class="mt-3 text-tbd-mid max-w-xl mx-auto">每一次合作，都會產出具體可檢視的交付物——讓你的準備有節點、有成果，而不是花了時間但說不清楚做了什麼。</p>
       </div>
 
       <div data-reveal-stagger class="grid md:grid-cols-3 gap-5 sm:gap-6">
-        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7 hover-lift">
+        <div class="deliverable-card bg-white rounded-xl border border-tbd-light/80 hover-lift">
+          <div class="deliverable-tag">標準交付物</div>
           <div class="w-10 h-10 rounded-lg bg-tbd-accent/10 flex items-center justify-center mb-4">
             <svg class="w-5 h-5 text-tbd-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -142,7 +381,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="text-tbd-mid text-sm leading-relaxed">初談後產出一份文件，說明你目前的競爭力定位、最適合的升學管道、以及建議的準備優先順序。是整個申請系統的起點。</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7 hover-lift">
+        <div class="deliverable-card bg-white rounded-xl border border-tbd-light/80 hover-lift">
+          <div class="deliverable-tag">標準交付物</div>
           <div class="w-10 h-10 rounded-lg bg-tbd-accent/10 flex items-center justify-center mb-4">
             <svg class="w-5 h-5 text-tbd-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h10M4 18h6"/>
@@ -152,7 +392,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="text-tbd-mid text-sm leading-relaxed">系統化整理你的競賽、課程、專題、幹部、實習與自學成果，標記每項素材的申請價值與可延伸方向，讓備審撰寫有材料可用。</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-tbd-light/80 shadow-soft p-6 sm:p-7 hover-lift">
+        <div class="deliverable-card bg-white rounded-xl border border-tbd-light/80 hover-lift">
+          <div class="deliverable-tag">標準交付物</div>
           <div class="w-10 h-10 rounded-lg bg-tbd-accent/10 flex items-center justify-center mb-4">
             <svg class="w-5 h-5 text-tbd-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3-3-3z"/>
@@ -197,207 +438,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="mt-2 text-xs text-tbd-mid leading-relaxed">客製化題庫、模擬面試、結構化回饋</p>
           <div class="mt-3 text-xs font-bold text-tbd-accent">了解服務 →</div>
         </a>
-        <a href="/pages/guides/parents-guide.html" class="sm:col-span-2 lg:col-span-4 bg-white rounded-xl border border-tbd-light/80 shadow-soft p-5 hover:border-tbd-accent/40 hover:shadow-md transition flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3" style="text-decoration: none;">
-          <div>
-            <div class="text-xs font-bold text-tbd-accent bg-tbd-accent/10 rounded-full px-2 py-1 inline-block mb-3">我是家長</div>
-            <h3 class="font-bold text-tbd-dark text-sm leading-snug">想先了解升學制度，以及 TBD 怎麼協助孩子</h3>
-            <p class="mt-2 text-xs text-tbd-mid leading-relaxed">從看懂現行制度、判斷孩子現在缺什麼，到家長真正幫得上忙的位置——先讀給家長的完整指南。</p>
-          </div>
-          <div class="text-xs font-bold text-tbd-accent shrink-0">閱讀家長指南 →</div>
-        </a>
       </div>
     </div>
   </section>
-
-  <!-- CASES -->
-  <section id="cases" class="py-14 sm:py-16 lg:py-20 bg-white">
-    <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
-      <div data-reveal class="mb-8 sm:mb-10 lg:mb-12">
-        <span class="inline-flex items-center rounded-full border border-tbd-light/80 bg-tbd-accent/10 px-3 py-1 text-xs font-bold text-tbd-accent">成功案例</span>
-        <h2 class="mt-4 text-2xl sm:text-3xl font-bold text-tbd-dark">讓學生的故事，成為被錄取的理由</h2>
-        <p class="mt-3 text-tbd-mid max-w-2xl">以下案例已去識別化處理，保留真實合作脈絡、交付方法與成果，避免揭露學生個資。</p>
-      </div>
-
-      <!-- 四張平分觸發卡：點一張就在下方共用區展開成精選大卡 -->
-      <div data-reveal-stagger class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <button type="button" class="home-case-trigger active" data-case="special" aria-expanded="true">
-          <span class="hc-type">特殊選才｜機械工程</span>
-          <h3>從競賽型學生，到能說清楚研究動機的工程申請者</h3>
-          <div class="hc-meta"><strong>約 20 週</strong> · 陽明交大百川</div>
-        </button>
-        <button type="button" class="home-case-trigger" data-case="personal" aria-expanded="false">
-          <span class="hc-type">大學個人申請｜機械工程</span>
-          <h3>從樂高到機器人競賽，整合成中原機械的入學論述</h3>
-          <div class="hc-meta"><strong>約 24 週</strong> · 中原機械</div>
-        </button>
-        <button type="button" class="home-case-trigger" data-case="mis" aria-expanded="false">
-          <span class="hc-type">大學個人申請｜資訊管理</span>
-          <h3>把社團、活動與醫療背景，串成一條資管申請主線</h3>
-          <div class="hc-meta"><strong>約 6 週</strong> · 政大資管</div>
-        </button>
-        <button type="button" class="home-case-trigger" data-case="art" aria-expanded="false">
-          <span class="hc-type">備審策略諮詢｜藝術設計</span>
-          <h3>作品很多卻缺能力證據，升級成校系要的特質</h3>
-          <div class="hc-meta"><strong>約 1 天</strong> · 東華藝創</div>
-        </button>
-      </div>
-
-      <div data-reveal class="mt-6 sm:mt-8">
-        <!-- special -->
-        <div class="home-case-detail active" data-case="special">
-          <div class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft grid md:grid-cols-[0.9fr_1.1fr]">
-            <div class="bg-tbd-dark p-6 sm:p-8 text-white flex flex-col justify-between gap-8">
-              <div>
-                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs font-bold text-tbd-yellow">特殊選才｜機械工程組</div>
-                <h3 class="mt-5 text-xl sm:text-2xl font-bold leading-snug">把「做過很多事」轉化為「我為什麼適合這個學程」</h3>
-              </div>
-              <div class="grid grid-cols-2 gap-3 text-sm">
-                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Period</div><div class="mt-1 font-bold">約 20 週</div></div>
-                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Mode</div><div class="mt-1 font-bold">視訊＋文件協作</div></div>
-              </div>
-            </div>
-            <div class="p-6 sm:p-8 flex flex-col gap-5">
-              <div>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">VEX 世界賽代表</span>
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">機電自學</span>
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">跨域工程動機</span>
-                </div>
-                <p class="text-tbd-mid text-sm sm:text-base leading-relaxed">學生原有豐富競賽與跨域素材，但主線發散、面試容易只停在成果陳述。TBD 以競爭力定位、素材庫盤點、SARI 敘事與模擬面試覆盤，協助他把競賽經歷連回工程學習動機。</p>
-              </div>
-              <div class="mt-auto flex flex-col sm:flex-row sm:items-center gap-4">
-                <a href="/pages/cases.html#tab-special" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-5 py-3 rounded-md text-sm font-bold hover:opacity-90 transition shadow-soft">閱讀完整案例拆解 →</a>
-                <div class="flex-1 rounded-xl border border-tbd-accent/20 bg-tbd-accent/5 px-4 py-2.5">
-                  <div class="text-tbd-mid/70 text-[10px] uppercase tracking-widest">錄取結果</div>
-                  <div class="mt-0.5 font-bold text-tbd-dark text-sm">陽明交通大學百川學士學位學程</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- personal -->
-        <div class="home-case-detail" data-case="personal">
-          <div class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft grid md:grid-cols-[0.9fr_1.1fr]">
-            <div class="bg-tbd-dark p-6 sm:p-8 text-white flex flex-col justify-between gap-8">
-              <div>
-                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs font-bold text-tbd-yellow">大學個人申請｜機械工程組</div>
-                <h3 class="mt-5 text-xl sm:text-2xl font-bold leading-snug">把分散的競賽資歷，整合成一條工程成長敘事</h3>
-              </div>
-              <div class="grid grid-cols-2 gap-3 text-sm">
-                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Period</div><div class="mt-1 font-bold">約 24 週</div></div>
-                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Mode</div><div class="mt-1 font-bold">每週課程＋面試衝刺</div></div>
-              </div>
-            </div>
-            <div class="p-6 sm:p-8 flex flex-col gap-5">
-              <div>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">國際機器人大賽</span>
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">程式設計自學</span>
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">醫療機器人跨域</span>
-                </div>
-                <p class="text-tbd-mid text-sm sm:text-base leading-relaxed">競賽資歷豐富但主線發散、工程價值說不清楚。建立「樂高→機器人→醫療應用→汽車設計」成長敘事，並以逐字稿修正與每日面試訓練強化口條。</p>
-              </div>
-              <div class="mt-auto flex flex-col sm:flex-row sm:items-center gap-4">
-                <a href="/pages/cases.html#tab-personal" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-5 py-3 rounded-md text-sm font-bold hover:opacity-90 transition shadow-soft">閱讀完整案例拆解 →</a>
-                <div class="flex-1 rounded-xl border border-tbd-accent/20 bg-tbd-accent/5 px-4 py-2.5">
-                  <div class="text-tbd-mid/70 text-[10px] uppercase tracking-widest">錄取結果</div>
-                  <div class="mt-0.5 font-bold text-tbd-dark text-sm">中原大學機械工程學系</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- mis -->
-        <div class="home-case-detail" data-case="mis">
-          <div class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft grid md:grid-cols-[0.9fr_1.1fr]">
-            <div class="bg-tbd-dark p-6 sm:p-8 text-white flex flex-col justify-between gap-8">
-              <div>
-                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs font-bold text-tbd-yellow">大學個人申請｜資訊管理</div>
-                <h3 class="mt-5 text-xl sm:text-2xl font-bold leading-snug">從真實問題出發，用資訊與管理把經歷串成主線</h3>
-              </div>
-              <div class="grid grid-cols-2 gap-3 text-sm">
-                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Period</div><div class="mt-1 font-bold">約 6 週</div></div>
-                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Mode</div><div class="mt-1 font-bold">線上密集衝刺</div></div>
-              </div>
-            </div>
-            <div class="p-6 sm:p-8 flex flex-col gap-5">
-              <div>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">跨域探索</span>
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">醫療 × 資訊</span>
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">系統思維</span>
-                </div>
-                <p class="text-tbd-mid text-sm sm:text-base leading-relaxed">社團、活動與醫療家庭背景豐富卻發散。透過問題意識挖掘與經驗轉譯，把活動管理、RPG 劇本設計讀成系統思維，6 週密集完成備審與面試。</p>
-              </div>
-              <div class="mt-auto flex flex-col sm:flex-row sm:items-center gap-4">
-                <a href="/pages/cases.html#tab-mis" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-5 py-3 rounded-md text-sm font-bold hover:opacity-90 transition shadow-soft">閱讀完整案例拆解 →</a>
-                <div class="flex-1 rounded-xl border border-tbd-accent/20 bg-tbd-accent/5 px-4 py-2.5">
-                  <div class="text-tbd-mid/70 text-[10px] uppercase tracking-widest">錄取結果</div>
-                  <div class="mt-0.5 font-bold text-tbd-dark text-sm">政治大學資訊管理學系</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- art -->
-        <div class="home-case-detail" data-case="art">
-          <div class="relative overflow-hidden rounded-2xl border border-tbd-light/80 bg-white shadow-soft grid md:grid-cols-[0.9fr_1.1fr]">
-            <div class="bg-tbd-dark p-6 sm:p-8 text-white flex flex-col justify-between gap-8">
-              <div>
-                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs font-bold text-tbd-yellow">備審策略諮詢｜藝術設計</div>
-                <h3 class="mt-5 text-xl sm:text-2xl font-bold leading-snug">不是補作品，而是把現有經歷重講成校系要的能力</h3>
-              </div>
-              <div class="grid grid-cols-2 gap-3 text-sm">
-                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Period</div><div class="mt-1 font-bold">約 1 天密集</div></div>
-                <div class="rounded-xl bg-white/8 border border-white/10 p-4"><div class="text-white/45 text-[11px] uppercase tracking-widest">Mode</div><div class="mt-1 font-bold">重點 3 小時＋線上來回</div></div>
-              </div>
-            </div>
-            <div class="p-6 sm:p-8 flex flex-col gap-5">
-              <div>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">美展競賽</span>
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">展場設計</span>
-                  <span class="text-sm font-bold text-tbd-accent bg-tbd-accent/10 px-3 py-1.5 rounded-lg">跨域藝術</span>
-                </div>
-                <p class="text-tbd-mid text-sm sm:text-base leading-relaxed">作品多但停在展示、缺能力證據。以校系評分邏輯逆向拆解與 STAR 敘事重構，一天密集把美展、展場與見學經歷整合成一致主線。</p>
-              </div>
-              <div class="mt-auto flex flex-col sm:flex-row sm:items-center gap-4">
-                <a href="/pages/cases.html#tab-art" class="shrink-0 inline-flex items-center justify-center bg-tbd-accent text-white px-5 py-3 rounded-md text-sm font-bold hover:opacity-90 transition shadow-soft">閱讀完整案例拆解 →</a>
-                <div class="flex-1 rounded-xl border border-tbd-accent/20 bg-tbd-accent/5 px-4 py-2.5">
-                  <div class="text-tbd-mid/70 text-[10px] uppercase tracking-widest">錄取結果</div>
-                  <div class="mt-0.5 font-bold text-tbd-dark text-sm">東華大學藝術創意產業學系（另錄取華梵文創）</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    (function () {
-      var triggers = Array.prototype.slice.call(document.querySelectorAll('.home-case-trigger'));
-      var details = Array.prototype.slice.call(document.querySelectorAll('.home-case-detail'));
-      if (!triggers.length) return;
-      function activate(key) {
-        triggers.forEach(function (t) {
-          var on = t.getAttribute('data-case') === key;
-          t.classList.toggle('active', on);
-          t.setAttribute('aria-expanded', on ? 'true' : 'false');
-        });
-        details.forEach(function (d) {
-          d.classList.toggle('active', d.getAttribute('data-case') === key);
-        });
-      }
-      triggers.forEach(function (t) {
-        t.addEventListener('click', function () { activate(t.getAttribute('data-case')); });
-      });
-    })();
-  </script>
 
   <!-- VALUES / METHOD -->
 <section id="method" class="py-16 sm:py-20 lg:py-24 bg-tbd-dark text-white relative overflow-hidden">
@@ -428,6 +471,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="text-tbd-yellow font-bold text-lg">01</span>
           </div>
           <h3 class="text-xl font-bold text-white mb-3">Mapping<br>潛力盤點</h3>
+          <p class="text-white/90 text-sm leading-relaxed mb-3 font-medium">我們會與你坐下來，鋪開你的所有過去。</p>
           <p class="text-[11px] text-tbd-yellow/80 font-bold tracking-wide mb-2">＝ 合作流程 Phase 1–2（策略諮詢・素材盤點）</p>
           <p class="text-white/60 text-sm leading-relaxed mb-6">盤點學生能力、家庭期待、建立「能力與敘事地圖」。</p>
           <div class="inline-flex items-center gap-2 text-[11px] text-white/70 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
@@ -445,6 +489,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="text-tbd-yellow font-bold text-lg">02</span>
           </div>
           <h3 class="text-xl font-bold text-white mb-3">Positioning<br>敘事定位</h3>
+          <p class="text-white/90 text-sm leading-relaxed mb-3 font-medium">這階段我們會反覆挑戰你的核心動機，直到你說出連自己都會被說服的理由。</p>
           <p class="text-[11px] text-tbd-yellow/80 font-bold tracking-wide mb-2">＝ 合作流程 Phase 3（主軸設計）</p>
           <p class="text-white/60 text-sm leading-relaxed mb-6">透過共創找到申請核心靈魂，建立「敘事定位圖」。</p>
           <div class="inline-flex items-center gap-2 text-[11px] text-white/70 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
@@ -462,6 +507,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="text-tbd-yellow font-bold text-lg">03</span>
           </div>
           <h3 class="text-xl font-bold text-white mb-3">Strategy<br>策略設計</h3>
+          <p class="text-white/90 text-sm leading-relaxed mb-3 font-medium">我們陪你把龐大的目標，拆成每週都做得到的下一步。</p>
           <p class="text-[11px] text-tbd-yellow/80 font-bold tracking-wide mb-2">＝ 合作流程 Phase 4（文件製作的規劃期）</p>
           <p class="text-white/60 text-sm leading-relaxed mb-6">將龐大目標拆解成可執行的細節，建立「WBS 計畫」。</p>
           <div class="inline-flex items-center gap-2 text-[11px] text-white/70 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
@@ -479,6 +525,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="text-tbd-yellow font-bold text-lg">04</span>
           </div>
           <h3 class="text-xl font-bold text-white mb-3">Asset Delivery<br>資產交付</h3>
+          <p class="text-white/90 text-sm leading-relaxed mb-3 font-medium">我們交到你手上的，是日後還能一直複用的資產，不是一次性的檔案。</p>
           <p class="text-[11px] text-tbd-yellow/80 font-bold tracking-wide mb-2">＝ 合作流程 Phase 4–6（文件製作・面試訓練・收尾）</p>
           <p class="text-white/60 text-sm leading-relaxed mb-6">最終產出的不僅是申請材料，更是可遷移的「資產包」。</p>
           <div class="inline-flex items-center gap-2 text-[11px] text-white/70 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
