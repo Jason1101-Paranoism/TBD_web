@@ -53,6 +53,10 @@ const TARGETS = [
     mustContain: ['商管與財經推甄專屬工具包', 'graduate-contact-professor.html#business-tips'] },
   { path: '/pages/resources/business-graduate-timeline.html', name: '文章（商管時程：分軌 relatedArticles）', toc: true,
     mustContain: ['business-graduate-choose.html'] },
+  { path: '/pages/guides/graduate-humanities.html', name: '人文與社會科學研究所指南（工具包＋humanities-tips 錨點）',
+    mustContain: ['人文與社會科學推甄專屬工具包', 'graduate-contact-professor.html#humanities-tips'] },
+  { path: '/pages/resources/humanities-graduate-timeline.html', name: '文章（人文社科時程：分軌 relatedArticles）', toc: true,
+    mustContain: ['humanities-graduate-choose.html'] },
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
   { path: '/pages/grad-path-quiz.html', name: '推甄vs考試測驗（vanilla JS）', gpq: true,
     mustContain: ['id="gpq-card"', 'grad-path-quiz.js'] },
@@ -149,16 +153,45 @@ async function waitForServer(timeoutMs = 20000) {
     try {
       const res = await fetch(ORIGIN + '/index.html');
       if (res.ok) return true;
-    } catch {}
+    } catch { /* server 還沒起來，等下一輪重試；逾時由 while 條件負責 */ }
     await sleep(300);
   }
   return false;
 }
 
+// 每個目標之間夾著一個 blocking 的 headless Chrome（實際耗時 > 5 秒），而 preview server
+// 的 keepAliveTimeout 預設 5 秒——單次 fetch 會撿到已被伺服器關閉的 pooled socket，
+// 隨機在任意頁面丟 "fetch failed"（連 404.html 都中過）。故：明示不重用連線 + 重試。
+async function fetchHtml(path, attempts = 3) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const res = await fetch(ORIGIN + path, { headers: { connection: 'close' } });
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${path}`);
+      return await res.text();
+    } catch (e) {
+      lastErr = e;
+      await sleep(300 * (i + 1));
+    }
+  }
+  throw lastErr;
+}
+
+// Chrome 冷啟動偶爾會超過逾時；重試一次即可，仍失敗才視為真的有問題。
+function runBrowser(browser, args, attempts = 2) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return execFileSync(browser, args, { encoding: 'utf8', timeout: 45000, maxBuffer: 64 * 1024 * 1024 });
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  throw lastErr;
+}
+
 async function probe(browser, tmp, target) {
-  const res = await fetch(ORIGIN + target.path);
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${target.path}`);
-  let html = await res.text();
+  let html = await fetchHtml(target.path);
   // 靜態內容斷言：驗證關鍵區塊存在／已移除（不需進瀏覽器，直接對 build 產物檢查）
   const staticFails = [];
   for (const s of target.mustContain ?? []) if (!html.includes(s)) staticFails.push(`缺少必要內容片段：${s}`);
@@ -167,11 +200,16 @@ async function probe(browser, tmp, target) {
   html = html.replace(/<\/body>/i, harness() + '</body>');
   const file = join(tmp, target.path.replace(/[\\/]/g, '_') + '.html');
   writeFileSync(file, html, 'utf8');
-  const out = execFileSync(browser, [
+  // --user-data-dir 指向本次執行的暫存目錄：不指定時 Chrome 會用使用者的預設設定檔，
+  // 與已開著的 Chrome 搶 profile lock（並附帶 GCM 註冊、安裝 web app 等背景動作），
+  // 偶發卡死到 ETIMEDOUT。獨立 profile + 一次重試把這條路徑穩住。
+  const out = runBrowser(browser, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--mute-audio',
+    `--user-data-dir=${join(tmp, 'chrome-profile')}`,
+    '--no-first-run', '--no-default-browser-check', '--disable-extensions',
     `--window-size=${MOBILE}`, '--virtual-time-budget=5000', '--dump-dom',
     pathToFileURL(file).href,
-  ], { encoding: 'utf8', timeout: 30000, maxBuffer: 64 * 1024 * 1024 });
+  ]);
   const m = out.match(/@@VERIFY@@(.*?)@@END@@/);
   if (!m) throw new Error('探針未回傳結果（頁面可能在載入早期就崩潰）');
   const r = JSON.parse(Buffer.from(m[1], 'base64').toString('utf8'));
@@ -262,9 +300,9 @@ try {
   exitCode = 2;
 } finally {
   if (platform() === 'win32') {
-    try { execFileSync('taskkill', ['/PID', String(server.pid), '/T', '/F'], { stdio: 'ignore' }); } catch {}
+    try { execFileSync('taskkill', ['/PID', String(server.pid), '/T', '/F'], { stdio: 'ignore' }); } catch { /* server 已自行結束；收尾失敗不應覆蓋驗證結果 */ }
   } else {
-    try { server.kill('SIGTERM'); } catch {}
+    try { server.kill('SIGTERM'); } catch { /* 同上：process 可能已不存在 */ }
   }
 }
 process.exit(exitCode);
