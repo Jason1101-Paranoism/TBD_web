@@ -117,6 +117,13 @@ export const resourceCategories: ResourceCategory[] = [
         desc: '商管與財經類群專屬：經歷整合時程、選校所定位、可研究的問題、商業故事線備審與綜合能力口試，附五份模板。',
         order: 8.3,
       },
+      {
+        kicker: '分學群指南',
+        title: '人文與社會科學研究所申請指南',
+        href: '/pages/guides/graduate-humanities.html',
+        desc: '人文社科類群專屬：文獻與初稿期時程、學術傳統選所、問題意識與文獻對話、文字作品備審與研究計畫答辯，附五份模板。',
+        order: 8.4,
+      },
     ],
   },
   {

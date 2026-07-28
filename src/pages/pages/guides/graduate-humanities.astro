@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+import { getCollection } from 'astro:content';
+
+// 人文與社會科學類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
+// 只有人文社科真正不同的環節（文獻與初稿期時程、學術傳統選所、問題意識與文獻對話、
+// 文字作品備審、研究計畫答辯）用人文社科專屬文。
+const STAGE_ORDER = [
+  { slug: 'graduate-recommend-vs-exam',    tag: '通用',     role: '先理解推甄與考試的差異；人文社科的路線判斷基準見下方快篩。' },
+  { slug: 'humanities-graduate-timeline',  tag: '人文社科專屬', role: '問題不是沒經歷，而是問題還沒長出來——確認問題、讀文獻、界定範圍都無法被加班壓縮。' },
+  { slug: 'humanities-graduate-choose',    tag: '人文社科專屬', role: '關鍵字相同不代表取徑相同：用研究對象、理論與方法、教授與資源三層收斂名單。' },
+  { slug: 'graduate-contact-professor',    tag: '通用',     role: '送件前聯繫教授；人文社科不一定需要套磁，判斷方式直達文內〈人文社科專屬重點〉。', anchor: '#humanities-tips' },
+  { slug: 'humanities-graduate-proposal',  tag: '人文社科專屬', role: '從問題意識到文獻對話：現象→既有解釋→解釋不足→研究問題→分析方法，五步收斂。' },
+  { slug: 'humanities-graduate-cv',        tag: '人文社科專屬', role: '用學術 CV、自傳與文字作品，證明你已經開始學習如何閱讀、提問、論證與寫作。' },
+  { slug: 'humanities-graduate-oral',      tag: '人文社科專屬', role: '答辯不是朗讀：四類追問、五步答題框架，以及面對反對意見時該怎麼回應。' },
+];
+
+const bySlug = Object.fromEntries(
+  (await getCollection('articles')).map((a) => [a.slug, a])
+);
+const stages = STAGE_ORDER
+  .map((s, i) => {
+    const a = bySlug[s.slug];
+    if (!a) return null;
+    // anchor：通用文內的人文社科專屬區塊（#humanities-tips），總覽直接深連結到該段
+    return { n: i + 1, tag: s.tag, role: s.role, title: a.data.title, href: `/pages/resources/${a.slug}.html${'anchor' in s && s.anchor ? s.anchor : ''}` };
+  })
+  .filter(Boolean);
+
+// 可下載模板（實體檔在 public/assets/templates/，各對應一篇專屬文）
+const templates = [
+  {
+    title: '校所、學術傳統與教授比較表',
+    desc: '學術傳統、偏重時期與區域、方法課程、館藏與資料庫、教授取徑逐項比較，把選校收斂成一張表。',
+    csv: '/assets/templates/grad-humanities-school-compare.csv',
+    md: '/assets/templates/grad-humanities-school-compare.md',
+    article: '/pages/resources/humanities-graduate-choose.html',
+  },
+  {
+    title: '人文社科聯繫教授信結構模板',
+    desc: '先判斷該不該寄的兩組條件，再用七段信件結構寫，最後八項寄信前檢核，避免寫成群發罐頭信。',
+    csv: '/assets/templates/grad-humanities-contact-email.csv',
+    md: '/assets/templates/grad-humanities-contact-email.md',
+    article: '/pages/resources/graduate-contact-professor.html#humanities-tips',
+  },
+  {
+    title: '研究問題形成與文獻對話整理表',
+    desc: '問題收斂五步＋十節架構＋文獻對話表＋範圍與可行性檢核，把興趣變成做得完的研究問題。',
+    csv: '/assets/templates/grad-humanities-proposal-framework.csv',
+    md: '/assets/templates/grad-humanities-proposal-framework.md',
+    article: '/pages/resources/humanities-graduate-proposal.html',
+  },
+  {
+    title: '文字作品選件與備審 Checklist',
+    desc: '作品選件十項評分、學術 CV 十二欄位、自傳要素與五份文件分工，逐項勾完再送件。',
+    csv: '/assets/templates/grad-humanities-portfolio-checklist.csv',
+    md: '/assets/templates/grad-humanities-portfolio-checklist.md',
+    article: '/pages/resources/humanities-graduate-cv.html',
+  },
+  {
+    title: '研究計畫口試答辯檢核表',
+    desc: '四類追問題庫、五步答題框架、面對反對意見的句型與三個預期質疑，上場前完整檢核。',
+    csv: '/assets/templates/grad-humanities-oral-checklist.csv',
+    md: '/assets/templates/grad-humanities-oral-checklist.md',
+    article: '/pages/resources/humanities-graduate-oral.html',
+  },
+];
+
+const title = '人文與社會科學研究所申請完整指南';
+const description = '人文社科研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、以文獻與初稿為核心的時程規劃，到人文社科專屬的學術傳統選所、問題意識與文獻對話、文字作品備審與研究計畫答辯，並附五份可下載模板。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-humanities`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": title,
+      "description": description,
+      "url": `${site.siteUrl}/pages/guides/graduate-humanities.html`,
+      "inLanguage": "zh-TW"
+    },
+    {
+      "@type": "ItemList",
+      "name": "人文與社會科學研究所申請的七個階段",
+      "itemListElement": stages.map((s) => ({
+        "@type": "ListItem",
+        "position": s.n,
+        "name": s.title,
+        "item": `${site.siteUrl}${s.href}`
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "知識庫", "item": `${site.siteUrl}/pages/resources.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/guides/graduate-humanities.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page guide-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">主題指南 · 人文與社會科學類群</span>
+  <h1>{title}</h1>
+  <p class="lead">人文社科推甄和其他領域最大的不同，是教授看的不只是「做過多少事」，而是你能不能從現象、文本或社會議題中提出問題、與既有文獻形成對話、界定研究對象與方法，並在口試中為自己的論點辯護。而這些能力最耗時的部分——確認問題、閱讀文獻、界定範圍、反覆修改論述——都無法靠加班壓縮。這個指南把申請拆成七個階段，和通用的研究所推甄指南同一套骨架：推甄與考試、聯繫教授沿用通用文章，人文社科真正不同的環節（文獻與初稿期時程、學術傳統選所、問題意識與文獻對話、文字作品備審、研究計畫答辯）則有專屬深文，並附五份可直接下載的模板。建議照順序讀一遍，再回頭把卡住的階段讀深。</p>
+</section>
+
+<main>
+
+  <section class="section" id="route-check">
+    <h2>先做路線快篩：推甄、考試還是並行？</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">投入七個階段之前，先確認方向。人文社科的推甄與考試不只是兩條入學路徑，而是兩種不同能力的評量——建議用三個問題做第一層判斷（是參考基準，不是絕對門檻）：</p>
+    <div class="card-grid">
+      <article class="card article-card">
+        <span class="badge">問題一：文字代表作</span>
+        <h3>有沒有一份能代表學術能力的作品？</h3>
+        <p class="card-desc">大專生計畫、畢業論文、專題報告、期末研究報告、研討會論文、長篇評論或田野紀錄都算。完全找不出一份能證明長期閱讀與寫作能力的作品，推甄材料很難建立說服力。</p>
+      </article>
+      <article class="card article-card">
+        <span class="badge">問題二：限時申論</span>
+        <h3>能不能在限時情境下完成有結構的論述？</h3>
+        <p class="card-desc">考試路線要求快速理解題目、即時建立論點、組織理論架構並在時間內完成論證。習慣深度閱讀但限時寫作不穩定的人，要提早訓練——這是兩種不同的能力。</p>
+      </article>
+      <article class="card article-card">
+        <span class="badge">問題三：學術傳統</span>
+        <h3>研究興趣能不能與目標系所形成對話？</h3>
+        <p class="card-desc">不同校所重視的理論傳統、文本取徑、歷史時期、研究區域與方法論差異很大。研究計畫若能與目標系所形成明確對話，推甄優勢會顯著提高。</p>
+      </article>
+    </div>
+    <p style="margin-top: 16px; color: var(--tbd-mid);">系排可以當第一層風險判斷，但不該當成固定錄取標準——文字作品品質、推薦信強度、研究題目契合度與特殊語言或史料能力，都會改變結果。完整的路線判斷（含「推甄未錄取時考試準備能否延續」這個現實問題），見<a class="text-link" href="/pages/resources/humanities-graduate-timeline.html">人文社科推甄時程</a>的第一節。</p>
+  </section>
+
+  <section class="section" id="stages">
+    <h2>人文與社會科學研究所申請的七個階段</h2>
+    <div class="guide-rail-legend">
+      <span><i class="own"></i>人文與社會科學專屬深文</span>
+      <span><i class="reuse"></i>沿用通用文章</span>
+    </div>
+    <div class="guide-rail">
+      {stages.map((s) => (
+        <a class={`rail-stage${s.tag !== '通用' ? ' own' : ''}`} href={s.href}>
+          <span class="rs-num">{s.n}</span>
+          <span class="rs-node"><i></i></span>
+          <span class="rs-body">
+            <span class="rs-tag">{s.tag}</span>
+            <span class="rs-title">{s.title}</span>
+            <span class="rs-role">{s.role}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="templates">
+    <h2>人文與社會科學推甄專屬工具包</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">五份對應各階段的工具，兩種格式任選：<strong>CSV</strong> 用 Excel / Google 試算表開；<strong>Markdown</strong> 可一鍵匯入 Notion。</p>
+    <div class="card-grid">
+      {templates.map((t) => (
+        <article class="card article-card">
+          <span class="badge">模板</span>
+          <h3>{t.title}</h3>
+          <p class="card-desc">{t.desc}</p>
+          <div class="button-row" style="margin-top: 16px;">
+            <a class="button" href={t.md} download data-track-event="download_resource">Notion / Markdown</a>
+            <a class="button secondary" href={t.csv} download data-track-event="download_resource">CSV 試算表</a>
+          </div>
+          <p style="margin-top: 10px;"><a class="text-link" href={t.article}>看使用說明 →</a></p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="more">
+    <h2>延伸與案例</h2>
+    <div class="card-grid">
+      <article class="card article-card">
+        <span class="badge">成功案例</span>
+        <h3><a class="text-link" href="/pages/cases.html">TBD Studio 升學輔導案例</a></h3>
+        <p class="card-desc">去識別化的真實案例——素材盤點、敘事重構與模擬面試怎麼落實成錄取結果，跨域申請者也適用。</p>
+      </article>
+      <article class="card article-card">
+        <span class="badge">通用指南</span>
+        <h3><a class="text-link" href="/pages/guides/graduate-application.html">研究所推甄完整指南</a></h3>
+        <p class="card-desc">不分科系的研究所推甄通用流程，想先掌握整體再回到人文社科專屬準備，從這裡開始。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>人文社科推甄的研究問題、校所名單與文字作品，想找人一起檢視？</h2>
+    <p>TBD 的策略諮詢會依你的閱讀與寫作累積、既有課堂報告與目標校所，幫你判斷推甄與考試的路線配比、把研究興趣收斂成一個做得完的問題，並檢視文字作品的選件與論證強度，找出目前最該補強的階段。</p>
+    <p class="cta-trust"><span>✓ 線上進行</span><span>✓ 不代寫</span><span>✓ 過程文件可追蹤</span></p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/services/graduate.html">看研究所推甄服務</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_guide_graduate_humanities">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>
