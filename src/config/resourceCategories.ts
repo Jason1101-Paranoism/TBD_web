@@ -110,6 +110,13 @@ export const resourceCategories: ResourceCategory[] = [
         desc: '生醫與公衛類群專屬：雙軌時程、選實驗室、可行性研究計畫書、研究誠信備審與研究限制答辯，附五份模板。',
         order: 8.2,
       },
+      {
+        kicker: '分學群指南',
+        title: '商管與財經研究所申請指南',
+        href: '/pages/guides/graduate-business.html',
+        desc: '商管與財經類群專屬：經歷整合時程、選校所定位、可研究的問題、商業故事線備審與綜合能力口試，附五份模板。',
+        order: 8.3,
+      },
     ],
   },
   {
