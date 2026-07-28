@@ -18,3 +18,7 @@ node_modules/
 !.claude/skills/tbd-seo-meta/
 !.claude/skills/tbd-image-citation/
 !.claude/skills/tbd-faq/
+.dev-archive/
+
+# 學生對話紀錄與個資，一律不入版控（[ ] 需跳脫，否則會被當成字元類別）
+\[LINE\]*.txt
