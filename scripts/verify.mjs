@@ -43,6 +43,15 @@ const TARGETS = [
   // v3 review 回歸：理工套磁要點移入通用套磁文（#stem-tips 錨點＋情境化模板下載）
   { path: '/pages/resources/graduate-contact-professor.html', name: '文章（套磁：理工專屬重點＋模板）', toc: true,
     mustContain: ['id="stem-tips"', 'grad-engineering-contact-email.md'] },
+  // 分學群指南已從知識庫外層收起，唯一入口是這張對照表的欄位標題連結
+  { path: '/pages/guides/graduate-application.html', name: '研究所推甄完整指南（對照表欄位標題＝分學群入口）',
+    mustContain: [
+      '<a class="text-link" href="/pages/guides/graduate-humanities.html">人文社科</a>',
+      '<a class="text-link" href="/pages/guides/graduate-business.html">商管財經</a>',
+      '<a class="text-link" href="/pages/guides/graduate-engineering.html">理工</a>',
+      '<a class="text-link" href="/pages/guides/graduate-biomed.html">生醫</a>',
+      '<a class="text-link" href="/pages/guides/graduate-design.html">設計傳播</a>',
+    ] },
   { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（工具包＋stem-tips 錨點）',
     mustContain: ['理工推甄專屬工具包', 'graduate-contact-professor.html#stem-tips'], mustNotContain: ['id="contact-tips"'] },
   { path: '/pages/guides/graduate-biomed.html', name: '生醫與公衛研究所指南（工具包＋biomed-tips 錨點）',

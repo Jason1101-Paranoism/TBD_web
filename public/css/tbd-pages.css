@@ -153,6 +153,9 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 .series-matrix-shared { color: var(--tbd-mid); font-size: 0.85em; }
 /* 對照表錨點：加底線並用品牌主色，避免只靠顏色傳達（WCAG 視覺線索） */
 .series-matrix td a { color: var(--tbd-accent); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+/* 欄位標題本身是該學群完整指南的入口（分學群指南已從知識庫外層收進來） */
+.series-matrix thead th a { color: var(--tbd-accent); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.series-matrix thead th a:hover { opacity: .85; }
 .series-matrix thead th { white-space: nowrap; }
 /* 窄螢幕水平滑動提示（表格可橫向捲動時才顯示） */
 .series-matrix-scrollhint { display: none; font-size: 12.5px; color: var(--tbd-mid); margin: 0 0 8px; text-align: center; }

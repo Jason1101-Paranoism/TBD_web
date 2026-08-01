@@ -37,6 +37,15 @@ const matrixCell = (stg, trk) => {
   const a = allGrad.find((x) => x.data.gradStage === stg && trackOf(x) === trk);
   return a ? `/pages/resources/${a.slug}.html` : null;
 };
+// 各學群的完整指南入口。知識庫外層只留這份通用指南，分學群指南改由下面
+// 對照表的欄位標題進入（沒有對應指南的學群就維持純文字標題）。
+const GUIDE_BY_TRACK: Record<string, string> = {
+  '人文社科': '/pages/guides/graduate-humanities.html',
+  '商管財經': '/pages/guides/graduate-business.html',
+  '理工':     '/pages/guides/graduate-engineering.html',
+  '生醫':     '/pages/guides/graduate-biomed.html',
+  '設計傳播': '/pages/guides/graduate-design.html',
+};
 const matrixRows = [1, 2, 3, 4, 5, 6, 7].map((n) => ({
   n,
   label: STAGE_LABELS[n],
@@ -112,14 +121,20 @@ const schema = {
 
   <section class="section" id="matrix">
     <h2>完整對照：7 階段 × 各學群</h2>
-    <p class="series-matrix-hint">縱向是七個準備階段，橫向是通用與各學群。標「專屬」的格點是該學群特別準備的版本；標「共用」表示沿用通用版。各學群完整路徑可進該學群指南。</p>
+    <p class="series-matrix-hint">縱向是七個準備階段，橫向是通用與各學群。標「專屬」的格點是該學群特別準備的版本；標「共用」表示沿用通用版。點欄位標題（如「理工」「設計傳播」）可進該學群的完整申請指南。</p>
     <p class="series-matrix-scrollhint" aria-hidden="true">← 左右滑動檢視完整學群 →</p>
     <div class="series-matrix-wrap">
       <table class="series-matrix">
         <thead>
           <tr>
             <th scope="col">階段</th>
-            {matrixTracks.map((t) => <th scope="col">{t}</th>)}
+            {matrixTracks.map((t) => (
+              <th scope="col">
+                {GUIDE_BY_TRACK[t]
+                  ? <a class="text-link" href={GUIDE_BY_TRACK[t]}>{t}</a>
+                  : t}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
