@@ -88,41 +88,15 @@ export const resourceCategories: ResourceCategory[] = [
     category: '研究所推甄',
     desc: '從時程規劃、研究計畫書到口試準備，研究所推甄的完整準備邏輯。',
     ctaParagraph: '推甄的準備邏輯和大學申請不同，研究計畫與口試往往才是勝負點。TBD 的第一次策略諮詢會協助你檢視推甄時程、研究計畫書的方向與口試準備，給你一份具體的下一步建議——不管後續有沒有合作都帶得走。',
+    // 五個學群的專屬指南不各佔一張卡（會把這個分類洗成一整排指南），
+    // 收成一張匯總卡導到通用指南的 7 階段 × 各學群對照表，由欄位標題分流。
     extraCards: [
       {
         kicker: '分學群指南',
-        title: '設計研究所申請指南',
-        href: '/pages/guides/graduate-design.html',
-        desc: '設計類群專屬：選校（學術型vs實務型）、研究計畫×作品集、口試講評，七階段一次看。',
+        title: '各學群研究所申請指南',
+        href: '/pages/guides/graduate-application.html#matrix',
+        desc: '理工、生醫與公衛、商管財經、人文社科、設計傳播各有一份七階段專屬指南。從對照表的學群欄位標題進入你的學群。',
         order: 8,
-      },
-      {
-        kicker: '分學群指南',
-        title: '理工研究所申請指南',
-        href: '/pages/guides/graduate-engineering.html',
-        desc: '理工類群專屬：大二暑假起跑的時程、選實驗室、技術匹配計畫書、口試技術答辯，附五份模板。',
-        order: 8.1,
-      },
-      {
-        kicker: '分學群指南',
-        title: '生醫與公衛研究所申請指南',
-        href: '/pages/guides/graduate-biomed.html',
-        desc: '生醫與公衛類群專屬：雙軌時程、選實驗室、可行性研究計畫書、研究誠信備審與研究限制答辯，附五份模板。',
-        order: 8.2,
-      },
-      {
-        kicker: '分學群指南',
-        title: '商管與財經研究所申請指南',
-        href: '/pages/guides/graduate-business.html',
-        desc: '商管與財經類群專屬：經歷整合時程、選校所定位、可研究的問題、商業故事線備審與綜合能力口試，附五份模板。',
-        order: 8.3,
-      },
-      {
-        kicker: '分學群指南',
-        title: '人文與社會科學研究所申請指南',
-        href: '/pages/guides/graduate-humanities.html',
-        desc: '人文社科類群專屬：文獻與初稿期時程、學術傳統選所、問題意識與文獻對話、文字作品備審與研究計畫答辯，附五份模板。',
-        order: 8.4,
       },
     ],
   },

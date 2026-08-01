@@ -30,7 +30,10 @@ const TARGETS = [
   { path: '/index.html', name: '首頁' },
   { path: '/pages/cases.html', name: '成功案例（tab 切換）' },
   { path: '/pages/services.html', name: '服務頁' },
-  { path: '/pages/resources.html', name: '知識庫首頁（主題指南 Tabs）', guideTab: true },
+  // 瀏覽動線只留一張匯總卡導到對照表；搜尋資料則五份分學群指南都要在
+  { path: '/pages/resources.html', name: '知識庫首頁（主題指南 Tabs）', guideTab: true,
+    mustContain: ['graduate-application.html#matrix', '各學群研究所申請指南',
+      'graduate-biomed.html', 'graduate-business.html', 'graduate-humanities.html'] },
   { path: '/pages/faq.html', name: 'FAQ' },
   { path: '/pages/resources/admission-channels-compare.html', name: '文章（無 series-rail）', toc: true },
   { path: '/pages/resources/lulu-preparation-system.html', name: '文章（含原創 CSS 圖示）', toc: true },
