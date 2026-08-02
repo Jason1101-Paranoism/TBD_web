@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
+import { templatesFor } from '../../../config/gradTemplates';
 
 // 藝術類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有藝術類群真正不同的環節（作品集與母題時程、工作室與創作取向選所、
@@ -28,44 +29,8 @@ const stages = STAGE_ORDER
   })
   .filter(Boolean);
 
-// 可下載模板（實體檔在 public/assets/templates/，各對應一篇專屬文）
-const templates = [
-  {
-    title: '教授、工作室與系所比較表',
-    desc: '創作取向、教授近年創作、工作室設備與使用限制、指導方式、展覽資源逐項比較，把選校收斂成一張表。',
-    csv: '/assets/templates/grad-arts-school-compare.csv',
-    md: '/assets/templates/grad-arts-school-compare.md',
-    article: '/pages/resources/arts-graduate-choose.html',
-  },
-  {
-    title: '藝術類群聯繫教授信結構模板',
-    desc: '先判斷該不該寄的兩組條件，再用七段信件結構寫，最後八項寄信前檢核，避免寫成只有稱讚的罐頭信。',
-    csv: '/assets/templates/grad-arts-contact-email.csv',
-    md: '/assets/templates/grad-arts-contact-email.md',
-    article: '/pages/resources/graduate-contact-professor.html#arts-tips',
-  },
-  {
-    title: '創作母題發展與研究計畫模板',
-    desc: '作品盤點與母題辨認表＋十節計畫提綱＋製作可行性檢核，讓計畫從既有作品長出來而不是另外拼一份。',
-    csv: '/assets/templates/grad-arts-proposal-framework.csv',
-    md: '/assets/templates/grad-arts-proposal-framework.md',
-    article: '/pages/resources/arts-graduate-proposal.html',
-  },
-  {
-    title: '作品集選件與備審 Checklist',
-    desc: '選件十項評分、作品說明八欄位、藝術 CV 十一欄位與五份文件分工，逐項勾完再送件。',
-    csv: '/assets/templates/grad-arts-portfolio-checklist.csv',
-    md: '/assets/templates/grad-arts-portfolio-checklist.md',
-    article: '/pages/resources/arts-graduate-cv.html',
-  },
-  {
-    title: '口試作品答辯檢核表',
-    desc: '四類追問題庫、五步答題框架、一分鐘創作主張與面對反對意見的句型，上場前完整檢核。',
-    csv: '/assets/templates/grad-arts-oral-checklist.csv',
-    md: '/assets/templates/grad-arts-oral-checklist.md',
-    article: '/pages/resources/arts-graduate-oral.html',
-  },
-];
+// 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
+const templates = templatesFor('藝術');
 
 const title = '藝術研究所申請完整指南';
 const description = '藝術研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、以作品集與母題為核心的時程規劃，到藝術類群專屬的工作室與創作取向選所、創作研究計畫、作品集備審與作品答辯，並附五份可下載模板。';

@@ -1,9 +1,17 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
+import { gradTemplateGroups, templateLinks } from '../../../config/gradTemplates';
+
+// 分學群工具包依學群分組列出。資料來自 src/config/gradTemplates.ts，
+// 與五個分學群指南頁同一份來源——新增學群不必再手動同步這一頁。
+const gradGroups = gradTemplateGroups.map((g) => ({
+  ...g,
+  items: g.templates.map(templateLinks),
+}));
 
 const title = '升學工具與模板下載｜TBD Studio';
-const description = '可下載的升學準備模板：升大學前30天Checklist、備審主線整理表、科系探索訪談清單，以及可直接複製的紀錄卡與資料夾架構範本。';
+const description = '可下載的升學準備模板：升大學前30天Checklist、備審主線整理表、科系探索訪談清單，以及理工、生醫與公衛、商管財經、人文社科、藝術五個學群各五份的研究所推甄工具包。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=tools`;
 
 const downloads = [
@@ -34,41 +42,6 @@ const downloads = [
     csv: '/assets/templates/department-compare-prompt.csv',
     md: '/assets/templates/department-compare-prompt.md',
     article: '/pages/resources/department-compare-method.html',
-  },
-  {
-    title: '教授與實驗室比較表（理工研究所）',
-    desc: '研究資源、指導風格、畢業去向逐項比較，把選所收斂成一張可決策的表。',
-    csv: '/assets/templates/grad-engineering-lab-compare.csv',
-    md: '/assets/templates/grad-engineering-lab-compare.md',
-    article: '/pages/resources/engineering-graduate-choose.html',
-  },
-  {
-    title: '理工套磁信結構模板',
-    desc: '六段信件結構＋寄信前檢核：用專題成果證明契合度，不是表達熱情。',
-    csv: '/assets/templates/grad-engineering-contact-email.csv',
-    md: '/assets/templates/grad-engineering-contact-email.md',
-    article: '/pages/resources/graduate-contact-professor.html',
-  },
-  {
-    title: '理工研究計畫書架構模板',
-    desc: '七節架構，每節附「要回答的問題」與檢查點，含常見失分寫法。',
-    csv: '/assets/templates/grad-engineering-proposal-framework.csv',
-    md: '/assets/templates/grad-engineering-proposal-framework.md',
-    article: '/pages/resources/engineering-graduate-proposal.html',
-  },
-  {
-    title: '理工備審資料 Checklist',
-    desc: 'CV、自傳、專題成果與整體一致性，逐項勾完再送件。',
-    csv: '/assets/templates/grad-engineering-portfolio-checklist.csv',
-    md: '/assets/templates/grad-engineering-portfolio-checklist.md',
-    article: '/pages/resources/engineering-graduate-cv.html',
-  },
-  {
-    title: '理工口試自我檢核表',
-    desc: '簡報、數據答辯、追問應對與行政準備，上場前的完整檢核。',
-    csv: '/assets/templates/grad-engineering-oral-checklist.csv',
-    md: '/assets/templates/grad-engineering-oral-checklist.md',
-    article: '/pages/resources/engineering-graduate-oral.html',
   },
 ];
 
@@ -127,6 +100,33 @@ const relatedArticles = [
         </article>
       ))}
     </div>
+  </section>
+
+  <section class="section" id="grad-toolkits">
+    <h2 class="section-label">研究所推甄：分學群工具包</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">每個學群五份，對應申請的五個關鍵階段：選校選教授、聯繫教授、研究／創作計畫、備審、口試。各學群的評估邏輯不同，模板的欄位也跟著不同——請用你要申請的學群那一組，不要混用。每份都有完整的使用說明文章。</p>
+    {gradGroups.map((g) => (
+      <div class="grad-toolkit-group">
+        <h3 class="grad-toolkit-title">
+          {g.label}<a class="text-link grad-toolkit-guide" href={g.guide}>看完整申請指南 →</a>
+        </h3>
+        <div class="card-grid">
+          {g.items.map((d) => (
+            <article class="card article-card">
+              <span class="badge">模板</span>
+              <h4>{d.title}</h4>
+              <p class="card-desc">{d.desc}</p>
+              <div class="button-row" style="margin-top: 16px;">
+                <a class="button" href={d.md} download data-track-event="download_resource">Notion / Markdown</a>
+                <a class="button secondary" href={d.csv} download data-track-event="download_resource">CSV 試算表</a>
+              </div>
+              <p style="margin-top: 10px;"><a class="text-link" href={d.article}>看使用說明 →</a></p>
+            </article>
+          ))}
+        </div>
+      </div>
+    ))}
+    <p style="margin-top: 20px; color: var(--tbd-mid);">找不到你的學群？設計傳播類群目前有<a class="text-link" href="/pages/guides/graduate-design.html">完整申請指南</a>但尚未附模板；其他學群可先用<a class="text-link" href="/pages/guides/graduate-application.html#matrix">通用七階段對照表</a>找到最接近的一組。</p>
   </section>
 
   <section class="section" id="interactive">

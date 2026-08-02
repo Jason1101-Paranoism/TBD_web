@@ -15,7 +15,7 @@
 //   CHROME_PATH="C:\\path\\to\\chrome.exe" node scripts/verify.mjs
 
 import { spawn, execFileSync } from 'node:child_process';
-import { writeFileSync, existsSync, mkdtempSync } from 'node:fs';
+import { writeFileSync, existsSync, mkdtempSync, readdirSync } from 'node:fs';
 import { tmpdir, platform } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -47,6 +47,10 @@ const TARGETS = [
   // v3 review 回歸：理工套磁要點移入通用套磁文（#stem-tips 錨點＋情境化模板下載）
   { path: '/pages/resources/graduate-contact-professor.html', name: '文章（套磁：理工專屬重點＋模板）', toc: true,
     mustContain: ['id="stem-tips"', 'grad-engineering-contact-email.md'] },
+  // 階段 1／4 沒有分學群專屬文，series-nav 的橫向軸必須改列六份學群指南，不能是死路
+  { path: '/pages/resources/graduate-recommend-vs-exam.html', name: '文章（階段1：橫向出口回退為學群指南）', toc: true,
+    mustContain: ['guides/graduate-arts.html', 'guides/graduate-design.html', 'guides/graduate-engineering.html',
+      '往下看你的學群'] },
   // 分學群指南已從知識庫外層收起，唯一入口是這張對照表的欄位標題連結
   { path: '/pages/guides/graduate-application.html', name: '研究所推甄完整指南（對照表欄位標題＝分學群入口）',
     mustContain: [
@@ -80,7 +84,17 @@ const TARGETS = [
     mustContain: ['id="gpq-card"', 'grad-path-quiz.js'] },
   { path: '/pages/process.html', name: '合作流程（track tabs + 時程軸）' },
   { path: '/404.html', name: '自訂 404 頁' },
+  // 回歸：Week 3–6 的 20 份分學群模板曾只登記在指南頁、沒進下載頁，四輪都沒被發現。
+  // 這一項用「磁碟上的實體檔」當事實來源，漏登記就直接失敗（見 src/config/gradTemplates.ts）。
+  { path: '/pages/resources/tools.html', name: '工具與模板下載（分學群工具包不得漏檔）',
+    mustContain: templateFiles() },
 ];
+
+/** public/assets/templates 底下所有分學群模板的 .md 檔名 */
+function templateFiles() {
+  return readdirSync(join(process.cwd(), 'public', 'assets', 'templates'))
+    .filter((f) => f.startsWith('grad-') && f.endsWith('.md'));
+}
 
 // 注入頁面的探針：捕捉 uncaught error，並（若存在）測目錄/選單 toggle 行為。
 // 結果以 base64 包在 @@VERIFY@@...@@END@@ 之間，避免 HTML 轉義干擾解析。

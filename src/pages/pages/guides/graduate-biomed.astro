@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
+import { templatesFor } from '../../../config/gradTemplates';
 
 // 生醫與公衛類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有生醫與公衛真正不同的環節（雙軌時程、選實驗室、可行性研究計畫書、研究誠信備審、研究限制答辯）用生醫專屬文。
@@ -28,43 +29,8 @@ const stages = STAGE_ORDER
   .filter(Boolean);
 
 // 可下載模板（實體檔在 public/assets/templates/，各對應一篇專屬文）
-const templates = [
-  {
-    title: '教授與實驗室評估表',
-    desc: '研究方向、樣本與設備資源、指導風格、失敗容忍度、畢業去向逐項比較，把選所收斂成一張表。',
-    csv: '/assets/templates/grad-biomed-lab-compare.csv',
-    md: '/assets/templates/grad-biomed-lab-compare.md',
-    article: '/pages/resources/biomed-graduate-choose.html',
-  },
-  {
-    title: '生醫套磁信結構模板',
-    desc: '六段信件結構＋能力證據清單＋寄信前檢核：用技術即戰力證明契合度，並依教授類型調整切入點。',
-    csv: '/assets/templates/grad-biomed-contact-email.csv',
-    md: '/assets/templates/grad-biomed-contact-email.md',
-    article: '/pages/resources/graduate-contact-professor.html#biomed-tips',
-  },
-  {
-    title: '研究計畫可行性檢核表',
-    desc: '十節架構＋生醫與公衛各自的檢核點，含 IRB／IACUC、對照設計、偏差與備援方案。',
-    csv: '/assets/templates/grad-biomed-proposal-framework.csv',
-    md: '/assets/templates/grad-biomed-proposal-framework.md',
-    article: '/pages/resources/biomed-graduate-proposal.html',
-  },
-  {
-    title: '生醫備審 Checklist',
-    desc: '學術 CV 欄位、技術清單具體化、專題誠實呈現與一致性，逐項勾完再送件。',
-    csv: '/assets/templates/grad-biomed-portfolio-checklist.csv',
-    md: '/assets/templates/grad-biomed-portfolio-checklist.md',
-    article: '/pages/resources/biomed-graduate-cv.html',
-  },
-  {
-    title: '生醫口試自我檢核表',
-    desc: '三分鐘說明、四類追問、面對不會的問題與研究誠信，上場前的完整檢核。',
-    csv: '/assets/templates/grad-biomed-oral-checklist.csv',
-    md: '/assets/templates/grad-biomed-oral-checklist.md',
-    article: '/pages/resources/biomed-graduate-oral.html',
-  },
-];
+// 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
+const templates = templatesFor('生醫');
 
 const title = '生醫與公衛研究所申請完整指南';
 const description = '生醫與公衛研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、拉到大二暑假的雙軌時程，到生醫與公衛專屬的選實驗室、可行性研究計畫書、研究誠信備審與研究限制答辯，並附五份可下載模板。';

@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
+import { templatesFor } from '../../../config/gradTemplates';
 
 // 人文與社會科學類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有人文社科真正不同的環節（文獻與初稿期時程、學術傳統選所、問題意識與文獻對話、
@@ -28,44 +29,8 @@ const stages = STAGE_ORDER
   })
   .filter(Boolean);
 
-// 可下載模板（實體檔在 public/assets/templates/，各對應一篇專屬文）
-const templates = [
-  {
-    title: '校所、學術傳統與教授比較表',
-    desc: '學術傳統、偏重時期與區域、方法課程、館藏與資料庫、教授取徑逐項比較，把選校收斂成一張表。',
-    csv: '/assets/templates/grad-humanities-school-compare.csv',
-    md: '/assets/templates/grad-humanities-school-compare.md',
-    article: '/pages/resources/humanities-graduate-choose.html',
-  },
-  {
-    title: '人文社科聯繫教授信結構模板',
-    desc: '先判斷該不該寄的兩組條件，再用七段信件結構寫，最後八項寄信前檢核，避免寫成群發罐頭信。',
-    csv: '/assets/templates/grad-humanities-contact-email.csv',
-    md: '/assets/templates/grad-humanities-contact-email.md',
-    article: '/pages/resources/graduate-contact-professor.html#humanities-tips',
-  },
-  {
-    title: '研究問題形成與文獻對話整理表',
-    desc: '問題收斂五步＋十節架構＋文獻對話表＋範圍與可行性檢核，把興趣變成做得完的研究問題。',
-    csv: '/assets/templates/grad-humanities-proposal-framework.csv',
-    md: '/assets/templates/grad-humanities-proposal-framework.md',
-    article: '/pages/resources/humanities-graduate-proposal.html',
-  },
-  {
-    title: '文字作品選件與備審 Checklist',
-    desc: '作品選件十項評分、學術 CV 十二欄位、自傳要素與五份文件分工，逐項勾完再送件。',
-    csv: '/assets/templates/grad-humanities-portfolio-checklist.csv',
-    md: '/assets/templates/grad-humanities-portfolio-checklist.md',
-    article: '/pages/resources/humanities-graduate-cv.html',
-  },
-  {
-    title: '研究計畫口試答辯檢核表',
-    desc: '四類追問題庫、五步答題框架、面對反對意見的句型與三個預期質疑，上場前完整檢核。',
-    csv: '/assets/templates/grad-humanities-oral-checklist.csv',
-    md: '/assets/templates/grad-humanities-oral-checklist.md',
-    article: '/pages/resources/humanities-graduate-oral.html',
-  },
-];
+// 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
+const templates = templatesFor('人文社科');
 
 const title = '人文與社會科學研究所申請完整指南';
 const description = '人文社科研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、以文獻與初稿為核心的時程規劃，到人文社科專屬的學術傳統選所、問題意識與文獻對話、文字作品備審與研究計畫答辯，並附五份可下載模板。';

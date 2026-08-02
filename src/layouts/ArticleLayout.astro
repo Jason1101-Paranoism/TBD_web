@@ -107,6 +107,9 @@ let seriesNav: null | {
   prev: { title: string; href: string } | null;
   next: { title: string; href: string } | null;
   others: { track: string; title: string; href: string }[];
+  // others 為空時的替代出口：階段 1（推甄vs考試）與階段 4（聯繫教授）沒有分學群專屬文，
+  // 但它們是漏斗最上層，不能是死路——改列各學群的完整指南。
+  guides: { track: string; label: string; href: string }[];
   stages: { n: number; label: string; href: string; current: boolean }[];
 } = null;
 if (gradStage) {
@@ -130,7 +133,10 @@ if (gradStage) {
       return a ? { n, label: GRAD_STAGE_LABELS[n], href: `/pages/resources/${a.slug}.html`, current: n === gradStage } : null;
     })
     .filter((x): x is { n: number; label: string; href: string; current: boolean } => x !== null);
-  seriesNav = { track, stage: gradStage, prev: link(prevA), next: link(nextA), others, stages };
+  const guides = others.length === 0
+    ? Object.entries(GUIDE_BY_DEPT).map(([t, g]) => ({ track: t, label: g.label, href: g.href }))
+    : [];
+  seriesNav = { track, stage: gradStage, prev: link(prevA), next: link(nextA), others, guides, stages };
 }
 
 const articleSchema = {
@@ -255,6 +261,16 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
             <div class="button-row">
               {seriesNav.others.map((o) => (
                 <a class="button secondary" href={o.href}>{o.track}版：{o.title}</a>
+              ))}
+            </div>
+          </div>
+        )}
+        {seriesNav.guides.length > 0 && (
+          <div class="series-nav-axis">
+            <span class="series-nav-label">橫向 · 這個階段各學群共用，往下看你的學群</span>
+            <div class="button-row">
+              {seriesNav.guides.map((g) => (
+                <a class="button secondary" href={g.href}>{g.track}：{g.label}</a>
               ))}
             </div>
           </div>

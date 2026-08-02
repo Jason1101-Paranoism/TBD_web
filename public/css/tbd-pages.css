@@ -107,6 +107,11 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 
 .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tbd-accent); margin: 0 0 16px; }
 
+/* 工具頁的分學群工具包：五組 × 五張卡，用學群標題分隔，避免 25 張卡連成一片 */
+.grad-toolkit-group + .grad-toolkit-group { margin-top: 40px; }
+.grad-toolkit-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem; font-size: 1.05rem; margin: 0 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--tbd-line); }
+.grad-toolkit-guide { font-size: 0.85rem; font-weight: 500; }
+
 /* flex-wrap + nowrap：手機 4 層路徑時整項換行，杜絕「首/頁」逐字豎排破版。
    最後一層（本頁長標題）除外，仍允許換行以免撐寬版面。 */
 .breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--tbd-mid); margin-bottom: 1rem; }

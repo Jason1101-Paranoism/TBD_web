@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
+import { templatesFor } from '../../../config/gradTemplates';
 
 // 理工類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有理工真正不同的環節（提早時程、實驗室資源、技術匹配計畫書、個人貢獻備審、技術答辯）用理工專屬文。
@@ -28,43 +29,8 @@ const stages = STAGE_ORDER
   .filter(Boolean);
 
 // 可下載模板（實體檔在 public/assets/templates/，各對應一篇專屬文）
-const templates = [
-  {
-    title: '教授與實驗室比較表',
-    desc: '研究資源、指導風格、畢業去向逐項比較，把選所收斂成一張表。',
-    csv: '/assets/templates/grad-engineering-lab-compare.csv',
-    md: '/assets/templates/grad-engineering-lab-compare.md',
-    article: '/pages/resources/engineering-graduate-choose.html',
-  },
-  {
-    title: '理工套磁信結構模板',
-    desc: '六段信件結構＋寄信前檢核：用專題成果證明契合度，不是表達熱情。',
-    csv: '/assets/templates/grad-engineering-contact-email.csv',
-    md: '/assets/templates/grad-engineering-contact-email.md',
-    article: '/pages/resources/graduate-contact-professor.html#stem-tips',
-  },
-  {
-    title: '理工研究計畫書架構模板',
-    desc: '七節架構，每節附「要回答的問題」與檢查點，含常見失分寫法。',
-    csv: '/assets/templates/grad-engineering-proposal-framework.csv',
-    md: '/assets/templates/grad-engineering-proposal-framework.md',
-    article: '/pages/resources/engineering-graduate-proposal.html',
-  },
-  {
-    title: '理工備審資料 Checklist',
-    desc: 'CV、自傳、專題成果與整體一致性，逐項勾完再送件。',
-    csv: '/assets/templates/grad-engineering-portfolio-checklist.csv',
-    md: '/assets/templates/grad-engineering-portfolio-checklist.md',
-    article: '/pages/resources/engineering-graduate-cv.html',
-  },
-  {
-    title: '理工口試自我檢核表',
-    desc: '簡報、數據答辯、追問應對與行政準備，上場前的完整檢核。',
-    csv: '/assets/templates/grad-engineering-oral-checklist.csv',
-    md: '/assets/templates/grad-engineering-oral-checklist.md',
-    article: '/pages/resources/engineering-graduate-oral.html',
-  },
-];
+// 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
+const templates = templatesFor('理工');
 
 const title = '理工研究所申請完整指南';
 const description = '理工研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、提早到大二暑假的時程，到理工專屬的選實驗室、研究計畫書（技術匹配度）、備審個人貢獻與口試技術答辯，並附五份可下載模板。';

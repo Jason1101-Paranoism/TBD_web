@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
+import { templatesFor } from '../../../config/gradTemplates';
 
 // 商管與財經類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有商管財經真正不同的環節（整合期時程、選校所定位、可研究的問題、商業故事線備審、綜合能力口試）用商管專屬文。
@@ -28,43 +29,8 @@ const stages = STAGE_ORDER
   .filter(Boolean);
 
 // 可下載模板（實體檔在 public/assets/templates/，各對應一篇專屬文）
-const templates = [
-  {
-    title: '校所與教授比較表',
-    desc: '系所定位、課程與研究方法、教授方向、產學資源、校友去向逐項比較，把選校收斂成一張表。',
-    csv: '/assets/templates/grad-business-school-compare.csv',
-    md: '/assets/templates/grad-business-school-compare.md',
-    article: '/pages/resources/business-graduate-choose.html',
-  },
-  {
-    title: '商管財經套磁信結構模板',
-    desc: '七段信件結構＋適合呈現的能力證據清單＋寄信前檢核，避免寫成群發罐頭信。',
-    csv: '/assets/templates/grad-business-contact-email.csv',
-    md: '/assets/templates/grad-business-contact-email.md',
-    article: '/pages/resources/graduate-contact-professor.html#business-tips',
-  },
-  {
-    title: '研究問題拆解與可行性檢核表',
-    desc: '問題拆解五步＋十節架構＋方法選用對照＋常見失分點，把熱門議題收斂成做得完的題目。',
-    csv: '/assets/templates/grad-business-proposal-framework.csv',
-    md: '/assets/templates/grad-business-proposal-framework.md',
-    article: '/pages/resources/business-graduate-proposal.html',
-  },
-  {
-    title: '商管財經備審 Checklist',
-    desc: '經歷盤點表、CV 欄位、每段經歷該寫出的七件事、自傳與五份文件分工，逐項勾完再送件。',
-    csv: '/assets/templates/grad-business-portfolio-checklist.csv',
-    md: '/assets/templates/grad-business-portfolio-checklist.md',
-    article: '/pages/resources/business-graduate-cv.html',
-  },
-  {
-    title: '商管財經口試自我檢核表',
-    desc: '一分鐘說明、四類題型、個案與時事兩個答題框架、面對不會的問題五步，上場前完整檢核。',
-    csv: '/assets/templates/grad-business-oral-checklist.csv',
-    md: '/assets/templates/grad-business-oral-checklist.md',
-    article: '/pages/resources/business-graduate-oral.html',
-  },
-];
+// 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
+const templates = templatesFor('商管財經');
 
 const title = '商管與財經研究所申請完整指南';
 const description = '商管財經研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、把經歷整合成主線的時程規劃，到商管財經專屬的選校所定位、可研究的問題、商業故事線備審與綜合能力口試，並附五份可下載模板。';
