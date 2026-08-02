@@ -34,6 +34,22 @@
 
 > 完整流程（界定範圍 → 觀察 → 改 → build → verify → 證據式回報 → commit → push → 確認部署）見 **`docs/dev-workflow.md`**。`git push` 會觸發 Vercel 正式部署，屬「必須先確認」的高風險操作，除非本輪已獲明確授權。
 
+**驗證時的四個陷阱（都是本專案實際踩過的，不是假想）：**
+
+1. **要判斷「頁面上有沒有這個連結／區塊」，查 `dist/`，不要查 `src/`。**
+   `src/` 只能證明「不是手寫的」。這個站有大量由 layout 資料驅動產生的連結（`ArticleLayout` 的 `series-nav`、`graduate-application` 的學群對照表），grep `.mdx` 會得到 0 個結果，然後你會做出「完全沒有內部連結」這種與事實相反的判斷——這件事真的發生過，而且被當成結論回報給使用者。
+   查法：`npm run build` 後對 `dist/**/*.html` 搜尋。
+
+2. **量 RWD 寬度不要用 `--window-size`。**
+   Windows 有視窗最小寬度（指定 375 實際會得到 485），再加上顯示縮放曾量到 497。用錯寬度截出來的圖會出現「內容被切掉」的假象，看起來像嚴重破版，其實版面完全正常。
+   正確作法：走 DevTools Protocol 的 `Emulation.setDeviceMetricsOverride`，並用 `document.documentElement.scrollWidth === clientWidth` 判定有無橫向溢出，不要只靠肉眼看截圖。
+
+3. **要引用外部網址，先實測它活著再寫進文章。**
+   本專案文章的外部連結必須是可查證的權威來源（政府、學術、官方機構）。寫進 `.mdx` 之前一律先發一次 HTTP 請求確認 200；曾有候選來源（藝術銀行）DNS 解不出來而被剔除。憑記憶寫網址等於製造死連結。
+
+4. **PowerShell 主控台輸出的中文會變亂碼。**
+   要取得檔案內的中文原文（例如複製既有文案到新檔），用 Read 工具，不要從 PowerShell 的輸出複製——`Get-Content` + regex 印出來的中文是 mojibake，照抄會把文案寫壞。同理，改寫含中文的檔案用 Edit／Write，不要用 `Set-Content` 管線。
+
 **禁止行為：**
 
 - 不要任意重構整個專案架構
@@ -156,6 +172,22 @@ relatedArticles:
 段落內容，支援 **粗體**、`程式碼`、清單等 Markdown 語法。
 </section>
 ```
+
+---
+
+## 新增分學群模板（研究所推甄工具包）
+
+模板的資料只有一份：`src/config/gradTemplates.ts`。五個分學群指南頁與 `resources/tools.html` 都從它讀，**不要在頁面裡另寫一份陣列**。
+
+**固定順序（順序錯了閘門會擋）：**
+
+1. 把 `.md` 與 `.csv` 放進 `public/assets/templates/`，檔名為 `grad-<學群>-<用途>`
+2. 在 `gradTemplates.ts` 對應的學群 group 裡登記（`title` / `desc` / `file` / `article`）
+3. `npm run verify`
+
+第 2 步漏掉的話，verify 會直接失敗——那一項的事實來源是**磁碟上的實體檔**，不是設定檔。這是刻意的：兩邊都從同一份設定推導的話等於自己驗自己。
+
+**為什麼有這條規則**：這些模板原本各自寫死在指南頁裡，`tools.html` 是另一份手寫清單。Week 3 落地時只更新了指南頁，結果 20 份模板在下載頁上消失了四輪（Week 3–6）都沒被發現。完整決策見 `docs/DECISIONS.md` 的 D-003。
 
 ---
 
