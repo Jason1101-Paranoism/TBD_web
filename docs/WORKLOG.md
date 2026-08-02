@@ -30,6 +30,36 @@
 
 ---
 
+## #006｜2026-08-03｜分學群系列補外部權威來源（12 篇）＋把本輪教訓寫進 CLAUDE.md
+
+**Scope**：結清 #004 留下的「其餘 21 篇零外部連結」，重點是當時說找不到來源的商管財經與設計傳播兩軌；並把這幾輪踩到的驗證陷阱固化成規範。
+**Non-scope**：新增文章、視覺調整、`BaseLayout.astro` 既有的 `tailwind is not defined` lint error（仍未處理）。
+
+**變更檔案**：
+- `src/content/articles/` 共 12 篇補上外部來源（只加在內文已經叫讀者去查的位置）：
+  - 商管財經：`business-graduate-choose`（AACSB 認證校院查詢、NDLTD）、`business-graduate-proposal`（公開資訊觀測站、主計總處、政府資料開放平臺）
+  - 設計傳播：`design-graduate-choose`（NDLTD、新一代設計展、金點設計獎）、`design-graduate-portfolio`（新一代設計展、金點設計獎）
+  - 理工：`engineering-graduate-timeline`（國科會大專生研究計畫）、`engineering-graduate-proposal`（Scholar、NDLTD、學術倫理中心）、`engineering-graduate-cv`（學術倫理中心）
+  - 生醫：`biomed-graduate-proposal`／`biomed-graduate-oral`（臺灣學術倫理教育資源中心）、`biomed-graduate-timeline`（政府資料開放平臺）
+  - 人文社科：`humanities-graduate-proposal`（華藝、臺灣期刊論文索引、NDLTD、Scholar）
+  - 藝術：`arts-graduate-cv`（藝術銀行 `artbank.tfaf.org.tw`）
+- `CLAUDE.md` — 新增「驗證時的四個陷阱」（查 dist 不查 src／RWD 寬度別用 `--window-size`／外部網址先實測／PowerShell 中文亂碼）與「新增分學群模板」節（實體檔 → `gradTemplates.ts` 登記 → verify 的固定順序）
+- `~/.claude/skills/fullstack-flow/references/gotchas.md` — 同一批教訓的泛用英文版（**不在本 repo 版控內**，換機器要另外帶）
+
+**閘門證據**：
+- G1 語法：PASS（`npm run build` 156 頁）
+- G3 smoke：PASS（`npm run verify` 27/27）
+- 外部連結：13 個網址逐一實測，全部 200。`www.stat.gov.tw` 首次 DNS 解析失敗、重試 200 且公共 DNS 查得到（104.18.0.120），屬本機解析器抖動；藝術銀行早先用 `artbank.ntmofa.gov.tw` 兩次解不出來，改用可解析的 `artbank.tfaf.org.tw`
+
+**風險與待確認**：
+- **verify 隨機失敗再現**：本輪第一次 `npm run verify` 是 21/27，`--no-build` 重跑與完整重跑各一次都是 27/27，六項失敗無法重現。這是 D-001 修過之後**首次再現**。D-001 的後果欄早已寫明「重試會掩蓋真的變慢這類問題」——**下次再出現時不要再放寬重試或當雜訊帶過，直接查根因**。
+- 藝術類群仍有 4 篇（timeline／choose 以外）沒有外部來源；藝術的展覽與駐村資訊分散在各館所，沒有單一權威入口可引。
+- 這兩個 commit 當下沒寫 WORKLOG，是事後補記（違反「當輪沒記＝違規」）。補記時是靠 `git show` 逐檔取回實際新增的網址，不是憑印象。
+
+**下一步**：Week 7 素材到位後同一套結構落地（`docs/content-plans/` 目前最新為 Week 6）。技術面兩項：①`BaseLayout.astro` 的 lint error 已掛帳多輪 ②篇數已達 118，值得評估加一道「站內連結全掃、404 即失敗」的閘門——`relatedArticles` 指向的 slug 目前無人把關。
+
+---
+
 ## #005｜2026-08-03｜人工目視 1280／375（結清連續三輪的掛帳）＋修掉一處重複文字
 
 **Scope**：把連續三輪掛帳的人工目視補做完：Week 5／6 兩個指南頁、Week 6 五篇文章、本輪新增的 tools 頁分學群區塊與階段 1 的 series-nav。
