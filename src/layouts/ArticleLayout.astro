@@ -270,7 +270,9 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
             <span class="series-nav-label">橫向 · 這個階段各學群共用，往下看你的學群</span>
             <div class="button-row">
               {seriesNav.guides.map((g) => (
-                <a class="button secondary" href={g.href}>{g.track}：{g.label}</a>
+                // label 本身已含學群名（「理工研究所申請指南」），不再前綴 track，
+                // 否則會變成「理工：理工研究所申請指南」
+                <a class="button secondary" href={g.href}>{g.label}</a>
               ))}
             </div>
           </div>
