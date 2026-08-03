@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
+import { gradGuides } from '../../../config/gradTemplates';
 
 // 研究所推甄的七個準備階段，依「申請旅程」順序排列（非 resources 列表的 order 欄位）。
 // 每個階段對應一篇已發布的知識庫文章，這個指南把它們串成一條閱讀路徑。
@@ -39,14 +40,10 @@ const matrixCell = (stg, trk) => {
 };
 // 各學群的完整指南入口。知識庫外層只留這份通用指南，分學群指南改由下面
 // 對照表的欄位標題進入（沒有對應指南的學群就維持純文字標題）。
-const GUIDE_BY_TRACK: Record<string, string> = {
-  '人文社科': '/pages/guides/graduate-humanities.html',
-  '商管財經': '/pages/guides/graduate-business.html',
-  '理工':     '/pages/guides/graduate-engineering.html',
-  '生醫':     '/pages/guides/graduate-biomed.html',
-  '設計傳播': '/pages/guides/graduate-design.html',
-  '藝術':     '/pages/guides/graduate-arts.html',
-};
+// 資料來自 src/config/gradTemplates.ts（與麵包屑指南層、知識庫搜尋資料同一份來源）
+const GUIDE_BY_TRACK: Record<string, string> = Object.fromEntries(
+  gradGuides.map((g) => [g.dept, g.href])
+);
 const matrixRows = [1, 2, 3, 4, 5, 6, 7].map((n) => ({
   n,
   label: STAGE_LABELS[n],

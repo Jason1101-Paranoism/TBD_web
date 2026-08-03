@@ -17,6 +17,7 @@
 import { spawn, execFileSync } from 'node:child_process';
 import { writeFileSync, existsSync, mkdtempSync, readdirSync } from 'node:fs';
 import { tmpdir, platform } from 'node:os';
+import { Socket } from 'node:net';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -179,6 +180,20 @@ function findBrowser() {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// 啟動 preview 之前先問：這個埠現在有人嗎？用 net 直接試連，不發 HTTP——
+// 對面可能是別人的 preview，也可能是任何佔住埠的東西，能連上就算被占。
+function portInUse(port = PORT) {
+  return new Promise((resolve) => {
+    const socket = new Socket();
+    const done = (v) => { socket.destroy(); resolve(v); };
+    socket.setTimeout(1500);
+    socket.once('connect', () => done(true));
+    socket.once('timeout', () => done(false));
+    socket.once('error', () => done(false));
+    socket.connect(port, '127.0.0.1');
+  });
+}
+
 async function waitForServer(timeoutMs = 20000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
@@ -297,6 +312,27 @@ if (!noBuild) {
 if (!existsSync('dist/index.html')) {
   console.error('找不到 dist/，請先 build（或移除 --no-build）。');
   process.exit(2);
+}
+
+// 4321 已被占用 = 另一個 verify／preview 正在跑。若放著不管，這一輪的 astro preview
+// 綁不到埠，探針會從某個目標開始整段 "fetch failed"，看起來像閘門隨機失敗——
+// 2026-08-03 因此連紅四次，還一度被誤記成 D-001 再現。寧可在這裡直接停，講清楚原因。
+if (await portInUse()) {
+  console.error(
+    `\n✋ 埠 ${PORT} 已被占用——極可能有另一個 npm run verify／astro preview 正在跑。\n` +
+    `   兩個 preview 搶同一個埠時，測試會從某一項開始整段 "fetch failed"，那是假失敗。\n` +
+    `   請等另一輪跑完（或關掉它）再執行，不要靠重跑或調重試參數繞過。`
+  );
+  process.exit(2);
+}
+
+// 站內死連結是純靜態問題，不需要瀏覽器——放在起 preview 之前，壞掉時省下整輪跑。
+console.log('▶ 站內連結檢查…');
+try {
+  execFileSync('node', ['scripts/check-links.mjs'], { stdio: 'inherit' });
+} catch {
+  console.error('\n站內連結檢查未通過，中止（詳見上方清單）。');
+  process.exit(1);
 }
 
 console.log('▶ 啟動 preview…');

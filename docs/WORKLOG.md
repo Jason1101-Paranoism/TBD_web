@@ -30,6 +30,41 @@
 
 ---
 
+## #007｜2026-08-03｜還清三項技術債＋知識庫首頁去冗餘
+
+**Scope**：①#006 下一步列的三項技術債全部處理 ②知識庫首頁（`resources.astro`）的冗餘與優化。
+**Non-scope**：知識庫首頁的視覺改版、文章內容調整、Week 7。
+
+**變更檔案**：
+- `scripts/verify.mjs` — ①新增 `portInUse()`，啟動 preview 前若 4321 已被占用就 `exit 2` 並說明原因（見 D-004）②在啟動 preview 前先跑站內連結檢查，壞掉直接中止
+- `scripts/check-links.mjs` — **新增**。掃 `dist/**/*.html` 全部站內連結，比對檔案存在與錨點存在（見 D-005）
+- `src/content/articles/pre-college-30-day-checklist.mdx` — 修死錨點：`pre-college-complete-guide.html#departments` 該 id 不存在，改指向各科系建議實際的起點 `#stem`，連結文字同步改為「各科系準備建議」以與目標一致
+- `src/layouts/BaseLayout.astro` — `tailwind` 加 `/* global */` 宣告（它是 CDN 注入的執行期全域，規則沒錯、是缺宣告，所以宣告而非關規則）
+- `src/config/gradTemplates.ts` — 新增 `gradGuides` / `gradGuideByDept`：「學群 → 完整指南」的唯一資料來源（含設計傳播，故不能用 `gradTemplateGroups` 代替）
+- `src/layouts/ArticleLayout.astro` — `GUIDE_BY_DEPT` 改讀 `gradGuideByDept`；順手修掉 sort comparator 的未使用參數
+- `src/pages/pages/guides/graduate-application.astro` — `GUIDE_BY_TRACK` 由 `gradGuides` 產生
+- `src/pages/pages/resources.astro` — ①六筆手寫的分學群指南搜尋資料改由 `gradGuides` 展開 ②主題指南 Tab3 移除與「快速入口」重複的 3 個資源頁連結，標籤由「備審面試與資源」改為「備審與面試」 ③刪除未使用的 `DIM_NAMES` ④工具頁的搜尋描述由「理工研究所五套模板等」更新為五個學群
+- `src/pages/pages/faq.astro` — 移除未使用的 `site` import
+
+**閘門證據**：
+- G1 語法：PASS（`npm run build` 156 頁）
+- G3 smoke：PASS（`npm run verify` 27/27）
+- 站內連結：PASS（159 頁掃描，**首次執行抓到 1 個死錨點**，已修）
+- eslint：`npx eslint src scripts` **0 error 0 warning**（本輪之前是 1 error 3 warning，全部清掉）
+- 埠守衛：以真實佔用 4321 的 server 實測，verify 如預期 `exit 2` 並印出說明
+- 產物抽查：對照表頁與知識庫首頁各含 6 個學群指南連結（單一來源生效）；Tab3 已無資源頁連結
+
+**計畫／決策異動**：新增 D-004（埠占用直接中止）、D-005（站內連結閘門，事實來源是 build 產物、只檢查站內）。
+
+**風險與待確認**：
+- 「學群 → 指南」現在單一來源，但**六份指南頁本身的 `title` 仍各自寫死**，與 `gradGuides.label` 沒有機制保證一致。目前兩邊相同，是靠人工對齊。
+- 錨點檢查依賴產物裡的靜態 `id=`／`name=`；若日後出現 JS 動態產生的錨點會誤報。
+- 尚未 push。
+
+**下一步**：Week 7 素材到位後同一套結構落地。技術面已無掛帳項目；若要再往前一步，可考慮把「指南頁 title 與 `gradGuides.label` 一致」也納入閘門。
+
+---
+
 ## #006｜2026-08-03｜分學群系列補外部權威來源（12 篇）＋把本輪教訓寫進 CLAUDE.md
 
 **Scope**：結清 #004 留下的「其餘 21 篇零外部連結」，重點是當時說找不到來源的商管財經與設計傳播兩軌；並把這幾輪踩到的驗證陷阱固化成規範。

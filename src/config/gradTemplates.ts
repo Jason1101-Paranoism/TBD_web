@@ -8,6 +8,69 @@
 // 搭配 `scripts/verify.mjs` 的「模板檔案全部出現在 tools.html」測試：
 // 有實體檔卻沒登記在這裡，閘門會直接失敗，不會再靜默漏掉。
 
+/**
+ * 「學群 → 完整指南」的唯一資料來源。
+ *
+ * 這份對應原本有三份副本：`ArticleLayout` 的 `GUIDE_BY_DEPT`（麵包屑指南層與
+ * series-nav 的橫向出口）、`graduate-application.astro` 的 `GUIDE_BY_TRACK`
+ * （對照表欄位標題）、`resources.astro` 的 `staticPages`（搜尋資料）。三份手寫、
+ * 沒有任何東西保證它們一致——和 D-003 那 20 份消失的模板是同一類問題，只是還沒爆。
+ *
+ * 含設計傳播（有指南但沒有模板），所以不能直接用 gradTemplateGroups 代替。
+ */
+export interface GradGuide {
+  /** 對應文章 frontmatter 的 departmentGroup */
+  dept: string;
+  /** 完整標題，麵包屑與搜尋用 */
+  label: string;
+  href: string;
+  /** 搜尋資料用的一句話說明 */
+  desc: string;
+}
+
+export const gradGuides: GradGuide[] = [
+  {
+    dept: '設計傳播',
+    label: '設計研究所申請指南',
+    href: '/pages/guides/graduate-design.html',
+    desc: '設計類群研究所申請七階段：學術型vs實務型選校、研究計畫×作品集、口試講評，含通用與設計專屬文章地圖。',
+  },
+  {
+    dept: '理工',
+    label: '理工研究所申請指南',
+    href: '/pages/guides/graduate-engineering.html',
+    desc: '理工類群研究所申請七階段：大二暑假起跑的時程、選實驗室、技術匹配研究計畫、備審與口試答辯，附五份下載模板。',
+  },
+  {
+    dept: '生醫',
+    label: '生醫與公衛研究所申請指南',
+    href: '/pages/guides/graduate-biomed.html',
+    desc: '生醫與公衛類群研究所申請七階段：雙軌時程、選實驗室、可行性研究計畫書、研究誠信備審與研究限制答辯，附五份下載模板。',
+  },
+  {
+    dept: '商管財經',
+    label: '商管與財經研究所申請指南',
+    href: '/pages/guides/graduate-business.html',
+    desc: '商管與財經類群研究所申請七階段：經歷整合時程、選校所定位、可研究的問題、商業故事線備審與綜合能力口試，附五份下載模板。',
+  },
+  {
+    dept: '人文社科',
+    label: '人文與社會科學研究所申請指南',
+    href: '/pages/guides/graduate-humanities.html',
+    desc: '人文社科類群研究所申請七階段：文獻與初稿期時程、學術傳統選所、問題意識與文獻對話、文字作品備審與研究計畫答辯，附五份下載模板。',
+  },
+  {
+    dept: '藝術',
+    label: '藝術研究所申請指南',
+    href: '/pages/guides/graduate-arts.html',
+    desc: '藝術類群研究所申請七階段：作品集與母題時程、工作室與創作取向選所、創作研究計畫、作品集備審與作品答辯，附五份下載模板。',
+  },
+];
+
+/** dept → { href, label }，給需要查表的地方用 */
+export const gradGuideByDept: Record<string, { href: string; label: string }> =
+  Object.fromEntries(gradGuides.map((g) => [g.dept, { href: g.href, label: g.label }]));
+
 export interface GradTemplate {
   title: string;
   desc: string;

@@ -65,6 +65,8 @@ const siteSchema = {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com" is:inline></script>
   <script is:inline>
+    // tailwind 由上一行的 cdn.tailwindcss.com 注入，是執行期全域，非本檔宣告
+    /* global tailwind */
     tailwind.config = {
       theme: {
         extend: {
