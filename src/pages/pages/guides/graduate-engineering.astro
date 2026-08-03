@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
-import { templatesFor } from '../../../config/gradTemplates';
+import { templatesFor, gradGuideByDept } from '../../../config/gradTemplates';
 
 // 理工類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有理工真正不同的環節（提早時程、實驗室資源、技術匹配計畫書、個人貢獻備審、技術答辯）用理工專屬文。
@@ -32,7 +32,7 @@ const stages = STAGE_ORDER
 // 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
 const templates = templatesFor('理工');
 
-const title = '理工研究所申請完整指南';
+const title = gradGuideByDept['理工'].pageTitle;
 const description = '理工研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、提早到大二暑假的時程，到理工專屬的選實驗室、研究計畫書（技術匹配度）、備審個人貢獻與口試技術答辯，並附五份可下載模板。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-engineering`;
 

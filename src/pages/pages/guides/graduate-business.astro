@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
-import { templatesFor } from '../../../config/gradTemplates';
+import { templatesFor, gradGuideByDept } from '../../../config/gradTemplates';
 
 // 商管與財經類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有商管財經真正不同的環節（整合期時程、選校所定位、可研究的問題、商業故事線備審、綜合能力口試）用商管專屬文。
@@ -32,7 +32,7 @@ const stages = STAGE_ORDER
 // 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
 const templates = templatesFor('商管財經');
 
-const title = '商管與財經研究所申請完整指南';
+const title = gradGuideByDept['商管財經'].pageTitle;
 const description = '商管財經研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、把經歷整合成主線的時程規劃，到商管財經專屬的選校所定位、可研究的問題、商業故事線備審與綜合能力口試，並附五份可下載模板。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-business`;
 

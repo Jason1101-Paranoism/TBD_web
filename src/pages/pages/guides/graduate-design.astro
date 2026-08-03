@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
+import { gradGuideByDept } from '../../../config/gradTemplates';
 
 // 設計類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有設計真正不同的環節（選校型態、研究計畫×作品集、口試講評）用設計專屬文。
@@ -26,7 +27,7 @@ const stages = STAGE_ORDER
   })
   .filter(Boolean);
 
-const title = '設計研究所申請完整指南';
+const title = gradGuideByDept['設計傳播'].pageTitle;
 const description = '設計研究所怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試、時程規劃，到設計專屬的選校（學術型vs實務型）、聯繫教授、研究計畫、作品集，以及口試與作品集講評。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-design`;
 

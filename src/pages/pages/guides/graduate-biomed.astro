@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
-import { templatesFor } from '../../../config/gradTemplates';
+import { templatesFor, gradGuideByDept } from '../../../config/gradTemplates';
 
 // 生醫與公衛類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有生醫與公衛真正不同的環節（雙軌時程、選實驗室、可行性研究計畫書、研究誠信備審、研究限制答辯）用生醫專屬文。
@@ -32,7 +32,7 @@ const stages = STAGE_ORDER
 // 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
 const templates = templatesFor('生醫');
 
-const title = '生醫與公衛研究所申請完整指南';
+const title = gradGuideByDept['生醫'].pageTitle;
 const description = '生醫與公衛研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、拉到大二暑假的雙軌時程，到生醫與公衛專屬的選實驗室、可行性研究計畫書、研究誠信備審與研究限制答辯，並附五份可下載模板。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-biomed`;
 

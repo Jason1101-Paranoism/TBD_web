@@ -21,8 +21,13 @@
 export interface GradGuide {
   /** 對應文章 frontmatter 的 departmentGroup */
   dept: string;
-  /** 完整標題，麵包屑與搜尋用 */
+  /**
+   * 短版名稱：麵包屑的指南層、series-nav 的橫向出口、知識庫搜尋結果標題。
+   * 刻意比 `pageTitle` 少一個「完整」——這些位置空間有限，且已有上下文。
+   */
   label: string;
+  /** 指南頁自己的 <title> 與 h1（全稱） */
+  pageTitle: string;
   href: string;
   /** 搜尋資料用的一句話說明 */
   desc: string;
@@ -32,44 +37,50 @@ export const gradGuides: GradGuide[] = [
   {
     dept: '設計傳播',
     label: '設計研究所申請指南',
+    pageTitle: '設計研究所申請完整指南',
     href: '/pages/guides/graduate-design.html',
     desc: '設計類群研究所申請七階段：學術型vs實務型選校、研究計畫×作品集、口試講評，含通用與設計專屬文章地圖。',
   },
   {
     dept: '理工',
     label: '理工研究所申請指南',
+    pageTitle: '理工研究所申請完整指南',
     href: '/pages/guides/graduate-engineering.html',
     desc: '理工類群研究所申請七階段：大二暑假起跑的時程、選實驗室、技術匹配研究計畫、備審與口試答辯，附五份下載模板。',
   },
   {
     dept: '生醫',
     label: '生醫與公衛研究所申請指南',
+    pageTitle: '生醫與公衛研究所申請完整指南',
     href: '/pages/guides/graduate-biomed.html',
     desc: '生醫與公衛類群研究所申請七階段：雙軌時程、選實驗室、可行性研究計畫書、研究誠信備審與研究限制答辯，附五份下載模板。',
   },
   {
     dept: '商管財經',
     label: '商管與財經研究所申請指南',
+    pageTitle: '商管與財經研究所申請完整指南',
     href: '/pages/guides/graduate-business.html',
     desc: '商管與財經類群研究所申請七階段：經歷整合時程、選校所定位、可研究的問題、商業故事線備審與綜合能力口試，附五份下載模板。',
   },
   {
     dept: '人文社科',
     label: '人文與社會科學研究所申請指南',
+    pageTitle: '人文與社會科學研究所申請完整指南',
     href: '/pages/guides/graduate-humanities.html',
     desc: '人文社科類群研究所申請七階段：文獻與初稿期時程、學術傳統選所、問題意識與文獻對話、文字作品備審與研究計畫答辯，附五份下載模板。',
   },
   {
     dept: '藝術',
     label: '藝術研究所申請指南',
+    pageTitle: '藝術研究所申請完整指南',
     href: '/pages/guides/graduate-arts.html',
     desc: '藝術類群研究所申請七階段：作品集與母題時程、工作室與創作取向選所、創作研究計畫、作品集備審與作品答辯，附五份下載模板。',
   },
 ];
 
-/** dept → { href, label }，給需要查表的地方用 */
-export const gradGuideByDept: Record<string, { href: string; label: string }> =
-  Object.fromEntries(gradGuides.map((g) => [g.dept, { href: g.href, label: g.label }]));
+/** dept → 該學群指南的完整設定，給需要查表的地方用（麵包屑用 label、指南頁自己用 pageTitle） */
+export const gradGuideByDept: Record<string, GradGuide> =
+  Object.fromEntries(gradGuides.map((g) => [g.dept, g]));
 
 export interface GradTemplate {
   title: string;
