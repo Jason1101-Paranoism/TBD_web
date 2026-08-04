@@ -10,11 +10,9 @@
 //    再回來同步這裡**。長期解法是 compass 開一支公開的方案 JSON 端點，
 //    由本站在 build 時抓取——那是另一輪的事，不在本輪範圍。
 //
-//    最後同步時間：2026-08-05（對應 entitlement.ts 的 single 499 / season 899，
-//    以及 D-006 重分後的能力：single＝接手包＋跨裝置同步，season 再加跨年度保存）
+//    最後同步時間：2026-08-04（對應 entitlement.ts 的 single 499 / season 899）
 //
-// 定價 499／899 已於 2026-08-05 拍板（D-M3）。軟啟動只開 single，
-// 但本頁兩個方案都列——方案結構是真的，能不能買由 compass 的結帳端控制。
+// 定價本身是 MONETIZATION_PLAN.md §2 D-M3 的建議值，團隊尚未拍板。
 
 export interface PricingPlan {
   id: 'single' | 'season';
@@ -33,14 +31,14 @@ export const pricingPlans: readonly PricingPlan[] = [
     id: 'single',
     label: '單次解鎖',
     priceTwd: 499,
-    includes: ['顧問接手包分享連結', '跨裝置同步：換手機、換電腦都在'],
-    suitedFor: '想把整理好的檔案交給顧問，或不只用一台裝置。',
+    includes: ['完整落點報告', '個人化的校系比對結果'],
+    suitedFor: '這一屆就要用，想把落點一次看清楚。',
   },
   {
     id: 'season',
     label: '一屆方案',
     priceTwd: 899,
-    includes: ['顧問接手包分享連結', '跨裝置同步：換手機、換電腦都在', '跨年度保存：這一屆的紀錄一路留到放榜'],
+    includes: ['完整落點報告', '個人化的校系比對結果', '跨年度資料保存'],
     suitedFor: '想從現在一路用到學測放榜後填志願，中間的紀錄都留著。',
   },
 ];
