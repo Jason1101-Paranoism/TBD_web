@@ -30,6 +30,151 @@
 
 ---
 
+## #015｜2026-08-05｜實測發現 7 份新模板與漏斗出口從未在正式站生效；形式落差拍板全面補齊
+
+**Scope**：對照 `TBD知識庫轉工具模板銷售企劃_0804`（Google Doc）與實際狀態，
+查證上線狀況，記錄形式落差的拍板結果。
+**Non-scope**：不合併分支、不部署、不改任何模板檔或頁面程式。
+
+**本輪最該記的一項——待辦被標成完成，但正式站上不成立**：
+
+實測 `https://tbd-web.vercel.app`（2026-08-05）：
+
+| 檢查 | 結果 |
+|---|---|
+| `tools.html` 列出的 CSV 數 | **29**（批次 A；批次 B 的 7 份不在） |
+| 7 份新模板 CSV | 全部 404 |
+| `/pages/placement.html` | **404** ← 四份高中端模板的 compass 出口是死連結 |
+| `/pages/compass.html` | 404 |
+| `/pages/seen.html`（對照組） | 307 → compass（本來就在 main 上，所以活著） |
+
+成因不是沒 push：`f867065` 已在 `origin/feat/templates-and-compass-funnel`，
+但**該分支未合併進 `main`**，而正式站部署 `main`。`/pages/placement.html` 的轉址
+規則寫在 `vercel.json:13`，同樣在未合併的分支上，所以規則在正式環境根本不存在。
+`5f58789`（#014 的銷售頁改寫）則連分支都還沒推。
+
+**教訓**：「push 了」與「上線了」在這個 repo 是兩件事，因為所有工作都在 feature branch。
+驗收一律打正式站 URL，不要看 git 狀態。這次是靠 `tools.html` 只列 29 份這個
+**與我方設定無關的獨立訊號**抓到的——先前用猜的檔名打 404，那證明不了任何事。
+
+**變更檔案**：
+- `docs/template-format-upgrade.md` — 新增。11 個產品的形式落差逐項對照、
+  企劃書沒涵蓋的 17 份、與上線順序的衝突
+- `../TEMPLATE_INVENTORY.md`（根目錄，無版控）— 待辦 2／3 改為「尚未生效」並附實測證據；
+  待辦 5 標記完成（使用者回報，repo 側無法查證）；新增 §7 形式落差拍板、§8 待拍板的上線順序
+
+**閘門證據**：G1／G2／G3／G4 全部 **N/A**——本輪只動 Markdown，未觸及任何會被
+build 或 verify 涵蓋的檔案。正式站實測見上表，那是本輪唯一的證據來源。
+
+**計畫／決策異動**：形式落差拍板「全面補齊」（正本記在 `TEMPLATE_INVENTORY` §7）。
+連帶把企劃書的 8 週排程重新啟用——扣掉已完成的階段 1 內容層。
+
+**風險與待確認**：
+1. **批次 B 的 7 份同時是「待上線」與「待補形式」，兩者互斥。** 走法 A／B／C 未選，
+   這一項阻塞其他所有事
+2. 補完形式後 5 份不再是 CSV，`tools.astro` 的下載連結、`gradTemplates.ts`、
+   `verify.mjs` 斷言都要跟著改——不是換檔案而已
+3. 企劃書的定價段落（單品 150–399、落點分析 +$299 解鎖）與 D-M2／D-006 直接衝突，
+   **尚未處理**。文件還是團隊手上的執行依據，不修會有人照著做
+4. 六階段 SOP 需要四個角色（LR／YC／YY／CL），目前完全沒有在跑
+
+**走法拍板：C**（2026-08-05，同日）。分支已備妥，**未推、未合併**：
+
+- 分支 `feat/compass-page-and-redirect`，基底 `origin/main`（6669ff7），單一 commit `327ddf4`
+- 作法不是 cherry-pick 而是**按路徑取檔**：從 `feat/templates-and-compass-funnel`
+  取 9 個路徑的最終狀態，因此包含 `5f58789` 的銷售頁改寫，不需要處理 commit 之間的中間態
+- 含：`vercel.json` 轉址、`compass.astro`、`pricing.ts`、`tbd-pages.css`、
+  `verify.mjs`、三份批次 A 模板的 `.md`（compass 出口）、`DECISIONS.md`
+- 排除：7 份新模板的 14 個檔、`tools.astro` 分組改版、分組方向稿
+- 第四份帶 compass 出口的是 `admission-channel-radar`（批次 B），出口跟著模板押後
+- 在隔離的 worktree 驗，未動主工作區
+
+**C 分支的閘門證據**：
+- G1／build：PASS，157 頁
+- G3 verify：PASS **28/28**，含新增的 `/pages/compass.html`（`NT$`／`499`／`899`／
+  compass 網域四項 mustContain）
+- 排除有效（對 `dist/` 實測，不是看 git）：模板 CSV 計 **29** 份、7 份新模板全數不在
+  `dist`、compass 頁仍 `noindex`、首頁不含 compass 連結、`tools.html` 無新模板連結
+- **本來預期會失敗但沒有的一項**：`verify.mjs` 的 `templateFiles()` 改成掃磁碟上
+  所有 `.md`（原本只篩 `grad-`），我原本判斷 main 的舊 `tools.astro` 可能沒列全
+  4 份通用模板而會紅。實測列全了，所以過。這是實測結果，不是推論
+
+**C 的後續成本（現在就要知道）**：`feat/templates-and-compass-funnel` 之後要重新
+接上 main 時，`vercel.json`／`verify.mjs`／`pricing.ts`／`compass.astro`／`DECISIONS.md`
+與三份 `.md` 都已在 main 上。內容相同的部分 git 併得掉，但 `WORKLOG.md` 與
+`DECISIONS.md` 兩邊都在檔首插入條目，**衝突是必然的**，要手動解。
+建議該分支改為 rebase 到新的 main 再續做，不要 merge。
+
+**PR #18 的 CI 紅燈與根因（2026-08-05 追加）**：
+
+推上去之後 Vercel check 直接 `failure`。原始訊息由 Vercel bot 貼在 PR 留言：
+
+```
+The `vercel.json` schema validation failed with the following message:
+`redirects[1]` should NOT have additional property `_comment`
+```
+
+`redirects[1]` 就是新增的那筆 `/pages/placement.html` 轉址。Vercel 的 `redirects`
+schema 是 `additionalProperties: false`，多一個鍵就整份設定驗證失敗，
+**在 build 開始前中止部署**——所以 `target_url` 只給
+`vercel.com/docs/.../project-configuration`，沒有 build log。
+辨識方式記起來：**失敗連到設定文件而非部署 log ＝ 設定檔無效，不是程式壞。**
+
+**這不是本 PR 造成的，而是本 PR 讓它第一次被看見。** `_comment` 由 `f867065` 引進，
+之後每一次 preview 部署都是紅的：
+
+| commit | 環境 | 結果 |
+|---|---|---|
+| `6669ff7`（`_comment` 出現前） | Production | success |
+| `9957a5f` | Preview | **failure** |
+| `0f40235` | Preview | **failure** |
+| `327ddf4`（本 PR 第一版） | Preview | **failure** |
+
+**三個 commit 連紅沒被發現，因為本機閘門根本不驗 `vercel.json`。**
+`npm run build` 不碰它，`verify` 的 28 項也不碰它，只有 Vercel 會。
+這是閘門缺口，不是誰不小心——所以修法不是「下次記得」，是把它加進閘門。
+
+**修正 commit `d678c5e`**：
+- `vercel.json` — 移除 `_comment`
+- `docs/DECISIONS.md` — 新增 D-007：模板出口為什麼走站內轉址（模板是會被下載的檔案，
+  網域搬家後改不到已下載的副本）、以及這條 schema 限制與辨識方式
+- `scripts/verify.mjs` — 新增 `checkVercelJson()`，放在 build 之前。
+  **用白名單而非黑名單**：schema 本身就是 `additionalProperties: false`，
+  黑名單只擋得住已經出過事的那個鍵名，下次換個名字又會重演
+
+**閘門有效性已實測**（不是只確認它在正常情況下不報錯）：
+修好的設定 → 0 問題；放回 `_comment` → 1 問題且訊息指到 `redirects[1]` 與鍵名、
+與 Vercel 自己回的一致；故意寫壞 JSON → 1 問題。
+修正後 `npm run verify` 仍 28/28。
+
+**已合併並在正式站實證（2026-08-05）**：PR #18 squash 為 `a44da05`。
+部署後 30 秒內生效，六項全過：
+
+| 檢查 | 結果 |
+|---|---|
+| `/pages/placement.html` | **307 → `tbd-compass-app.vercel.app/placement`** |
+| `/pages/compass.html` | 200 |
+| `tools.html` 模板數 | **29**（排除有效） |
+| 批次 B 三支 CSV | 全 404 |
+| compass 頁 | `noindex` |
+| 對照組 `seen.html` | 307 → compass |
+
+**更正一處先前的說法**：本則原本寫「應為 302」。實際是 **307**——Vercel 對
+`permanent: false` 一律發 307，本來就在站上的 `seen.html` 也是 307。語意（非永久轉址）
+正確，是先前的狀態碼寫得不精確。驗收條件應寫「307 且目的地為 compass」。
+
+**驗收方式本身有一個坑值得記**：合併前試過用 preview 部署先驗，但整個 preview 被
+Vercel SSO 保護擋著，**每一條路徑都回 302 到 `vercel.com/sso-api`**。
+`/pages/placement.html` 當時也是 302——只看狀態碼會誤判成「轉址生效」。
+識破它靠的是比對 `redirect_url`，以及注意到三支**本來就不存在**的批次 B CSV 也回 302
+而非 404。**驗轉址一律比對目的地，不要只看狀態碼。**
+
+**下一步**：`TEMPLATE_INVENTORY` 待辦 3 已劃掉（但只有三份出口活了，第四份
+`admission-channel-radar` 屬批次 B、跟著押後）。**待辦 2 仍維持未完成**，這是走法 C 的
+設計而非遺漏。接下來是 §7 的形式補齊，第一件事是選定第三節那 17 份要不要一起補。
+
+---
+
 ## #014｜2026-08-05｜D-M2／D-M3 拍板後，銷售頁與 pricing.ts 全面改寫
 
 **Scope**：把 `compass.astro` 與 `pricing.ts` 對齊拍板結果——**付費的不是落點分析**。
