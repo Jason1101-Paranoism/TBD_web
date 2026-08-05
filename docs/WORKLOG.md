@@ -30,6 +30,59 @@
 
 ---
 
+## #013｜2026-08-05｜挑定方向 1（依準備階段）並實作；甘特圖移出通用區
+
+**Scope**：`tools.astro` 的「可下載模板」區由單一平鋪網格改為依準備階段五組；
+把「推甄時程倒數與任務甘特圖」從通用區移到研究所區的跨學群區塊。
+**Non-scope**：不動 `gradTemplates.ts` 與五個分學群指南頁、不動 `resourceSituations.ts`、
+不改任何模板檔本身、不動 `verify.mjs`。
+
+**挑選過程中發現的事（這是本輪最該記的一項）**：方向稿宣稱方向 3「沿用
+`resourceSituations.ts` 已定義的六個處境」，但它模擬裡的六句只有三句真的在那份設定裡
+（活動很散、Side Project、研究所推甄）；「不知道選哪個科系」「面試快到了」「已經錄取了」
+三句是新造的，而既有的 `special-admission`、`parent`、`early-start` 被靜靜拿掉。
+方向稿自估的實作成本「改一個設定檔加兩頁」因此是低估的——真要共用一份資料，
+等於把 `situations` 從 6 改成 9 並改寫既有三個，而 `resources.astro`（知識庫首頁）與
+`search.astro`（搜尋頁空狀態）都讀它，這是全站處境語彙改版，不是模板頁改版。
+**教訓：方向稿裡「沿用既有設定」這種話要打開那份設定逐項比對，不能照收。**
+
+**變更檔案**：
+- `src/pages/pages/resources/tools.astro` — `downloads` 平陣列改為 `downloadGroups`
+  五組（找方向 3／累積與記錄 2／整理成果 2／面試 2／入學前 1）；新增 `gradShared`
+  放跨學群的甘特圖，渲染在 `#grad-toolkits` 五個學群之前；卡片標題 `h3`→`h4`
+  （組標題升為 `h3`）；`description` meta 改為反映分組
+- `public/css/tbd-pages.css` — `.grad-toolkit-*` 更名為 `.tool-group-*`（通用區與研究所區
+  現在共用同一組樣式，`grad` 前綴不再成立）；新增 `.tool-group-why`、`.tool-group-count`；
+  新增 `@media (min-width: 900px)` 下 `.tool-group .card-grid` 固定三欄
+
+**閘門證據**：
+- G1 語法：PASS。`npm run build` 157 頁
+- G2 boot：N/A（靜態站，無 server 端 import）
+- G3 smoke：PASS。`npm run verify` 28/28
+- G4 migration：N/A（未動 schema）
+- 人工目視：桌面 1280 headless 截圖看過（`verify.mjs` 同一套 Chrome/CDP 路徑）。
+  手機 375 **未目視**——Chrome 擴充功能未連線，改由 verify 的 `docOverflow` 探針覆蓋
+  （每個目標都在 MOBILE 寬度下測頁面級水平溢出，tools.html 通過）。
+  依 CLAUDE.md 陷阱 2，`--window-size` 在窄寬度不可信，故不用它截 375 圖充數。
+
+**第一次截圖抓到的問題（已修）**：拆成五組後每個 `.card-grid` 各自 `auto-fit`，
+份數不同的組算出不同欄數——3 份的組卡片 1/3 寬、2 份的組 1/2 寬、1 份的組整排寬，
+同一頁卡片忽大忽小。固定三欄修掉。**build 與 verify 都不會抓到這個，只有看圖才會。**
+
+**計畫／決策異動**：`TEMPLATE_INVENTORY.md` 待辦 4 由「方向稿完成，待挑選」改為「已完成」。
+無新增 D-0xx——分組軸線是可逆的呈現選擇，不是會綁住後續的結構決策。
+
+**風險與待確認**：
+1. 五組的份數不均（3/2/2/2/1）是刻意保留的。「入學前」只有 1 份，視覺上會空一片。
+2. 方向 3 的價值（全站語彙一致）沒有實現，只是被延後。若日後要做，範圍見上面那段。
+
+**下一步**：拍板 `TEMPLATE_INVENTORY.md` 的 D-M2／D-M3（賣什麼、定價）。
+compass 的 `hasAccess()` 目前仍無呼叫端，整條付費線卡在這個決策後面。
+另外 PR #17（本站）與 tbd-compass-app PR #56 都還沒 merge——
+#17 merge 後要立刻打 `https://tbd-web.vercel.app/pages/placement.html` 確認回 302。
+
+---
+
 ## #012｜2026-08-04｜tools.astro 分組：三個方向稿完成，三案並存待挑，未實作
 
 **Scope**：依 CLAUDE.md 的 UI 改版三級流程（區塊改版＝先出方向稿），為
