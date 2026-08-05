@@ -169,9 +169,42 @@ Vercel SSO 保護擋著，**每一條路徑都回 302 到 `vercel.com/sso-api`**
 識破它靠的是比對 `redirect_url`，以及注意到三支**本來就不存在**的批次 B CSV 也回 302
 而非 404。**驗轉址一律比對目的地，不要只看狀態碼。**
 
-**下一步**：`TEMPLATE_INVENTORY` 待辦 3 已劃掉（但只有三份出口活了，第四份
-`admission-channel-radar` 屬批次 B、跟著押後）。**待辦 2 仍維持未完成**，這是走法 C 的
-設計而非遺漏。接下來是 §7 的形式補齊，第一件事是選定第三節那 17 份要不要一起補。
+**分支 rebase（2026-08-05 收尾）**：`feat/templates-and-compass-funnel` 已 rebase 到
+`a44da05` 並 force-push（`5f58789` → `64f5201`）。5 個 commit 全部重放，只解一輪衝突。
+
+驗收條件刻意不是「rebase 沒報錯」，而是**「收斂到與 main 相同」**——
+`vercel.json`／`verify.mjs`／`DECISIONS.md`／`tbd-pages.css`／`pricing.ts`／`compass.astro`
+六個檔案相對 main 必須零差異，實測全過（`_comment` 計數 0，D-007 還在，
+`checkVercelJson` 出現 2 次＝定義＋呼叫而非重複貼上）。
+剩餘差異正好是 main 還缺的：7 份模板、`tools.astro` 分組、方向稿、兩份 docs。
+rebase 後 `npm run verify` 28/28、`dist` 36 份。
+退路 tag：`pre-rebase-templates` = `58d580f`。
+
+解衝突原則（下次再遇到照這個走）：`vercel.json` 與 `DECISIONS.md` 取 main
+（main 是超集）；`pricing.ts`／`compass.astro` 取被重放的 commit，
+讓後面 `f12f564` 的改寫乾淨套上、自然收斂到與 main 相同。
+
+**本輪三個決策（2026-08-05 收尾拍板）**：
+1. **形式補齊範圍擴大到全部 36 份**，不只企劃書涵蓋的 19 份。
+   理由同 `TEMPLATE_INVENTORY` §4 選項 X：兩種形式並存，學生會問「差在哪」，
+   而誠實的答案是「沒人決定」。**代價：工作量約 1.9 倍，企劃書的 8 週排程作廢，
+   需要重估——這件事還沒做。**
+2. **押後期間的預覽管道**：`feat/templates-and-compass-funnel` 的 Vercel preview
+   （SSO 保護，登入 Vercel 的瀏覽器可開；curl 會被導到 `sso-api`），
+   或本機 `npm run preview`。正式站 29 份、preview 36 份，**看到 36 份不代表上線**。
+3. **企劃書定價段落與 D-006 的衝突：延後討論。** 未處理，那份 Google Doc
+   仍是團隊手上的執行依據，仍會有人照著做——這個風險維持開著。
+
+**下一步（下次開場從這裡接）**：形式補齊的第一件事是**逐份決定那 17 份的目標形式**
+（`docs/template-format-upgrade.md` §3 有初步方向，未拍板），接著重估排程。
+
+另有一項風險最高的技術債要先想清楚：模板改成 Sheets／Notion 之後**磁碟上不會有檔案**，
+`verify.mjs` 的 `templateFiles()` 會失去事實來源——而它正是擋住 D-003
+（20 份模板消失四輪）的那道閘門。換形式時必須同步決定新的事實來源，不能只是刪掉它。
+
+`TEMPLATE_INVENTORY` 待辦 3 已劃掉（但只有三份出口活了，第四份
+`admission-channel-radar` 屬批次 B、跟著押後）。**待辦 2 仍維持未完成**，
+這是走法 C 的設計而非遺漏。
 
 ---
 
