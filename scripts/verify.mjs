@@ -15,7 +15,7 @@
 //   CHROME_PATH="C:\\path\\to\\chrome.exe" node scripts/verify.mjs
 
 import { spawn, execFileSync } from 'node:child_process';
-import { writeFileSync, existsSync, mkdtempSync, readdirSync } from 'node:fs';
+import { writeFileSync, existsSync, mkdtempSync, readdirSync, readFileSync } from 'node:fs';
 import { tmpdir, platform } from 'node:os';
 import { Socket } from 'node:net';
 import { join } from 'node:path';
@@ -111,6 +111,51 @@ function templateFiles() {
 
 // 注入頁面的探針：捕捉 uncaught error，並（若存在）測目錄/選單 toggle 行為。
 // 結果以 base64 包在 @@VERIFY@@...@@END@@ 之間，避免 HTML 轉義干擾解析。
+/**
+ * vercel.json 的 schema 檢查。回傳問題清單（空陣列＝通過）。
+ *
+ * 為什麼需要這一項：`npm run build` 與本檔其餘所有檢查**都不會碰 vercel.json**，
+ * 只有 Vercel 會。2026-08-05 因此連續三個 commit 的 preview 部署全紅而沒人發現——
+ * 一筆轉址裡多放了 `"_comment"` 想當註解用，Vercel 回
+ * 「`redirects[1]` should NOT have additional property `_comment`」並在 build 開始前中止。
+ * 本機一路全綠，因為本機從來沒有人驗過這個檔。
+ *
+ * 這裡刻意用**白名單**而非黑名單：Vercel 的 schema 本身就是 additionalProperties: false，
+ * 用黑名單只能擋掉已經出過事的那一個鍵，下次換個鍵名又會重演。
+ */
+function checkVercelJson() {
+  const problems = [];
+  if (!existsSync('vercel.json')) return problems;
+  let cfg;
+  try {
+    cfg = JSON.parse(readFileSync('vercel.json', 'utf8'));
+  } catch (e) {
+    return [`vercel.json 不是合法 JSON：${e.message}`];
+  }
+  // 僅涵蓋本專案實際用到的區段。用到新區段時一起把它的合法鍵加進來，
+  // 不要因為「這裡沒列到」就以為 Vercel 會接受。
+  const ALLOWED = {
+    redirects: ['source', 'destination', 'permanent', 'statusCode', 'has', 'missing'],
+    rewrites: ['source', 'destination', 'has', 'missing'],
+    headers: ['source', 'headers', 'has', 'missing'],
+  };
+  for (const [section, allowed] of Object.entries(ALLOWED)) {
+    const arr = cfg[section];
+    if (!Array.isArray(arr)) continue;
+    arr.forEach((entry, i) => {
+      for (const key of Object.keys(entry)) {
+        if (!allowed.includes(key)) {
+          problems.push(
+            `${section}[${i}] 有 Vercel 不接受的鍵 \`${key}\`——整份設定會驗證失敗、部署在 build 前中止。` +
+            `（JSON 沒有註解；理由請寫在 docs/DECISIONS.md，不要塞進設定檔）`
+          );
+        }
+      }
+    });
+  }
+  return problems;
+}
+
 function harness() {
   return `<script>(function(){
     window.__errs=[];
@@ -315,6 +360,14 @@ const browser = findBrowser();
 if (!browser) {
   console.error('找不到 Chrome/Edge。請設定環境變數 CHROME_PATH 指向瀏覽器執行檔。');
   process.exit(2);
+}
+
+// 放在 build 之前：設定檔錯誤不需要等跑完一輪才知道，而且它壞掉時 build 綠也沒有意義。
+const vercelProblems = checkVercelJson();
+if (vercelProblems.length) {
+  console.error('\n✋ vercel.json 檢查未通過（Vercel 會在 build 開始前中止部署）：');
+  for (const p of vercelProblems) console.error(`   ✗ ${p}`);
+  process.exit(1);
 }
 
 if (!noBuild) {

@@ -119,3 +119,31 @@
 **後果**：調價要動三個地方（compass 的 `PLANS`、官網的 `pricing.ts`、`verify.mjs` 的斷言），順序是 compass 先。看起來麻煩，但它是目前唯一會在不一致時發出聲音的機制。等 D 落地後，這三處收斂回一處。
 
 **連帶**：該頁目前設 `noindex` 且**未掛進 `site.ts` 的 nav**——付費牆尚未上線、定價也尚未拍板，先不讓它被搜尋引擎收錄或從導覽進入。上線時要做的是拿掉 `noindex={true}` 並在 nav 加一項。
+
+---
+
+## D-007 — 模板的 compass 出口走站內轉址；`vercel.json` 一律不得放註解鍵
+
+**背景**：36 份模板是**會被下載的靜態檔**。檔案裡若直接寫 `tbd-compass-app.vercel.app`，
+等 compass 換到正式網域，已經被學生下載到本機的副本永遠改不到——那些連結會直接死掉。
+
+**選項**：
+  - A（採用）— 模板裡一律寫 `https://tbd-web.vercel.app/pages/placement.html`，由 `vercel.json` 轉到 compass。換網域只改一行。
+  - B（否決）— 模板直接寫 compass 網域。省一次跳轉，代價是已下載的副本無法補救。
+  - C（否決）— 在官網開一個實體的 `placement.astro` 頁做 JS 跳轉。多一個要維護的頁，且對不執行 JS 的環境無效。
+
+**決定**：採 A。用 `permanent: false`（302）而非 301，因為目的地本身就是暫時網域，
+301 會被瀏覽器與搜尋引擎長期快取，換網域時反而更難收拾。查詢字串（`utm_*`）Vercel 自動帶過去。
+
+**後果 —— 這一則真正的重點**：`vercel.json` 是**嚴格 schema 的 JSON**，
+`redirects[]` 只接受 `source` / `destination` / `permanent` / `statusCode` / `has` / `missing`。
+多放任何一個鍵（例如用 `"_comment"` 假裝成註解）會讓整份設定驗證失敗，
+**Vercel 在 build 開始前就中止部署**。
+
+這個坑實際發生過：PR #18 的第一版把上面那段理由寫成 `"_comment"` 放進轉址物件，
+CI 的 Vercel check 直接 `failure`，而且 `target_url` 只給一個
+`vercel.com/docs/.../project-configuration` 的通用連結、**沒有 build log**——
+因為根本還沒 build。辨識方式就是這個：**失敗連到設定文件而非部署 log ＝ 設定檔無效**。
+
+因此 `vercel.json` 的任何理由一律寫在這裡，不寫在檔案裡。JSON 沒有註解，
+而 Vercel 也不允許拿多餘的鍵當註解用。
