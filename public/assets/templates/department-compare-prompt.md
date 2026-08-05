@@ -54,6 +54,16 @@ Prompt 本體結尾必須附「資料查核條款」：優先來源清單（兩�
 - [ ] 「無法確認」的內容保留標註，不要讓 AI 替你補造
 - [ ] 第 7、8 階段（判斷與整合）自己做——AI 只負責整理資料
 
+## 比完科系，還有一個判斷條件
+
+第 7、8 階段的判斷與整合是你自己要做的——而其中一個繞不開的條件是「我進得去嗎」。
+
+把兩個科系的落點一起算出來，這個取捨會具體很多：
+
+→ https://tbd-web.vercel.app/pages/placement.html?utm_source=tbd-web&utm_medium=template&utm_campaign=department-compare-prompt
+
+基本功能免費。
+
 ---
 
 *模板由 TBD Studio 提供 · tbd-web.vercel.app*

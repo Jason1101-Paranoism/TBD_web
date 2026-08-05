@@ -9,6 +9,11 @@
       "permanent": false
     },
     {
+      "source": "/pages/placement.html",
+      "destination": "https://tbd-compass-app.vercel.app/placement",
+      "permanent": false
+    },
+    {
       "source": "/pages/plans.html",
       "destination": "/pages/services.html#plans",
       "permanent": true

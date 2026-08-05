@@ -38,6 +38,16 @@
 - [ ] 練習用兩分鐘口頭說明這個作品
 - [ ] 把成果與紀錄收進作品／經歷資料夾
 
+## 這 30 天做的事，記下來才留得住
+
+這個月的作品、卡關與反思，過幾個月你不會記得細節——而大學期間的申請、實習、轉學考都還會用到。
+
+TBD Growth Compass 可以把每段經歷的過程與反思存下來，不用等到要用了才回想：
+
+→ https://tbd-web.vercel.app/pages/seen.html?utm_source=tbd-web&utm_medium=template&utm_campaign=pre-college-30day-checklist
+
+不用登入就能先看。
+
 ---
 
 *模板由 TBD Studio 提供 · tbd-web.vercel.app*

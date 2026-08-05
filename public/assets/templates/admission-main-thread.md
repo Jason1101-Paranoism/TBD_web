@@ -27,6 +27,16 @@
 
 > 主線不是「最多的活動」，而是「最有邏輯的故事」。
 
+## 主線整理完，接著對照校系
+
+主線回答的是「你是誰」，落點回答的是「哪些校系接得住你」。兩件事要一起看，志願序才排得出來。
+
+TBD Growth Compass 可以把你想比的校系存成一份工作集，用歷年篩選標準算出你的相對位置：
+
+→ https://tbd-web.vercel.app/pages/placement.html?utm_source=tbd-web&utm_medium=template&utm_campaign=admission-main-thread
+
+基本功能免費，資料存在你自己的帳號裡，換裝置也還在。
+
 ---
 
 *模板由 TBD Studio 提供 · tbd-web.vercel.app*

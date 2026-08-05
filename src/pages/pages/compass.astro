@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { pricingPlans, COMPASS_URL } from '../../config/pricing';
+
+// Growth Compass 落點分析的方案說明頁（MONETIZATION_PLAN.md §5.4）。
+//
+// noindex 是刻意的：付費牆本身還沒上線（`hasAccess()` 目前仍無呼叫端）。
+// D-M2／D-M3 已於 2026-08-05 拍板，但在實際的解鎖流程接起來之前，這一頁是給團隊
+// 內部對稿用的，不該被搜尋引擎收錄，也刻意沒有掛進 Nav——上線時把 noindex 拿掉
+// 並加進 site.ts 的 nav。
+//
+// ⚠️ 本頁文案在 2026-08-05 依 D-006 全面改寫。**付費的不是落點分析。**
+// 落點分析（結果分區、收藏工作集、並排比較、清單健檢）一律免費且免登入，
+// 付費賣的是帳號資產：顧問接手包、跨裝置同步、跨年度保存。
+// 舊版文案寫「完整報告付費、免費版只看得到概略位置」，那是拍板前的假設，已作廢。
+
+const title = '落點分析方案｜TBD Studio';
+const description =
+  'TBD Growth Compass 落點分析完全免費、不必註冊：輸入級分、比對校系、收藏與並排比較都不收錢。付費解鎖的是顧問接手包、跨裝置同步與跨年度保存。單次解鎖 NT$499、一屆方案 NT$899。';
+
+const freeThings = [
+  {
+    title: '落點分析的全部功能',
+    desc: '輸入六科級分、圈選校系、看分區結果、收藏比較、清單健檢——整套都免費，而且不必註冊。這一段不會變成付費功能。',
+    href: `${COMPASS_URL}/placement`,
+    linkText: '直接去用',
+  },
+  {
+    title: '36 份升學準備模板',
+    desc: '備審主線整理表、研究計畫框架、套磁信公版、口試檢核表——五個學群各有專屬版本。CSV 與 Markdown 兩種格式。',
+    href: '/pages/resources/tools.html',
+    linkText: '看模板列表',
+  },
+  {
+    title: '知識庫文章',
+    desc: '從選管道、寫反思、整理主線到面試準備，每個階段都有對應的完整說明。',
+    href: '/pages/resources.html',
+    linkText: '進知識庫',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page" noindex={true}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <span>落點分析方案</span>
+  </nav>
+  <span class="kicker">Growth Compass</span>
+  <h1>把級分換算成一份看得懂的落點報告</h1>
+  <p class="lead">落點不是一個數字，是「以你現在的成績，這些校系分別站在什麼位置」。Growth Compass 用歷年的級分與篩選標準做跨年度換算，把這件事算給你看。<strong>這件事完全免費，也不必註冊。</strong></p>
+</section>
+
+<main class="search-main">
+
+  <section class="section" id="free">
+    <h2 class="section-label">先說不用付錢的部分</h2>
+    <p class="pricing-intro">把免費的講清楚，你才知道值不值得付那一筆。以下三件事一直都是免費的，不會因為推出付費方案而收起來——落點分析本身也在裡面。</p>
+    <div class="card-grid">
+      {freeThings.map((f) => (
+        <article class="card article-card">
+          <h3>{f.title}</h3>
+          <p class="card-desc">{f.desc}</p>
+          <p style="margin-top: 12px;"><a class="text-link" href={f.href}>{f.linkText} →</a></p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="difference">
+    <h2 class="section-label">那付費解鎖的是什麼</h2>
+    <p class="pricing-diff"><strong>不是算得更準，是算完之後的事。</strong></p>
+    <p class="pricing-intro">落點分析不管付不付錢都是同一套算法、同一份結果，沒有藏起來的欄位。付費買的是三件只有綁帳號才成立的事：</p>
+    <ul class="content-list" style="color: var(--tbd-mid); line-height: 2;">
+      <li><strong>顧問接手包：</strong>產生一個分享連結，級分、期待校系與經歷一頁看完。顧問開場就進入狀況，不必再從頭問一次。</li>
+      <li><strong>跨裝置同步：</strong>不付費的話，你的收藏與偏好存在這台裝置上——換手機就沒了。付費後跟著帳號走。</li>
+      <li><strong>跨年度保存（僅一屆方案）：</strong>從現在到放榜填志願，中間每一版的紀錄都留著，可以回頭看自己的判斷怎麼變的。</li>
+    </ul>
+    <p class="pricing-intro">為什麼落點分析不收錢：坊間的落點工具多半免費，我們沒有理由在這件事上收費。而且落點頁不需要登入就能用完整功能——把它擋在付費牆後面，等於同時加了註冊和付款兩道門，那會讓大部分真正需要的人根本走不到。</p>
+  </section>
+
+  <section class="section" id="plans">
+    <h2 class="section-label">兩種方案</h2>
+    <div class="card-grid pricing-grid">
+      {pricingPlans.map((p) => (
+        <article class="card article-card pricing-card">
+          <h3>{p.label}</h3>
+          <p class="pricing-price"><span class="pricing-currency">NT$</span>{p.priceTwd}</p>
+          <ul class="pricing-includes">
+            {p.includes.map((i) => <li>{i}</li>)}
+          </ul>
+          <p class="card-desc pricing-suited">{p.suitedFor}</p>
+        </article>
+      ))}
+    </div>
+    <p class="pricing-note">兩個方案的差別只有跨年度保存一項，其餘完全相同。如果你只是這一屆要用，單次解鎖就夠了，而且它是買斷、不會過期——不需要為了「比較划算」去買用不到的效期。</p>
+  </section>
+
+  <section class="section" id="start">
+    <h2 class="section-label">要怎麼開始</h2>
+    <p class="pricing-intro">直接去把級分輸進去、把想比的校系圈起來，不必註冊也不必付錢。等到你想把整理好的東西交給顧問、或想換裝置繼續用，再回來看方案——不必先決定。</p>
+    <div class="button-row">
+      <a class="button" href={`${COMPASS_URL}/placement`}>直接開始試算</a>
+      <a class="button secondary" href="/pages/services.html">我想直接找顧問談</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>
