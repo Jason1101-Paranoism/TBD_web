@@ -85,16 +85,28 @@ const TARGETS = [
     mustContain: ['id="gpq-card"', 'grad-path-quiz.js'] },
   { path: '/pages/process.html', name: '合作流程（track tabs + 時程軸）' },
   { path: '/404.html', name: '自訂 404 頁' },
+  // 落點分析方案頁。價格的正本在 tbd-compass-app 的 entitlement.ts（見 src/config/pricing.ts 的警語），
+  // 這裡刻意把數字寫死當獨立事實來源：改價時本項會紅，逼人回頭確認 compass 那側也改了。
+  // 兩邊價格不一致＝網站標一個價、結帳頁收另一個價，是 D-003 的同一種形狀。
+  { path: '/pages/compass.html', name: '落點分析方案（價格須與 compass entitlement.ts 一致）',
+    mustContain: ['NT$', '499', '899', 'tbd-compass-app.vercel.app'] },
   // 回歸：Week 3–6 的 20 份分學群模板曾只登記在指南頁、沒進下載頁，四輪都沒被發現。
   // 這一項用「磁碟上的實體檔」當事實來源，漏登記就直接失敗（見 src/config/gradTemplates.ts）。
-  { path: '/pages/resources/tools.html', name: '工具與模板下載（分學群工具包不得漏檔）',
+  { path: '/pages/resources/tools.html', name: '工具與模板下載（所有模板不得漏檔）',
     mustContain: templateFiles() },
 ];
 
-/** public/assets/templates 底下所有分學群模板的 .md 檔名 */
+/**
+ * public/assets/templates 底下所有模板的 .md 檔名。
+ *
+ * 原本只篩 `grad-`——但那是把 D-003 的教訓只套用在出事的那一批上。
+ * 通用模板（`admission-main-thread`、`pre-college-30day-checklist` 等）走的是
+ * tools.astro 裡另一份手寫的 `downloads` 陣列，一樣是「實體檔」與「清單」兩份事實，
+ * 一樣可能漏登記而沒有任何訊號。改成涵蓋全部 `.md`，兩批用同一道閘門。
+ */
 function templateFiles() {
   return readdirSync(join(process.cwd(), 'public', 'assets', 'templates'))
-    .filter((f) => f.startsWith('grad-') && f.endsWith('.md'));
+    .filter((f) => f.endsWith('.md'));
 }
 
 // 注入頁面的探針：捕捉 uncaught error，並（若存在）測目錄/選單 toggle 行為。

@@ -9,6 +9,12 @@
       "permanent": false
     },
     {
+      "_comment": "模板檔案裡的 compass 出口一律指向這裡，不直接寫 compass 網域。理由：模板是會被下載的靜態檔，網域搬到 app.tbd… 之後，已下載的副本改不到；走轉址則只要改這一行。與 /pages/seen.html 同樣用 302（permanent: false），因為目的地本來就是暫時網域。查詢字串（utm_*）Vercel 會自動帶過去。",
+      "source": "/pages/placement.html",
+      "destination": "https://tbd-compass-app.vercel.app/placement",
+      "permanent": false
+    },
+    {
       "source": "/pages/plans.html",
       "destination": "/pages/services.html#plans",
       "permanent": true

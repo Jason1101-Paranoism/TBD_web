@@ -107,10 +107,21 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 
 .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tbd-accent); margin: 0 0 16px; }
 
-/* 工具頁的分學群工具包：五組 × 五張卡，用學群標題分隔，避免 25 張卡連成一片 */
-.grad-toolkit-group + .grad-toolkit-group { margin-top: 40px; }
-.grad-toolkit-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem; font-size: 1.05rem; margin: 0 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--tbd-line); }
-.grad-toolkit-guide { font-size: 0.85rem; font-weight: 500; }
+/* 工具頁的分組容器。原本只給分學群工具包用（五組 × 五張卡，避免 25 張卡連成一片），
+   通用模板改為依準備階段分五組後，兩批共用同一組樣式，故類名去掉 grad 前綴。 */
+.tool-group + .tool-group { margin-top: 40px; }
+.tool-group-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem; font-size: 1.05rem; margin: 0 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--tbd-line); }
+.tool-group-link { font-size: 0.85rem; font-weight: 500; }
+/* 份數：與組名同一行但明顯次級，讓「這組有幾份」不必數卡片 */
+.tool-group-count { font-size: 0.8rem; font-weight: 500; color: var(--tbd-mid); }
+/* 這一組什麼時候用——放在標題與卡片之間，回答「我現在該看哪一組」 */
+.tool-group-why { margin: -6px 0 16px; color: var(--tbd-mid); font-size: 0.92rem; }
+/* 分組後每個 .card-grid 各自 auto-fit，份數不同的組會算出不同欄數——3 份的組卡片是
+   1/3 寬、2 份的組 1/2 寬、1 份的組整排寬，同一頁的卡片大小忽大忽小。固定三欄讓
+   卡片寬度跨組一致，份數不均只反映在留白上。窄螢幕仍交回全域的 auto-fit。 */
+@media (min-width: 900px) {
+  .tool-group .card-grid { grid-template-columns: repeat(3, 1fr); }
+}
 
 /* flex-wrap + nowrap：手機 4 層路徑時整項換行，杜絕「首/頁」逐字豎排破版。
    最後一層（本頁長標題）除外，仍允許換行以免撐寬版面。 */
@@ -889,3 +900,32 @@ table.deliv-mini td b { color: var(--tbd-dark); }
 .deliv-ba-col.is-after p { color: var(--tbd-dark); }
 .deliv-ba-note { font-size: 13px; color: var(--tbd-mid); line-height: 1.6; margin: 16px 0 0; }
 .deliv-ba-note b { color: var(--tbd-accent); }
+
+/* ── 落點分析方案頁（compass.astro）────────────────────────────────
+   一律用 --tbd-* token，不寫死色值。價格是這一頁唯一該跳出來的數字，
+   其餘維持與知識庫頁一致的卡片節奏，不做 SaaS 式的方案對照表。 */
+.pricing-intro { color: var(--tbd-mid); margin: 0 0 18px; line-height: 1.75; }
+.pricing-diff {
+  margin: 0 0 16px; padding: 18px 20px; line-height: 1.8;
+  border-left: 3px solid var(--tbd-yellow); border-radius: var(--tbd-radius-sm);
+  background: rgba(250, 183, 72, .09); color: var(--tbd-dark);
+}
+.pricing-diff strong { font-weight: 700; }
+.pricing-grid { align-items: stretch; }
+.pricing-card { display: flex; flex-direction: column; }
+.pricing-price {
+  font-family: var(--tbd-font-serif); font-size: 40px; line-height: 1.1; font-weight: 700;
+  color: var(--tbd-accent); margin: 10px 0 14px;
+}
+.pricing-currency { font-family: var(--tbd-font-sans); font-size: 17px; font-weight: 700; margin-right: 3px; }
+.pricing-includes { margin: 0 0 14px; padding-left: 0; list-style: none; }
+.pricing-includes li {
+  position: relative; padding-left: 20px; margin-bottom: 7px;
+  font-size: 14.5px; line-height: 1.6; color: var(--tbd-dark);
+}
+.pricing-includes li::before {
+  content: '✓'; position: absolute; left: 0; top: 0;
+  color: var(--tbd-accent); font-weight: 800; font-size: 13px;
+}
+.pricing-suited { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--tbd-line); }
+.pricing-note { color: var(--tbd-mid); font-size: 14px; line-height: 1.75; margin: 18px 0 0; }
