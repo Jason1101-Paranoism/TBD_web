@@ -30,6 +30,51 @@
 
 ---
 
+## #017｜2026-08-09｜補上模板閘門的反方向漏洞（D-008）；PLAN.md 第一次填
+
+**Scope**：① 解掉 WORKLOG #015 標為「風險最高」的技術債——模板改成 Sheets／Notion 後
+`verify.mjs` 會失去事實來源；② 把散落的待辦收斂成 `docs/PLAN.md` 正本。
+**Non-scope**：不動任何模板檔內容、不改頁面、不做形式轉換本身（那批產出在 repo 外）。
+
+**這道閘門原本漏在哪**：D-003 讓閘門掃磁碟上的 `.md`，只擋得住**一個方向**——
+多了檔案沒登記會紅，**少了檔案不會**。而形式補齊拍板的方向正是把模板改成
+Google Sheets／Docs／Notion，那些形式在磁碟上沒有檔案。第一份轉過去的模板會讓
+掃出來的清單少一項、斷言跟著少一項，**閘門覆蓋範圍安靜縮編且沒有任何訊號**。
+D-003 要擋的就是「模板從下載頁消失」，縮編後它剛好不再擋得住那件事。
+
+**變更檔案**：
+- `scripts/template-manifest.json` — 新增。41 筆，每筆 `slug` ＋ `delivery: "file" | "external"`（external 需 `url`）
+- `scripts/verify.mjs` — `templateFiles()` 改為 `templateManifest()` / `templateLinkFragments()` /
+  `checkTemplateManifest()`；後者與 `checkVercelJson()` 一樣在 build 之前跑
+- `docs/DECISIONS.md` — 新增 D-008（含三個被否決的選項與理由）
+- `CLAUDE.md` — 新增模板的順序由 2 步改為 3 步（放檔案 → 登記 manifest → 登記 gradTemplates.ts），
+  並寫明「改外部形式時不要只刪檔案」
+- `docs/PLAN.md` — 第一次填。Phase 0–5，把 WORKLOG 各則「下一步」、
+  `template-format-upgrade.md` §5、根目錄兩份無版控文件的待辦收斂成單一正本
+- `docs/template-format-upgrade.md` — §4／§5 把已解決那項劃掉並指向 D-008
+
+**閘門證據**：
+- G1 語法：PASS（build）
+- G2 boot：PASS（163 頁）
+- G3 smoke：PASS（`npm run verify` 30/30）
+- **反向測試（重點）**：新閘門的四個失敗方向逐一實測，全部會紅——
+  ① 磁碟多一份沒登記；② manifest 說 file 但檔案不在（模擬轉 Sheets 只刪檔）；
+  ③ 改成 external 但沒填 url；④ 宣告一致的 external 但下載頁沒有它的連結（29/30）。
+  沒實測過失敗方向的守門等於沒有守門——這一則的價值就在這四行。
+- G4 migration：N/A
+
+**計畫／決策異動**：新增 D-008；`template-format-upgrade.md` §5 第 5 項劃掉；
+PLAN.md Phase 3 第一項勾掉。
+**風險與待確認**：manifest 是「有哪些模板」的唯一宣告處，但**它不驗內容**——
+一份模板的 md/csv 內容爛掉、或 csv 與 md 不同步，這道閘門看不出來。目前沒有人在驗這件事。
+
+**下一步**：Phase 3 剩下的四項都不是 repo 內的工作（逐份決定 17 份的目標形式、重估排程、
+確認四人分工、產品 4／8 回到內容規劃），需要使用者拍板才動得了。
+repo 內能先做的只有「形式補完後連帶要改的 `tools.astro` 下載連結結構與 `gradTemplates.ts` 資料結構」，
+但在第一份外部模板實際存在之前做那件事＝寫沒有使用者的程式，刻意不做。
+
+---
+
 ## #016｜2026-08-09｜Week 7 教育類群落地：5 篇文章＋指南頁＋5 份模板
 
 **Scope**：依 `docs/content-plans/Week7_研究所申請陪跑計畫_教育類群_知識庫轉換規劃.md`，

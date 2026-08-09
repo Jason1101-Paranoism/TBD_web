@@ -182,10 +182,13 @@ relatedArticles:
 **固定順序（順序錯了閘門會擋）：**
 
 1. 把 `.md` 與 `.csv` 放進 `public/assets/templates/`，檔名為 `grad-<學群>-<用途>`
-2. 在 `gradTemplates.ts` 對應的學群 group 裡登記（`title` / `desc` / `file` / `article`）
-3. `npm run verify`
+2. 在 `scripts/template-manifest.json` 登記一筆（`slug` ＋ `delivery: "file"`）
+3. 在 `gradTemplates.ts` 對應的學群 group 裡登記（`title` / `desc` / `file` / `article`）
+4. `npm run verify`
 
-第 2 步漏掉的話，verify 會直接失敗——那一項的事實來源是**磁碟上的實體檔**，不是設定檔。這是刻意的：兩邊都從同一份設定推導的話等於自己驗自己。
+第 2、3 步漏掉任一步，verify 都會直接失敗。事實來源是 `template-manifest.json`，並與**磁碟上的實體檔**雙向校驗——設定檔（`gradTemplates.ts`）不能兼任事實來源，兩邊都從同一份設定推導的話等於自己驗自己。
+
+**模板要改成 Google Sheets／Docs／Notion 時**：把 manifest 那筆改成 `delivery: "external"` 並填 `url`，不要只刪掉磁碟上的檔案。只刪檔會讓這道閘門安靜地少驗一項，而那正是它要擋的事（理由見 `docs/DECISIONS.md` 的 D-008）。
 
 **為什麼有這條規則**：這些模板原本各自寫死在指南頁裡，`tools.html` 是另一份手寫清單。Week 3 落地時只更新了指南頁，結果 20 份模板在下載頁上消失了四輪（Week 3–6）都沒被發現。完整決策見 `docs/DECISIONS.md` 的 D-003。
 

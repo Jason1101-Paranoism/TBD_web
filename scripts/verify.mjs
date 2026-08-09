@@ -96,22 +96,88 @@ const TARGETS = [
   { path: '/pages/compass.html', name: '落點分析方案（價格須與 compass entitlement.ts 一致）',
     mustContain: ['NT$', '499', '899', 'tbd-compass-app.vercel.app'] },
   // 回歸：Week 3–6 的 20 份分學群模板曾只登記在指南頁、沒進下載頁，四輪都沒被發現。
-  // 這一項用「磁碟上的實體檔」當事實來源，漏登記就直接失敗（見 src/config/gradTemplates.ts）。
+  // 事實來源是 scripts/template-manifest.json（見 D-008），且該 manifest 由
+  // checkTemplateManifest() 與磁碟互相校驗，任一邊少一份都會失敗。
   { path: '/pages/resources/tools.html', name: '工具與模板下載（所有模板不得漏檔）',
-    mustContain: templateFiles() },
+    mustContain: templateLinkFragments() },
 ];
 
+/** manifest 的原始內容。讀不到就讓它拋——沒有 manifest 等於沒有這道閘門。 */
+function templateManifest() {
+  return JSON.parse(readFileSync(join(process.cwd(), 'scripts', 'template-manifest.json'), 'utf8')).templates;
+}
+
 /**
- * public/assets/templates 底下所有模板的 .md 檔名。
+ * 每一份模板在 tools.html 上必須出現的字串。
  *
- * 原本只篩 `grad-`——但那是把 D-003 的教訓只套用在出事的那一批上。
- * 通用模板（`admission-main-thread`、`pre-college-30day-checklist` 等）走的是
- * tools.astro 裡另一份手寫的 `downloads` 陣列，一樣是「實體檔」與「清單」兩份事實，
- * 一樣可能漏登記而沒有任何訊號。改成涵蓋全部 `.md`，兩批用同一道閘門。
+ * `file` 交付的用 `<slug>.md`（下載連結）；`external` 交付的用它的 url——
+ * 模板改成 Google Sheets／Notion 之後磁碟上不會有檔案，但它仍必須在下載頁上找得到。
  */
-function templateFiles() {
-  return readdirSync(join(process.cwd(), 'public', 'assets', 'templates'))
-    .filter((f) => f.endsWith('.md'));
+function templateLinkFragments() {
+  // TARGETS 在模組載入時就求值，早於 main 的 checkTemplateManifest()。manifest 壞掉時
+  // 這裡回空陣列讓載入不中斷，由 checkTemplateManifest() 印出可讀的原因並中止——
+  // 不是靜默降級：那條路徑保證會 exit(1)。
+  try {
+    return templateManifest().map((t) => (t.delivery === 'external' ? t.url : `${t.slug}.md`));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * manifest 與磁碟互相校驗。回傳問題清單（空陣列＝通過）。
+ *
+ * 為什麼不是直接掃磁碟（D-003 原本的作法）：掃磁碟能抓「多了檔案沒登記」，
+ * 但抓不到**反方向**——模板改成 Sheets／Notion 後 `.md` 從磁碟消失，
+ * 掃出來的清單會安靜地少一份，斷言數跟著少一項，閘門的覆蓋範圍就這樣無聲縮編。
+ * D-003 擋的是「模板從下載頁消失」，而那正是它縮編後不再擋得住的東西。
+ *
+ * 改法：manifest 是「有哪些模板」的事實來源，磁碟是它的獨立對照。
+ * 兩邊不一致就失敗，所以把模板換成外部形式必須是一個**明確的編輯動作**
+ * （把該筆改成 `delivery: "external"` 並填 url），不能靠刪檔案默默發生。
+ */
+function checkTemplateManifest() {
+  const problems = [];
+  let entries;
+  try {
+    entries = templateManifest();
+  } catch (e) {
+    return [`讀不到 scripts/template-manifest.json：${e.message}（沒有它就沒有 D-003／D-008 這道閘門）`];
+  }
+
+  const onDisk = new Set(
+    readdirSync(join(process.cwd(), 'public', 'assets', 'templates'))
+      .filter((f) => f.endsWith('.md'))
+      .map((f) => f.replace(/\.md$/, ''))
+  );
+  const declaredAsFile = new Set();
+
+  for (const t of entries) {
+    if (!t.slug) { problems.push(`manifest 有一筆缺 slug：${JSON.stringify(t)}`); continue; }
+    if (t.delivery === 'file') {
+      declaredAsFile.add(t.slug);
+      if (!onDisk.has(t.slug)) {
+        problems.push(
+          `manifest 宣告 \`${t.slug}\` 是 file 交付，但 public/assets/templates/${t.slug}.md 不存在。` +
+          `（若它已改成 Sheets／Notion，請把該筆改成 delivery: "external" 並填 url，不要只刪檔案）`
+        );
+      }
+    } else if (t.delivery === 'external') {
+      if (!t.url) problems.push(`manifest 的 \`${t.slug}\` 是 external 交付，但沒有 url——下載頁要連到哪裡？`);
+    } else {
+      problems.push(`manifest 的 \`${t.slug}\` 的 delivery 只能是 "file" 或 "external"，實為 ${JSON.stringify(t.delivery)}`);
+    }
+  }
+
+  for (const slug of onDisk) {
+    if (!declaredAsFile.has(slug)) {
+      problems.push(
+        `public/assets/templates/${slug}.md 存在，但沒有登記在 scripts/template-manifest.json。` +
+        `（新增模板的順序是：放檔案 → 登記 manifest → 登記 gradTemplates.ts／tools.astro）`
+      );
+    }
+  }
+  return problems;
 }
 
 // 注入頁面的探針：捕捉 uncaught error，並（若存在）測目錄/選單 toggle 行為。
@@ -372,6 +438,15 @@ const vercelProblems = checkVercelJson();
 if (vercelProblems.length) {
   console.error('\n✋ vercel.json 檢查未通過（Vercel 會在 build 開始前中止部署）：');
   for (const p of vercelProblems) console.error(`   ✗ ${p}`);
+  process.exit(1);
+}
+
+// 同樣放在 build 之前：manifest 與磁碟對不起來時，後面那項 tools.html 斷言
+// 本身就是用 manifest 產生的，先驗它才有意義。
+const manifestProblems = checkTemplateManifest();
+if (manifestProblems.length) {
+  console.error('\n✋ 模板清單檢查未通過（scripts/template-manifest.json 與磁碟不一致）：');
+  for (const p of manifestProblems) console.error(`   ✗ ${p}`);
   process.exit(1);
 }
 

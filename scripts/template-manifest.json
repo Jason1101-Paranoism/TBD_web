@@ -1,0 +1,169 @@
+{
+  "$schema-note": "見 scripts/verify.mjs 的 checkTemplateManifest()；欄位說明在 docs/DECISIONS.md 的 D-008",
+  "templates": [
+    {
+      "slug": "admission-channel-radar",
+      "delivery": "file"
+    },
+    {
+      "slug": "admission-main-thread",
+      "delivery": "file"
+    },
+    {
+      "slug": "department-compare-prompt",
+      "delivery": "file"
+    },
+    {
+      "slug": "department-interview-questions",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-arts-contact-email",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-arts-oral-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-arts-portfolio-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-arts-proposal-framework",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-arts-school-compare",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-biomed-contact-email",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-biomed-lab-compare",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-biomed-oral-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-biomed-portfolio-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-biomed-proposal-framework",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-business-contact-email",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-business-oral-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-business-portfolio-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-business-proposal-framework",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-business-school-compare",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-education-contact-email",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-education-oral-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-education-portfolio-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-education-proposal-framework",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-education-school-compare",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-engineering-contact-email",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-engineering-lab-compare",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-engineering-oral-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-engineering-portfolio-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-engineering-proposal-framework",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-humanities-contact-email",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-humanities-oral-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-humanities-portfolio-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-humanities-proposal-framework",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-humanities-school-compare",
+      "delivery": "file"
+    },
+    {
+      "slug": "graduate-timeline-gantt",
+      "delivery": "file"
+    },
+    {
+      "slug": "interview-answer-material",
+      "delivery": "file"
+    },
+    {
+      "slug": "interview-six-layer-prep",
+      "delivery": "file"
+    },
+    {
+      "slug": "portfolio-reflection-guide",
+      "delivery": "file"
+    },
+    {
+      "slug": "pre-college-30day-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "readme-portfolio-planner",
+      "delivery": "file"
+    },
+    {
+      "slug": "side-project-tracker",
+      "delivery": "file"
+    }
+  ]
+}

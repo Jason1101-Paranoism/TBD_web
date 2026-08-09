@@ -147,3 +147,35 @@ CI 的 Vercel check 直接 `failure`，而且 `target_url` 只給一個
 
 因此 `vercel.json` 的任何理由一律寫在這裡，不寫在檔案裡。JSON 沒有註解，
 而 Vercel 也不允許拿多餘的鍵當註解用。
+
+---
+
+## D-008 — 模板清單的事實來源改為 `scripts/template-manifest.json`，與磁碟雙向校驗
+
+**背景**：D-003 讓閘門以「磁碟上的實體 `.md`」當事實來源，成功擋住「模板沒登記到下載頁」。
+但它只擋得住**一個方向**：多了檔案沒登記會紅，少了檔案不會。
+
+而 `docs/template-format-upgrade.md` 拍板的方向正是把 36 份模板改成 Google Sheets／Docs／Notion——
+那些形式**在磁碟上不會有檔案**。第一份轉過去的模板，會讓 `templateFiles()` 掃出來的清單少一項、
+`mustContain` 的斷言跟著少一項，**閘門的覆蓋範圍安靜地縮編一格，而且不會有任何訊號**。
+D-003 要擋的是「模板從下載頁消失」，縮編後它剛好不再擋得住那件事。
+
+**選項**：
+  - A（採用）— 新增 `scripts/template-manifest.json` 當「有哪些模板」的事實來源，每筆宣告 `delivery: "file" | "external"`（external 需填 `url`）。閘門做雙向校驗：manifest 宣告 file 的必須在磁碟上找得到、磁碟上的 `.md` 必須登記在 manifest；tools.html 的斷言則改由 manifest 產生（file 用 `<slug>.md`、external 用 url）。
+  - B（否決）— 只加一個「模板總數不得減少」的下限值。抓得到縮編，但抓不到「換掉一份、同時新增一份」這種數量不變的情況，而且下限值本身也是要手動維護的另一份事實。
+  - C（否決）— 改成去 HTTP 打那些 Google／Notion 網址確認活著。真正的事實來源，但把閘門變成依賴外部網路與登入狀態；Google 對無登入的自動請求行為不穩，閘門會開始隨機紅——D-004 已經記過「閘門說謊的代價」。
+  - D（否決）— 讓 `gradTemplates.ts` 兼任 manifest。它就是渲染下載頁的那份設定，拿它驗自己等於沒驗——D-003 已經明說過這件事。
+
+**決定**：採 A。manifest 是**唯一**宣告「有哪些模板」的地方，磁碟是它的獨立對照。
+換句話說，把一份模板改成外部形式，必須是一個**明確的編輯動作**（該筆改成 external 並填 url），
+不能靠刪掉檔案默默發生——後者正是原本會無聲吃掉閘門的那條路徑。
+
+**實測**（四個方向都確認會失敗，未實測的守門等於沒有守門）：
+1. 磁碟多一份、manifest 沒登記 → 紅
+2. manifest 說是 file，但檔案不在磁碟上（模擬轉 Sheets 只刪檔） → 紅
+3. 改成 external 但沒填 url → 紅
+4. 宣告一致的 external，但下載頁上沒有它的連結 → tools.html 那項紅（29/30）
+
+**後果**：新增模板的順序從兩步變三步——**放檔案 → 登記 `template-manifest.json` → 登記 `gradTemplates.ts`／`tools.astro`**。
+中間跑閘門會失敗，是預期行為。`verify.mjs` 的 `checkTemplateManifest()` 與 `checkVercelJson()`
+一樣放在 build 之前：manifest 對不起來時，後面那項 tools.html 斷言本身就是用它產生的，先驗它才有意義。
