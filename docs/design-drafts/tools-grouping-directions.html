@@ -1,0 +1,612 @@
+<title>工具與模板下載頁：分組方向稿</title>
+<style>
+  /* ────────────────────────────────────────────────────────────
+     兩層 token：
+       --sh-*  審稿介面本身（可跟隨深淺色）
+       --tbd-* 站上真實 token，取自 public/css/tbd-theme.css，不得改動
+     模擬區一律維持淺色——TBD 官網沒有深色版，把它畫成深色會誤導決策。
+     ──────────────────────────────────────────────────────────── */
+  :root {
+    --tbd-accent: #1A5D94;
+    --tbd-dark: #142143;
+    --tbd-yellow: #FAB748;
+    --tbd-mid: #6A6D89;
+    --tbd-light: #D0CEDB;
+    --tbd-line: rgba(208, 206, 219, 0.75);
+    --tbd-soft: rgba(208, 206, 219, 0.32);
+    --tbd-shadow: 0 10px 30px rgba(20, 33, 67, 0.08);
+
+    --sh-bg: #EDEBF2;
+    --sh-panel: #FFFFFF;
+    --sh-ink: #1B1930;
+    --sh-mid: #605D75;
+    --sh-line: rgba(27, 25, 48, 0.14);
+    --sh-accent: #1A5D94;
+    --sh-warn: #8A5A16;
+
+    --sans: "Segoe UI", -apple-system, BlinkMacSystemFont, "Noto Sans TC",
+            "Microsoft JhengHei", sans-serif;
+    --serif: Georgia, "Songti TC", "Noto Serif TC", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --sh-bg: #14131C;
+      --sh-panel: #1E1C29;
+      --sh-ink: #ECEAF4;
+      --sh-mid: #A5A1B8;
+      --sh-line: rgba(236, 234, 244, 0.16);
+      --sh-accent: #7FB2DC;
+      --sh-warn: #E0AE62;
+    }
+  }
+  :root[data-theme="dark"] {
+    --sh-bg: #14131C; --sh-panel: #1E1C29; --sh-ink: #ECEAF4;
+    --sh-mid: #A5A1B8; --sh-line: rgba(236, 234, 244, 0.16);
+    --sh-accent: #7FB2DC; --sh-warn: #E0AE62;
+  }
+  :root[data-theme="light"] {
+    --sh-bg: #EDEBF2; --sh-panel: #FFFFFF; --sh-ink: #1B1930;
+    --sh-mid: #605D75; --sh-line: rgba(27, 25, 48, 0.14);
+    --sh-accent: #1A5D94; --sh-warn: #8A5A16;
+  }
+
+  body {
+    margin: 0; background: var(--sh-bg); color: var(--sh-ink);
+    font-family: var(--sans); line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 20px 80px; }
+  h1, h2, h3 { text-wrap: balance; }
+
+  /* ── 審稿頁頭 ── */
+  .doc-head { display: flex; flex-direction: column; gap: 14px; margin-bottom: 12px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--sh-warn); text-transform: uppercase;
+  }
+  h1 { font-family: var(--serif); font-size: clamp(26px, 4vw, 38px); line-height: 1.25; margin: 0; }
+  .lede { max-width: 62ch; color: var(--sh-mid); margin: 0; font-size: 16px; }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .fact {
+    border: 1px solid var(--sh-line); border-radius: 999px;
+    padding: 5px 13px; font-size: 13px; color: var(--sh-mid);
+    font-variant-numeric: tabular-nums;
+  }
+  .fact b { color: var(--sh-ink); font-weight: 700; }
+
+  /* ── 控制列 ── */
+  .controls {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    margin: 26px 0 32px; padding: 12px 14px;
+    background: var(--sh-panel); border: 1px solid var(--sh-line);
+    border-radius: 14px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  }
+  .controls-label { font-size: 13px; color: var(--sh-mid); margin-right: 2px; }
+  .seg { display: flex; gap: 4px; background: var(--sh-bg); border-radius: 10px; padding: 4px; }
+  .seg button {
+    font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+    border: 0; background: transparent; color: var(--sh-mid);
+    padding: 7px 15px; border-radius: 7px; min-height: 38px;
+  }
+  .seg button[aria-pressed="true"] { background: var(--sh-panel); color: var(--sh-ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  .seg button:hover:not([aria-pressed="true"]) { color: var(--sh-ink); }
+  :where(button, a):focus-visible { outline: 2px solid var(--sh-accent); outline-offset: 2px; }
+
+  /* ── 每個方向 ── */
+  .dir { margin-bottom: 56px; }
+  .dir-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .dir-tag {
+    font-family: var(--serif); font-size: 15px; font-weight: 700;
+    color: #fff; background: var(--sh-ink);
+    width: 30px; height: 30px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+  }
+  .dir-head h2 { font-size: 21px; margin: 0; }
+  .dir-note { max-width: 68ch; color: var(--sh-mid); margin: 0 0 18px; font-size: 15px; }
+
+  /* 模擬畫布：明確標示這是網站的樣子，不是本頁的一部分 */
+  .canvas-label {
+    font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sh-mid); margin-bottom: 7px; display: block;
+  }
+  .canvas {
+    background: #fff; color: var(--tbd-dark);
+    border: 1px solid var(--sh-line); border-radius: 16px;
+    padding: 30px 28px; overflow-x: auto;
+    box-shadow: var(--tbd-shadow);
+  }
+  .canvas-inner { margin: 0 auto; transition: max-width 0.25s ease; }
+  body[data-w="desktop"] .canvas-inner { max-width: 100%; }
+  body[data-w="mobile"] .canvas-inner { max-width: 375px; }
+  body[data-w="mobile"] .canvas { padding: 22px 16px; }
+
+  /* ── 站上元件的複刻（對齊 tbd-components.css 的視覺）── */
+  .m-h2 {
+    font-family: var(--serif); font-size: 20px; font-weight: 700;
+    color: var(--tbd-dark); margin: 0 0 6px;
+  }
+  .m-sub { color: var(--tbd-mid); font-size: 14px; margin: 0 0 20px; max-width: 60ch; }
+  .m-group { margin-bottom: 28px; }
+  .m-group:last-child { margin-bottom: 0; }
+  .m-group-title {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;
+    font-size: 15.5px; font-weight: 800; color: var(--tbd-dark);
+    margin: 0 0 4px; padding-bottom: 9px; border-bottom: 1px solid var(--tbd-line);
+  }
+  .m-group-count { font-size: 12px; font-weight: 700; color: var(--tbd-mid); font-variant-numeric: tabular-nums; }
+  .m-group-why { font-size: 13px; color: var(--tbd-mid); margin: 8px 0 14px; }
+  .m-grid {
+    display: grid; gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(226px, 1fr));
+  }
+  body[data-w="mobile"] .m-grid { grid-template-columns: 1fr; }
+  .m-card {
+    background: #fff; border: 1px solid var(--tbd-line); border-radius: 14px;
+    padding: 16px; display: flex; flex-direction: column; gap: 7px;
+    transition: box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .m-card:hover { box-shadow: var(--tbd-shadow); border-color: rgba(26, 93, 148, 0.36); }
+  .m-badge {
+    align-self: flex-start; font-size: 11px; font-weight: 800; letter-spacing: 0.03em;
+    color: var(--tbd-accent); background: rgba(26, 93, 148, 0.08);
+    border: 1px solid var(--tbd-line); border-radius: 999px; padding: 3px 9px;
+  }
+  .m-badge.tool { color: var(--sh-warn); background: rgba(250, 183, 72, 0.16); }
+  .m-card h4 { font-size: 14.5px; margin: 0; color: var(--tbd-dark); line-height: 1.45; }
+  .m-card p { font-size: 12.5px; color: var(--tbd-mid); margin: 0; line-height: 1.6; }
+  .m-btns { display: flex; gap: 7px; margin-top: 5px; flex-wrap: wrap; }
+  .m-btn {
+    font-size: 12px; font-weight: 700; text-decoration: none;
+    padding: 7px 11px; border-radius: 9px;
+    background: var(--tbd-accent); color: #fff; border: 1px solid var(--tbd-accent);
+  }
+  .m-btn.sec { background: #fff; color: var(--tbd-dark); border-color: var(--tbd-line); }
+  .m-btn:hover { filter: brightness(0.95); }
+
+  /* 方向 2 的頁籤 */
+  .m-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .m-tab {
+    font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer;
+    background: #fff; color: var(--tbd-mid);
+    border: 1px solid var(--tbd-line); border-radius: 999px;
+    padding: 8px 16px; min-height: 40px;
+  }
+  .m-tab[aria-selected="true"] { background: var(--tbd-accent); color: #fff; border-color: var(--tbd-accent); }
+  .m-tab:hover:not([aria-selected="true"]) { color: var(--tbd-dark); background: var(--tbd-soft); }
+  .m-tab:focus-visible { outline: 2px solid var(--tbd-accent); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+
+  /* 方向 3 的處境標題 */
+  .m-situ-title {
+    display: block; font-family: var(--serif); font-size: 17px; font-weight: 700;
+    color: var(--tbd-dark); margin: 0 0 3px; line-height: 1.4;
+  }
+  .m-situ-title::before { content: "「"; color: var(--tbd-yellow); }
+  .m-situ-title::after { content: "」"; color: var(--tbd-yellow); }
+  .m-situ { border-left: 3px solid var(--tbd-yellow); padding-left: 16px; margin-bottom: 26px; }
+  .m-situ:last-child { margin-bottom: 0; }
+
+  /* ── 取捨表 ── */
+  .tradeoff { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+  @media (max-width: 700px) { .tradeoff { grid-template-columns: 1fr; } }
+  .to-col { border: 1px solid var(--sh-line); border-radius: 12px; padding: 15px 17px; background: var(--sh-panel); }
+  .to-h {
+    font-size: 11.5px; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase;
+    margin: 0 0 9px;
+  }
+  .to-col.good .to-h { color: #2C6E49; }
+  .to-col.cost .to-h { color: #A03E2F; }
+  @media (prefers-color-scheme: dark) {
+    .to-col.good .to-h { color: #7FC49B; }
+    .to-col.cost .to-h { color: #E39182; }
+  }
+  :root[data-theme="dark"] .to-col.good .to-h { color: #7FC49B; }
+  :root[data-theme="dark"] .to-col.cost .to-h { color: #E39182; }
+  .to-col ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 7px; }
+  .to-col li { font-size: 14px; color: var(--sh-mid); line-height: 1.65; }
+  .to-col li b { color: var(--sh-ink); font-weight: 600; }
+
+  /* ── 收尾 ── */
+  .close {
+    margin-top: 8px; padding: 26px 28px; border-radius: 16px;
+    background: var(--sh-panel); border: 1px solid var(--sh-line);
+  }
+  .close h2 { font-family: var(--serif); font-size: 22px; margin: 0 0 12px; }
+  .close p { color: var(--sh-mid); max-width: 68ch; margin: 0 0 12px; font-size: 15px; }
+  .close p:last-child { margin-bottom: 0; }
+  .close strong { color: var(--sh-ink); }
+  .flag {
+    margin: 20px 0 0; padding: 15px 18px; border-radius: 12px;
+    border-left: 3px solid var(--sh-warn); background: rgba(250, 183, 72, 0.1);
+  }
+  .flag p { margin: 0; font-size: 14.5px; color: var(--sh-ink); }
+</style>
+
+<div class="wrap">
+
+  <div class="doc-head">
+    <span class="eyebrow">方向稿 · 待挑選</span>
+    <h1>工具與模板下載頁：11 份通用模板該怎麼分組</h1>
+    <p class="lede">
+      模板從 4 份長到 11 份之後，「可下載模板」變成一片沒有結構的卡片牆。
+      下面三個方向用的是同一批真實內容，差別只在分組的軸線。挑一個，我再實作進站。
+    </p>
+    <div class="facts">
+      <span class="fact">通用模板 <b>11</b> 份</span>
+      <span class="fact">分學群工具包 <b>25</b> 份（已依學群分組，不動）</span>
+      <span class="fact">現況：<b>單一平鋪網格</b></span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <span class="controls-label">檢視寬度</span>
+    <div class="seg" role="group" aria-label="檢視寬度">
+      <button type="button" data-w="desktop" aria-pressed="true">桌面</button>
+      <button type="button" data-w="mobile" aria-pressed="false">手機 375</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ 方向 1 ═══════════ -->
+  <section class="dir">
+    <div class="dir-head">
+      <span class="dir-tag">1</span>
+      <h2>依準備階段分組</h2>
+    </div>
+    <p class="dir-note">
+      五組，順序就是準備的順序。學生從上往下讀，位置本身就在說「你現在該做哪一步」。
+      推甄甘特圖移到下方的研究所區——它本來就不屬於這一批。
+    </p>
+
+    <span class="canvas-label">模擬：/pages/resources/tools.html 的「可下載模板」區</span>
+    <div class="canvas">
+      <div class="canvas-inner">
+        <h3 class="m-h2">可下載模板</h3>
+        <p class="m-sub">依準備的先後順序排列。不確定自己在哪一步，就從第一組開始。</p>
+
+        <div class="m-group">
+          <h4 class="m-group-title">一、找方向 <span class="m-group-count">3 份</span></h4>
+          <p class="m-group-why">還沒決定要走哪條路、讀哪個科系的時候用。</p>
+          <div class="m-grid">
+            <article class="m-card">
+              <span class="m-badge tool">含公式</span>
+              <h4>升學管道戰力評估雷達圖</h4>
+              <p>11 題各給 1–5 分，個申／特選／分科三條路的平均分自動算出。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+            <article class="m-card">
+              <span class="m-badge">模板</span>
+              <h4>科系比較 Prompt 產生器</h4>
+              <p>填五個變數，產生一份 8 階段的科系深度比較 Prompt。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+            <article class="m-card">
+              <span class="m-badge">模板</span>
+              <h4>科系探索訪談清單</h4>
+              <p>訪談學長姐或從業者時直接用的問題表，附「我的判斷」欄位。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="m-group">
+          <h4 class="m-group-title">二、累積與記錄 <span class="m-group-count">2 份</span></h4>
+          <p class="m-group-why">高一高二、或還在做東西的階段。記錄的時機是當下，不是備審前。</p>
+          <div class="m-grid">
+            <article class="m-card">
+              <span class="m-badge tool">含公式</span>
+              <h4>Side Project 執行追蹤板</h4>
+              <p>填專案開始日，15 個任務的目標完成日自動排出、剩餘天數每天更新。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+            <article class="m-card">
+              <span class="m-badge">引導</span>
+              <h4>學習歷程「反思」寫作引導</h4>
+              <p>三種有效的反思結構，先選結構再下筆。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="m-group">
+          <h4 class="m-group-title">三、整理成果 <span class="m-group-count">2 份</span></h4>
+          <p class="m-group-why">東西做完了，要變成別人看得懂的形式。</p>
+          <div class="m-grid">
+            <article class="m-card">
+              <span class="m-badge">模板</span>
+              <h4>備審主線整理表</h4>
+              <p>把經歷攤開，依「與目標科系的關聯」找出能串成主線的那幾項。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+            <article class="m-card">
+              <span class="m-badge">公版</span>
+              <h4>README 與 Portfolio 內容規劃表</h4>
+              <p>區塊檢核表，加一份可直接複製的 README 公版。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="m-group">
+          <h4 class="m-group-title">四、面試 <span class="m-group-count">2 份</span></h4>
+          <p class="m-group-why">拿到面試通知之後，通常只剩兩到四週。</p>
+          <div class="m-grid">
+            <article class="m-card">
+              <span class="m-badge">工作表</span>
+              <h4>面試答題素材工作表</h4>
+              <p>兩分鐘自介的三段式填空，加上依五個題型整理「這題用哪段經歷」。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+            <article class="m-card">
+              <span class="m-badge">工作表</span>
+              <h4>系統性面試準備六層防護網</h4>
+              <p>對象、背景、關係、素材、情境、流程六層逐層填。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="m-group">
+          <h4 class="m-group-title">五、入學前 <span class="m-group-count">1 份</span></h4>
+          <p class="m-group-why">已經錄取了，暑假那個月。</p>
+          <div class="m-grid">
+            <article class="m-card">
+              <span class="m-badge">Checklist</span>
+              <h4>升大學前 30 天 Checklist</h4>
+              <p>一個月四週的準備節奏：探索選題 → 做第一版 → 優化紀錄 → 整理表達。</p>
+              <div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tradeoff">
+      <div class="to-col good">
+        <p class="to-h">好處</p>
+        <ul>
+          <li><b>順序本身帶資訊。</b>位置說明了「這件事什麼時候做」，這是平鋪給不了的。</li>
+          <li>全部可見，不必點擊就知道有什麼。</li>
+          <li>新模板要放哪一組，答案幾乎都是明確的——維護成本低。</li>
+        </ul>
+      </div>
+      <div class="to-col cost">
+        <p class="to-h">代價</p>
+        <ul>
+          <li>第五組只有 <b>1 份</b>，視覺上會空。份數不均是真實的，不該用假分組掩蓋。</li>
+          <li>頁面變長。手機上要捲很久才到研究所區。</li>
+          <li>假設學生知道自己在哪一步——高一生未必分得清「累積」和「整理」。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 方向 2 ═══════════ -->
+  <section class="dir">
+    <div class="dir-head">
+      <span class="dir-tag">2</span>
+      <h2>依對象分頁籤</h2>
+    </div>
+    <p class="dir-note">
+      三個頁籤，一次只顯示一組。把 36 份的總量壓成「跟我有關的那幾份」。
+      下面的頁籤是可以點的。
+    </p>
+
+    <span class="canvas-label">模擬：頁籤可點擊切換</span>
+    <div class="canvas">
+      <div class="canvas-inner">
+        <h3 class="m-h2">可下載模板</h3>
+        <p class="m-sub">先選你的身分，只看跟你有關的。</p>
+
+        <div class="m-tabs" role="tablist" aria-label="依對象篩選模板">
+          <button class="m-tab" role="tab" id="t-hs" aria-selected="true" aria-controls="p-hs">高中生 · 7</button>
+          <button class="m-tab" role="tab" id="t-uni" aria-selected="false" aria-controls="p-uni">大學生 · 專案與作品集 · 3</button>
+          <button class="m-tab" role="tab" id="t-grad" aria-selected="false" aria-controls="p-grad">研究所推甄 · 26</button>
+        </div>
+
+        <div role="tabpanel" id="p-hs" aria-labelledby="t-hs">
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge tool">含公式</span><h4>升學管道戰力評估雷達圖</h4><p>三條路的準備程度各給幾分。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">模板</span><h4>科系比較 Prompt 產生器</h4><p>兩個科系的深度比較。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">模板</span><h4>科系探索訪談清單</h4><p>訪談學長姐時直接用的問題表。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">模板</span><h4>備審主線整理表</h4><p>把經歷串成一條主線。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">引導</span><h4>學習歷程「反思」寫作引導</h4><p>三種有效的反思結構。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">工作表</span><h4>面試答題素材工作表</h4><p>自介三段式填空與題型素材。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">Checklist</span><h4>升大學前 30 天 Checklist</h4><p>錄取後那個月的準備節奏。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+          </div>
+        </div>
+
+        <div role="tabpanel" id="p-uni" aria-labelledby="t-uni" hidden>
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge tool">含公式</span><h4>Side Project 執行追蹤板</h4><p>15 個任務自動排程，剩餘天數每天更新。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">公版</span><h4>README 與 Portfolio 內容規劃表</h4><p>區塊檢核 + 可複製的 README 公版。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">工作表</span><h4>系統性面試準備六層防護網</h4><p>高中與研究所面試都適用。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+          </div>
+        </div>
+
+        <div role="tabpanel" id="p-grad" aria-labelledby="t-grad" hidden>
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge tool">含公式</span><h4>推甄時程倒數與任務甘特圖</h4><p>填送件截止日，17 個任務起訖自動回推。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">工具包</span><h4>理工研究所工具包</h4><p>選實驗室、套磁信、研究計畫、備審、口試共 5 份。</p><div class="m-btns"><a class="m-btn sec" href="#">看工具包</a></div></article>
+            <article class="m-card"><span class="m-badge">工具包</span><h4>生醫與公衛研究所工具包</h4><p>同上結構，依學群調整欄位。</p><div class="m-btns"><a class="m-btn sec" href="#">看工具包</a></div></article>
+            <article class="m-card"><span class="m-badge">工具包</span><h4>商管與財經研究所工具包</h4><p>同上結構，依學群調整欄位。</p><div class="m-btns"><a class="m-btn sec" href="#">看工具包</a></div></article>
+            <article class="m-card"><span class="m-badge">工具包</span><h4>人文與社會科學研究所工具包</h4><p>同上結構，依學群調整欄位。</p><div class="m-btns"><a class="m-btn sec" href="#">看工具包</a></div></article>
+            <article class="m-card"><span class="m-badge">工具包</span><h4>藝術研究所工具包</h4><p>同上結構，依學群調整欄位。</p><div class="m-btns"><a class="m-btn sec" href="#">看工具包</a></div></article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tradeoff">
+      <div class="to-col good">
+        <p class="to-h">好處</p>
+        <ul>
+          <li><b>一次看到的量最少。</b>36 份壓成 3–7 份，選擇負擔明顯下降。</li>
+          <li>把研究所那 25 份收進頁籤，整頁高度大幅縮短。</li>
+          <li>身分是學生最容易自我辨識的軸——不需要理解準備流程。</li>
+        </ul>
+      </div>
+      <div class="to-col cost">
+        <p class="to-h">代價</p>
+        <ul>
+          <li><b>藏起來的東西不會被發現。</b>沒點的頁籤等於不存在，SEO 與探索性都受損。</li>
+          <li>高中生那組仍有 7 份平鋪——對主要客群，問題只解決了一半。</li>
+          <li>六層防護網高中與研究所都適用，被迫二選一。分類軸不乾淨。</li>
+          <li>多一次點擊才拿得到檔案。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 方向 3 ═══════════ -->
+  <section class="dir">
+    <div class="dir-head">
+      <span class="dir-tag">3</span>
+      <h2>依處境，沿用知識庫首頁的語彙</h2>
+    </div>
+    <p class="dir-note">
+      用學生自己會說的話當標題。這不是新發明——<code>src/config/resourceSituations.ts</code>
+      已經定義了六個處境，知識庫首頁的「依你的狀況找文章」正在用。這裡把同一套語彙延伸到模板。
+    </p>
+
+    <span class="canvas-label">模擬：處境即標題</span>
+    <div class="canvas">
+      <div class="canvas-inner">
+        <h3 class="m-h2">可下載模板</h3>
+        <p class="m-sub">先找到最像你現在的那一句，模板就在下面。</p>
+
+        <div class="m-situ">
+          <span class="m-situ-title">我不知道要選哪個科系</span>
+          <p class="m-group-why">方向還沒定的時候，先把選項攤開來比，而不是急著寫備審。</p>
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge tool">含公式</span><h4>升學管道戰力評估雷達圖</h4><p>個申／特選／分科，你在哪一條路上準備得最足。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">模板</span><h4>科系比較 Prompt 產生器</h4><p>兩個科系的 8 階段深度比較。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">模板</span><h4>科系探索訪談清單</h4><p>問學長姐什麼、以及怎麼記下你的判斷。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+          </div>
+        </div>
+
+        <div class="m-situ">
+          <span class="m-situ-title">我活動很多，但備審看起來很散</span>
+          <p class="m-group-why">不缺經歷，缺的是把它們串成一條教授看得懂的主線。</p>
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge">模板</span><h4>備審主線整理表</h4><p>依「與目標科系的關聯」挑出能串成主線的 3–5 項。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">引導</span><h4>學習歷程「反思」寫作引導</h4><p>把「收穫很多」換成一段只有你寫得出來的話。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+          </div>
+        </div>
+
+        <div class="m-situ">
+          <span class="m-situ-title">我想做 Side Project，但不知道從哪開始</span>
+          <p class="m-group-why">從選題、動手，到讓評審看得懂的 README 與作品集。</p>
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge tool">含公式</span><h4>Side Project 執行追蹤板</h4><p>前六個任務都還沒開始寫程式——那是刻意的。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">公版</span><h4>README 與 Portfolio 內容規劃表</h4><p>先確認每個區塊有沒有，再處理好不好。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+          </div>
+        </div>
+
+        <div class="m-situ">
+          <span class="m-situ-title">面試快到了，我不知道該準備什麼</span>
+          <p class="m-group-why">通知到面試通常只有兩到四週。準備的是素材，不是逐字稿。</p>
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge">工作表</span><h4>面試答題素材工作表</h4><p>自介三段式填空，加五個題型的素材對照。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">工作表</span><h4>系統性面試準備六層防護網</h4><p>答不出來時通常不是表達的問題，是第三層沒建立。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+          </div>
+        </div>
+
+        <div class="m-situ">
+          <span class="m-situ-title">我要準備研究所推甄</span>
+          <p class="m-group-why">時程、研究計畫書、聯繫教授——推甄的準備邏輯和大學申請不一樣。</p>
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge tool">含公式</span><h4>推甄時程倒數與任務甘特圖</h4><p>填送件截止日，17 個任務起訖自動回推。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+            <article class="m-card"><span class="m-badge">工具包</span><h4>分學群工具包 25 份</h4><p>五個學群各五份，評估邏輯不同，欄位也不同。</p><div class="m-btns"><a class="m-btn sec" href="#">看五個學群</a></div></article>
+          </div>
+        </div>
+
+        <div class="m-situ">
+          <span class="m-situ-title">我已經錄取了，暑假該做什麼</span>
+          <p class="m-group-why">一個月把一件事做完，比什麼都碰一點有用。</p>
+          <div class="m-grid">
+            <article class="m-card"><span class="m-badge">Checklist</span><h4>升大學前 30 天 Checklist</h4><p>探索選題 → 做第一版 → 優化紀錄 → 整理表達。</p><div class="m-btns"><a class="m-btn" href="#">CSV</a><a class="m-btn sec" href="#">Markdown</a></div></article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tradeoff">
+      <div class="to-col good">
+        <p class="to-h">好處</p>
+        <ul>
+          <li><b>全站語彙一致。</b>知識庫首頁已經用這套處境，學生在兩處看到同一句話。</li>
+          <li>問句直接對上痛點，不需要學生先理解「準備階段」這種內部概念。</li>
+          <li>研究所 25 份收成一張卡，整頁高度接近方向 2，但沒有藏起來。</li>
+        </ul>
+      </div>
+      <div class="to-col cost">
+        <p class="to-h">代價</p>
+        <ul>
+          <li><b>可能長出第二份處境清單。</b>若不與 <code>resourceSituations.ts</code> 共用，就是 D-003 的形狀——同一份事實兩份手寫。</li>
+          <li>既有六個處境有兩個（特選、家長）沒有對應模板，需要調整清單或接受不對齊。</li>
+          <li>標題較長，手機上每組佔的垂直空間比方向 1 多。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 收尾 ═══════════ -->
+  <div class="close">
+    <h2>我建議方向 3，但它有一個前提</h2>
+    <p>
+      理由不是它最好看，是<strong>它讓兩個頁面說同一種話</strong>。學生在知識庫首頁看到
+      「我活動很多，但備審看起來很散」，到了模板頁又看到同一句——那是同一個產品的感覺。
+      方向 1 的準備階段是我們內部的分法，方向 2 的身分標籤則把跨身分的工具逼著二選一。
+    </p>
+    <p>
+      前提是：<strong>處境清單必須跟 <code>resourceSituations.ts</code> 共用一份資料</strong>，
+      在那份設定裡加上「這個處境有哪些模板」，而不是在 <code>tools.astro</code> 另寫一份。
+      否則就是 D-003 那 20 份模板消失四輪的同一種結構。這件事會讓實作從「改一頁」變成
+      「改一個設定檔加兩頁」，我認為值得，但那是多出來的工。
+    </p>
+    <div class="flag">
+      <p>
+        <strong>另外要你決定一件事（三個方向都會碰到）：</strong>推甄時程甘特圖目前放在通用區，
+        但它是研究所端的工具。三個方向的模擬裡我都把它移到研究所那一組了——
+        如果你認為它該留在通用區，跟我說，我改回去。
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // 寬度切換：改 body 的 data-w，模擬區用 CSS 收窄，不動實際視窗
+  document.querySelectorAll('.seg button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.body.dataset.w = btn.dataset.w;
+      document.querySelectorAll('.seg button').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b === btn)),
+      );
+    });
+  });
+
+  // 方向 2 的頁籤：真的能切，含鍵盤左右鍵
+  const tabs = [...document.querySelectorAll('.m-tab')];
+  function select(tab) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      next.focus();
+      select(next);
+    });
+  });
+
+  document.body.dataset.w = 'desktop';
+</script>

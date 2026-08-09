@@ -30,6 +30,456 @@
 
 ---
 
+## #015｜2026-08-05｜實測發現 7 份新模板與漏斗出口從未在正式站生效；形式落差拍板全面補齊
+
+**Scope**：對照 `TBD知識庫轉工具模板銷售企劃_0804`（Google Doc）與實際狀態，
+查證上線狀況，記錄形式落差的拍板結果。
+**Non-scope**：不合併分支、不部署、不改任何模板檔或頁面程式。
+
+**本輪最該記的一項——待辦被標成完成，但正式站上不成立**：
+
+實測 `https://tbd-web.vercel.app`（2026-08-05）：
+
+| 檢查 | 結果 |
+|---|---|
+| `tools.html` 列出的 CSV 數 | **29**（批次 A；批次 B 的 7 份不在） |
+| 7 份新模板 CSV | 全部 404 |
+| `/pages/placement.html` | **404** ← 四份高中端模板的 compass 出口是死連結 |
+| `/pages/compass.html` | 404 |
+| `/pages/seen.html`（對照組） | 307 → compass（本來就在 main 上，所以活著） |
+
+成因不是沒 push：`f867065` 已在 `origin/feat/templates-and-compass-funnel`，
+但**該分支未合併進 `main`**，而正式站部署 `main`。`/pages/placement.html` 的轉址
+規則寫在 `vercel.json:13`，同樣在未合併的分支上，所以規則在正式環境根本不存在。
+`5f58789`（#014 的銷售頁改寫）則連分支都還沒推。
+
+**教訓**：「push 了」與「上線了」在這個 repo 是兩件事，因為所有工作都在 feature branch。
+驗收一律打正式站 URL，不要看 git 狀態。這次是靠 `tools.html` 只列 29 份這個
+**與我方設定無關的獨立訊號**抓到的——先前用猜的檔名打 404，那證明不了任何事。
+
+**變更檔案**：
+- `docs/template-format-upgrade.md` — 新增。11 個產品的形式落差逐項對照、
+  企劃書沒涵蓋的 17 份、與上線順序的衝突
+- `../TEMPLATE_INVENTORY.md`（根目錄，無版控）— 待辦 2／3 改為「尚未生效」並附實測證據；
+  待辦 5 標記完成（使用者回報，repo 側無法查證）；新增 §7 形式落差拍板、§8 待拍板的上線順序
+
+**閘門證據**：G1／G2／G3／G4 全部 **N/A**——本輪只動 Markdown，未觸及任何會被
+build 或 verify 涵蓋的檔案。正式站實測見上表，那是本輪唯一的證據來源。
+
+**計畫／決策異動**：形式落差拍板「全面補齊」（正本記在 `TEMPLATE_INVENTORY` §7）。
+連帶把企劃書的 8 週排程重新啟用——扣掉已完成的階段 1 內容層。
+
+**風險與待確認**：
+1. **批次 B 的 7 份同時是「待上線」與「待補形式」，兩者互斥。** 走法 A／B／C 未選，
+   這一項阻塞其他所有事
+2. 補完形式後 5 份不再是 CSV，`tools.astro` 的下載連結、`gradTemplates.ts`、
+   `verify.mjs` 斷言都要跟著改——不是換檔案而已
+3. 企劃書的定價段落（單品 150–399、落點分析 +$299 解鎖）與 D-M2／D-006 直接衝突，
+   **尚未處理**。文件還是團隊手上的執行依據，不修會有人照著做
+4. 六階段 SOP 需要四個角色（LR／YC／YY／CL），目前完全沒有在跑
+
+**走法拍板：C**（2026-08-05，同日）。分支已備妥，**未推、未合併**：
+
+- 分支 `feat/compass-page-and-redirect`，基底 `origin/main`（6669ff7），單一 commit `327ddf4`
+- 作法不是 cherry-pick 而是**按路徑取檔**：從 `feat/templates-and-compass-funnel`
+  取 9 個路徑的最終狀態，因此包含 `5f58789` 的銷售頁改寫，不需要處理 commit 之間的中間態
+- 含：`vercel.json` 轉址、`compass.astro`、`pricing.ts`、`tbd-pages.css`、
+  `verify.mjs`、三份批次 A 模板的 `.md`（compass 出口）、`DECISIONS.md`
+- 排除：7 份新模板的 14 個檔、`tools.astro` 分組改版、分組方向稿
+- 第四份帶 compass 出口的是 `admission-channel-radar`（批次 B），出口跟著模板押後
+- 在隔離的 worktree 驗，未動主工作區
+
+**C 分支的閘門證據**：
+- G1／build：PASS，157 頁
+- G3 verify：PASS **28/28**，含新增的 `/pages/compass.html`（`NT$`／`499`／`899`／
+  compass 網域四項 mustContain）
+- 排除有效（對 `dist/` 實測，不是看 git）：模板 CSV 計 **29** 份、7 份新模板全數不在
+  `dist`、compass 頁仍 `noindex`、首頁不含 compass 連結、`tools.html` 無新模板連結
+- **本來預期會失敗但沒有的一項**：`verify.mjs` 的 `templateFiles()` 改成掃磁碟上
+  所有 `.md`（原本只篩 `grad-`），我原本判斷 main 的舊 `tools.astro` 可能沒列全
+  4 份通用模板而會紅。實測列全了，所以過。這是實測結果，不是推論
+
+**C 的後續成本（現在就要知道）**：`feat/templates-and-compass-funnel` 之後要重新
+接上 main 時，`vercel.json`／`verify.mjs`／`pricing.ts`／`compass.astro`／`DECISIONS.md`
+與三份 `.md` 都已在 main 上。內容相同的部分 git 併得掉，但 `WORKLOG.md` 與
+`DECISIONS.md` 兩邊都在檔首插入條目，**衝突是必然的**，要手動解。
+建議該分支改為 rebase 到新的 main 再續做，不要 merge。
+
+**PR #18 的 CI 紅燈與根因（2026-08-05 追加）**：
+
+推上去之後 Vercel check 直接 `failure`。原始訊息由 Vercel bot 貼在 PR 留言：
+
+```
+The `vercel.json` schema validation failed with the following message:
+`redirects[1]` should NOT have additional property `_comment`
+```
+
+`redirects[1]` 就是新增的那筆 `/pages/placement.html` 轉址。Vercel 的 `redirects`
+schema 是 `additionalProperties: false`，多一個鍵就整份設定驗證失敗，
+**在 build 開始前中止部署**——所以 `target_url` 只給
+`vercel.com/docs/.../project-configuration`，沒有 build log。
+辨識方式記起來：**失敗連到設定文件而非部署 log ＝ 設定檔無效，不是程式壞。**
+
+**這不是本 PR 造成的，而是本 PR 讓它第一次被看見。** `_comment` 由 `f867065` 引進，
+之後每一次 preview 部署都是紅的：
+
+| commit | 環境 | 結果 |
+|---|---|---|
+| `6669ff7`（`_comment` 出現前） | Production | success |
+| `9957a5f` | Preview | **failure** |
+| `0f40235` | Preview | **failure** |
+| `327ddf4`（本 PR 第一版） | Preview | **failure** |
+
+**三個 commit 連紅沒被發現，因為本機閘門根本不驗 `vercel.json`。**
+`npm run build` 不碰它，`verify` 的 28 項也不碰它，只有 Vercel 會。
+這是閘門缺口，不是誰不小心——所以修法不是「下次記得」，是把它加進閘門。
+
+**修正 commit `d678c5e`**：
+- `vercel.json` — 移除 `_comment`
+- `docs/DECISIONS.md` — 新增 D-007：模板出口為什麼走站內轉址（模板是會被下載的檔案，
+  網域搬家後改不到已下載的副本）、以及這條 schema 限制與辨識方式
+- `scripts/verify.mjs` — 新增 `checkVercelJson()`，放在 build 之前。
+  **用白名單而非黑名單**：schema 本身就是 `additionalProperties: false`，
+  黑名單只擋得住已經出過事的那個鍵名，下次換個名字又會重演
+
+**閘門有效性已實測**（不是只確認它在正常情況下不報錯）：
+修好的設定 → 0 問題；放回 `_comment` → 1 問題且訊息指到 `redirects[1]` 與鍵名、
+與 Vercel 自己回的一致；故意寫壞 JSON → 1 問題。
+修正後 `npm run verify` 仍 28/28。
+
+**已合併並在正式站實證（2026-08-05）**：PR #18 squash 為 `a44da05`。
+部署後 30 秒內生效，六項全過：
+
+| 檢查 | 結果 |
+|---|---|
+| `/pages/placement.html` | **307 → `tbd-compass-app.vercel.app/placement`** |
+| `/pages/compass.html` | 200 |
+| `tools.html` 模板數 | **29**（排除有效） |
+| 批次 B 三支 CSV | 全 404 |
+| compass 頁 | `noindex` |
+| 對照組 `seen.html` | 307 → compass |
+
+**更正一處先前的說法**：本則原本寫「應為 302」。實際是 **307**——Vercel 對
+`permanent: false` 一律發 307，本來就在站上的 `seen.html` 也是 307。語意（非永久轉址）
+正確，是先前的狀態碼寫得不精確。驗收條件應寫「307 且目的地為 compass」。
+
+**驗收方式本身有一個坑值得記**：合併前試過用 preview 部署先驗，但整個 preview 被
+Vercel SSO 保護擋著，**每一條路徑都回 302 到 `vercel.com/sso-api`**。
+`/pages/placement.html` 當時也是 302——只看狀態碼會誤判成「轉址生效」。
+識破它靠的是比對 `redirect_url`，以及注意到三支**本來就不存在**的批次 B CSV 也回 302
+而非 404。**驗轉址一律比對目的地，不要只看狀態碼。**
+
+**下一步**：`TEMPLATE_INVENTORY` 待辦 3 已劃掉（但只有三份出口活了，第四份
+`admission-channel-radar` 屬批次 B、跟著押後）。**待辦 2 仍維持未完成**，這是走法 C 的
+設計而非遺漏。接下來是 §7 的形式補齊，第一件事是選定第三節那 17 份要不要一起補。
+
+---
+
+## #014｜2026-08-05｜D-M2／D-M3 拍板後，銷售頁與 pricing.ts 全面改寫
+
+**Scope**：把 `compass.astro` 與 `pricing.ts` 對齊拍板結果——**付費的不是落點分析**。
+**Non-scope**：不拿掉 `noindex`（解鎖流程還沒接起來）、不掛進 nav、不動 compass repo 的程式。
+
+**背景**：拍板前這一頁的整個價值主張是「免費版只看得到概略位置，完整報告付費」。
+拍板後落點分析全部免費且免登入，那句話從賣點變成假話，必須整段改寫而不是改幾個字。
+
+**變更檔案**：
+- `src/config/pricing.ts` — 兩個方案的 `includes` 由「完整落點報告／個人化校系比對結果」
+  改為「顧問接手包分享連結／跨裝置同步／跨年度保存」；同步註記更新為 2026-08-05
+- `src/pages/pages/compass.astro` — `description`、hero lead、「那付費解鎖的是什麼」
+  整節、方案註腳、開始區的 CTA 文案。免費清單第一項由「落點分析的基本結果」
+  改為「落點分析的全部功能」，模板份數 29 → 36（早就過時了，這輪順手修）
+
+**閘門證據**：
+- G1 語法：PASS。`npm run build` 157 頁
+- G3 smoke：PASS。`npm run verify` 28/28，含 `/pages/compass.html` 的
+  `mustContain: ['NT$','499','899','tbd-compass-app.vercel.app']`——價格未變故仍通過
+- 人工目視：**未做**。本輪只改文案未動版型，且 Chrome 擴充功能仍未連線
+
+**計畫／決策異動**：`MONETIZATION_PLAN.md` 狀態改為已拍板、§2 兩節加拍板註記、
+§8 待辦 1 劃掉並新增待辦 5；`TEMPLATE_INVENTORY.md` 待辦 1 劃掉。
+決策正本是 compass 的 D-006，本 repo 不重複寫一份。
+
+**風險與待確認**：
+1. `pricing.ts` 仍是手寫鏡像，正本在 compass 的 `PLANS`。這輪兩邊同時改、內容一致，
+   但保證機制還是只有「改價先改 compass」這條人為規則。verify 只比對數字（499／899），
+   **比對不到 `includes` 的文字**——方案內容講錯不會有任何訊號
+2. 銷售頁現在主打「落點免費」，等於把最強的鉤子從付費項移到免費項。
+   轉換率的假設變了，軟啟動要重新看數據
+
+**下一步**：等 compass 那側把 `hasAccess()` 接到接手包、且金流實刷過一筆之後，
+再回來拿掉 `noindex` 並把本頁加進 `site.ts` 的 nav。
+
+---
+
+## #013｜2026-08-05｜挑定方向 1（依準備階段）並實作；甘特圖移出通用區
+
+**Scope**：`tools.astro` 的「可下載模板」區由單一平鋪網格改為依準備階段五組；
+把「推甄時程倒數與任務甘特圖」從通用區移到研究所區的跨學群區塊。
+**Non-scope**：不動 `gradTemplates.ts` 與五個分學群指南頁、不動 `resourceSituations.ts`、
+不改任何模板檔本身、不動 `verify.mjs`。
+
+**挑選過程中發現的事（這是本輪最該記的一項）**：方向稿宣稱方向 3「沿用
+`resourceSituations.ts` 已定義的六個處境」，但它模擬裡的六句只有三句真的在那份設定裡
+（活動很散、Side Project、研究所推甄）；「不知道選哪個科系」「面試快到了」「已經錄取了」
+三句是新造的，而既有的 `special-admission`、`parent`、`early-start` 被靜靜拿掉。
+方向稿自估的實作成本「改一個設定檔加兩頁」因此是低估的——真要共用一份資料，
+等於把 `situations` 從 6 改成 9 並改寫既有三個，而 `resources.astro`（知識庫首頁）與
+`search.astro`（搜尋頁空狀態）都讀它，這是全站處境語彙改版，不是模板頁改版。
+**教訓：方向稿裡「沿用既有設定」這種話要打開那份設定逐項比對，不能照收。**
+
+**變更檔案**：
+- `src/pages/pages/resources/tools.astro` — `downloads` 平陣列改為 `downloadGroups`
+  五組（找方向 3／累積與記錄 2／整理成果 2／面試 2／入學前 1）；新增 `gradShared`
+  放跨學群的甘特圖，渲染在 `#grad-toolkits` 五個學群之前；卡片標題 `h3`→`h4`
+  （組標題升為 `h3`）；`description` meta 改為反映分組
+- `public/css/tbd-pages.css` — `.grad-toolkit-*` 更名為 `.tool-group-*`（通用區與研究所區
+  現在共用同一組樣式，`grad` 前綴不再成立）；新增 `.tool-group-why`、`.tool-group-count`；
+  新增 `@media (min-width: 900px)` 下 `.tool-group .card-grid` 固定三欄
+
+**閘門證據**：
+- G1 語法：PASS。`npm run build` 157 頁
+- G2 boot：N/A（靜態站，無 server 端 import）
+- G3 smoke：PASS。`npm run verify` 28/28
+- G4 migration：N/A（未動 schema）
+- 人工目視：桌面 1280 headless 截圖看過（`verify.mjs` 同一套 Chrome/CDP 路徑）。
+  手機 375 **未目視**——Chrome 擴充功能未連線，改由 verify 的 `docOverflow` 探針覆蓋
+  （每個目標都在 MOBILE 寬度下測頁面級水平溢出，tools.html 通過）。
+  依 CLAUDE.md 陷阱 2，`--window-size` 在窄寬度不可信，故不用它截 375 圖充數。
+
+**第一次截圖抓到的問題（已修）**：拆成五組後每個 `.card-grid` 各自 `auto-fit`，
+份數不同的組算出不同欄數——3 份的組卡片 1/3 寬、2 份的組 1/2 寬、1 份的組整排寬，
+同一頁卡片忽大忽小。固定三欄修掉。**build 與 verify 都不會抓到這個，只有看圖才會。**
+
+**計畫／決策異動**：`TEMPLATE_INVENTORY.md` 待辦 4 由「方向稿完成，待挑選」改為「已完成」。
+無新增 D-0xx——分組軸線是可逆的呈現選擇，不是會綁住後續的結構決策。
+
+**風險與待確認**：
+1. 五組的份數不均（3/2/2/2/1）是刻意保留的。「入學前」只有 1 份，視覺上會空一片。
+2. 方向 3 的價值（全站語彙一致）沒有實現，只是被延後。若日後要做，範圍見上面那段。
+
+**下一步**：拍板 `TEMPLATE_INVENTORY.md` 的 D-M2／D-M3（賣什麼、定價）。
+compass 的 `hasAccess()` 目前仍無呼叫端，整條付費線卡在這個決策後面。
+另外 PR #17（本站）與 tbd-compass-app PR #56 都還沒 merge——
+#17 merge 後要立刻打 `https://tbd-web.vercel.app/pages/placement.html` 確認回 302。
+
+---
+
+## #012｜2026-08-04｜tools.astro 分組：三個方向稿完成，三案並存待挑，未實作
+
+**Scope**：依 CLAUDE.md 的 UI 改版三級流程（區塊改版＝先出方向稿），為
+`TEMPLATE_INVENTORY.md` 待辦 4 產出可操作的 HTML 方向稿。
+**Non-scope**：**不實作進站**。三個方向都保留，等挑定再動 `tools.astro`。
+
+**背景**：通用模板從 4 份長到 11 份後，「可下載模板」變成單一平鋪網格。
+這 11 份橫跨高中升學、Side Project、面試、Portfolio 四種情境，平鋪讓人難挑。
+
+**產出**：
+- Artifact（可操作）：<https://claude.ai/code/artifact/90e5ea7f-67a3-4ea7-a3de-05e1945f1072>
+- 原始檔：`docs/design-drafts/tools-grouping-directions.html` — **新增目錄**。
+  收進 repo 的理由：artifact 的來源檔原本只在 session 暫存目錄，那裡會被清掉，
+  之後就只能把 artifact 抓回來重建。要改方向稿改這個檔再重新發布即可
+
+**三個方向與各自的代價**：
+
+| 方向 | 分組軸 | 主要代價 |
+|---|---|---|
+| 1 依準備階段 | 找方向→累積記錄→整理成果→面試→入學前 | 最後一組只有 1 份會空；假設學生分得清自己在哪一步 |
+| 2 依對象分頁籤 | 高中生 7／大學生 3／研究所 26 | **沒點的頁籤等於不存在**（SEO 與探索性受損）；高中生組仍 7 份平鋪；六層防護網跨身分被迫二選一 |
+| 3 依處境 | 沿用 `src/config/resourceSituations.ts` 既有的六個處境語彙 | 若不與該設定共用資料就是 D-003 的形狀；既有處境中「特選」「家長」無對應模板 |
+
+**當輪結論**：使用者表示三個方向都可接受、三種呈現都保留，決定延後。**未挑定，未實作。**
+
+**閘門證據**：N/A —— 本輪未動任何產品程式碼，只新增 `docs/` 底下的文件與方向稿原始檔。
+`tools.astro`、`verify.mjs`、模板檔案一律未動，上一輪的 build 157 頁 / verify 28/28 仍然成立。
+
+**計畫／決策異動**：`TEMPLATE_INVENTORY.md` 待辦 4 由「未開始」改為「方向稿完成，待挑選」。
+無新增 D-0xx——分組方式尚未拍板，還不到寫決策的時候。
+
+**風險與待確認**：
+1. 三個方向的模擬裡，**推甄時程甘特圖都被移到研究所組**（它目前錯放在通用區，是 #009 放的）。
+   這是三案共同的前提，但尚未經使用者確認。實作前要先問一次
+2. 若選方向 3，實作範圍會從「改一頁」變成「改 `resourceSituations.ts` 加兩頁」——
+   處境清單必須共用一份資料，否則同一份事實會有兩份手寫
+
+**下一步**：本輪停在這裡。下次開場要處理的依序是——
+① `git push` 兩個 branch（`feat/templates-and-compass-funnel` / `feat/paywall-scaffold-and-theme`），
+push 後**立刻**打 `https://tbd-web.vercel.app/pages/placement.html` 確認回 302，
+否則四份模板的 compass 出口是死的；
+② 挑定分組方向並確認甘特圖歸屬，然後實作；
+③ 拍板 `TEMPLATE_INVENTORY.md` 的結論（等同 D-M2）。
+
+---
+
+## #011｜2026-08-04｜接上斷掉的漏斗：4 份高中端模板加 compass 出口，走站內轉址而非硬寫外站網域
+
+**Scope**：`TEMPLATE_INVENTORY.md` 第五節的待辦 3。順帶補齊 7 份新模板缺的頁尾署名。
+**Non-scope**：研究所端 25 份不加出口（compass 目前沒有研究所對應功能，導到用不上的地方比不導更傷）、
+`tools.astro` 的資訊架構分組、免費／付費決策本身。
+
+**起因**：`TEMPLATE_INVENTORY.md` 盤點時實測 36 份模板的 `.md`，**零份導向 compass**。
+118 篇文章 → 36 份模板 → 斷了。學生填完雷達圖、排完甘特圖，沒有任何東西告訴他
+可以去把落點算出來。
+
+**變更檔案**：
+- `vercel.json` — 新增 `/pages/placement.html` → compass `/placement` 的 302 轉址
+- `public/assets/templates/admission-channel-radar.{md,csv}` — 加 compass 出口（CSV 版加在表尾一列）
+- `public/assets/templates/admission-main-thread.md` — 加 compass 出口
+- `public/assets/templates/department-compare-prompt.md` — 加 compass 出口
+- `public/assets/templates/pre-college-30day-checklist.md` — 加出口，指向 `/pages/seen.html`
+  （準大學生用不到落點，對應的是經歷紀錄那條線）
+- 7 份新模板的 `.md` — 補上既有慣例的頁尾署名（原本 29/36 有，7 份缺）
+
+**為什麼走站內轉址，不直接寫 compass 網域**：
+模板是**會被下載的靜態檔**。compass 目前在暫時網域（`tbd-compass-app.vercel.app`，
+其首頁註解寫明「搬到 app.tbd… 後再開放索引」）。若把該網域寫進模板，網域一搬，
+已經下載到學生電腦裡的副本全部變死連結，而且我們改不到。走 `/pages/placement.html`
+轉址則只要改 `vercel.json` 一行。沿用既有 `/pages/seen.html` 的做法，同樣用
+`permanent: false`（302）——目的地本來就是暫時的。utm 查詢字串 Vercel 會自動帶過去。
+
+**閘門證據**：
+- `npm run build`：PASS（157 頁）
+- `npm run verify`：PASS 28/28
+- `vercel.json`：JSON 合法性已驗
+- CSV 結構：`admission-channel-radar.csv` 加列後仍 22 列 × 4 欄
+- 四份模板各自命中一次出口連結（grep 確認）
+- **轉址本身 NOT RUN**：`vercel.json` 的 redirects 只在 Vercel 部署後生效，
+  本機 `astro preview` 實測 `/pages/placement.html` 回 **404**（預期行為）。
+  **部署後必須手動打一次確認回 302 並落在 compass 的落點頁**——在那之前，
+  這四份模板裡的連結是死的
+
+**計畫／決策異動**：`TEMPLATE_INVENTORY.md` 待辦 3 完成。無新增 D-0xx。
+
+**風險與待確認**：
+1. **轉址未驗證**（見上）。這是本輪唯一沒有證據的一環，且影響四份對外檔案。
+2. 這四份模板中有三份**已經在正式站上線**，改動會隨下次 push 一起生效。
+3. 發現 compass 的公開鉤子頁（`tbd-compass-app` 的 `src/pages/index.astro`）內嵌了
+   **第三份品牌色副本**（`--gc-*`），且其中 `--gc-mid: #767995` 是 `tbd-theme.css`
+   註明「已調暗為 #6A6D89 以通過 WCAG AA」之前的舊值。屬 compass 的範圍，本輪未動。
+
+**下一步**：push 之後第一件事是打 `https://tbd-web.vercel.app/pages/placement.html`
+確認 302 生效。接著回 `TEMPLATE_INVENTORY.md` 的待辦 4（`tools.astro` 分組，要先出方向稿）
+與待辦 5（含公式的 CSV 實際匯入 Google 試算表確認）。
+
+---
+
+## #010｜2026-08-04｜軌 A 收尾：補完剩餘 6 份模板，模板總數 30 → 36
+
+**Scope**：`MONETIZATION_PLAN.md` 軌 A 的產品 1、2、4、5、6、7。
+**Non-scope**：既有 29 份的免費／付費決策（D-M2 未拍板）、視覺統一（YY）、UX 檢核（CL）、
+`tools.astro` 的資訊架構調整（見下方風險 2）。
+
+**變更檔案**（每份皆 `.md` + `.csv` 兩格式）：
+- `side-project-tracker` — 產品 7。15 個任務，CSV 帶公式：填專案開始日自動排目標完成日，
+  剩餘天數 `=Cn-TODAY()` 每天更新。前六列都還沒開始寫程式，對應文章 Step 1–2
+- `admission-channel-radar` — 產品 1。11 題各評 1–5 分，三管道平均分 `=AVERAGE(C5:C8)` 等自動算
+- `interview-answer-material` — 產品 5。三段式自介填空 + 五題型素材表
+- `interview-six-layer-prep` — 產品 6。六層逐層填
+- `portfolio-reflection-guide` — 產品 2。三種反思結構各兩則
+- `readme-portfolio-planner` — 產品 4。區塊檢核表 + 可直接複製的 README 公版
+- `src/pages/pages/resources/tools.astro` — `downloads` 陣列 5 → 11 筆
+
+**內容來源**：六份的維度、層序、結構全部取自既有文章，未自創另一套標準——
+六層架構逐字對應 `lulu-preparation-system.mdx`、三種反思對應 `reflection-in-portfolio.mdx`、
+三管道評估項目對應 `admission-channels-compare.mdx`、README 區塊對應 `readme-guide.mdx`
+的「最低可行版本」、Side Project 五階段對應 `side-project-from-zero.mdx`。
+
+**刻意不重複既有資產**：`portfolio-guide.html`（839 行六步驟指南）與 `interview-bank.astro`
+（5 題型題庫，每題附「評審想看什麼」）內容已很完整，產品 4、5 只補「可填的工作表」那一層，
+不重講一次內容。素材表也導向題庫頁挑題，不在模板裡再抄一份題目。
+
+**閘門證據**：
+- `npm run build`：PASS（157 頁）
+- `npm run verify`：PASS **28/28**，模板不得漏檔項現在斷言 36 個檔名
+- CSV 結構檢查（腳本）：7 份全部 BOM 存在、欄數一致、自我參照公式（`=Dn-`／`=Cn-`）的列號
+  等於所在列、雷達圖三個 `AVERAGE` 範圍與實際資料列吻合（C5:C8／C9:C12／C13:C15）
+- 人工目視：CDP 量測 `tools.html`，桌面 1280 `1265===1265`、手機 375 `375===375`，
+  溢出元素清單皆空。截圖確認 11 張卡片在三欄網格正常排列
+
+**計畫／決策異動**：軌 A 的 7 份模板全部完成（#009 一份 + 本輪六份）。無新增 D-0xx。
+
+**風險與待確認**：
+1. **公式版本只有結構驗證，沒有真的匯入 Google 試算表跑過。** 我驗的是欄數、列號參照、
+   範圍對齊，這些擋得住最常見的錯位；但「Sheets 匯入後公式是否被正確識別為公式而非文字」
+   要實際匯入一次才知道。建議上架前每份 CSV 各匯入一次確認。
+2. **`tools.astro` 的資訊架構該重看了。** 「可下載模板」現在是 11 張卡的平鋪網格，
+   而底下研究所推甄區是依學群分組的。這 11 份橫跨高中升學、Side Project、面試、Portfolio
+   四種情境，平鋪讓人難挑。依 CLAUDE.md 的 UI 改版三級流程，這屬「區塊改版」，
+   要先出方向稿再實作，本輪刻意不動。
+3. 尚未 push。
+
+**下一步**：兩件事二選一——(a) 處理風險 2 的 `tools.astro` 分組（要先出 2–3 個方向稿）；
+(b) 進軌 A 的 W1 盤點：36 份模板逐份決定免費／付費，那同時就是在回答 D-M2。
+建議先 (b)，因為 (a) 的分組方式會被 (b) 的結果影響（付費項要不要跟免費項混排是同一個問題）。
+
+---
+
+## #009｜2026-08-04｜新增推甄時程甘特圖模板（CSV 帶公式，首份），並把模板閘門從 25 份擴到 30 份
+
+**Scope**：`MONETIZATION_PLAN.md` 軌 A 的產品 10。順帶修正閘門只保護 `grad-*` 的涵蓋缺口。
+**Non-scope**：其餘 6 份待做模板、既有 29 份的免費／付費決策、視覺統一（YY）、UX 檢核（CL）。
+
+**變更檔案**：
+- `public/assets/templates/graduate-timeline-gantt.{md,csv}` — **新增**。17 個任務，CSV 的日期欄是公式（`=$B$2±n`），改 B2 一格全部重算
+- `src/pages/pages/resources/tools.astro` — `downloads` 陣列新增第 5 筆
+- `scripts/verify.mjs` — `templateFiles()` 由 `grad-` 前綴篩選改為所有 `.md`，閘門涵蓋 25 → **30 份**
+
+**閘門證據**：
+- `npm run build`：PASS（157 頁）
+- `npm run verify`：PASS **28/28**，模板不得漏檔那一項現在斷言 30 個檔名
+- CSV 結構：BOM 存在、每行皆 7 欄（腳本檢查）
+- **公式求值模擬**：解析 CSV、以 `B2=2026/10/15` 代入求值，確認 17 列的 `=$B$2±n` 可解析、
+  `=Dn-$B$2` 的列號與所在列一致、起訖未顛倒。**這一步抓到一個真的錯**——見下
+
+**抓到並修掉的錯**：末段三列的偏移量與 `graduate-timeline.mdx` 不符。原本錄取結果落在
++90 天（送件 10/15 → 隔年 1/12），但文章寫的是「十一月底到十二月」。已改為
+口試準備 +14→+40、口試 +30→+50、錄取 +45→+75，重算後為 11/14–12/04 口試、11/29–12/29 錄取，
+與文章一致。**只看檔案長得對是抓不到這個的**，要把公式真的算一次。
+
+**計畫／決策異動**：無新增 D-0xx。閘門涵蓋範圍的擴大屬 D-003 的既有原則延伸，不另立決策。
+
+**風險與待確認**：
+1. **CSV 帶公式是本站首例**，既有 29 份都沒有。代價是欄位位置變成契約——使用者在表格中間插入一列，
+   該列以下的 `=Dn-$B$2` 會被試算表自動調整（沒問題），但若刪掉 B2 所在列則全表壞掉。MD 版已註明
+   「CSV 才是完整工具，MD 是紙本版」。
+2. 甘特圖的**色條沒有自動產生**——CSV 帶不了條件式格式。MD 裡給了四步驟自己加，並明講不加也完全可用。
+   沒有在頁面上宣稱「自動產生甘特圖」。
+3. 尚未 push。
+
+**下一步**：軌 A 剩 6 份。建議順序：Side Project 追蹤板、升學管道雷達圖（這兩份同樣需要公式，
+可沿用本輪的作法）→ 面試答題素材工作表、六層防護網、反思引導、README／Portfolio 規劃表（純結構）。
+
+---
+
+## #008｜2026-08-04｜新增落點分析方案頁（noindex、未掛 nav），價格以 verify 寫死數字防跨 repo 走鐘
+
+**Scope**：`MONETIZATION_PLAN.md` §5.4——官網側的方案說明頁與導流。
+**Non-scope**：不改 `site.ts` 的 nav（付費牆未上線，先不開入口）、不動既有頁面、不動 29 份免費模板、不碰金流（在 compass 那側）、不 push。
+
+**變更檔案**：
+- `src/pages/pages/compass.astro` — **新增**。落點分析方案頁：先講免費的三件事（落點基本結果、29 份模板、知識庫）→ 免費與付費的一句話差別 → 兩張方案卡 → CTA。設 `noindex={true}`
+- `src/config/pricing.ts` — **新增**。官網側的方案資料單一來源，檔頭標明它是 compass `entitlement.ts` 的鏡像與改價順序（見 D-006）
+- `public/css/tbd-pages.css` — 附加 `.pricing-*` 區塊（8 個 class）。全部走 `--tbd-*` token，未寫死色值
+- `scripts/verify.mjs` — 新增 1 個測試項，`mustContain` 寫死 `NT$`／`499`／`899`／`tbd-compass-app.vercel.app`
+
+**閘門證據**：
+- `npm run build`：PASS（157 頁，較上輪 +1）
+- `npm run verify`：PASS **28/28**（含新增的 1 項）
+- 人工目視：改用 CDP `Emulation.setDeviceMetricsOverride` 量測（依 CLAUDE.md 陷阱 #2，不用 `--window-size`）。桌面 1280 → `scrollWidth 1265 === clientWidth 1265`；手機 375 → `375 === 375`；兩者 `overflowing` 元素清單皆為空。截圖確認：桌面三欄卡片、手機單欄堆疊、兩個 CTA 皆可見，價格 NT$499／NT$899 正確渲染
+- 外部連結實測（CLAUDE.md 陷阱 #3）：`tbd-compass-app.vercel.app` 的 `/`、`/placement`、`/login` 皆回 200，才寫進頁面
+
+**計畫／決策異動**：新增 D-006（跨 repo 價格鏡像與 verify 寫死數字）。
+
+**風險與待確認**：
+1. **頁面內容描述的付費／免費界線尚未成真。** compass 的付費牆還沒套到落點頁，`MONETIZATION_PLAN.md` §2 的 D-M2／D-M3 也未拍板。這正是設 `noindex` 且不掛 nav 的原因——目前它是給團隊對稿用的，不是對外頁。**拍板並且 compass 的 gating 實際上線之前，不要拿掉 noindex。**
+2. 價格是跨 repo 鏡像，三處要同步（見 D-006）。
+3. `src/config/pricing.ts` 不在 eslint config 的涵蓋範圍內（跑 eslint 得到 "File ignored because no matching configuration was supplied"）。`src/config/` 底下的其他檔案應該也一樣，本輪未動 eslint 設定。
+4. 尚未 push；Vercel 正式部署需另行確認。
+
+**下一步**：等 D-M2／D-M3 拍板。拍板後這一頁要做三件事：拿掉 `noindex={true}`、在 `src/config/site.ts` 的 nav 加入口、把文案裡「免費 vs 付費」的描述對回 compass 實際 gating 的行為。
+
+---
+
 ## #007｜2026-08-03｜還清三項技術債＋知識庫首頁去冗餘
 
 **Scope**：①#006 下一步列的三項技術債全部處理 ②知識庫首頁（`resources.astro`）的冗餘與優化。
