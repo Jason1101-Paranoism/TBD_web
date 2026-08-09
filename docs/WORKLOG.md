@@ -30,6 +30,52 @@
 
 ---
 
+## #016｜2026-08-09｜Week 7 教育類群落地：5 篇文章＋指南頁＋5 份模板
+
+**Scope**：依 `docs/content-plans/Week7_研究所申請陪跑計畫_教育類群_知識庫轉換規劃.md`，
+比照 Week 6（藝術，`6af82a3`）的形狀把教育類群落地。
+**Non-scope**：不動既有六學群的文章內容、不改 CSS／layout、不改 content schema、不 push。
+在新分支 `feat/week7-education` 上做（`feat/templates-and-compass-funnel` 還有在途工作）。
+
+**變更檔案**：
+- `src/content/articles/education-graduate-{timeline,choose,proposal,cv,oral}.mdx` — 新增 5 篇
+  （`departmentGroup: 教育`、`gradStage` 2/3/5/6/7、`order` 7.1–7.5、各含 faqItems 與 inline CTA）
+- `src/content/articles/graduate-contact-professor.mdx` — 新增 `#education-tips` 區塊與對應 tocItem
+  （Day 4 沿用通用文，與前五個學群同一作法）
+- `src/pages/pages/guides/graduate-education.astro` — 新增指南頁：路線快篩三卡、七階段 rail、工具包
+- `public/assets/templates/grad-education-*.{md,csv}` — 5 份模板 × 雙格式（共 10 個檔）
+- `src/config/gradTemplates.ts` — `gradGuides` 與 `gradTemplateGroups` 各加一組「教育」
+  （麵包屑、對照表欄位標題、知識庫搜尋資料、tools.html 分組全部由此自動長出）
+- `src/config/resourceCategories.ts`、`src/pages/pages/resources.astro`、
+  `src/pages/pages/resources/tools.astro` — 匯總卡與 meta description 的學群列舉補上「教育」
+- `scripts/verify.mjs` — 新增 2 項回歸測試（教育指南頁、教育時程文），
+  既有 3 項（knowledge base 首頁、對照表欄位標題、階段1 橫向出口）補上教育的 mustContain
+
+**閘門證據**：
+- G1 語法：PASS（`npm run build`）
+- G2 boot：PASS（build 163 頁，較 Week 6 的 156 頁 +7＝5 文章＋指南頁＋sitemap 產物）
+- G3 smoke：PASS（`npm run verify` 30/30，含站內死連結檢查「無死連結」）
+- G4 migration：N/A（未動 schema）
+- 測試：`npm run verify` 即本專案的行為測試套件，見上
+- lint：`npx eslint` 對改動的 .ts/.mjs 回 0 errors（`src/config/*.ts` 無 eslint 設定涵蓋，回 warning「File ignored」）。
+  過程中 PostToolUse hook 的 eslint 連兩次回 `spawnSync cmd.exe ETIMEDOUT`——那是 spawn 逾時，不是規則失敗，
+  故獨立再跑一次確認。
+
+**「模板漏登記」那道閘門有生效**：`tools.html` 那項以磁碟上的實體 `.md` 檔為事實來源，
+10 份新檔在 `gradTemplates.ts` 登記前會直接讓 verify 紅——這正是 D-003 要防的形狀，這輪照順序走沒有踩到。
+
+**計畫／決策異動**：無新決策；沿用 D-003 的單一資料來源作法。
+**風險與待確認**：
+- 文章涉及心諮／特教的實習、修業年限與專業資格路徑，一律寫成「以系所公告與當年度簡章為準」，
+  未寫任何具體時數或年限數字——這類數字會隨法規調整，寫死等於製造過期內容。
+- 外部連結只用了站內既有且已驗證的兩個（臺灣博碩士論文知識加值系統、Google 學術搜尋），未新增未驗證來源。
+- 尚未 push、未合併 main，因此正式站上還看不到（見 #015 的教訓）。
+
+**下一步**：等使用者確認內容方向後再 `git push`；push 只上 feature branch，
+要在正式站生效仍需合併進 `main`。若要驗收，請打正式站 URL 而不是看 git 狀態。
+
+---
+
 ## #015｜2026-08-05｜實測發現 7 份新模板與漏斗出口從未在正式站生效；形式落差拍板全面補齊
 
 **Scope**：對照 `TBD知識庫轉工具模板銷售企劃_0804`（Google Doc）與實際狀態，
@@ -169,9 +215,42 @@ Vercel SSO 保護擋著，**每一條路徑都回 302 到 `vercel.com/sso-api`**
 識破它靠的是比對 `redirect_url`，以及注意到三支**本來就不存在**的批次 B CSV 也回 302
 而非 404。**驗轉址一律比對目的地，不要只看狀態碼。**
 
-**下一步**：`TEMPLATE_INVENTORY` 待辦 3 已劃掉（但只有三份出口活了，第四份
-`admission-channel-radar` 屬批次 B、跟著押後）。**待辦 2 仍維持未完成**，這是走法 C 的
-設計而非遺漏。接下來是 §7 的形式補齊，第一件事是選定第三節那 17 份要不要一起補。
+**分支 rebase（2026-08-05 收尾）**：`feat/templates-and-compass-funnel` 已 rebase 到
+`a44da05` 並 force-push（`5f58789` → `64f5201`）。5 個 commit 全部重放，只解一輪衝突。
+
+驗收條件刻意不是「rebase 沒報錯」，而是**「收斂到與 main 相同」**——
+`vercel.json`／`verify.mjs`／`DECISIONS.md`／`tbd-pages.css`／`pricing.ts`／`compass.astro`
+六個檔案相對 main 必須零差異，實測全過（`_comment` 計數 0，D-007 還在，
+`checkVercelJson` 出現 2 次＝定義＋呼叫而非重複貼上）。
+剩餘差異正好是 main 還缺的：7 份模板、`tools.astro` 分組、方向稿、兩份 docs。
+rebase 後 `npm run verify` 28/28、`dist` 36 份。
+退路 tag：`pre-rebase-templates` = `58d580f`。
+
+解衝突原則（下次再遇到照這個走）：`vercel.json` 與 `DECISIONS.md` 取 main
+（main 是超集）；`pricing.ts`／`compass.astro` 取被重放的 commit，
+讓後面 `f12f564` 的改寫乾淨套上、自然收斂到與 main 相同。
+
+**本輪三個決策（2026-08-05 收尾拍板）**：
+1. **形式補齊範圍擴大到全部 36 份**，不只企劃書涵蓋的 19 份。
+   理由同 `TEMPLATE_INVENTORY` §4 選項 X：兩種形式並存，學生會問「差在哪」，
+   而誠實的答案是「沒人決定」。**代價：工作量約 1.9 倍，企劃書的 8 週排程作廢，
+   需要重估——這件事還沒做。**
+2. **押後期間的預覽管道**：`feat/templates-and-compass-funnel` 的 Vercel preview
+   （SSO 保護，登入 Vercel 的瀏覽器可開；curl 會被導到 `sso-api`），
+   或本機 `npm run preview`。正式站 29 份、preview 36 份，**看到 36 份不代表上線**。
+3. **企劃書定價段落與 D-006 的衝突：延後討論。** 未處理，那份 Google Doc
+   仍是團隊手上的執行依據，仍會有人照著做——這個風險維持開著。
+
+**下一步（下次開場從這裡接）**：形式補齊的第一件事是**逐份決定那 17 份的目標形式**
+（`docs/template-format-upgrade.md` §3 有初步方向，未拍板），接著重估排程。
+
+另有一項風險最高的技術債要先想清楚：模板改成 Sheets／Notion 之後**磁碟上不會有檔案**，
+`verify.mjs` 的 `templateFiles()` 會失去事實來源——而它正是擋住 D-003
+（20 份模板消失四輪）的那道閘門。換形式時必須同步決定新的事實來源，不能只是刪掉它。
+
+`TEMPLATE_INVENTORY` 待辦 3 已劃掉（但只有三份出口活了，第四份
+`admission-channel-radar` 屬批次 B、跟著押後）。**待辦 2 仍維持未完成**，
+這是走法 C 的設計而非遺漏。
 
 ---
 
