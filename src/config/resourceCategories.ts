@@ -95,7 +95,7 @@ export const resourceCategories: ResourceCategory[] = [
         kicker: '分學群指南',
         title: '各學群研究所申請指南',
         href: '/pages/guides/graduate-application.html#matrix',
-        desc: '理工、生醫與公衛、商管財經、人文社科、設計傳播、藝術各有一份七階段專屬指南。從對照表的學群欄位標題進入你的學群。',
+        desc: '理工、生醫與公衛、商管財經、人文社科、設計傳播、藝術、教育各有一份七階段專屬指南。從對照表的學群欄位標題進入你的學群。',
         order: 8,
       },
     ],

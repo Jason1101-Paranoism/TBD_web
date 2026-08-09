@@ -30,6 +30,52 @@
 
 ---
 
+## #016｜2026-08-09｜Week 7 教育類群落地：5 篇文章＋指南頁＋5 份模板
+
+**Scope**：依 `docs/content-plans/Week7_研究所申請陪跑計畫_教育類群_知識庫轉換規劃.md`，
+比照 Week 6（藝術，`6af82a3`）的形狀把教育類群落地。
+**Non-scope**：不動既有六學群的文章內容、不改 CSS／layout、不改 content schema、不 push。
+在新分支 `feat/week7-education` 上做（`feat/templates-and-compass-funnel` 還有在途工作）。
+
+**變更檔案**：
+- `src/content/articles/education-graduate-{timeline,choose,proposal,cv,oral}.mdx` — 新增 5 篇
+  （`departmentGroup: 教育`、`gradStage` 2/3/5/6/7、`order` 7.1–7.5、各含 faqItems 與 inline CTA）
+- `src/content/articles/graduate-contact-professor.mdx` — 新增 `#education-tips` 區塊與對應 tocItem
+  （Day 4 沿用通用文，與前五個學群同一作法）
+- `src/pages/pages/guides/graduate-education.astro` — 新增指南頁：路線快篩三卡、七階段 rail、工具包
+- `public/assets/templates/grad-education-*.{md,csv}` — 5 份模板 × 雙格式（共 10 個檔）
+- `src/config/gradTemplates.ts` — `gradGuides` 與 `gradTemplateGroups` 各加一組「教育」
+  （麵包屑、對照表欄位標題、知識庫搜尋資料、tools.html 分組全部由此自動長出）
+- `src/config/resourceCategories.ts`、`src/pages/pages/resources.astro`、
+  `src/pages/pages/resources/tools.astro` — 匯總卡與 meta description 的學群列舉補上「教育」
+- `scripts/verify.mjs` — 新增 2 項回歸測試（教育指南頁、教育時程文），
+  既有 3 項（knowledge base 首頁、對照表欄位標題、階段1 橫向出口）補上教育的 mustContain
+
+**閘門證據**：
+- G1 語法：PASS（`npm run build`）
+- G2 boot：PASS（build 163 頁，較 Week 6 的 156 頁 +7＝5 文章＋指南頁＋sitemap 產物）
+- G3 smoke：PASS（`npm run verify` 30/30，含站內死連結檢查「無死連結」）
+- G4 migration：N/A（未動 schema）
+- 測試：`npm run verify` 即本專案的行為測試套件，見上
+- lint：`npx eslint` 對改動的 .ts/.mjs 回 0 errors（`src/config/*.ts` 無 eslint 設定涵蓋，回 warning「File ignored」）。
+  過程中 PostToolUse hook 的 eslint 連兩次回 `spawnSync cmd.exe ETIMEDOUT`——那是 spawn 逾時，不是規則失敗，
+  故獨立再跑一次確認。
+
+**「模板漏登記」那道閘門有生效**：`tools.html` 那項以磁碟上的實體 `.md` 檔為事實來源，
+10 份新檔在 `gradTemplates.ts` 登記前會直接讓 verify 紅——這正是 D-003 要防的形狀，這輪照順序走沒有踩到。
+
+**計畫／決策異動**：無新決策；沿用 D-003 的單一資料來源作法。
+**風險與待確認**：
+- 文章涉及心諮／特教的實習、修業年限與專業資格路徑，一律寫成「以系所公告與當年度簡章為準」，
+  未寫任何具體時數或年限數字——這類數字會隨法規調整，寫死等於製造過期內容。
+- 外部連結只用了站內既有且已驗證的兩個（臺灣博碩士論文知識加值系統、Google 學術搜尋），未新增未驗證來源。
+- 尚未 push、未合併 main，因此正式站上還看不到（見 #015 的教訓）。
+
+**下一步**：等使用者確認內容方向後再 `git push`；push 只上 feature branch，
+要在正式站生效仍需合併進 `main`。若要驗收，請打正式站 URL 而不是看 git 狀態。
+
+---
+
 ## #015｜2026-08-05｜實測發現 7 份新模板與漏斗出口從未在正式站生效；形式落差拍板全面補齊
 
 **Scope**：對照 `TBD知識庫轉工具模板銷售企劃_0804`（Google Doc）與實際狀態，

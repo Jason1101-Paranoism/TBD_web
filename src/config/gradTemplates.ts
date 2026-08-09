@@ -76,6 +76,13 @@ export const gradGuides: GradGuide[] = [
     href: '/pages/guides/graduate-arts.html',
     desc: '藝術類群研究所申請七階段：作品集與母題時程、工作室與創作取向選所、創作研究計畫、作品集備審與作品答辯，附五份下載模板。',
   },
+  {
+    dept: '教育',
+    label: '教育研究所申請指南',
+    pageTitle: '教育研究所申請完整指南',
+    href: '/pages/guides/graduate-education.html',
+    desc: '教育類群研究所申請七階段：現場經驗轉研究問題的時程、次領域與場域選所、教育研究計畫、實務與學術潛力並重的備審，以及政策題與個案題口試，附五份下載模板。',
+  },
 ];
 
 /** dept → 該學群指南的完整設定，給需要查表的地方用（麵包屑用 label、指南頁自己用 pageTitle） */
@@ -284,6 +291,43 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         desc: '四類追問題庫、五步答題框架、一分鐘創作主張與面對反對意見的句型，上場前完整檢核。',
         file: 'grad-arts-oral-checklist',
         article: '/pages/resources/arts-graduate-oral.html',
+      },
+    ],
+  },
+  {
+    dept: '教育',
+    label: '教育',
+    guide: '/pages/guides/graduate-education.html',
+    templates: [
+      {
+        title: '校所、次領域與教授比較表',
+        desc: '次領域定位、學術取向、教授方法、合作學校與實習場域、實習與修業制度逐項比較，把選校收斂成一張表。',
+        file: 'grad-education-school-compare',
+        article: '/pages/resources/education-graduate-choose.html',
+      },
+      {
+        title: '教育類群聯繫教授信結構模板',
+        desc: '先判斷該不該寄的兩組條件，再用七段信件結構寫，附可問的問題與可附上的作品清單，避免寫成只有熱忱的罐頭信。',
+        file: 'grad-education-contact-email',
+        article: '/pages/resources/graduate-contact-professor.html#education-tips',
+      },
+      {
+        title: '現場痛點轉研究問題與可行性檢核表',
+        desc: '五步轉換＋十節架構＋方法選用對照＋研究對象與倫理檢核，把現場困惑收斂成做得完的研究問題。',
+        file: 'grad-education-proposal-framework',
+        article: '/pages/resources/education-graduate-proposal.html',
+      },
+      {
+        title: '教育類備審 Checklist',
+        desc: '經驗盤點表、CV 十二欄位、每段經歷該寫出的七件事、推薦信素材與三份文件分工，逐項勾完再送件。',
+        file: 'grad-education-portfolio-checklist',
+        article: '/pages/resources/education-graduate-cv.html',
+      },
+      {
+        title: '教育口試自我檢核表',
+        desc: '四類追問題庫、方法答辯五步與個案題六步框架、政策題四段練習，上場前的完整檢核。',
+        file: 'grad-education-oral-checklist',
+        article: '/pages/resources/education-graduate-oral.html',
       },
     ],
   },
