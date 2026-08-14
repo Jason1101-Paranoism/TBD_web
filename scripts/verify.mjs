@@ -177,6 +177,105 @@ function checkTemplateManifest() {
       );
     }
   }
+
+  // CSV 必須帶 UTF-8 BOM。
+  //
+  // 沒有 BOM 的話，Excel 會用系統 ANSI 編碼開啟中文 CSV，整份變亂碼——
+  // 而使用者下載模板的第一個動作就是用 Excel 打開它。這不是相容性細節，
+  // 是「這份模板能不能用」的分野。2026-08-14 的模板審閱回報 department-compare-prompt
+  // 亂碼，一查是 41 份裡有 31 份缺 BOM；審閱者只是剛好開到其中一份。
+  //
+  // 純文字編輯器與 Google Sheets 都會忽略 BOM，所以補上它沒有任何代價。
+  const csvNoBom = readdirSync(join(process.cwd(), 'public', 'assets', 'templates'))
+    .filter((f) => f.endsWith('.csv'))
+    .filter((f) => {
+      const buf = readFileSync(join(process.cwd(), 'public', 'assets', 'templates', f));
+      return !(buf[0] === 0xef && buf[1] === 0xbb && buf[2] === 0xbf);
+    });
+  if (csvNoBom.length) {
+    problems.push(
+      `這些 CSV 缺 UTF-8 BOM，用 Excel 開啟會是亂碼：${csvNoBom.join('、')}。` +
+      `（修法：在檔首補上 EF BB BF；純文字編輯器與 Google Sheets 都會忽略它）`
+    );
+  }
+  problems.push(...checkCsvFormulaRefs());
+  return problems;
+}
+
+/** 極簡 CSV 列解析：處理雙引號欄位（公式裡有逗號）。夠用就好，不是通用 parser。 */
+function parseCsvLine(line) {
+  const cells = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQ) {
+      if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; }
+      else if (ch === '"') inQ = false;
+      else cur += ch;
+    } else if (ch === '"') inQ = true;
+    else if (ch === ',') { cells.push(cur); cur = ''; }
+    else cur += ch;
+  }
+  cells.push(cur);
+  return cells;
+}
+
+/**
+ * CSV 內的試算表公式，列號必須對得上實際內容。
+ *
+ * 為什麼需要這道：公式寫的是絕對列號（`=AVERAGE(C6:C9)`、`B19`），而 CSV 是純文字——
+ * 在檔案開頭插一行說明，底下每一條公式就全部指錯位置，而且**打開檔案不會報錯**，
+ * 只會安靜地算出錯的平均分。2026-08-14 補模板說明時當場踩到：多加兩行前言，
+ * 三個管道的平均分全部往上位移兩列，個申的平均變成把「特選」的分數也算進去。
+ *
+ * 檢查兩件事：
+ *   1. `=AVERAGE(C<a>:C<b>)` 涵蓋的列，第一欄標籤必須與公式自己那列的標籤相同
+ *      （個申的平均只能算個申那幾題）
+ *   2. 公式裡的 `B<n>` 必須指向自己那一列（同列參照，插一行就會壞）
+ */
+function checkCsvFormulaRefs() {
+  const dir = join(process.cwd(), 'public', 'assets', 'templates');
+  const problems = [];
+
+  for (const f of readdirSync(dir).filter((x) => x.endsWith('.csv'))) {
+    const text = readFileSync(join(dir, f), 'utf8').replace(/^\uFEFF/, '');
+    const rows = text.split(/\r?\n/).map(parseCsvLine);
+    const label = (rowNum) => (rows[rowNum - 1] ?? [])[0] ?? '';
+
+    rows.forEach((cells, idx) => {
+      const rowNum = idx + 1;
+      const self = cells[0] ?? '';
+
+      for (const cell of cells) {
+        if (!cell.startsWith('=') && !cell.includes('=AVERAGE(') && !cell.includes('REPT(')) continue;
+
+        for (const m of cell.matchAll(/AVERAGE\(C(\d+):C(\d+)\)/g)) {
+          const [a, b] = [Number(m[1]), Number(m[2])];
+          if (b > rows.length) {
+            problems.push(`${f} 第 ${rowNum} 列的 ${m[0]} 指到不存在的列（檔案只有 ${rows.length} 列）`);
+            continue;
+          }
+          const bad = [];
+          for (let r = a; r <= b; r++) if (label(r) !== self) bad.push(`${r}(${label(r) || '空'})`);
+          if (bad.length) {
+            problems.push(
+              `${f} 第 ${rowNum} 列「${self}」的 ${m[0]} 涵蓋了不屬於它的列：${bad.join('、')}。` +
+              `（多半是在上方插了說明行，公式的絕對列號沒跟著移）`
+            );
+          }
+        }
+
+        for (const m of cell.matchAll(/\bB(\d+)\b/g)) {
+          if (Number(m[1]) !== rowNum) {
+            problems.push(
+              `${f} 第 ${rowNum} 列的公式參照 B${m[1]}，但同列參照應該是 B${rowNum}。` +
+              `（插入或刪除列之後沒有同步更新）`
+            );
+          }
+        }
+      }
+    });
+  }
   return problems;
 }
 
