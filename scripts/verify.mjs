@@ -85,6 +85,19 @@ const TARGETS = [
     mustContain: ['教育推甄專屬工具包', 'graduate-contact-professor.html#education-tips'] },
   { path: '/pages/resources/education-graduate-timeline.html', name: '文章（教育時程：分軌 relatedArticles）', toc: true,
     mustContain: ['education-graduate-choose.html'] },
+  { path: '/pages/guides/graduate-law.html', name: '法政研究所指南（工具包＋law-tips 錨點）',
+    mustContain: ['法政推甄專屬工具包', 'graduate-contact-professor.html#law-tips'] },
+  { path: '/pages/resources/law-graduate-timeline.html', name: '文章（法政時程：分軌 relatedArticles）', toc: true,
+    mustContain: ['law-graduate-choose.html'] },
+  // ── markdown 表格的 RWD 回歸（D-009）──
+  // 全域 `table { min-width: 760px }` 會撐破文章欄（實寬只有 356–764px）。修正在
+  // tbd-pages.css 的 `.article-section table:not([class])`。下面三項刻意涵蓋：多表格的新文章、
+  // 以及兩篇 Week 6/7 的舊文——舊內容從來沒進過這份清單，那正是這個破版活了八週沒被發現的原因。
+  { path: '/pages/resources/law-graduate-proposal.html', name: '文章（法政研究計畫：多表格 RWD）', toc: true,
+    mustContain: ['grad-law-proposal-framework.md'] },
+  { path: '/pages/resources/education-graduate-choose.html', name: '文章（教育選校：舊文表格 RWD 回歸）', toc: true,
+    mustContain: ['grad-education-school-compare.md'] },
+  { path: '/pages/resources/arts-graduate-cv.html', name: '文章（藝術備審：舊文表格 RWD 回歸）', toc: true },
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
   { path: '/pages/grad-path-quiz.html', name: '推甄vs考試測驗（vanilla JS）', gpq: true,
     mustContain: ['id="gpq-card"', 'grad-path-quiz.js'] },

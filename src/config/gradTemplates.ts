@@ -83,6 +83,13 @@ export const gradGuides: GradGuide[] = [
     href: '/pages/guides/graduate-education.html',
     desc: '教育類群研究所申請七階段：現場經驗轉研究問題的時程、次領域與場域選所、教育研究計畫、實務與學術潛力並重的備審，以及政策題與個案題口試，附五份下載模板。',
   },
+  {
+    dept: '法政',
+    label: '法政研究所申請指南',
+    pageTitle: '法政研究所申請完整指南',
+    href: '/pages/guides/graduate-law.html',
+    desc: '法政類群研究所申請七階段：大三上起跑的時程、研究取向與教授選所、可辯論爭點的研究計畫、專業軌跡一致的備審，以及立場論證與反駁答辯的口試，附五份下載模板。',
+  },
 ];
 
 /** dept → 該學群指南的完整設定，給需要查表的地方用（麵包屑用 label、指南頁自己用 pageTitle） */
@@ -328,6 +335,43 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         desc: '四類追問題庫、方法答辯五步與個案題六步框架、政策題四段練習，上場前的完整檢核。',
         file: 'grad-education-oral-checklist',
         article: '/pages/resources/education-graduate-oral.html',
+      },
+    ],
+  },
+  {
+    dept: '法政',
+    label: '法政',
+    guide: '/pages/guides/graduate-law.html',
+    templates: [
+      {
+        title: '校所、研究取向與教授比較表',
+        desc: '組別定位、學術取向、教授近五年產出與慣用方法、收生狀況、對非本科背景的支援逐項比較，把選校收斂成一張表。',
+        file: 'grad-law-school-compare',
+        article: '/pages/resources/law-graduate-choose.html',
+      },
+      {
+        title: '法政類群聯繫教授信結構模板',
+        desc: '先判斷該不該寄的兩組條件，再用七段信件結構寫，附可附上的作品清單與八項寄信前檢核，避免寫成群發罐頭信。',
+        file: 'grad-law-contact-email',
+        article: '/pages/resources/graduate-contact-professor.html#law-tips',
+      },
+      {
+        title: '研究問題縮小與計畫架構模板',
+        desc: '縮小五步＋十節架構＋方法選用對照＋研究倫理與資料取得檢核，把宏大議題收斂成一個可辯論、做得完的爭點。',
+        file: 'grad-law-proposal-framework',
+        article: '/pages/resources/law-graduate-proposal.html',
+      },
+      {
+        title: '法政備審 Checklist',
+        desc: '經歷盤點表、學術 CV 十二欄位、每段經歷該寫出的七件事、自傳四要素與三份文件分工，逐項勾完再送件。',
+        file: 'grad-law-portfolio-checklist',
+        article: '/pages/resources/law-graduate-cv.html',
+      },
+      {
+        title: '口試立場論證與反駁答辯檢核表',
+        desc: '一分鐘立場說明、四類追問題庫、六步答題框架與被指出矛盾時的句型，上場前完整檢核。',
+        file: 'grad-law-oral-checklist',
+        article: '/pages/resources/law-graduate-oral.html',
       },
     ],
   },

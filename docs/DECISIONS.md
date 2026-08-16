@@ -179,3 +179,35 @@ D-003 要擋的是「模板從下載頁消失」，縮編後它剛好不再擋�
 **後果**：新增模板的順序從兩步變三步——**放檔案 → 登記 `template-manifest.json` → 登記 `gradTemplates.ts`／`tools.astro`**。
 中間跑閘門會失敗，是預期行為。`verify.mjs` 的 `checkTemplateManifest()` 與 `checkVercelJson()`
 一樣放在 build 之前：manifest 對不起來時，後面那項 tools.html 斷言本身就是用它產生的，先驗它才有意義。
+
+---
+
+## D-009 — 文章內文的 markdown 表格改由 CSS 統一收斂，不靠每篇包 `.table-wrapper`
+
+**背景**：Week 8 落地時，`law-graduate-timeline.html` 在 400px 被 verify 抓到水平溢出 285px。
+追下去發現不是這篇的問題：`tbd-components.css` 有一條全域 `table { min-width: 760px }`，
+而唯一的手機解法（`table-layout: fixed`）只寫在 `.plan-table` 的 `@media (max-width: 640px)` 裡。
+
+量過文章欄的實寬才看出這條規則錯得多徹底：`1120px` 容器 − `22×2` 內距 − `280px` 側欄 − `32px` gap
+＝ **最寬 764px**，單欄時 `min(1120, vw) − 44`。也就是說 760px 的下限**幾乎在每個視窗寬度都會溢出**，
+只有 1120px 以上的桌機剛好擦過去。裸的 markdown 表格從 Week 1 起就一直破版，
+而它活了八週沒被發現，是因為 verify 清單裡每個學群只放 `*-graduate-timeline`，
+**那幾篇剛好都沒有表格**——受影響的 7 篇（arts-choose／arts-cv／biomed-choose／business-choose／
+education-choose／education-cv／education-proposal）一篇都沒被測過。
+
+**選項**：
+  - A（採用）— 在 `tbd-pages.css` 加 `.article-section table:not([class])`，設 `table-layout: fixed; min-width: 0; width: 100%`＋儲存格 `word-break`。一條規則同時修好已寫的與未來寫的所有文章。
+  - B（否決）— 逐篇在 `.mdx` 裡把表格包進 `.table-wrapper`。Week 8 當下就是這樣先過閘門的，但它是每篇都要記得做的儀式——D-003 的 20 份模板消失，就是「靠人記得」的同一類失敗。而且結果是手機上橫向捲動，不如直接換行。
+  - C（否決）— 直接把全域 `table { min-width: 760px }` 拿掉。影響範圍包含指南頁等所有頁面級表格，超出本輪需要，而那些表格目前是綠的。
+  - D（否決）— 改用 `@media` 斷點處理。從上面的算式看，會溢出的區間是「幾乎全部」，斷點只是把補丁換個地方貼。
+
+**決定**：採 A。`:not([class])` 只挑 markdown 產生的表格，手寫的 `.plan-table`、`.series-matrix`
+維持原樣（它們各自已有處理）。欄數多的表格在窄螢幕會變高但完整可讀、不需橫捲，
+與 `.plan-table` 既有的處理方式一致。
+
+**實測**：修正前 `law-graduate-timeline` 溢出 285px（紅）；修正後連同兩篇從未被測過的舊文
+（`education-graduate-choose`、`arts-graduate-cv`）一併加進 verify 清單，35/35 全綠。
+
+**後果**：`.mdx` 裡的表格直接寫 markdown 即可，不需要也不應該再手動包 `.table-wrapper`。
+verify 清單從此不只放每個學群的 timeline——**有表格的文章要有人守著**，否則同一類破版
+會再一次靠「沒人測到」活下去。

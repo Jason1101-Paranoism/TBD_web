@@ -138,6 +138,26 @@
       "delivery": "file"
     },
     {
+      "slug": "grad-law-contact-email",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-law-oral-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-law-portfolio-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-law-proposal-framework",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-law-school-compare",
+      "delivery": "file"
+    },
+    {
       "slug": "graduate-timeline-gantt",
       "delivery": "file"
     },
