@@ -34,8 +34,13 @@ SessionStart hook 會讀這份文件，找出**編號最小、還有未勾選項
 - [x] Week 1 設計傳播（僅指南頁，無模板）
 - [x] Week 2 理工 ／ Week 3 生醫與公衛 ／ Week 4 商管財經 ／ Week 5 人文社科 ／ Week 6 藝術
 - [x] Week 7 教育（2026-08-09，PR #19 → `77fde0a`，已在正式站）
-- [ ] Week 8 之後的學群：`resources.astro` 的 `deptOrder` 已預留「法政」「農生環境」
+- [x] Week 8 法政（2026-08-16，5 篇文章＋指南頁＋5 組模板，build/verify 全綠；**尚未 push**，
+      正式站要等 main 部署，見 WORKLOG #018）
+- [ ] Week 9 之後的學群：`resources.astro` 的 `deptOrder` 還預留「農生環境」
       —— **卡在沒有週次規劃 md**，內容不能憑空生成，需先有限動素材
+- [x] 文章裸 markdown 表格的手機破版：在 CSS 端一次解掉根因（2026-08-16，D-009；
+      `.article-section table:not([class])`），受影響的 7 篇舊文一併修好，
+      其中 2 篇加進 verify 清單當回歸（見 WORKLOG #019）
 - [ ] 設計傳播補上五份模板（目前是六個學群裡唯一沒有工具包的，tools 頁以一句話帶過）
 
 ## Phase 3 — 模板形式補齊（36 份）

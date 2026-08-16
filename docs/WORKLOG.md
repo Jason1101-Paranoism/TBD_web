@@ -30,6 +30,81 @@
 
 ---
 
+## #019｜2026-08-16｜文章表格破版改在 CSS 端解根因（D-009）
+
+**Scope**：把 #018 用 `.table-wrapper` 逐篇擋住的手機破版，改成 `tbd-pages.css` 的一條規則，
+並把從未被測過的舊文加進 verify 清單。
+**Non-scope**：不動全域 `table { min-width: 760px }` 本身（影響指南頁等頁面級表格，且目前是綠的）、
+不改任何文章的文字內容、不動 `.plan-table` 與 `.series-matrix` 的既有處理。
+
+**為什麼不是逐篇包**：量過文章欄實寬是 356–764px（1120 容器 − 22×2 內距 − 280 側欄 − 32 gap），
+760px 的下限幾乎在每個視窗寬度都會溢出。逐篇包 `.table-wrapper` 是「每篇都要記得做」的儀式，
+和 D-003 那 20 份消失的模板是同一類失敗；而且結果是橫向捲動，不如直接換行。
+
+**變更檔案**：
+- `public/css/tbd-pages.css` — 新增 `.article-section table:not([class])`：`table-layout: fixed`
+  ＋ `min-width: 0` ＋ `width: 100%`，儲存格加 `word-break`。`:not([class])` 讓手寫表格不受影響
+- `src/content/articles/law-graduate-{timeline,choose,proposal,cv}.mdx` — 移除 #018 加的 6 個
+  `.table-wrapper` 包裝，回到純 markdown，與其他六週一致
+- `scripts/verify.mjs` — 法政研究計畫那項的 `mustContain` 拿掉 `table-wrapper`；新增
+  `education-graduate-choose`、`arts-graduate-cv` 兩項舊文回歸
+
+**閘門證據**：
+- G1 語法：PASS（`npm run build` 169 頁）
+- G3 smoke：PASS（`npm run verify` 35/35，含兩篇舊文；站內連結無死連結）
+- 修正確實生效：`dist/css/tbd-pages.css` 內含該規則；修正前 `law-graduate-timeline` 溢出 285px
+
+**計畫／決策異動**：新增 D-009；PLAN Phase 2 的「舊文表格破版」一項可勾掉。
+**風險與待確認**：`:not([class])` 依賴「markdown 表格不帶 class」這個前提。若日後有人在 `.mdx` 裡
+手寫帶 class 的表格，要自己處理 RWD——D-009 有寫，但這是規則的邊界，值得知道。
+**下一步**：Week 8（#018）與本則都還沒 commit／push；一起送出後要打正式站 URL 確認，
+push ≠ 上線（WORKLOG #015）。
+
+---
+
+## #018｜2026-08-16｜Week 8 法政類群落地：5 篇文章＋指南頁＋5 組模板
+
+**Scope**：把 `docs/content-plans/Week8_研究所申請陪跑計畫_法政類群_知識庫轉換規劃.md`
+轉成站上資產——5 篇 `law-graduate-*.mdx`、`guides/graduate-law.astro`、5 組 `grad-law-*`
+模板（md＋csv）與兩處登記，並在共用文 `graduate-contact-professor.mdx` 補 `#law-tips`。
+**Non-scope**：不動既有六個學群的任何檔案、不改 CSS、不重構 `gradTemplates.ts` 結構、
+不改 `graduate-application.astro`（對照表由文章 `departmentGroup` 自動推導）、不 push。
+
+**變更檔案**：
+- `src/content/articles/law-graduate-{timeline,choose,proposal,cv,oral}.mdx` — 新增，
+  gradStage 2/3/5/6/7、`departmentGroup: 法政`、order 8.1–8.5
+- `src/pages/pages/guides/graduate-law.astro` — 新增，七階段（2 篇通用＋5 篇法政專屬）
+- `public/assets/templates/grad-law-*.{md,csv}` — 新增 5 組共 10 檔
+- `scripts/template-manifest.json` — 登記 5 筆 `delivery: "file"`
+- `src/config/gradTemplates.ts` — `gradGuides` 加法政一筆、`gradTemplateGroups` 加一組
+- `src/content/articles/graduate-contact-professor.mdx` — 新增 `#law-tips` 區塊與目錄項
+- `scripts/verify.mjs` — 新增 3 項測試（法政指南／法政時程／法政研究計畫多表格 RWD）
+
+**閘門證據**：
+- G1 語法：PASS（`npm run build` 169 頁）
+- G3 smoke：PASS（`npm run verify` 33/33；站內連結掃 172 頁無死連結）
+- G4 migration：N/A（未動 schema）
+- 外部連結：8 個候選來源逐一實測，`law.judicial.gov.tw` 連不上已剔除，
+  實際採用 law.moj.gov.tw／lis.ly.gov.tw／judgment.judicial.gov.tw／cons.judicial.gov.tw／
+  ndltd.ncl.edu.tw／scholar.google.com／tpl.ncl.edu.tw／nstc.gov.tw（皆 200）
+
+**閘門擋下的兩件事（都不是假想）**：
+1. 5 個 CSV 缺 UTF-8 BOM——`Write` 工具不寫 BOM，Excel 開起來會是亂碼。模板閘門直接紅。
+2. `law-graduate-timeline.html` 在 400px 水平溢出 285px。原因是 `tbd-components.css` 的全域
+   `table { min-width: 760px }`，而手機端的解法（`table-layout: fixed`）只寫在 `.plan-table`
+   上。裸的 markdown 表格因此會撐破版面，要包 `.table-wrapper` 才會被 `overflow-x: auto` 收住。
+
+**計畫／決策異動**：未新增 D-0xx。上面第 2 點是既有 CSS 的既知陷阱，不是新決策。
+**風險與待確認**：既有六個學群的 `*-graduate-{choose,cv,proposal}.mdx` 共 6 篇也有裸的
+markdown 表格（arts-choose／arts-cv／biomed-choose／business-choose／education-choose／
+education-cv／education-proposal），推測有同一個手機破版，但它們不在 verify 清單內所以從沒被
+測到。本輪 Non-scope 沒動它們。
+**下一步**：① 決定要不要用一輪把上述 6 篇的表格補上 `.table-wrapper`（或改成在 CSS 端
+讓所有文章表格都適用 `table-layout: fixed`，一次解掉根因）；② Week 8 尚未 commit／push，
+正式站要等 main 部署才會出現。
+
+---
+
 ## #017｜2026-08-09｜補上模板閘門的反方向漏洞（D-008）；PLAN.md 第一次填
 
 **Scope**：① 解掉 WORKLOG #015 標為「風險最高」的技術債——模板改成 Sheets／Notion 後

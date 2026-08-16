@@ -145,6 +145,26 @@ summary.audience-group-header::after { content: ''; position: absolute; right: 2
 .article-section ul, .article-section ol { padding-left: 1.25rem; }
 .article-section li { margin-bottom: 0.4rem; }
 
+/* 文章內文表格（.mdx 的 markdown 表格）一律不得超出所在欄寬。
+   為什麼要有這條：tbd-components.css 的全域 `table { min-width: 760px }` 是為頁面級寬表格
+   設計的，但文章欄的實寬只有 356–764px（1120 容器 − 22×2 內距 − 280 側欄 − 32 gap），
+   等於**幾乎每個視窗寬度都會溢出**，只有 1120px 以上的桌機剛好擦過。原本只有 .plan-table
+   在 ≤640px 補了這件事，所以裸的 markdown 表格從 Week 1 起就一直破版，只是沒有任何一篇
+   進過 verify 清單所以沒被測到（見 WORKLOG #018、D-009）。
+   關鍵是 table-layout:fixed——只設 min-width:0 不夠，表格仍會取 max-content 寬（每格不換行）。
+   欄數多的寬表格會變高但完整可讀、不需橫捲，與 .plan-table 的既有處理一致。
+   `:not([class])` 只挑 markdown 產生的表格，手寫的 .plan-table / .series-matrix 維持原樣。 */
+.article-section table:not([class]) {
+  table-layout: fixed;
+  min-width: 0;
+  width: 100%;
+}
+.article-section table:not([class]) th,
+.article-section table:not([class]) td {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
 /* 研究所申請系列：階段 × 軌道 矩陣導覽 */
 .series-nav { background: #fff; border: 1px solid var(--tbd-line); border-radius: 16px; padding: 1.5rem 1.75rem; box-shadow: var(--tbd-shadow); }
 .series-nav h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--tbd-dark); }
