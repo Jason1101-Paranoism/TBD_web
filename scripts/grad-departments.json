@@ -1,0 +1,68 @@
+{
+  "$schema-note": "研究所學群體系的正本。校驗見 scripts/check-grad-departments.mjs，決策見 docs/DECISIONS.md 的 D-011",
+  "decidedAt": "2026-08-18",
+  "decidedCount": 9,
+  "statusMeaning": {
+    "shipped": "指南頁 + 五份模板都在，前台完整可走",
+    "guide-only": "指南頁在、五份模板未補。已知缺口，不是漏記",
+    "planned": "研究所內容未產出。前台不得有任何入口，出貨清單可先列"
+  },
+  "departments": [
+    {
+      "dept": "理工",
+      "slugPrefix": "grad-engineering",
+      "guide": "/pages/guides/graduate-engineering.html",
+      "status": "shipped"
+    },
+    {
+      "dept": "生醫",
+      "slugPrefix": "grad-biomed",
+      "guide": "/pages/guides/graduate-biomed.html",
+      "status": "shipped"
+    },
+    {
+      "dept": "商管財經",
+      "slugPrefix": "grad-business",
+      "guide": "/pages/guides/graduate-business.html",
+      "status": "shipped"
+    },
+    {
+      "dept": "人文社科",
+      "slugPrefix": "grad-humanities",
+      "guide": "/pages/guides/graduate-humanities.html",
+      "status": "shipped"
+    },
+    {
+      "dept": "藝術",
+      "slugPrefix": "grad-arts",
+      "guide": "/pages/guides/graduate-arts.html",
+      "status": "shipped"
+    },
+    {
+      "dept": "教育",
+      "slugPrefix": "grad-education",
+      "guide": "/pages/guides/graduate-education.html",
+      "status": "shipped"
+    },
+    {
+      "dept": "法政",
+      "slugPrefix": "grad-law",
+      "guide": "/pages/guides/graduate-law.html",
+      "status": "shipped"
+    },
+    {
+      "dept": "設計傳播",
+      "slugPrefix": "grad-design",
+      "guide": "/pages/guides/graduate-design.html",
+      "status": "guide-only",
+      "note": "Week 1 只做了指南頁。缺五份模板，且時程階段掛通用文 graduate-timeline（graduate-design.astro:11），是八群裡唯一一個。補完後改 shipped。"
+    },
+    {
+      "dept": "農生環境",
+      "slugPrefix": "grad-agriculture",
+      "guide": null,
+      "status": "planned",
+      "note": "2026-08-18 定案納入體系，但研究所內容一份都還沒有（現有的 agriculture-application.mdx 是大學申請、pre-college-agriculture-environment.mdx 是高中）。前台不得開入口，出貨清單可列並標未產出。"
+    }
+  ]
+}

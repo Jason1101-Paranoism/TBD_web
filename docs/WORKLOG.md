@@ -30,6 +30,59 @@
 
 ---
 
+## #022｜2026-08-18｜學群數定案 9：正本落地成 `grad-departments.json`＋四方一致性閘門（D-011）
+
+**Scope**：把使用者定案的「9 群、農生環境之後補」寫成 repo 內可被驗證的正本，
+並讓「學群數對不起來」這件事以後由閘門擋下。
+**Non-scope**：不產任何內容——`design-graduate-timeline.mdx` 與 `grad-design-*` 五份模板
+都還沒寫，本輪只是把它們的位置與狀態定義清楚（設計傳播＝`guide-only`）。
+農生環境的研究所內容一份都沒動。
+
+**變更檔案**：
+- `scripts/grad-departments.json`（新增）— 9 群正本，帶 `decidedCount` 與三態
+  （`shipped` 7／`guide-only` 1／`planned` 1）與 `slugPrefix`
+- `scripts/check-grad-departments.mjs`（新增）— 四方一致性校驗
+- `scripts/verify.mjs` — 在起 preview 之前呼叫上述閘門
+- `src/config/gradTemplates.ts` — 註解改指向正本，說明本陣列＝非 planned 集合、
+  `gradTemplateGroups` ＝ shipped 集合，不要單邊改
+- `CLAUDE.md` — 「新增分學群模板」加第 0 步：新增整個學群要先改正本
+
+**為什麼不是直接把農生環境加進 `gradGuides` 湊 9**：
+`gradGuides` 會驅動麵包屑、series-nav 橫向出口與知識庫搜尋資料，加進去等於在前台長出
+通往 `graduate-agriculture.html` 的連結，而那頁不存在——`check-links` 當場紅。
+**「定案 9 群」與「前台開 9 個入口」是兩件事**，正本必須能同時表示，所以才有三態。
+
+**閘門證據**：
+- G1 語法：PASS（`npx eslint scripts/check-grad-departments.mjs` 零問題；
+  write hook 的 eslint 又回了一次 `spawnSync cmd.exe ETIMEDOUT`，是 spawn 逾時不是規則失敗，已手動重跑）
+- G2 boot：PASS（`npm run build` 169 頁）
+- G3 smoke：PASS（`npm run verify` 35/35，含本輪與 #021 兩道新閘門）
+- G4 migration：N/A（未動 schema）
+- 新閘門注入測試（三個分支，皆 exit 1，還原後 exit 0）：
+  設計傳播謊報 `shipped` → 報 gradTemplateGroups 缺項＋manifest 0 份 `grad-design-*`；
+  農生環境提前開入口 → 報 gradGuides 缺項＋指南頁沒 build 出來；
+  `decidedCount` 改 8 → 報與實際 9 筆不符
+- 現況：正本 9 群，與 `gradTemplates.ts`、`template-manifest.json`、`dist/` 四方一致
+
+**計畫／決策異動**：新增 D-011。PLAN Phase 2 的「定案學群數」勾掉；
+`WEEKLY_CHECKLIST.md` ⑨ 從 🔴 改為已定案。
+
+**風險與待確認**：
+- 設計傳播停在 `guide-only` 是**被閘門記著的已知缺口**，不是漏記。補完五份模板要記得升 `shipped`，
+  否則 manifest 有檔而正本說沒有，閘門會紅（這正是它要擋的）。
+- 農生環境的 5 項工具已列在出貨清單上但內容未產出。清單那邊要標「未排程」，
+  否則完成率會一直被它拉著（⑩ 的 10a 尚未處理）。
+
+**下一步**：
+1. ② 新增 `design-graduate-timeline.mdx`（`gradStage: 2`／`departmentGroup: 設計傳播`／
+   `order` 排在 1 之前／faqItems ≥3／tocItems 8 項），換掉 `graduate-design.astro:11` 的通用文，
+   tag 改「設計專屬」。**需要素材與內容判斷，不是機械工作——動手前先確認方向。**
+2. ③ 補 `grad-design-*` 五份模板（各 `.md`+`.csv`）→ 登記 manifest → 登記 `gradTemplateGroups`
+   → **把正本的設計傳播升成 `shipped`** → verify。
+3. 本輪與 #021 都在分支 `fix/kb-bold-flanking`，未 commit、未 push。要上正式站需合進 `main` 由使用者推。
+
+---
+
 ## #021｜2026-08-18｜知識庫字面 `**` 從 160 處歸零，並補上 dist 掃描閘門（D-010）
 
 **Scope**：修掉 #020 定位到的 25 頁破版，並讓同一類問題以後由閘門擋下。

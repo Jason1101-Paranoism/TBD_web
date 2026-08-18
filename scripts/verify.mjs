@@ -602,6 +602,16 @@ try {
   process.exit(1);
 }
 
+// 學群體系四方一致性（正本 JSON／gradTemplates.ts／manifest／dist）。同樣是純靜態。
+// 2026-08-18 定案 9 群之前，這個數字在三個地方各有答案，沒有東西保證它們一致（D-011）。
+console.log('▶ 學群體系一致性檢查…');
+try {
+  execFileSync('node', ['scripts/check-grad-departments.mjs'], { stdio: 'inherit' });
+} catch {
+  console.error('\n學群體系一致性檢查未通過，中止（詳見上方清單）。');
+  process.exit(1);
+}
+
 console.log('▶ 啟動 preview…');
 const server = spawn('npm', ['run', 'preview'], { stdio: 'ignore', shell: platform() === 'win32' });
 let exitCode = 0;

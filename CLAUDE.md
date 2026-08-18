@@ -181,6 +181,10 @@ relatedArticles:
 
 **固定順序（順序錯了閘門會擋）：**
 
+0. **如果是新增一整個學群**（不是往既有學群加模板）：先改 `scripts/grad-departments.json`——
+   那是「學群共有幾個、各自到哪個階段」的正本（2026-08-18 定案 9 群，見 D-011）。三態：
+   `shipped`（指南＋模板都在）／`guide-only`（只有指南）／`planned`（研究所內容未產出，前台不得有入口）。
+   模板補齊後要把該群從 `guide-only` 升成 `shipped`，否則 `check-grad-departments.mjs` 會擋。
 1. 把 `.md` 與 `.csv` 放進 `public/assets/templates/`，檔名為 `grad-<學群>-<用途>`
 2. 在 `scripts/template-manifest.json` 登記一筆（`slug` ＋ `delivery: "file"`）
 3. 在 `gradTemplates.ts` 對應的學群 group 裡登記（`title` / `desc` / `file` / `article`）

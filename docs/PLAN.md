@@ -44,11 +44,13 @@ SessionStart hook 會讀這份文件，找出**編號最小、還有未勾選項
 - [ ] 設計傳播補上五份模板（目前是六個學群裡唯一沒有工具包的，tools 頁以一句話帶過）
 - [x] 知識庫字面 `**` 破版：25 頁 78 段收尾 `**` 移到標點前，另修 1 處 frontmatter 純文字欄位；
       新增 `scripts/check-markdown-leak.mjs` 接進 verify 防回歸（2026-08-18，D-010，WORKLOG #021）
-- [ ] **定案學群數 7／8／9**（模板 7／指南 8／出貨清單 9 三方不一致）——
-      這是「補設計傳播時程文」與「補設計五份模板」的前置，未定案前兩者都不動
-      （盤點見根目錄 `WEEKLY_CHECKLIST.md` ⑨）
+- [x] **定案學群數＝9**（2026-08-18 使用者拍板，農生環境之後補）：正本落成
+      `scripts/grad-departments.json`（三態 shipped 7／guide-only 1／planned 1）＋
+      `check-grad-departments.mjs` 四方一致性閘門（D-011，WORKLOG #022）
+- [ ] 農生環境（第 9 群）研究所內容產出——目前 `planned`，前台無入口。
+      仍卡在沒有週次規劃 md，與上面 Week 9 那項是同一件事
 - [ ] 設計傳播補上【時程規劃專屬文章】`design-graduate-timeline.mdx`（八群裡唯一掛通用文的，
-      `graduate-design.astro:11`）——卡在上一項
+      `graduate-design.astro:11`）——前置（學群數）已解除，可動；需要內容素材
 
 ## Phase 3 — 模板形式補齊（36 份）
 

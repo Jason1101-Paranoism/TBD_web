@@ -17,6 +17,12 @@
  * 沒有任何東西保證它們一致——和 D-003 那 20 份消失的模板是同一類問題，只是還沒爆。
  *
  * 含設計傳播（有指南但沒有模板），所以不能直接用 gradTemplateGroups 代替。
+ *
+ * 「學群共有幾個」的正本不在這裡，在 `scripts/grad-departments.json`（2026-08-18 定案 9 群，D-011）。
+ * 那份帶三態：shipped（指南＋模板都在）／guide-only（設計傳播，模板未補）／
+ * planned（農生環境，研究所內容未產出，前台不得有入口）。
+ * 本陣列＝非 planned 的集合，`gradTemplateGroups` ＝ shipped 的集合，
+ * 對不上時 `scripts/check-grad-departments.mjs` 會擋——不要單邊改這裡。
  */
 export interface GradGuide {
   /** 對應文章 frontmatter 的 departmentGroup */

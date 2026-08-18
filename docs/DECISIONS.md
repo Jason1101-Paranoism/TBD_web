@@ -250,3 +250,45 @@ build 綠、check-links 綠、verify 35/35 全綠——沒有任何一道閘門�
 **後果**：文章寫作不需要記得任何 flanking 規則——寫壞了 verify 會擋。
 代價是這條閘門對「字面 `**`」零容忍：日後若真要在頁面上顯示 `**` 字元（例如講解 markdown 語法的
 文章），必須改用 HTML 實體或程式碼區塊，不能直接寫，否則得替它開例外——**開例外時要在這裡補記**。
+
+---
+
+## D-011 — 學群數定案 9，正本落在 `scripts/grad-departments.json` 並帶三態
+
+**背景**：2026-08-18 核對發現「研究所學群有幾個」在三個地方各有答案：
+`gradTemplateGroups` 7（缺設計傳播）、`gradGuides` 8（缺農生環境）、`LR_進度紀錄.xlsx` 出貨清單 9。
+三份都是手寫，沒有任何東西保證一致，所以誰都說不出哪個才對——而「補設計傳播的時程文與五份模板」
+這件事必須先知道體系有幾群才能動，否則補完設計，農生環境立刻是下一個一模一樣的洞。
+
+使用者定案：**9 群，農生環境之後補**。
+
+**選項**：
+  - A（採用）— 新增 `scripts/grad-departments.json` 當正本，每群帶狀態：
+    `shipped`（指南＋五份模板都在）／`guide-only`（指南在、模板未補）／`planned`（研究所內容未產出，
+    前台不得有入口）。加 `scripts/check-grad-departments.mjs` 校驗四方一致，接進 verify。
+  - B（否決）— 直接把農生環境加進 `gradGuides`，湊足 9。它會在麵包屑、series-nav 橫向出口與
+    知識庫搜尋資料裡長出通往 `graduate-agriculture.html` 的連結，而那頁不存在——
+    `check-links` 當場紅。「定案 9」不等於「前台立刻有 9 個入口」，這兩件事必須分開表示。
+  - C（否決）— 把數字寫進 `WEEKLY_CHECKLIST.md` 或 CLAUDE.md 就算定案。那是第四份手寫副本，
+    與現有三份的關係一樣沒有東西保證。D-003／D-008／D-010 是同一種失敗的第三、四次。
+  - D（否決）— 讓 `gradGuides` 自己兼任正本（誰在陣列裡誰就存在）。它表示不了
+    「已定案但還沒產出」——農生環境正是這個狀態，而出貨清單已經替它列了 5 項工具。
+
+**決定**：採 A。狀態三態是這個決策的核心，不是實作細節：
+**「定案幾群」和「前台開幾個入口」是兩件事**，正本要能同時表示。
+`decidedCount` 與實際筆數不符時閘門會紅，所以改學群數是一個必須寫進 DECISIONS 的動作，不會被當筆誤改掉。
+
+閘門校驗四件事，事實來源各自獨立：正本自身（總數／狀態值／planned 不得帶 guide 路徑）、
+vs `gradTemplates.ts`（gradGuides ＝ 非 planned 集合、gradTemplateGroups ＝ shipped 集合）、
+vs `template-manifest.json`（shipped 每群 ≥5 份 `slugPrefix-*`；非 shipped 一份都不該有）、
+vs `dist/`（非 planned 的指南頁要真的 build 出來、planned 的不得存在）。
+
+**實測**：現況 9 群 = shipped 7／guide-only 1（設計傳播）／planned 1（農生環境），四方一致。
+三個注入測試都 exit 1：把設計傳播謊報 `shipped`（報 gradTemplateGroups 缺項＋manifest 0 份）、
+把農生環境提前開入口（報 gradGuides 缺項＋指南頁沒 build 出來）、`decidedCount` 改 8（報與實際筆數不符）。
+還原後 exit 0，`npm run verify` 35/35 全綠。
+
+**後果**：設計傳播的缺口從此是**被閘門記著的已知狀態**，不是註解裡的一句話——
+補完五份模板後必須把它升成 `shipped`，否則 manifest 有檔而正本說沒有，閘門會紅。
+農生環境同理：任何人想在前台開它的入口，會先撞到這道閘門，而不是撞到讀者。
+代價是新增學群多一個步驟（先改正本再動設定檔），已寫進 `CLAUDE.md` 的「新增分學群模板」第 0 步。
