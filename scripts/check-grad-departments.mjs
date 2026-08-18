@@ -9,15 +9,20 @@
 // 直接加進 `gradGuides` 會在前台開出通往不存在頁面的入口。所以正本帶三態：
 //
 //   shipped     指南頁 + 五份模板都在
-//   guide-only  指南頁在、模板未補（設計傳播）——已知缺口，不是漏記
+//   guide-only  指南頁在、模板未補齊（0–4 份）——已知缺口，不是漏記
 //   planned     研究所內容未產出（農生環境）——前台不得有入口
 //
 // 本閘門校驗四件事，兩兩獨立、事實來源各不相同：
 //   1. 正本自身：總數等於 decidedCount、狀態值合法、planned 不得帶 guide 路徑
 //   2. vs `src/config/gradTemplates.ts`：gradGuides ＝ 非 planned 的集合；
-//      gradTemplateGroups ＝ shipped 的集合
+//      gradTemplateGroups ＝ **有模板的**集合（不等於 shipped，見下）
 //   3. vs `scripts/template-manifest.json`：shipped 每群至少五份 slugPrefix 模板；
-//      非 shipped 的群一份都不該有（有的話代表狀態該升級了，不是模板該刪）
+//      guide-only 補滿五份卻沒升級要報（正本落後於產出）；planned 一份都不該有
+//
+// 為什麼 gradTemplateGroups 不等於 shipped：2026-08-18 決定 8/25 前先補設計傳播的
+// 比較表一份（SEL-299 的內含要對得上），設計仍是 guide-only。模板做出來卻不進
+// gradTemplateGroups，下載頁與指南頁就都看不到它——做了等於沒做。所以「有沒有模板」
+// 由 manifest 決定，「補齊了沒」才由 status 決定，兩者分開。
 //   4. vs `dist/`：非 planned 的指南頁必須真的 build 出來；planned 的不得存在
 //
 // 用法：node scripts/check-grad-departments.mjs
@@ -61,8 +66,19 @@ for (const d of depts) {
   }
 }
 
+let slugs = [];
+try {
+  slugs = JSON.parse(readFileSync(MANIFEST, 'utf8')).templates.map((t) => t.slug);
+} catch (e) {
+  problems.push(`讀不到 ${MANIFEST}：${e.message}`);
+}
+/** 某群目前實際有幾份模板。事實來源是 manifest，不是狀態欄。 */
+const ownedBy = (d) => (d.slugPrefix ? slugs.filter((s) => s.startsWith(`${d.slugPrefix}-`)) : []);
+
 const expectGuides = depts.filter((d) => d.status !== 'planned').map((d) => d.dept);
-const expectGroups = depts.filter((d) => d.status === 'shipped').map((d) => d.dept);
+// gradTemplateGroups ＝「有模板的學群」，不等於 shipped：一個 guide-only 的學群補到第一份
+// 模板時就必須進下載頁與指南頁，否則做出來也沒人拿得到。
+const expectGroups = depts.filter((d) => ownedBy(d).length > 0).map((d) => d.dept);
 
 // ── 2. vs gradTemplates.ts ────────────────────────────────────────────────
 /** 從 TS 原始碼裡抓某個 export 陣列區塊內的所有 dept: '…' */
@@ -94,24 +110,25 @@ if (!existsSync(CONFIG)) {
 }
 
 // ── 3. vs template-manifest.json ──────────────────────────────────────────
-let slugs = [];
-try {
-  slugs = JSON.parse(readFileSync(MANIFEST, 'utf8')).templates.map((t) => t.slug);
-} catch (e) {
-  problems.push(`讀不到 ${MANIFEST}：${e.message}`);
-}
 for (const d of depts) {
   if (!d.slugPrefix) { problems.push(`\`${d.dept}\` 沒有 slugPrefix，無法對照模板`); continue; }
-  const owned = slugs.filter((s) => s.startsWith(`${d.slugPrefix}-`));
+  const owned = ownedBy(d);
   if (d.status === 'shipped' && owned.length < 5) {
     problems.push(
       `\`${d.dept}\` 是 shipped，但 manifest 只有 ${owned.length} 份 \`${d.slugPrefix}-*\` 模板（應 ≥5）`
     );
   }
-  if (d.status !== 'shipped' && owned.length > 0) {
+  // guide-only 是「補到一半」的合法狀態（0–4 份），但補滿五份還不升級就是正本落後於產出。
+  if (d.status === 'guide-only' && owned.length >= 5) {
     problems.push(
-      `\`${d.dept}\` 是 ${d.status}，但 manifest 已經有 ${owned.length} 份 \`${d.slugPrefix}-*\` 模板。` +
-      `\n      模板做出來了就把 status 升成 shipped，不要讓正本落後於實際產出。`
+      `\`${d.dept}\` 是 guide-only，但 manifest 已經有 ${owned.length} 份 \`${d.slugPrefix}-*\` 模板。` +
+      `\n      五份補齊了就把 status 升成 shipped，不要讓正本落後於實際產出。`
+    );
+  }
+  if (d.status === 'planned' && owned.length > 0) {
+    problems.push(
+      `\`${d.dept}\` 是 planned（研究所內容未產出），但 manifest 已經有 ${owned.length} 份 ` +
+      `\`${d.slugPrefix}-*\` 模板——狀態或模板有一個是錯的。`
     );
   }
 }

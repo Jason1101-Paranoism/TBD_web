@@ -123,6 +123,23 @@ export interface GradTemplateGroup {
 
 export const gradTemplateGroups: GradTemplateGroup[] = [
   {
+    // 設計傳播是唯一一組還沒滿五份的：2026-08-18 先補比較表，因為 SEL-299（8/25 第一波
+    // 唯一要建的品項）的內含寫「各學群比較表」，少這一份就是商品描述對不上可交付。
+    // 其餘四份（套磁信／研究計畫書架構／備審 Checklist／口試檢核）待補，補齊後要把
+    // `scripts/grad-departments.json` 的設計傳播從 guide-only 升成 shipped，否則閘門會紅。
+    dept: '設計傳播',
+    label: '設計傳播',
+    guide: '/pages/guides/graduate-design.html',
+    templates: [
+      {
+        title: '校所與教授比較表',
+        desc: '先分清學術研究型與實務創作型，再比師資方向、課程導向、設備資源與作品集要求。',
+        file: 'grad-design-school-compare',
+        article: '/pages/resources/design-graduate-choose.html',
+      },
+    ],
+  },
+  {
     dept: '理工',
     label: '理工',
     guide: '/pages/guides/graduate-engineering.html',

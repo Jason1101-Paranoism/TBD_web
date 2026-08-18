@@ -4,7 +4,7 @@
   "decidedCount": 9,
   "statusMeaning": {
     "shipped": "指南頁 + 五份模板都在，前台完整可走",
-    "guide-only": "指南頁在、五份模板未補。已知缺口，不是漏記",
+    "guide-only": "指南頁在、五份模板未補齊（0–4 份）。已知缺口，不是漏記。補滿五份要升成 shipped",
     "planned": "研究所內容未產出。前台不得有任何入口，出貨清單可先列"
   },
   "departments": [
@@ -55,7 +55,7 @@
       "slugPrefix": "grad-design",
       "guide": "/pages/guides/graduate-design.html",
       "status": "guide-only",
-      "note": "Week 1 只做了指南頁。缺五份模板，且時程階段掛通用文 graduate-timeline（graduate-design.astro:11），是八群裡唯一一個。補完後改 shipped。"
+      "note": "Week 1 只做了指南頁。2026-08-18 補上第一份模板（school-compare，SEL-299 的內含要對得上），還缺四份：套磁信、研究計畫書架構、備審 Checklist、口試檢核。時程階段仍掛通用文 graduate-timeline（graduate-design.astro:11），是八群裡唯一一個。五份補齊後改 shipped。"
     },
     {
       "dept": "農生環境",

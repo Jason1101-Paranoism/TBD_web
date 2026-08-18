@@ -63,6 +63,10 @@ const TARGETS = [
       '<a class="text-link" href="/pages/guides/graduate-arts.html">藝術</a>',
       '<a class="text-link" href="/pages/guides/graduate-education.html">教育</a>',
     ] },
+  // 設計傳播的工具包是分批補的（2026-08-18 先補比較表，供 SEL-299）。這一項守的是
+  // 「模板做出來了，指南頁真的看得到」——只登記在 gradTemplates.ts 而頁面沒渲染，等於沒做。
+  { path: '/pages/guides/graduate-design.html', name: '設計研究所指南（工具包：分批補齊中）',
+    mustContain: ['設計推甄專屬工具包', 'grad-design-school-compare.md', 'grad-design-school-compare.csv'] },
   { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（工具包＋stem-tips 錨點）',
     mustContain: ['理工推甄專屬工具包', 'graduate-contact-professor.html#stem-tips'], mustNotContain: ['id="contact-tips"'] },
   { path: '/pages/guides/graduate-biomed.html', name: '生醫與公衛研究所指南（工具包＋biomed-tips 錨點）',

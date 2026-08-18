@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 import { getCollection } from 'astro:content';
-import { gradGuideByDept } from '../../../config/gradTemplates';
+import { templatesFor, gradGuideByDept } from '../../../config/gradTemplates';
 
 // 設計類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
 // 只有設計真正不同的環節（選校型態、研究計畫×作品集、口試講評）用設計專屬文。
@@ -27,6 +27,8 @@ const stages = STAGE_ORDER
   })
   .filter(Boolean);
 
+// 設計傳播的工具包還在補（目前一份，其餘四份待補），所以文案不像其他學群寫死「五份」。
+const templates = templatesFor('設計傳播');
 const title = gradGuideByDept['設計傳播'].pageTitle;
 const description = '設計研究所怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試、時程規劃，到設計專屬的選校（學術型vs實務型）、聯繫教授、研究計畫、作品集，以及口試與作品集講評。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-design`;
@@ -96,6 +98,25 @@ const schema = {
             <span class="rs-role">{s.role}</span>
           </span>
         </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="templates">
+    <h2>設計推甄專屬工具包</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">對應各階段的工具，兩種格式任選：<strong>CSV</strong> 用 Excel / Google 試算表開；<strong>Markdown</strong> 可一鍵匯入 Notion。</p>
+    <div class="card-grid">
+      {templates.map((t) => (
+        <article class="card article-card">
+          <span class="badge">模板</span>
+          <h3>{t.title}</h3>
+          <p class="card-desc">{t.desc}</p>
+          <div class="button-row" style="margin-top: 16px;">
+            <a class="button" href={t.md} download data-track-event="download_resource">Notion / Markdown</a>
+            <a class="button secondary" href={t.csv} download data-track-event="download_resource">CSV 試算表</a>
+          </div>
+          <p style="margin-top: 10px;"><a class="text-link" href={t.article}>看使用說明 →</a></p>
+        </article>
       ))}
     </div>
   </section>

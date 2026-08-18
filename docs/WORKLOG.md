@@ -30,6 +30,60 @@
 
 ---
 
+## #023｜2026-08-18｜設計傳播補上第一份模板（比較表），SEL-299 的內含才對得上
+
+**Scope**：8/25 第一波要建的 SEL-299 內含寫「甘特圖 ＋ 各學群比較表」，但設計傳播沒有比較表。
+補這一份，並讓它在下載頁與設計指南頁都真的看得到。
+**Non-scope**：設計的其餘四份模板（套磁信／研究計畫書架構／備審 Checklist／口試檢核）不做；
+`design-graduate-timeline.mdx` 不做；農生環境維持 `planned`，不碰。
+
+**變更檔案**：
+- `public/assets/templates/grad-design-school-compare.{md,csv}`（新增）— CSV 帶 UTF-8 BOM
+- `scripts/template-manifest.json` — 登記一筆（47 份）
+- `src/config/gradTemplates.ts` — `gradTemplateGroups` 新增設計傳播組（目前一份）
+- `src/pages/pages/guides/graduate-design.astro` — 新增工具包區塊（原本沒有，因為以前零模板）
+- `scripts/check-grad-departments.mjs` — 規則調整（見下）
+- `scripts/grad-departments.json` — 設計傳播的 note 更新為「已補一份、還缺四份」
+- `scripts/verify.mjs` — 新增設計指南頁的工具包斷言
+
+**規則被自己擋住，所以改了規則**（D-011 補記）：
+原本寫「非 shipped 的群一份模板都不該有」，預設五份一次補完。只補一份時兩邊都走不通——
+升 `shipped` 會因不足五份而紅，不升則因「非 shipped 不得有模板」而紅。
+改成 `guide-only` 是合法的補到一半狀態（0–4 份），補滿五份沒升級才報；
+`gradTemplateGroups` 的對照集合改為「有模板的集合」而非「shipped 的集合」。
+原始用意（正本不得落後於產出）沒放棄，判準從「有沒有模板」改成「補齊了沒」。
+
+**模板內容對齊文章，不另立一套**：欄位取自 `design-graduate-choose.mdx` 的四個判準——
+型態（學術研究型／實務創作型，文章說這是設計選校最大的選擇）、師資創作或研究方向、
+課程導向、資源與產學連結，再加作品集要求（多數設計所權重很高、有些是第一關門檻）。
+外部驗證管道沿用文章已實測過的三個連結（臺灣博碩士論文知識加值系統、新一代設計展、金點新秀）。
+
+**閘門證據**：
+- G1 語法：PASS（eslint 零問題）
+- G2 boot：PASS（`npm run build` 170 頁）
+- G3 smoke：PASS（`npm run verify` 36/36，比上一輪多一項＝新增的設計指南頁斷言）
+- G4 migration：N/A
+- 注入測試（調整後的規則，皆 exit 1）：只有 1 份就宣告 `shipped` → 報「應 ≥5」；
+  有模板卻標 `planned` → 同時報 gradGuides 多了、manifest 有模板、指南頁已 build 出來
+- 可見性實查：`dist/pages/resources/tools.html` 與 `dist/pages/guides/graduate-design.html`
+  都含 `grad-design-school-compare`。**補這一項是因為第一次 build 後發現指南頁是 0**——
+  設計指南頁從來沒有工具包區塊（以前零模板），只登記設定檔的話模板只在 tools 頁看得到。
+
+**計畫／決策異動**：D-011 補記規則調整。PLAN Phase 2 的「設計傳播補五份模板」改為進行中（1/5）。
+
+**風險與待確認**：
+- SEL-299 的內含仍不能寫「全 9 學群」：農生環境沒有比較表，設計現在有了，實際是 8 個。
+  金流分頁那一格要改（WEEKLY_CHECKLIST 9d）。
+- 設計還缺四份。缺著的期間 `guide-only` 是誠實狀態，閘門不會催——但補滿五份不升 `shipped` 會紅。
+
+**下一步**：
+1. 出貨清單 9b（農生環境改「未排程」＋統計改 COUNTIF）與 9d（SEL-299 內含改「全 8 學群」）——
+   都在 Drive 的 .xlsx 上，Drive MCP 只能讀不能寫，要人手動做。指示已寫在 `WEEKLY_CHECKLIST.md`。
+2. 設計其餘四份模板；補齊後把 `grad-departments.json` 的設計傳播升成 `shipped`。
+3. ② `design-graduate-timeline.mdx`（仍需素材與方向確認）。
+
+---
+
 ## #022｜2026-08-18｜學群數定案 9：正本落地成 `grad-departments.json`＋四方一致性閘門（D-011）
 
 **Scope**：把使用者定案的「9 群、農生環境之後補」寫成 repo 內可被驗證的正本，

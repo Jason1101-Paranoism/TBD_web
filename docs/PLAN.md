@@ -41,7 +41,9 @@ SessionStart hook 會讀這份文件，找出**編號最小、還有未勾選項
 - [x] 文章裸 markdown 表格的手機破版：在 CSS 端一次解掉根因（2026-08-16，D-009；
       `.article-section table:not([class])`），受影響的 7 篇舊文一併修好，
       其中 2 篇加進 verify 清單當回歸（見 WORKLOG #019）
-- [ ] 設計傳播補上五份模板（目前是六個學群裡唯一沒有工具包的，tools 頁以一句話帶過）
+- [ ] 設計傳播補上五份模板 —— **進行中 1/5**：比較表已上（2026-08-18，WORKLOG #023，
+      為了讓 SEL-299 的內含對得上）。還缺套磁信／研究計畫書架構／備審 Checklist／口試檢核。
+      補滿五份要把 `grad-departments.json` 的設計傳播升成 `shipped`，否則閘門會紅
 - [x] 知識庫字面 `**` 破版：25 頁 78 段收尾 `**` 移到標點前，另修 1 處 frontmatter 純文字欄位；
       新增 `scripts/check-markdown-leak.mjs` 接進 verify 防回歸（2026-08-18，D-010，WORKLOG #021）
 - [x] **定案學群數＝9**（2026-08-18 使用者拍板，農生環境之後補）：正本落成
