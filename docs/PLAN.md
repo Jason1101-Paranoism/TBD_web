@@ -42,6 +42,13 @@ SessionStart hook 會讀這份文件，找出**編號最小、還有未勾選項
       `.article-section table:not([class])`），受影響的 7 篇舊文一併修好，
       其中 2 篇加進 verify 清單當回歸（見 WORKLOG #019）
 - [ ] 設計傳播補上五份模板（目前是六個學群裡唯一沒有工具包的，tools 頁以一句話帶過）
+- [x] 知識庫字面 `**` 破版：25 頁 78 段收尾 `**` 移到標點前，另修 1 處 frontmatter 純文字欄位；
+      新增 `scripts/check-markdown-leak.mjs` 接進 verify 防回歸（2026-08-18，D-010，WORKLOG #021）
+- [ ] **定案學群數 7／8／9**（模板 7／指南 8／出貨清單 9 三方不一致）——
+      這是「補設計傳播時程文」與「補設計五份模板」的前置，未定案前兩者都不動
+      （盤點見根目錄 `WEEKLY_CHECKLIST.md` ⑨）
+- [ ] 設計傳播補上【時程規劃專屬文章】`design-graduate-timeline.mdx`（八群裡唯一掛通用文的，
+      `graduate-design.astro:11`）——卡在上一項
 
 ## Phase 3 — 模板形式補齊（36 份）
 

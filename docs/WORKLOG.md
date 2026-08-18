@@ -30,6 +30,112 @@
 
 ---
 
+## #021｜2026-08-18｜知識庫字面 `**` 從 160 處歸零，並補上 dist 掃描閘門（D-010）
+
+**Scope**：修掉 #020 定位到的 25 頁破版，並讓同一類問題以後由閘門擋下。
+**Non-scope**：不新增 `design-graduate-timeline.mdx`、不補 `grad-design-*` 模板、不碰學群數
+（②③⑨ 全部卡在「7／8／9 尚未定案」，先做等於替農生環境先挖好下一個洞）；
+不動 `public/assets/templates/*.md`（那裡的 `**` 是下載檔本來就該有的內容）；不動 CSS。
+
+**變更檔案**：
+- `src/content/articles/*.mdx`（25 檔）— 78 段收尾 `**` 從中文標點之後移到之前
+  （`…有判斷。**多` → `…有判斷**。多`），粗體範圍不含句末標點，語意不動
+- `src/content/articles/arts-graduate-cv.mdx:20` — `faqItems` 的 `**看得出發展**` 去掉標記
+- `scripts/check-markdown-leak.mjs`（新增）— dist 的 HTML 不得含字面 `**`；
+  另附源頭檢查：frontmatter 不得含 `**`
+- `scripts/verify.mjs` — 在起 preview 之前呼叫上述閘門，與 `check-links` 同層
+
+**查到什麼**（修正過程中翻掉 #020 的一個歸因）：
+#020 把 dist 的 160 個 `**` 全歸給 flanking rule。實際上是 **156 + 4**：
+`arts-graduate-cv` 的 `faqItems` 是純文字欄位，原樣輸出到 `<p>` 與 JSON-LD 兩處，
+不經 markdown 渲染——那 4 個是同一段輸出兩次，怎麼調標點位置都不會變粗體。
+先寫的 flanking 偵測器（156 runs／25 檔）只看得到 A 類，B 類完全在它視野外；
+這正是閘門最後守 dist、不守解析規則的理由（見 D-010）。
+
+**閘門證據**：
+- G1 語法：PASS（`npx eslint scripts/check-markdown-leak.mjs` 零問題。
+  註：write hook 的 eslint 曾回 `spawnSync cmd.exe ETIMEDOUT`，是 spawn 逾時不是規則失敗，已手動重跑確認）
+- G2 boot：PASS（`npm run build` 169 頁）
+- G3 smoke：PASS（`npm run verify` 35/35，含新閘門）
+- G4 migration：N/A（未動 schema）
+- 新閘門注入測試：往 `dist/index.html` 插一段壞粗體 → exit 1；往 frontmatter 插 `**` → exit 1；
+  兩者還原後 → exit 0
+- 事實核對：修正前 `grep -o '\*\*' dist` = 160／25 檔；修正後 = 0
+- 抽查渲染：`law-graduate-cv` 該段輸出 `自傳要回答的是：<strong>你怎麼走到這個研究問題的</strong>？四個要素：`
+
+**計畫／決策異動**：新增 D-010。#020「下一步」的第 1 項完成，第 2、3 項仍卡在第 4 項（學群數定案）。
+
+**風險與待確認**：
+- 新閘門對字面 `**` 零容忍。日後要寫「講解 markdown 語法」的文章時得改用 HTML 實體或
+  程式碼區塊，或替它開例外並在 D-010 補記。
+- 這是第三次出現「正確做法寫在註解／文件裡、沒有東西保證它成立」（D-003、D-008、D-010）。
+  下次寫下規範時，先問「什麼東西會在它被違反時變紅」。
+
+**下一步**：
+1. **等使用者定案學群數 7／8／9**（WEEKLY_CHECKLIST ⑨）。這是 ②③ 的唯一前置，不定案不動。
+2. 定案後：新增 `design-graduate-timeline.mdx`（`gradStage: 2`／`departmentGroup: 設計傳播`／
+   `order` 排在 1 之前／faqItems ≥3／tocItems 8 項），換掉 `graduate-design.astro:11` 的通用文，
+   tag 改「設計專屬」。
+3. 補 `grad-design-*` 五份模板（各 `.md`+`.csv`）、登記進 `scripts/template-manifest.json`、
+   在 `gradTemplateGroups` 加該組。
+4. 本輪未 push。分支 `fix/kb-bold-flanking`，要上正式站需合進 `main` 再由使用者推。
+
+---
+
+## #020｜2026-08-18｜本週待辦逐項核對：`**` 破版定位到 25 頁、設計學群兩個洞證實
+
+**Scope**：把「樂平方本週待辦」的知識庫三項當假設逐一驗證，用 build 輸出與設定檔實際內容當事實來源，
+不靠待辦本身的描述。
+**Non-scope**：這一輪**沒有改任何程式碼**——只做核對與定位。修正留給 #021。
+
+**變更檔案**：無（僅 `npm run build` 產生 `dist/`）
+
+**查到什麼**（可觀察的事實）：
+
+- **`**` 沒渲染的範圍是 25 頁、160 個字元 = 80 段粗體**，全部落在
+  `dist/pages/resources/*-graduate-*.html`。分佈：教育 42／商管 34／人文 32／藝術 30／
+  法政 12／通用套磁 6／生醫 2；理工與設計 0。
+- **根因是 CommonMark 的 flanking rule 撞中文標點**，不是漏跳脫、不是 MDX 解析。
+  粗體內容以「。？！」結尾又緊接文字時，收尾的 `**` 前是標點、後是文字，
+  不成立 right-flanking → 無法收尾 → 整組吐字面。例：
+  `…關鍵在第四步。**主動指出限制，反而顯示你對作品有判斷。**多數學生…`
+  修法是把收尾 `**` 移到標點之前（`…有判斷**。`），語意不動，可腳本化。
+  `public/assets/templates/*.md` 裡的 `**` 是下載檔本來就該有的 markdown，**不可一起改**。
+- **設計學群缺時程專屬文，且是八群裡唯一一個。** 逐一掃過八份指南的 `STAGE_ORDER`，
+  只有 `graduate-design.astro:11` 的時程階段掛通用文 `graduate-timeline`。
+  另註：設計沒有 `-cv` 是刻意的（該階段由 `design-graduate-portfolio` 頂替），不是漏。
+- **設計學群模板缺整組 5 份。** `gradGuides` 8 群 vs `gradTemplateGroups` 7 群×5=35 份；
+  磁碟 46 份不重複模板 = 35 分學群 + 11 通用，`grad-design-*` 零份。
+  `gradTemplates.ts:20` 的註解早就寫了「含設計傳播（有指南但沒有模板）」——寫下來但沒有閘門盯。
+- **學群數在三個地方對不起來：模板 7／指南 8／出貨清單 9。**
+  出貨清單多出來的「農生環境」目前只有大學申請與高中文章，研究所內容一份都沒有，
+  但清單已經替它列了 5 項工具。
+
+**閘門證據**：
+- G1 語法：N/A（未改碼）
+- G2 boot：N/A
+- G3 smoke：NOT RUN（本輪不動碼，`npm run verify` 未跑）
+- G4 migration：N/A（未動 schema）
+- `npm run build`：PASS（169 頁），輸出即為上述 25 頁數字的事實來源
+
+**計畫／決策異動**：無新增 D-0xx。但 `**` 這件事符合 D-003／D-008 的同一種失敗形狀
+（正確做法寫在註解裡、沒有任何東西保證它成立），修正時應一併補閘門。
+
+**風險與待確認**：
+- 80 段要逐一改，機械但量大；沒有閘門的話下次寫文一樣會再犯。
+- 學群數 7／8／9 不定案的話，補完設計之後農生環境就是下一個一模一樣的洞。
+
+**下一步**：
+1. 修 80 段 `**`，並在 `scripts/verify.mjs` 加一條：build 後 `dist/**/*.html` 不得含 `**`（防回歸）。
+2. 新增 `design-graduate-timeline.mdx`（`gradStage: 2`／`departmentGroup: 設計傳播`／
+   `order` 排在 1 之前／faqItems ≥3／tocItems 8 項），並把 `graduate-design.astro:11`
+   換掉、tag 改「設計專屬」。
+3. 補 `grad-design-*` 五份模板（各 `.md`+`.csv`）、登記進 `scripts/template-manifest.json`、
+   在 `gradTemplateGroups` 加該組。
+4. **先定案學群數是 7／8／9**，再動 2 與 3——否則等於替下一個洞先挖好。
+
+---
+
 ## #019｜2026-08-16｜文章表格破版改在 CSS 端解根因（D-009）
 
 **Scope**：把 #018 用 `.table-wrapper` 逐篇擋住的手機破版，改成 `tbd-pages.css` 的一條規則，

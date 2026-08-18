@@ -592,6 +592,16 @@ try {
   process.exit(1);
 }
 
+// 同樣是純靜態、不需要瀏覽器：markdown 標記（`**`）漏印在頁面上。
+// build 與死連結檢查對它全綠，只有讀者看得到——2026-08-18 一次抓到 25 頁 80 段。
+console.log('▶ markdown 標記外漏檢查…');
+try {
+  execFileSync('node', ['scripts/check-markdown-leak.mjs'], { stdio: 'inherit' });
+} catch {
+  console.error('\nmarkdown 標記外漏檢查未通過，中止（詳見上方清單）。');
+  process.exit(1);
+}
+
 console.log('▶ 啟動 preview…');
 const server = spawn('npm', ['run', 'preview'], { stdio: 'ignore', shell: platform() === 'win32' });
 let exitCode = 0;
