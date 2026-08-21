@@ -30,6 +30,58 @@
 
 ---
 
+## #025｜2026-08-21｜設計傳播五份補齊、正本升 shipped；順手修好一道一直是瞎的埠防護（D-012）
+
+**做了什麼**（可觀察的行為差異）：
+
+- **設計傳播工具包從 1 份補到 5 份**，`/pages/guides/graduate-design.html` 的
+  「設計推甄專屬工具包」現在五份都渲染得出來，`/pages/resources/tools.html` 也跟著長出來：
+  - `grad-design-contact-email`：設計套磁的獨有難處是「作品最有說服力、也最容易被誤讀」。
+    模板把重點放在**作品怎麼附**（精選版連結、每件一句話定位、不寄完整作品集），
+    另有「該不該寄」的判斷條件與八項寄信前檢核。
+  - `grad-design-proposal-framework`：先分學術研究型 vs 實務創作型，再填四大架構；
+    實務型另有「創作如何回答問題」專段，含一格「什麼結果會讓我知道方向不成立」——
+    說不出失敗長什麼樣就不是探究，是執行。
+  - `grad-design-portfolio-checklist`：選件少而深、排序、作品說明六欄位，
+    並用一整段逼出「作品集與研究計畫互相指涉」。
+  - `grad-design-oral-checklist`：三分鐘作品簡報、四類追問題庫，
+    以及設計口試特有的「被當場講評」四種情境的該做／不該做。
+- **`graduate-contact-professor.mdx` 補上 `#design-tips`**。八個學群裡原本只有設計沒有
+  專屬段落，套磁模板的 article 連結沒有落點。補完後八群齊。
+- **`scripts/grad-departments.json` 的設計傳播 `guide-only` → `shipped`**，
+  現況變成 shipped 8 ／ planned 1（農生環境）。
+- **verify 的設計那條斷言從抽驗一份改成五份逐一列出**，並加驗 `#design-tips` 錨點。
+  分批補的東西最容易漏掉中間某一份，抽驗一個擋不住。
+- **修好 `portInUse()`（D-012）**：原本只探 `127.0.0.1`，而 Astro dev server 只綁 `[::1]`，
+  所以這道 D-004 立的防護**從來沒擋過 Astro dev server**。本輪實際踩到：
+  另一個 repo 的 dev server 還活著 → 防護放行 → preview 綁不到埠 → 36 個探針全打到別人的站，
+  得到 1/36 全 404 的假失敗。改成兩個位址都探，並實測「占用時確實會擋下來」。
+
+**憑什麼說做完了**（閘門證據）：
+
+| 閘門 | 結果 | 證據 |
+|---|---|---|
+| build | PASS | 169 頁，無錯 |
+| `npm run verify` | PASS | **36/36**，含強化後的設計五份＋`#design-tips` 斷言 |
+| `check-grad-departments` | PASS | 正本／`gradTemplates.ts`／`template-manifest.json`／`dist` 四方一致（shipped 8／planned 1） |
+| `check-markdown-leak` | PASS | 172 頁 0 處外漏（新增四份模板的 md 不經 mdx 管線，但仍全站掃過） |
+| `check-links` | PASS | 0 死連結 |
+| CSV BOM | PASS | 四份新 CSV 皆帶 BOM、CRLF、固定 4 欄（verify 內建檢查） |
+| D-012 的修正 | PASS | 故意占住 4321 後重跑，防護正確擋下並印出提示；釋放後 36/36 |
+| 正式站 | **NOT RUN** | 本輪未 push。合併後要打正式站 URL 複驗（push ≠ 上線） |
+
+**下一步**：
+
+- **② `design-graduate-timeline.mdx` 仍缺**——八群裡唯一沒有專屬時程文的，
+  `graduate-design.astro:11` 還掛著通用的 `graduate-timeline`。
+  需要的素材只有三點：作品集要抓多久、有沒有 portfolio review／作品簡報這關、
+  實務型與學術型的送件季差異。其餘照其他七群現成的四階段骨架就能寫。
+- **設計那份比較表仍然沒有 Google Sheet 副本**——站上有、寄不出去。
+  SEL-299 的交付鏈缺這一環（見根目錄 `SEL-299_出貨連結.md`）。
+- 農生環境 8/24 上線後：加指南頁與文章、補五份模板、正本改狀態，三件缺一閘門就紅。
+
+---
+
 ## #024｜2026-08-18｜出貨清單 9b 核對：待辦寫的三處都不對；SEL-299 的交付鏈少一環
 
 **Scope**：核對 `LR_進度紀錄.xlsx`（Drive，owner yaching.0601）分頁一「出貨清單」的 9b

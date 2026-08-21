@@ -78,6 +78,22 @@
       "delivery": "file"
     },
     {
+      "slug": "grad-design-contact-email",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-design-oral-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-design-portfolio-checklist",
+      "delivery": "file"
+    },
+    {
+      "slug": "grad-design-proposal-framework",
+      "delivery": "file"
+    },
+    {
       "slug": "grad-design-school-compare",
       "delivery": "file"
     },

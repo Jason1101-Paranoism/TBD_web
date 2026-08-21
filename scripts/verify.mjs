@@ -63,10 +63,17 @@ const TARGETS = [
       '<a class="text-link" href="/pages/guides/graduate-arts.html">藝術</a>',
       '<a class="text-link" href="/pages/guides/graduate-education.html">教育</a>',
     ] },
-  // 設計傳播的工具包是分批補的（2026-08-18 先補比較表，供 SEL-299）。這一項守的是
-  // 「模板做出來了，指南頁真的看得到」——只登記在 gradTemplates.ts 而頁面沒渲染，等於沒做。
-  { path: '/pages/guides/graduate-design.html', name: '設計研究所指南（工具包：分批補齊中）',
-    mustContain: ['設計推甄專屬工具包', 'grad-design-school-compare.md', 'grad-design-school-compare.csv'] },
+  // 設計傳播 2026-08-21 五份補齊（比較表 08-18 先行）。這一項守的是「模板做出來了，
+  // 指南頁真的看得到」——只登記在 gradTemplates.ts 而頁面沒渲染，等於沒做。
+  // 五個檔名逐一列出而不是只抽驗一個：分批補的東西最容易漏掉中間某一份。
+  { path: '/pages/guides/graduate-design.html', name: '設計研究所指南（工具包五份齊）',
+    mustContain: [
+      '設計推甄專屬工具包',
+      'grad-design-school-compare.md', 'grad-design-school-compare.csv',
+      'grad-design-contact-email.md', 'grad-design-proposal-framework.md',
+      'grad-design-portfolio-checklist.md', 'grad-design-oral-checklist.md',
+      'graduate-contact-professor.html#design-tips',
+    ] },
   { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（工具包＋stem-tips 錨點）',
     mustContain: ['理工推甄專屬工具包', 'graduate-contact-professor.html#stem-tips'], mustNotContain: ['id="contact-tips"'] },
   { path: '/pages/guides/graduate-biomed.html', name: '生醫與公衛研究所指南（工具包＋biomed-tips 錨點）',
@@ -426,7 +433,10 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // 啟動 preview 之前先問：這個埠現在有人嗎？用 net 直接試連，不發 HTTP——
 // 對面可能是別人的 preview，也可能是任何佔住埠的東西，能連上就算被占。
-function portInUse(port = PORT) {
+// IPv4 與 IPv6 都要探。Astro 的 dev server 只綁 [::1]，127.0.0.1 一律連不上——
+// 只探 IPv4 的話這道防護對它完全瞎：2026-08-21 就這樣放行了一輪，preview 綁不到埠，
+// 36 個探針全打到別的 repo 的 dev server，得到 1/36 全 404 的假失敗（D-004 要防的正是這個）。
+function connectable(port, host) {
   return new Promise((resolve) => {
     const socket = new Socket();
     const done = (v) => { socket.destroy(); resolve(v); };
@@ -434,8 +444,13 @@ function portInUse(port = PORT) {
     socket.once('connect', () => done(true));
     socket.once('timeout', () => done(false));
     socket.once('error', () => done(false));
-    socket.connect(port, '127.0.0.1');
+    socket.connect(port, host);
   });
+}
+
+async function portInUse(port = PORT) {
+  const hits = await Promise.all([connectable(port, '127.0.0.1'), connectable(port, '::1')]);
+  return hits.some(Boolean);
 }
 
 async function waitForServer(timeoutMs = 20000) {

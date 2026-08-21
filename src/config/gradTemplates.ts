@@ -125,8 +125,8 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
   {
     // 設計傳播是唯一一組還沒滿五份的：2026-08-18 先補比較表，因為 SEL-299（8/25 第一波
     // 唯一要建的品項）的內含寫「各學群比較表」，少這一份就是商品描述對不上可交付。
-    // 其餘四份（套磁信／研究計畫書架構／備審 Checklist／口試檢核）待補，補齊後要把
-    // `scripts/grad-departments.json` 的設計傳播從 guide-only 升成 shipped，否則閘門會紅。
+    // 2026-08-21 五份補齊（比較表於 08-18 先行，供 SEL-299）。`scripts/grad-departments.json`
+    // 的設計傳播同步升為 shipped——兩邊不一致的話 check-grad-departments 會紅。
     dept: '設計傳播',
     label: '設計傳播',
     guide: '/pages/guides/graduate-design.html',
@@ -136,6 +136,30 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         desc: '先分清學術研究型與實務創作型，再比師資方向、課程導向、設備資源與作品集要求。',
         file: 'grad-design-school-compare',
         article: '/pages/resources/design-graduate-choose.html',
+      },
+      {
+        title: '設計類群聯繫教授信結構模板',
+        desc: '先判斷該不該寄的兩組條件，七段信件結構，以及設計獨有的「作品怎麼附」——精選版連結、每件一句話定位、不寄完整作品集。附八項寄信前檢核。',
+        file: 'grad-design-contact-email',
+        article: '/pages/resources/graduate-contact-professor.html#design-tips',
+      },
+      {
+        title: '研究計畫書架構模板（含創作探究）',
+        desc: '先分清學術研究型與實務創作型，再填四大架構；實務型另有「創作如何回答問題」專段與收斂五步，把想做的作品收斂成做得完的研究。',
+        file: 'grad-design-proposal-framework',
+        article: '/pages/resources/design-graduate-proposal.html',
+      },
+      {
+        title: '設計備審與作品集 Checklist',
+        desc: '送件清單、選件（少而深）、排序、每件的作品說明六欄位，以及最關鍵的一段：讓作品集與研究計畫互相指涉而不是各寫各的。',
+        file: 'grad-design-portfolio-checklist',
+        article: '/pages/resources/design-graduate-portfolio.html',
+      },
+      {
+        title: '口試與作品講評檢核表',
+        desc: '三分鐘作品簡報、四類追問題庫（作品／計畫／方法／適配），以及設計口試特有的一關：被當場講評時該做與不該做的四種情境。',
+        file: 'grad-design-oral-checklist',
+        article: '/pages/resources/design-graduate-oral.html',
       },
     ],
   },
