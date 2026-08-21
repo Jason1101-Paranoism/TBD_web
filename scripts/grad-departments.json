@@ -54,8 +54,8 @@
       "dept": "設計傳播",
       "slugPrefix": "grad-design",
       "guide": "/pages/guides/graduate-design.html",
-      "status": "guide-only",
-      "note": "Week 1 只做了指南頁。2026-08-18 補上第一份模板（school-compare，SEL-299 的內含要對得上），還缺四份：套磁信、研究計畫書架構、備審 Checklist、口試檢核。時程階段仍掛通用文 graduate-timeline（graduate-design.astro:11），是八群裡唯一一個。五份補齊後改 shipped。"
+      "status": "shipped",
+      "note": "2026-08-21 補齊：五份模板 ＋ 專屬時程文 design-graduate-timeline。八群的時程階段從此都指向自己的文章，不再有人掛通用文 graduate-timeline。"
     },
     {
       "dept": "農生環境",
