@@ -66,8 +66,14 @@ const TARGETS = [
   // 設計傳播 2026-08-21 五份補齊（比較表 08-18 先行）。這一項守的是「模板做出來了，
   // 指南頁真的看得到」——只登記在 gradTemplates.ts 而頁面沒渲染，等於沒做。
   // 五個檔名逐一列出而不是只抽驗一個：分批補的東西最容易漏掉中間某一份。
-  { path: '/pages/guides/graduate-design.html', name: '設計研究所指南（工具包五份齊）',
+  // 2026-08-21 設計補上專屬時程文，八群的時程階段從此都指向自己的文章。
+  // 這一項連 `design-graduate-timeline.html` 一起守：指南頁的階段若被改回通用文，
+  // 會退回「八群裡唯一一個沒有專屬時程」的狀態，而那正是本週待辦 ② 指出的洞。
+  { path: '/pages/resources/design-graduate-timeline.html', name: '文章（設計時程：FAQ＋分軌 relatedArticles）', toc: true,
+    mustContain: ['design-graduate-choose.html', 'design-graduate-portfolio.html', '"@type":"FAQPage"'] },
+  { path: '/pages/guides/graduate-design.html', name: '設計研究所指南（工具包五份齊＋專屬時程）',
     mustContain: [
+      'design-graduate-timeline.html',
       '設計推甄專屬工具包',
       'grad-design-school-compare.md', 'grad-design-school-compare.csv',
       'grad-design-contact-email.md', 'grad-design-proposal-framework.md',

@@ -55,7 +55,7 @@
       "slugPrefix": "grad-design",
       "guide": "/pages/guides/graduate-design.html",
       "status": "shipped",
-      "note": "2026-08-21 五份補齊（比較表 08-18 先行，供 SEL-299）。時程階段仍掛通用文 graduate-timeline（graduate-design.astro:11）——設計專屬時程文尚未產出，是八群裡唯一一個，見週待辦 ②。"
+      "note": "2026-08-21 補齊：五份模板 ＋ 專屬時程文 design-graduate-timeline。八群的時程階段從此都指向自己的文章，不再有人掛通用文 graduate-timeline。"
     },
     {
       "dept": "農生環境",
