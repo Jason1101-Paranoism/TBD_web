@@ -24,23 +24,33 @@
   /* ── Copy to clipboard ── */
   function copyText(text, msg) {
     var done = function () { showToast(msg || '已複製！'); };
+    // 複製失敗要講出來——靜默失敗會讓使用者以為複製到了，貼上時才發現是空的。
+    var fail = function () { showToast('複製失敗，請手動選取後按 Ctrl+C'); };
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done, fail); });
     } else {
-      fallbackCopy(text, done);
+      fallbackCopy(text, done, fail);
     }
   }
 
-  function fallbackCopy(text, cb) {
+  function fallbackCopy(text, cb, onFail) {
     var ta = document.createElement('textarea');
     ta.value = text;
     ta.style.position = 'fixed';
     ta.style.opacity = '0';
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); } catch (_) {}
+    var ok = false;
+    try {
+      // execCommand 回 false 代表沒複製成功，不是只有 throw 才算失敗。
+      ok = document.execCommand('copy');
+    } catch (err) {
+      ok = false;
+      if (window.console && console.warn) console.warn('[portfolio-guide] execCommand copy failed:', err);
+    }
     document.body.removeChild(ta);
-    cb();
+    if (ok) cb();
+    else if (onFail) onFail();
   }
 
   /* ── Tab switching ── */
