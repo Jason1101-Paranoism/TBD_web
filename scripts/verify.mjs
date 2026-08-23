@@ -106,6 +106,12 @@ const TARGETS = [
     mustContain: ['法政推甄專屬工具包', 'graduate-contact-professor.html#law-tips'] },
   { path: '/pages/resources/law-graduate-timeline.html', name: '文章（法政時程：分軌 relatedArticles）', toc: true,
     mustContain: ['law-graduate-choose.html'] },
+  { path: '/pages/guides/graduate-agriculture.html', name: '農生環境研究所指南（工具包＋agriculture-tips 錨點）',
+    mustContain: ['農生環境推甄專屬工具包', 'graduate-contact-professor.html#agriculture-tips'] },
+  { path: '/pages/resources/agriculture-graduate-timeline.html', name: '文章（農生環境時程：分軌 relatedArticles）', toc: true,
+    mustContain: ['agriculture-graduate-choose.html'] },
+  { path: '/pages/resources/agriculture-graduate-proposal.html', name: '文章（農生環境研究計畫：多表格 RWD）', toc: true,
+    mustContain: ['agriculture-graduate-cv.html'] },
   // ── markdown 表格的 RWD 回歸（D-009）──
   // 全域 `table { min-width: 760px }` 會撐破文章欄（實寬只有 356–764px）。修正在
   // tbd-pages.css 的 `.article-section table:not([class])`。下面三項刻意涵蓋：多表格的新文章、

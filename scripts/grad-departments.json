@@ -60,9 +60,9 @@
     {
       "dept": "農生環境",
       "slugPrefix": "grad-agriculture",
-      "guide": null,
-      "status": "planned",
-      "note": "2026-08-18 定案納入體系，但研究所內容一份都還沒有（現有的 agriculture-application.mdx 是大學申請、pre-college-agriculture-environment.mdx 是高中）。前台不得開入口，出貨清單可列並標未產出。"
+      "guide": "/pages/guides/graduate-agriculture.html",
+      "status": "shipped",
+      "note": "2026-08-23 Week 9 落地：五篇專屬文章（timeline/choose/proposal/cv/oral）＋五份模板＋指南頁，並在通用套磁文補 #agriculture-tips。九群至此全數 shipped。"
     }
   ]
 }

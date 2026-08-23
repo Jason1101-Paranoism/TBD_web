@@ -16,11 +16,10 @@
  * （對照表欄位標題）、`resources.astro` 的 `staticPages`（搜尋資料）。三份手寫、
  * 沒有任何東西保證它們一致——和 D-003 那 20 份消失的模板是同一類問題，只是還沒爆。
  *
- * 含設計傳播（有指南但沒有模板），所以不能直接用 gradTemplateGroups 代替。
- *
  * 「學群共有幾個」的正本不在這裡，在 `scripts/grad-departments.json`（2026-08-18 定案 9 群，D-011）。
- * 那份帶三態：shipped（指南＋模板都在）／guide-only（設計傳播，模板未補）／
- * planned（農生環境，研究所內容未產出，前台不得有入口）。
+ * 那份帶三態：shipped（指南＋模板都在）／guide-only（有指南、模板未補齊）／
+ * planned（研究所內容未產出，前台不得有入口）。
+ * 2026-08-23 農生環境補齊五篇文章＋五份模板＋指南頁後升為 shipped，九群全數 shipped。
  * 本陣列＝非 planned 的集合，`gradTemplateGroups` ＝ shipped 的集合，
  * 對不上時 `scripts/check-grad-departments.mjs` 會擋——不要單邊改這裡。
  */
@@ -95,6 +94,13 @@ export const gradGuides: GradGuide[] = [
     pageTitle: '法政研究所申請完整指南',
     href: '/pages/guides/graduate-law.html',
     desc: '法政類群研究所申請七階段：大三上起跑的時程、研究取向與教授選所、可辯論爭點的研究計畫、專業軌跡一致的備審，以及立場論證與反駁答辯的口試，附五份下載模板。',
+  },
+  {
+    dept: '農生環境',
+    label: '農生環境研究所申請指南',
+    pageTitle: '農生與環境研究所申請完整指南',
+    href: '/pages/guides/graduate-agriculture.html',
+    desc: '農生與環境類群研究所申請七階段：受生物週期與季節限制的時程、以資源契合度為主的實驗室選擇、以可行性為核心的研究計畫、證明實務掌控力的備審，以及技術追問的口試答辯，附五份下載模板。',
   },
 ];
 
@@ -419,6 +425,43 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         desc: '一分鐘立場說明、四類追問題庫、六步答題框架與被指出矛盾時的句型，上場前完整檢核。',
         file: 'grad-law-oral-checklist',
         article: '/pages/resources/law-graduate-oral.html',
+      },
+    ],
+  },
+  {
+    dept: '農生環境',
+    label: '農生環境',
+    guide: '/pages/guides/graduate-agriculture.html',
+    templates: [
+      {
+        title: '實驗室與教授評估表',
+        desc: '先定位自己要哪一種日子，再逐項比較經費、儀器、耗材、樣區、生活節奏與畢業狀況——這個類群的研究做不做得完，取決於實驗室而不是校名。',
+        file: 'grad-agriculture-lab-compare',
+        article: '/pages/resources/agriculture-graduate-choose.html',
+      },
+      {
+        title: '農生環境聯繫教授信結構模板',
+        desc: '先判斷該不該寄的六項條件，再用七段結構寫，附把技術寫成具體時數與產出的對照範例與九項寄信前檢核。',
+        file: 'grad-agriculture-contact-email',
+        article: '/pages/resources/graduate-contact-professor.html',
+      },
+      {
+        title: '研究計畫可行性與架構模板',
+        desc: '從技術出發的收斂五步＋十二節架構＋可行性換算＋風險與替代方案＋倫理與許可檢核，把「兩年做得完」寫成可以被檢查的東西。',
+        file: 'grad-agriculture-proposal-framework',
+        article: '/pages/resources/agriculture-graduate-proposal.html',
+      },
+      {
+        title: '農生環境備審檢核表',
+        desc: '技術與經驗盤點（量、產出、能否獨立操作）、現實變數處理案例的四段結構、成果圖表檢核與三份文件一致性檢查。',
+        file: 'grad-agriculture-portfolio-checklist',
+        article: '/pages/resources/agriculture-graduate-cv.html',
+      },
+      {
+        title: '口試技術答辯檢核表',
+        desc: '一句話說明的收斂、核心技術的原理與盲點準備表、五步答題框架、四類追問題庫與被指出漏洞時的句型。',
+        file: 'grad-agriculture-oral-checklist',
+        article: '/pages/resources/agriculture-graduate-oral.html',
       },
     ],
   },
