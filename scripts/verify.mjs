@@ -593,6 +593,17 @@ if (manifestProblems.length) {
   process.exit(1);
 }
 
+// 模板規格稽核（B1／B2／B3，見 docs/template-spec-audit.md）。
+// 45 份全數符合規格之後才接進來當閘門——現況是紅的就接，等於閘門永遠紅、也就永遠沒人看。
+// 新增學群或改模板時漏了共同區塊，這裡會擋下來（實作審閱報告第 E 節那條規則）。
+console.log('▶ 模板規格稽核…');
+try {
+  execFileSync('node', ['scripts/audit-templates.mjs', '--strict'], { stdio: 'inherit' });
+} catch {
+  console.error('\n✋ 模板規格稽核未通過（詳見上方清單與 docs/template-spec-audit.md）。');
+  process.exit(1);
+}
+
 if (!noBuild) {
   console.log('▶ build…');
   execFileSync('npm', ['run', 'build'], { stdio: 'inherit', shell: platform() === 'win32' });
