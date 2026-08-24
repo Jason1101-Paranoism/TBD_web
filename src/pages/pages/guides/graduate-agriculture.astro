@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+import { getCollection } from 'astro:content';
+import { templatesFor, gradGuideByDept } from '../../../config/gradTemplates';
+
+// 農生與環境類群研究所申請路徑：通用階段「重用」既有研究所推甄文章，
+// 只有農生環境真正不同的環節（受生物週期與季節限制的時程、以資源契合度為主的
+// 實驗室選擇、以可行性為核心的研究計畫、證明實務掌控力的備審、技術追問的口試）用專屬文。
+const STAGE_ORDER = [
+  { slug: 'graduate-recommend-vs-exam',   tag: '通用',     role: '先理解推甄與考試的差異；農生環境的路線判斷基準見下方快篩。' },
+  { slug: 'agriculture-graduate-timeline', tag: '農生環境專屬', role: '有些時間不能壓縮——生物週期、期作與樣區季節不會配合你的行事曆。為什麼起點是大三下，以及來不及的人該怎麼取捨。' },
+  { slug: 'agriculture-graduate-choose',   tag: '農生環境專屬', role: '經費、儀器、耗材與樣區跟著實驗室走、不跟著校名走：用領域、實驗室、教授三層收斂，附可直接填的比較表。' },
+  { slug: 'graduate-contact-professor',    tag: '通用',     role: '送件前聯繫教授；農生環境要用具體技術與時數證明進得了現場，判斷方式直達文內〈農生與環境類群專屬重點〉。', anchor: '#agriculture-tips' },
+  { slug: 'agriculture-graduate-proposal', tag: '農生環境專屬', role: '教授看的第一件事往往不是題目多新，而是它在修業年限與實驗室資源下做不做得完：收斂五步、十二節架構與可行性換算。' },
+  { slug: 'agriculture-graduate-cv',       tag: '農生環境專屬', role: 'CV 證明技術與時數、自傳說明除錯與耐受度、計畫展示延伸——三份文件怎麼指向同一條研究主軸。' },
+  { slug: 'agriculture-graduate-oral',     tag: '農生環境專屬', role: '委員多半直接追問技術細節：核心技術的盲點、對照組能排除什麼、假設被推翻怎麼辦，附五步答題框架。' },
+];
+
+const bySlug = Object.fromEntries(
+  (await getCollection('articles')).map((a) => [a.slug, a])
+);
+const stages = STAGE_ORDER
+  .map((s, i) => {
+    const a = bySlug[s.slug];
+    if (!a) return null;
+    // anchor：通用文內的農生環境專屬區塊（#agriculture-tips），總覽直接深連結到該段
+    return { n: i + 1, tag: s.tag, role: s.role, title: a.data.title, href: `/pages/resources/${a.slug}.html${'anchor' in s && s.anchor ? s.anchor : ''}` };
+  })
+  .filter(Boolean);
+
+// 可下載模板：資料在 src/config/gradTemplates.ts（與 resources/tools.html 同一份來源）
+const templates = templatesFor('農生環境');
+
+const title = gradGuideByDept['農生環境'].pageTitle;
+const description = '農生與環境研究所推甄怎麼準備？這個指南依申請順序拆成七個階段——從推甄與考試的路線判斷、受生物週期與季節限制的時程規劃，到農生環境專屬的實驗室與教授選擇、以可行性為核心的研究計畫、證明實務掌控力的備審，以及技術追問的口試答辯，並附五份可下載模板。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-graduate-agriculture`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": title,
+      "description": description,
+      "url": `${site.siteUrl}/pages/guides/graduate-agriculture.html`,
+      "inLanguage": "zh-TW"
+    },
+    {
+      "@type": "ItemList",
+      "name": "農生與環境研究所申請的七個階段",
+      "itemListElement": stages.map((s) => ({
+        "@type": "ListItem",
+        "position": s.n,
+        "name": s.title,
+        "item": `${site.siteUrl}${s.href}`
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 2, "name": "知識庫", "item": `${site.siteUrl}/pages/resources.html` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/guides/graduate-agriculture.html` }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page guide-page" schema={schema}>
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/index.html">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <span>{title}</span>
+  </nav>
+  <span class="kicker">主題指南 · 農生與環境類群</span>
+  <h1>{title}</h1>
+  <p class="lead">農生與環境類群涵蓋生命科學、生物科技、農藝、植物科學、生態、環境科學與環境工程等方向，申請的關鍵不只是研究題目夠不夠新，而是這個研究在生物週期、季節、儀器、耗材與經費的限制下做不做得完。教授要從研究計畫、備審與口試中判斷的，是你能不能把實驗室操作、田野調查與研究問題連起來，並在污染、天候與樣本失敗這些一定會發生的事情裡維持研究品質。這個指南把申請拆成七個階段，和通用的研究所推甄指南同一套骨架：推甄與考試、聯繫教授沿用通用文章，農生環境真正不同的環節（受生物週期限制的時程、以資源契合度為主的實驗室選擇、以可行性為核心的研究計畫、證明實務掌控力的備審、技術追問的口試）則有專屬深文，並附五份可直接下載的模板。建議照順序讀一遍，再回頭把卡住的階段讀深。</p>
+</section>
+
+<main>
+
+  <section class="section" id="route-check">
+    <h2>先做路線快篩：推甄、考試還是並行？</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">投入七個階段之前，先確認方向。農生環境的推甄與考試檢驗的是兩種不同的能力——建議用三個問題做第一層判斷（是參考基準，不是絕對門檻）：</p>
+    <div class="card-grid">
+      <article class="card article-card">
+        <span class="badge">問題一：實作證據</span>
+        <h3>你有能講到細節的專題或田野成果嗎？</h3>
+        <p class="card-desc">推甄看的不是「加入過實驗室」，而是你能不能獨立說清楚：做過什麼、遇到什麼問題、怎麼排除、得到什麼結果。這種能力筆試測不出來，也正是推甄的主要優勢所在。</p>
+      </article>
+      <article class="card article-card">
+        <span class="badge">問題二：時間的所有權</span>
+        <h3>你的研究進度，有多少不由你決定？</h3>
+        <p class="card-desc">生長週期、期作、樣區可進入的季節、儀器排隊與送樣等待——這些是這個類群獨有的時間成本。如果你的成果還卡在某個週期裡，時程規劃要先把它算進去。</p>
+      </article>
+      <article class="card article-card">
+        <span class="badge">問題三：長期壓力</span>
+        <h3>你擅長長期實作，還是長期應試？</h3>
+        <p class="card-desc">考試路線需要的是半年到一年、每天長時間面對生化與分生的穩定投入。在校成績或專題成果不具優勢、想跨校系翻盤的人，筆試往往是更直接的槓桿。</p>
+      </article>
+    </div>
+    <p style="margin-top: 16px; color: var(--tbd-mid);">兩邊並行是可行的，也是這個類群相當常見的配置，但要先分清楚哪些工作共用（生化、分生等核心科目實力）、哪些不共用（推甄的研究計畫與成果整理 vs 考試的長期進度）。還有一個變數要先算進去：<strong>如果你的實驗還在跑，它不會因為你在準備考試就暫停</strong>。完整的路線判斷與時間擠壓風險，見<a class="text-link" href="/pages/resources/agriculture-graduate-timeline.html">農生環境研究所推甄時程</a>。</p>
+  </section>
+
+  <section class="section" id="stages">
+    <h2>農生與環境研究所申請的七個階段</h2>
+    <div class="guide-rail-legend">
+      <span><i class="own"></i>農生環境專屬深文</span>
+      <span><i class="reuse"></i>沿用通用文章</span>
+    </div>
+    <div class="guide-rail">
+      {stages.map((s) => (
+        <a class={`rail-stage${s.tag !== '通用' ? ' own' : ''}`} href={s.href}>
+          <span class="rs-num">{s.n}</span>
+          <span class="rs-node"><i></i></span>
+          <span class="rs-body">
+            <span class="rs-tag">{s.tag}</span>
+            <span class="rs-title">{s.title}</span>
+            <span class="rs-role">{s.role}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="templates">
+    <h2>農生環境推甄專屬工具包</h2>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">五份對應各階段的工具，兩種格式任選：<strong>CSV</strong> 用 Excel / Google 試算表開；<strong>Markdown</strong> 可一鍵匯入 Notion。</p>
+    <div class="card-grid">
+      {templates.map((t) => (
+        <article class="card article-card">
+          <span class="badge">模板</span>
+          <h3>{t.title}</h3>
+          <p class="card-desc">{t.desc}</p>
+          <div class="button-row" style="margin-top: 16px;">
+            <a class="button" href={t.md} download data-track-event="download_resource">Notion / Markdown</a>
+            <a class="button secondary" href={t.csv} download data-track-event="download_resource">CSV 試算表</a>
+          </div>
+          <p style="margin-top: 10px;"><a class="text-link" href={t.article}>看使用說明 →</a></p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="more">
+    <h2>延伸與案例</h2>
+    <div class="card-grid">
+      <article class="card article-card">
+        <span class="badge">成功案例</span>
+        <h3><a class="text-link" href="/pages/cases.html">TBD Studio 升學輔導案例</a></h3>
+        <p class="card-desc">去識別化的真實案例——素材盤點、敘事重構與模擬面試怎麼落實成錄取結果，跨域申請者也適用。</p>
+      </article>
+      <article class="card article-card">
+        <span class="badge">通用指南</span>
+        <h3><a class="text-link" href="/pages/guides/graduate-application.html">研究所推甄完整指南</a></h3>
+        <p class="card-desc">不分科系的研究所推甄通用流程，想先掌握整體再回到農生環境專屬準備，從這裡開始。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>研究計畫的可行性、實驗室名單與技術答辯，想找人一起檢視？</h2>
+    <p>TBD 的策略諮詢會依你的技術背景、專題與田野成果、目標實驗室的資源條件，幫你判斷推甄與考試的路線配比、把題目收斂到兩年做得完的規模、檢查風險與替代方案是否具體，並針對可能被追問的技術細節做模擬。</p>
+    <p class="cta-trust"><span>✓ 線上進行</span><span>✓ 不代寫</span><span>✓ 過程文件可追蹤</span></p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/services/graduate.html">看研究所推甄服務</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_guide_graduate_agriculture">預約策略諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>

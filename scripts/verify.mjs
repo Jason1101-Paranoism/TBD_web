@@ -106,6 +106,12 @@ const TARGETS = [
     mustContain: ['法政推甄專屬工具包', 'graduate-contact-professor.html#law-tips'] },
   { path: '/pages/resources/law-graduate-timeline.html', name: '文章（法政時程：分軌 relatedArticles）', toc: true,
     mustContain: ['law-graduate-choose.html'] },
+  { path: '/pages/guides/graduate-agriculture.html', name: '農生環境研究所指南（工具包＋agriculture-tips 錨點）',
+    mustContain: ['農生環境推甄專屬工具包', 'graduate-contact-professor.html#agriculture-tips'] },
+  { path: '/pages/resources/agriculture-graduate-timeline.html', name: '文章（農生環境時程：分軌 relatedArticles）', toc: true,
+    mustContain: ['agriculture-graduate-choose.html'] },
+  { path: '/pages/resources/agriculture-graduate-proposal.html', name: '文章（農生環境研究計畫：多表格 RWD）', toc: true,
+    mustContain: ['agriculture-graduate-cv.html'] },
   // ── markdown 表格的 RWD 回歸（D-009）──
   // 全域 `table { min-width: 760px }` 會撐破文章欄（實寬只有 356–764px）。修正在
   // tbd-pages.css 的 `.article-section table:not([class])`。下面三項刻意涵蓋：多表格的新文章、
@@ -584,6 +590,17 @@ const manifestProblems = checkTemplateManifest();
 if (manifestProblems.length) {
   console.error('\n✋ 模板清單檢查未通過（scripts/template-manifest.json 與磁碟不一致）：');
   for (const p of manifestProblems) console.error(`   ✗ ${p}`);
+  process.exit(1);
+}
+
+// 模板規格稽核（B1／B2／B3，見 docs/template-spec-audit.md）。
+// 45 份全數符合規格之後才接進來當閘門——現況是紅的就接，等於閘門永遠紅、也就永遠沒人看。
+// 新增學群或改模板時漏了共同區塊，這裡會擋下來（實作審閱報告第 E 節那條規則）。
+console.log('▶ 模板規格稽核…');
+try {
+  execFileSync('node', ['scripts/audit-templates.mjs', '--strict'], { stdio: 'inherit' });
+} catch {
+  console.error('\n✋ 模板規格稽核未通過（詳見上方清單與 docs/template-spec-audit.md）。');
   process.exit(1);
 }
 
