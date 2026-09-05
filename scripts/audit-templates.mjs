@@ -135,5 +135,31 @@ for (const r of results) {
   );
 }
 
-console.log(`\n結論：${bad === 0 ? '✅ 全部符合規格' : `❌ ${bad}/${results.length} 份有缺漏`}`);
-if (bad && STRICT) process.exit(1);
+// 轉檔殘留：MD 轉 CSV 時破折號 —— 被吃成「到到」。只出現在標題與清單列
+//（剝掉 `## ` 與 `- [ ] ` 的那段程式碼），內文段落不受影響，所以人工翻檔很容易漏。
+// 轉檔器不在本 repo，這裡修不掉根因，只能擋住它的產物：任何一份 CSV 出現「到到」就紅。
+// 為什麼不併進上面那張表：規格表只涵蓋 grad-* 45 份，但同一條轉檔管線還產出另外 11 份
+//（高中生找方向那批），漏掃等於留半個洞。
+// 病史：8/23 審 Batch 2 只修掉 proposal-framework 一份就收工，另三份 8/29 才被掃出來，
+// 9/4 複查發現修正指令根本沒生效、仍在站上。「修得掉但只修一個檔」要靠閘門，不是靠記得。
+const allCsv = readdirSync(DIR).filter((f) => f.endsWith('.csv')).sort();
+const leaks = [];
+for (const f of allCsv) {
+  const ls = readFileSync(join(DIR, f), 'utf8').replace(/^\uFEFF/, '').split(/\r?\n/);
+  const hits = ls.map((x, i) => (x.includes('到到') ? i + 1 : 0)).filter(Boolean);
+  if (hits.length) leaks.push(`${f}：行 ${hits.join('、')}`);
+}
+console.log(`\n── 轉檔殘留掃描（${allCsv.length} 份 CSV）──`);
+if (leaks.length) {
+  console.log('❌ 破折號被轉成「到到」，應為 ——：');
+  for (const l of leaks) console.log(`   ✗ ${l}`);
+} else {
+  console.log('✅ 零命中');
+}
+
+const verdict = [
+  bad ? `❌ 規格 ${bad}/${results.length} 份有缺漏` : null,
+  leaks.length ? `❌ 轉檔殘留 ${leaks.length} 份` : null,
+].filter(Boolean).join('；') || '✅ 全部符合規格';
+console.log(`\n結論：${verdict}`);
+if ((bad || leaks.length) && STRICT) process.exit(1);
