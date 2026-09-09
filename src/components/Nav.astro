@@ -13,8 +13,11 @@ function isActive(item: { id: string; href: string }) {
 
 <header class="site-header">
   <nav class="site-nav" aria-label="主要導覽">
-    <a class="site-logo" href="/index.html" aria-label="TBD Studio 官方首頁">
-      <img src={site.logoUrl} alt="TBD Studio Logo" width="168" height="44">
+    <a class="site-logo" href="/" aria-label="TBD Studio 官方首頁">
+      <picture>
+        <source type="image/webp" srcset={site.logoUrl}>
+        <img src={site.logoFallbackUrl} alt="TBD Studio Logo" width="168" height="44" decoding="async">
+      </picture>
     </a>
 
     <div class="site-nav-links" aria-label="桌面導覽">

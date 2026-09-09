@@ -4,6 +4,7 @@ import { site } from '../config/site';
 import { resourceCategories } from '../config/resourceCategories';
 import { gradGuideByDept } from '../config/gradTemplates';
 import { getCollection } from 'astro:content';
+import { contentModifiedDate } from '../lib/contentDates';
 
 interface TocItem {
   href: string;
@@ -31,11 +32,15 @@ interface Props {
   tocItems: TocItem[];
   relatedArticles: RelatedArticle[];
   faqItems?: { q: string; a: string }[];
+  keyTakeaways?: string[];
+  howToSteps?: { name: string; text: string }[];
+  howToTotalTime?: string;
   slug: string;
   seoTitle?: string;
   category?: string;
   departmentGroup?: string;
   gradStage?: number;
+  guide?: string;
   publishDate: Date;
   updatedDate?: Date;
   readingMinutes?: number;
@@ -46,7 +51,8 @@ const {
   bodyClass = 'sub-page article-page',
   sidebarCtaText, sidebarCtaUtm,
   bottomCtaH2, bottomCtaUtm,
-  tocItems, relatedArticles, faqItems, slug, seoTitle, category, departmentGroup, gradStage,
+  tocItems, relatedArticles, faqItems, keyTakeaways, howToSteps, howToTotalTime,
+  slug, seoTitle, category, departmentGroup, gradStage, guide: guideKey,
   publishDate, updatedDate, readingMinutes,
 } = Astro.props;
 
@@ -61,11 +67,21 @@ const GUIDE_BY_CATEGORY: Record<string, { href: string; label: string }> = {
   '研究所推甄': { href: '/pages/guides/graduate-application.html', label: '研究所推甄完整指南' },
   '給家長': { href: '/pages/guides/parents-guide.html', label: '給家長完整指南' },
 };
+// 少數主題有專屬指南，但它的文章分散在多個 category，對不到上面那張表。
+// 這種情況由文章 frontmatter 的 guide 欄位直接指名。
+const GUIDE_BY_KEY: Record<string, { href: string; label: string }> = {
+  'ai-era': { href: '/pages/guides/ai-era.html', label: 'AI 時代升學觀點' },
+  'github': { href: '/pages/guides/github.html', label: 'GitHub 與作品集指南' },
+  'side-project': { href: '/pages/guides/side-project.html', label: 'Side Project 指南' },
+  'competitions': { href: '/pages/guides/competitions.html', label: '競賽指南' },
+  'research': { href: '/pages/guides/research.html', label: '研究與自學指南' },
+};
 // 學群 → 指南的對應在 src/config/gradTemplates.ts（與對照表、搜尋資料同一份來源）
 const GUIDE_BY_DEPT = gradGuideByDept;
 // 研究所推甄文章若帶 departmentGroup（分學群專屬文）→ 連到該學群研究所指南；
 // 其餘（含通用研究所文、大學端各科系文）→ 連到該 category 的指南。
-const guide = ((category === '研究所推甄' && departmentGroup ? GUIDE_BY_DEPT[departmentGroup] : undefined)
+const guide = ((guideKey ? GUIDE_BY_KEY[guideKey] : undefined)
+  ?? (category === '研究所推甄' && departmentGroup ? GUIDE_BY_DEPT[departmentGroup] : undefined)
   ?? (category ? GUIDE_BY_CATEGORY[category] : undefined)) ?? null;
 
 // 文章 → 對應服務頁的就地連結（資料驅動，依 category 對應；沒有對應的分類就不顯示）。
@@ -84,7 +100,7 @@ const serviceLink = (category && SERVICE_BY_CATEGORY[category]) ?? null;
 
 // 麵包屑層級（含可選的指南層），同時供 HTML 與 BreadcrumbList schema 使用。
 const crumbs = [
-  { name: '首頁', url: `${site.siteUrl}/index.html`, href: '/index.html' },
+  { name: '首頁', url: `${site.siteUrl}/`, href: '/' },
   { name: '知識庫', url: `${site.siteUrl}/pages/resources.html`, href: '/pages/resources.html' },
   ...(guide ? [{ name: guide.label, url: `${site.siteUrl}${guide.href}`, href: guide.href }] : []),
   { name: title, url: `${site.siteUrl}/pages/resources/${slug}.html`, href: '' },
@@ -135,6 +151,13 @@ if (gradStage) {
   seriesNav = { track, stage: gradStage, prev: link(prevA), next: link(nextA), others, guides, stages };
 }
 
+// dateModified 的來源順序：frontmatter 手動覆寫 → git 最後 commit 日 → 退回發布日。
+// 理由與取捨見 src/lib/contentDates.ts。
+const gitModified = contentModifiedDate(slug);
+const modifiedDate = updatedDate ?? (gitModified && gitModified > publishDate ? gitModified : publishDate);
+// 「更新於」只在真的比發布日晚一天以上時才顯示，避免同日 commit 被說成更新過
+const isRevised = modifiedDate.getTime() - publishDate.getTime() > 24 * 60 * 60 * 1000;
+
 const articleSchema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -144,7 +167,7 @@ const articleSchema = {
       "description": description,
       "url": `${site.siteUrl}/pages/resources/${slug}.html`,
       "datePublished": publishDate.toISOString(),
-      "dateModified": (updatedDate ?? publishDate).toISOString(),
+      "dateModified": modifiedDate.toISOString(),
       "author": { "@type": "Organization", "name": "TBD Studio", "url": site.siteUrl },
       "publisher": { "@type": "Organization", "name": "TBD Studio", "url": site.siteUrl },
       "inLanguage": "zh-TW"
@@ -155,6 +178,22 @@ const articleSchema = {
         "@type": "ListItem", "position": i + 1, "name": c.name, "item": c.url
       }))
     },
+    // HowTo：只有 frontmatter 明確填了 howToSteps 的步驟型文章才輸出。
+    // 不對每篇時程文自動生成——沒有真的照步驟寫的文章掛 HowTo 是假結構化資料。
+    ...(howToSteps && howToSteps.length ? [{
+      "@type": "HowTo",
+      "name": title,
+      "description": description,
+      "inLanguage": "zh-TW",
+      ...(howToTotalTime ? { "totalTime": howToTotalTime } : {}),
+      "step": howToSteps.map((st, i) => ({
+        "@type": "HowToStep",
+        "position": i + 1,
+        "name": st.name,
+        "text": st.text,
+        "url": `${site.siteUrl}/pages/resources/${slug}.html`,
+      })),
+    }] : []),
     // FAQPage：有填 faqItems 才加，讓文末 FAQ 能被 Google 當結構化資料
     ...(faqItems && faqItems.length ? [{
       "@type": "FAQPage",
@@ -174,14 +213,14 @@ const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=
 const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=${bottomCtaUtm}`;
 
 // Hero meta bar：作者背書＋時效訊號（v3 review 通用規範）
-const metaDate = updatedDate ?? publishDate;
+const metaDate = modifiedDate;
 const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 月`;
 ---
 
 <BaseLayout title={title} description={description} bodyClass={bodyClass} ogType="article" seoTitle={seoTitle} schema={articleSchema}>
   <section class="hero article-hero">
     <nav class="breadcrumb">
-      <a href="/index.html">首頁</a>
+      <a href="/">首頁</a>
       <span>›</span>
       <a href="/pages/resources.html">知識庫</a>
       <span>›</span>
@@ -190,9 +229,18 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
     </nav>
     <span class="kicker">{kicker}</span>
     <h1>{title}</h1>
-    <p class="article-meta"><span>TBD Studio 編輯團隊</span><span aria-hidden="true">·</span><span>{updatedDate ? '更新於' : '發布於'} {metaDateLabel}</span>{readingMinutes && (<><span aria-hidden="true">·</span><span>閱讀約 {readingMinutes} 分鐘</span></>)}</p>
+    <p class="article-meta"><span>TBD Studio 編輯團隊</span><span aria-hidden="true">·</span><span>{isRevised ? '更新於' : '發布於'} {metaDateLabel}</span>{readingMinutes && (<><span aria-hidden="true">·</span><span>閱讀約 {readingMinutes} 分鐘</span></>)}</p>
     <p class="lead">{lead}</p>
   </section>
+
+  {keyTakeaways && keyTakeaways.length > 0 && (
+    <section class="section key-takeaways" aria-labelledby="takeaways-head">
+      <h2 id="takeaways-head">重點速覽</h2>
+      <ul>
+        {keyTakeaways.map((k) => (<li>{k}</li>))}
+      </ul>
+    </section>
+  )}
 
   <main>
     <div class="article-layout">

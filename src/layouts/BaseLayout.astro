@@ -17,24 +17,57 @@ interface Props {
 
 const { title, description, bodyClass = '', canonicalUrl, ogType = 'website', seoTitle, schema, noindex = false } = Astro.props;
 const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
-const pageTitle = seoTitle ?? title;
+
+// 中文 SERP 大約在 30 個全形字截斷。原本每個 seoTitle 都自己把「｜TBD Studio」寫進去，
+// 結果 171 頁裡有 130 頁超過 30 字——被吃掉的正好就是品牌後綴，等於白寫。
+// 改成：內容側只寫標題本體，品牌由這裡在「塞得下」時才補。塞不下就不補，
+// 因為一個看得到的具體標題比一個被切一半的品牌有用。
+const BRAND = '｜TBD Studio';
+const TITLE_LIMIT = 30;
+const titleBase = (seoTitle ?? title).replace(/\s*[｜|]\s*TBD Studio\s*$/, '');
+const pageTitle = titleBase.length + BRAND.length <= TITLE_LIMIT ? titleBase + BRAND : titleBase;
 
 const siteSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "EducationalOrganization",
+      "@id": `${site.siteUrl}/#organization`,
       "name": "TBD Studio",
+      "alternateName": "TBD 升學策略顧問",
       "url": site.siteUrl,
       "email": site.email,
       "description": "TBD Studio 是台灣專注升學申請策略的教育顧問，協助高中生與研究所學生完成方向判斷、備審重構、學習歷程整理與面試訓練。每一步準備都可追蹤、可驗收。",
-      "areaServed": "TW",
-      "availableLanguage": "zh-TW"
+      "slogan": site.tagline,
+      // logo 沒填就不會有知識面板標誌；sameAs 是 AI 引擎做跨平台實體消歧的依據，
+      // IG 與 LINE 這兩個帳號本來就在 site.ts 裡，只是一直沒進 schema。
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${site.siteUrl}${site.logoDarkFallbackUrl}`,
+        "width": 424,
+        "height": 128
+      },
+      "image": site.ogImage,
+      "sameAs": [site.igUrl, site.lineUrl],
+      "areaServed": { "@type": "Country", "name": "Taiwan" },
+      "availableLanguage": "zh-TW",
+      "knowsLanguage": ["zh-TW", "en"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": site.email,
+        "url": site.lineUrl,
+        "areaServed": "TW",
+        "availableLanguage": "zh-TW"
+      }
     },
     {
       "@type": "WebSite",
+      "@id": `${site.siteUrl}/#website`,
       "name": "TBD Studio",
       "url": site.siteUrl,
+      "inLanguage": "zh-TW",
+      "publisher": { "@id": `${site.siteUrl}/#organization` },
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
@@ -63,32 +96,17 @@ const siteSchema = {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com" is:inline></script>
-  <script is:inline>
-    // tailwind 由上一行的 cdn.tailwindcss.com 注入，是執行期全域，非本檔宣告
-    /* global tailwind */
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'tbd-light': '#D0CEDB',
-            'tbd-mid': '#6A6D89',
-            'tbd-accent': '#1A5D94',
-            'tbd-dark': '#142143',
-            'tbd-yellow': '#FAB748',
-          },
-          fontFamily: {
-            sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
-            serif: ['EB Garamond', 'serif'],
-          },
-          boxShadow: {
-            'soft': '0 10px 30px rgba(20, 33, 67, 0.08)',
-          }
-        }
-      }
-    }
-  </script>
-  <link rel="stylesheet" href="/css/style.css">
+  <!-- 五個 CSS 模組直接平行載入。原本是 style.css 用 @import 串起來，
+       但 @import 不平行下載，會把關鍵渲染路徑拉成六層序列請求。順序即層級：
+       theme（tokens）→ base（reset）→ layout → components → pages。 -->
+  <link rel="stylesheet" href="/css/tbd-theme.css">
+  <link rel="stylesheet" href="/css/tbd-base.css">
+  <link rel="stylesheet" href="/css/tbd-layout.css">
+  <link rel="stylesheet" href="/css/tbd-components.css">
+  <link rel="stylesheet" href="/css/tbd-pages.css">
+  {/* Tailwind 一定要排在五個模組之後：Play CDN 是執行期把 <style> 附到 head 尾端，
+      utility 因此一直贏過 tbd-*.css。換成靜態檔後要靠順序維持同一個層級關係。 */}
+  <link rel="stylesheet" href="/css/tailwind.css">
   <script is:inline>document.documentElement.classList.add('js-reveal');</script>
   <GoogleAnalytics />
   <meta name="google-site-verification" content="google524eb5b6fa89d030">
@@ -100,11 +118,15 @@ const siteSchema = {
   <meta property="og:title" content={pageTitle}>
   <meta property="og:description" content={description}>
   <meta property="og:image" content={site.ogImage}>
+  <meta property="og:image:width" content={String(site.ogImageWidth)}>
+  <meta property="og:image:height" content={String(site.ogImageHeight)}>
+  <meta property="og:image:alt" content={site.ogImageAlt}>
   <meta property="og:url" content={canonical}>
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={pageTitle}>
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={site.ogImage}>
+  <meta name="twitter:image:alt" content={site.ogImageAlt}>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(siteSchema)} />
   {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
 </head>

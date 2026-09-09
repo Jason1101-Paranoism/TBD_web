@@ -76,3 +76,9 @@ select:focus-visible, input:focus-visible, [tabindex]:focus-visible {
 }
 .skip-link:focus { left: 0; }
 #main-content { outline: none; }
+
+/* <picture> 只是給瀏覽器挑格式用的容器，不該參與版面。
+   例：.site-logo 是 inline-flex 且 .site-logo img{width:100%}，
+   若 <picture> 佔一層 flex item，img 的 100% 會改對著 picture 算而破版。
+   display:contents 讓它從版面樹上消失，img 仍是原本那一層的子元素。 */
+picture { display: contents; }

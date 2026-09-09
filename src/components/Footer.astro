@@ -5,7 +5,7 @@ import { site, nav } from '../config/site';
 <footer class="site-footer">
   <div class="site-footer-grid">
     <section class="site-footer-card">
-      <h4>聯絡我們</h4>
+      <h2>聯絡我們</h2>
       <p>
         <span>Email</span>
         <a href={`mailto:${site.email}`}>{site.email}</a>
@@ -23,14 +23,18 @@ import { site, nav } from '../config/site';
     </section>
 
     <section class="site-footer-card site-footer-brand">
-      <a href="/index.html" aria-label="TBD Studio 官方首頁">
-        <img src={site.logoDarkUrl} alt="TBD Studio Logo">
+      <a href="/" aria-label="TBD Studio 官方首頁">
+        <picture>
+          <source type="image/webp" srcset={site.logoDarkUrl}>
+          {/* CSS 給 height:64px / width:auto；宣告內在尺寸是為了讓瀏覽器在圖到之前就知道長寬比，不要跳版 */}
+          <img src={site.logoDarkFallbackUrl} alt="TBD Studio Logo" width="424" height="128" loading="lazy" decoding="async">
+        </picture>
       </a>
       <p>{site.tagline}</p>
     </section>
 
     <section class="site-footer-card">
-      <h4>快速連結</h4>
+      <h2>快速連結</h2>
       <nav aria-label="頁腳導覽">
         {nav.filter(item => item.id !== 'home').map(item => (
           <p><a href={item.href}>{item.label}</a></p>

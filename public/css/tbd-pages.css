@@ -949,3 +949,57 @@ table.deliv-mini td b { color: var(--tbd-dark); }
 }
 .pricing-suited { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--tbd-line); }
 .pricing-note { color: var(--tbd-mid); font-size: 14px; line-height: 1.75; margin: 18px 0 0; }
+
+/* ── 重點速覽（AEO：答案先行框）────────────────────────────────
+   位置在 lead 之後、正文第一節之前。存在理由見 src/content/config.ts 的
+   keyTakeaways 註解：站上的 lead 幾乎都是誤區鉤子開場，生成式引擎抽首段
+   當答案時會抽到反例，這個框負責先把結論用完整句子講一次。
+   視覺上刻意不做成卡片：它是文章的一部分，不是側欄小工具。 */
+.key-takeaways {
+  max-width: var(--tbd-container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.key-takeaways > h2 {
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--tbd-accent);
+  margin: 0 0 12px;
+}
+.key-takeaways ul {
+  margin: 0;
+  padding: 20px 24px 20px 26px;
+  list-style: none;
+  border-left: 3px solid var(--tbd-accent);
+  background: var(--tbd-soft);
+  border-radius: 0 var(--tbd-radius-sm) var(--tbd-radius-sm) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.key-takeaways li {
+  position: relative;
+  padding-left: 20px;
+  line-height: 1.8;
+  color: var(--tbd-dark);
+}
+.key-takeaways li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .72em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tbd-accent);
+}
+@media (max-width: 640px) {
+  .key-takeaways { padding: 0 16px; }
+  .key-takeaways ul { padding: 16px 18px 16px 20px; }
+}
+
+/* 社群資源庫：懶人包 → 對應長文的清單。這一頁的卡片是執行期抓 Sheet 產生的，
+   這段靜態清單同時是給讀者的深入入口，也是爬蟲唯一讀得到的內容連結。 */
+.library-longform { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+.library-longform li { line-height: 1.9; }

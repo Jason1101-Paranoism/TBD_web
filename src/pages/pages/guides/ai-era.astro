@@ -3,7 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
 
 const title = 'AI 時代升學能力建立指南';
-const description = 'AI 普及後知識取得幾乎沒有門檻，真正稀缺的能力反而更清晰。這個頁面收錄 TBD Studio 的 AI 時代升學觀點文章，談執行力、跨域整合與個人品牌，幫你看懂什麼能力值得投資、又怎麼在申請中展示。';
+const description = 'AI 普及後知識取得幾乎沒有門檻，稀缺的能力反而更清晰。這裡收錄 TBD 談執行力、跨域整合與個人品牌的系列文章。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=guide-ai-era`;
 
 const schema = {
@@ -19,7 +19,7 @@ const schema = {
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/index.html` },
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": `${site.siteUrl}/` },
         { "@type": "ListItem", "position": 2, "name": "知識庫", "item": `${site.siteUrl}/pages/resources.html` },
         { "@type": "ListItem", "position": 3, "name": title, "item": `${site.siteUrl}/pages/guides/ai-era.html` }
       ]
@@ -31,7 +31,7 @@ const schema = {
 <BaseLayout title={title} description={description} bodyClass="sub-page guide-page" schema={schema}>
 <section class="hero">
   <nav class="breadcrumb">
-    <a href="/index.html">首頁</a>
+    <a href="/">首頁</a>
     <span>›</span>
     <a href="/pages/resources.html">知識庫</a>
     <span>›</span>
@@ -43,6 +43,58 @@ const schema = {
 </section>
 
 <main>
+
+  <section class="section" id="shift">
+    <h2>變的不是評分標準，是「證據」的門檻</h2>
+    <p>過去一份備審裡，「我自學了 Python」這句話本身就有分量，因為自學這件事有門檻。現在同一句話幾乎沒有資訊量——任何人都能在一個週末用 AI 生出一個看起來像樣的專案。評審的標準其實沒有改，變的是<strong>什麼東西還能當證據</strong>。</p>
+    <p>結果是評估的重心從「你會不會」移到「你做過什麼決定」。一份 AI 產出的成品看不出決策；一段有取捨、有失敗、有修正的過程看得出來。這也是為什麼近年評審越來越常在面試裡追問「這裡你為什麼選這個做法」——那是唯一問得出真假的地方。</p>
+    <p class="scroll-hint">← 左右滑動檢視完整表格 →</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">以前算證據的</th>
+            <th scope="col">現在為什麼不夠</th>
+            <th scope="col">現在算證據的</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>會使用某個工具或語言</td>
+            <td>工具門檻被 AI 抹平，人人都能生出成品</td>
+            <td>在多個可行做法之間做過取捨，並說得出理由</td>
+          </tr>
+          <tr>
+            <td>完成了一個作品</td>
+            <td>成品本身看不出是誰做的、花了多久</td>
+            <td>留得下的過程：版本紀錄、失敗的嘗試、修正的依據</td>
+          </tr>
+          <tr>
+            <td>知道很多概念</td>
+            <td>查得到的東西不再稀缺</td>
+            <td>把兩個不相干的領域接起來，找到別人沒想到的解法</td>
+          </tr>
+          <tr>
+            <td>參加過很多活動</td>
+            <td>清單長度不代表深度</td>
+            <td>一條持續三年、看得出累積的主線</td>
+          </tr>
+          <tr>
+            <td>成績優異</td>
+            <td>仍然重要，但只是入場券</td>
+            <td>成績之外，有一件別人記得住的事</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>右邊那一欄有個共同點：<strong>它們都不是 AI 能替你產生的東西</strong>。取捨、失敗、跨域的連結、三年的累積——這些需要時間與真的投入，這正是它們現在變得稀缺的原因。</p>
+  </section>
+
+  <section class="section" id="how-to-use">
+    <h2>那 AI 到底該怎麼用才不算作弊</h2>
+    <p>界線其實很清楚：<strong>AI 可以幫你做得更快，不能替你決定做什麼</strong>。用 AI 查資料、debug、潤稿、把口語整理成書面，都沒有問題，那和用搜尋引擎、用計算機是同一件事。問題出在讓 AI 決定題目、生出你沒有經歷過的經歷、寫出你答不出來的句子——面試現場會拆穿它。</p>
+    <p>一個實際可用的自我檢查：<strong>你備審上寫的每一句話，被追問三層還答得出來嗎？</strong>「我做了一個空氣品質監測裝置」→「為什麼選這個感測器」→「那個誤差你怎麼處理」。答得出來就是你的，答不出來就不要寫。</p>
+  </section>
 
   <section class="section" id="core-abilities">
     <h2>AI 時代真正稀缺的能力</h2>

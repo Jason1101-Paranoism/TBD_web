@@ -47,18 +47,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="relative">
             <div class="absolute -inset-2 rounded-xl bg-gradient-to-br from-tbd-accent/15 to-tbd-yellow/15 blur-2xl opacity-60"></div>
 
-            <!-- Hero Visual: TBD Landing Page Banner -->
+            <!-- Hero Visual：這是首頁的 LCP 元素，衍生圖由 scripts/build-images.mjs 產生。
+                 版位最寬約 576 CSS px，sizes 據此宣告；2400 那段留給高 DPR。 -->
             <div class="relative rounded-xl shadow-soft w-full aspect-[4/3] bg-white overflow-hidden border border-tbd-light/70">
-              <img
-                src="/assets/images/TBD_Landing Page Banner.png"
-                alt="TBD Studio 升學策略顧問首頁視覺主圖"
-                width="6000"
-                height="3375"
-                class="w-full h-full object-contain object-center bg-white"
-                loading="eager"
-                decoding="async"
-                fetchpriority="high"
-              >
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="/assets/images/hero-banner-800.webp 800w, /assets/images/hero-banner-1600.webp 1600w, /assets/images/hero-banner-2400.webp 2400w"
+                  sizes="(min-width: 1024px) 576px, 92vw"
+                >
+                <img
+                  src="/assets/images/hero-banner-1600.jpg"
+                  alt="TBD Studio 升學策略顧問首頁視覺主圖"
+                  width="1600"
+                  height="900"
+                  class="w-full h-full object-contain object-center bg-white"
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority="high"
+                >
+              </picture>
             </div>
 
             <!-- Overlay: auto-wrap + mobile spacing -->

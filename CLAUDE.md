@@ -11,7 +11,7 @@
 
 - 使用者：高中生、大學生、家長
 - 主要流量來源：IG Bio、LINE 官方選單、口碑轉介
-- 技術棧：Astro 5 + MDX Content Collections + Tailwind CDN + 自訂 CSS
+- 技術棧：Astro 5 + MDX Content Collections + Tailwind（建置期產出，非 CDN）+ 自訂 CSS
 - 部署：Vercel（push to main 自動觸發，build command: `npm run build`，output: `dist/`）
 - 未來可能延伸：學生管理後台、教師媒合、CRM
 
@@ -93,7 +93,7 @@ src/
                                ← 皆為轉址頁（Vercel 308 或 meta-refresh，保留舊連結用，不要當內容頁改）
 
 public/
-├── css/                       ← CSS 唯一來源（5 個模組 + style.css @import 入口）
+├── css/                       ← CSS 唯一來源（5 個模組；tailwind.css 為建置產物）
 ├── js/                        ← main.js（含 GA4 事件追蹤）、portfolio-guide.js
 ├── assets/images/
 └── pages/
@@ -103,6 +103,35 @@ public/
 ```
 
 ---
+
+## 圖片、Tailwind 與 SEO 欄位（2026-09-06 SEO 稽核後）
+
+**圖片一律走衍生圖，原圖不進 public。** 原圖放 `assets-src/`（不會被部署），
+`node scripts/build-images.mjs` 產生 WebP／JPEG 衍生圖進 `public/assets/images/`。
+換主視覺或 logo 就改原圖再重跑那支。**不要把大圖直接丟進 public**——
+先前那張 11.7 MB 的主視覺同時是首頁 LCP 元素與全站 og:image，
+既讓行動端 LCP 進入 CWV 不良區，也超過 LINE／FB 的 OG 圖上限而完全不出預覽卡。
+
+**Tailwind 是建置期產出，不是 CDN。** `npm run css` 由 `tailwind.config.mjs` 掃 `src/**` 與
+`public/pages/*.html` 產生 `public/css/tailwind.css`（已納入 `npm run dev` 與 `npm run build`）。
+新增用到 Tailwind class 的檔案時，確認它落在 config 的 `content` 範圍內，否則 class 會被 purge 掉。
+
+**文章 frontmatter 新增四個欄位**（都可選，說明見 `src/content/config.ts`）：
+
+| 欄位 | 用途 |
+|------|------|
+| `keyTakeaways` | 3–5 條答案先行的重點，渲染成文章開頭的「重點速覽」框 |
+| `howToSteps` / `howToTotalTime` | 步驟型文章的 HowTo 結構化資料；有填才輸出，不要為了有而有 |
+| `guide` | 指定所屬主題指南，蓋過由 category 推導的預設值 |
+
+**`dateModified` 由 git 推導，不要手動維護。** `src/lib/contentDates.ts` 取該 `.mdx` 的最後 commit 日；
+`updatedDate` 保留為手動覆寫，用在「只改錯字的 commit 不該算成內容更新」這種情況。
+
+**標題與描述的長度由版型把關。** `seoTitle` 只寫本體，不要自己加「｜TBD Studio」——
+BaseLayout 會在總長 ≤30 字時才補上品牌後綴。description 上限 90 字（目標 80 以內）。
+
+**SEO 進度報告**：`node progress/build-seo-progress.mjs`（在工作區根目錄跑，需先 build）。
+狀態全部由 probe 現掃 dist／src 判定，不手寫。
 
 ## GA4 事件追蹤（v1.2 Key Event）
 
@@ -244,13 +273,14 @@ public/css/tbd-base.css       ← reset、全站基礎
 public/css/tbd-layout.css     ← nav、footer、全站 layout
 public/css/tbd-components.css ← button、card、table、timeline、cta
 public/css/tbd-pages.css      ← 各頁差異樣式（about、swimlane、search、resources 等）
-public/css/style.css          ← @import 入口，不直接寫樣式
+public/css/tailwind.css       ← npm run css 產出，不入版控、不要手改；載入順序必須排在上面五個之後
 ```
 
 - 修改按鈕 → `public/css/tbd-components.css`
 - 修改品牌色 → `public/css/tbd-theme.css`
 - 修改某一頁特定樣式 → `public/css/tbd-pages.css`
 - **`css/` 目錄已不存在**，`public/css/` 是唯一 CSS 來源，不需要雙份同步
+- `style.css` 已移除：它用 `@import` 串起五個模組，而 `@import` 不平行下載，會把關鍵渲染路徑拉成六層序列請求。現在由 BaseLayout（與兩個獨立靜態頁）直接列出五個 `<link>`，順序即層級。
 
 ---
 

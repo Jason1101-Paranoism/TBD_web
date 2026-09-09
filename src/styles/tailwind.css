@@ -1,0 +1,5 @@
+/* Tailwind 入口。由 npm run css 編成 public/css/tailwind.css（不入版控，每次建置重產）。
+   base 必須保留：Play CDN 一直有帶 preflight，整站的預設樣式建立在它之上，拿掉會全站走樣。 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
