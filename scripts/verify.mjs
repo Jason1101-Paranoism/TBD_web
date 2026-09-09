@@ -214,6 +214,38 @@ function checkTemplateManifest() {
     }
   }
 
+  // xlsx 活頁簿與 manifest 互相校驗，方向與上面的 .md 一致。
+  //
+  // 為什麼要有這一段：備審檢核表的價值有一半在公式跟分頁上——「我到哪了」那頁是
+  // COUNTIF 跟著「檢核表」跑出來的，攤平成 CSV 就只剩死掉的文字。所以這一類額外發
+  // 一份 xlsx，而「額外」正是它危險的地方：CSV 與 md 都還在，頁面照樣渲染得出來，
+  // 少一份 xlsx 不會有任何東西壞掉，只會有人下載到一個沒有活頁簿的按鈕。
+  // 兩個方向都要擋：manifest 說有、磁碟沒有（下載連結 404），
+  // 磁碟有、manifest 沒說（檔案進了 repo 但沒有任何頁面連得到它）。
+  const xlsxOnDisk = new Set(
+    readdirSync(join(process.cwd(), 'public', 'assets', 'templates'))
+      .filter((f) => f.endsWith('.xlsx'))
+      .map((f) => f.replace(/\.xlsx$/, ''))
+  );
+  const xlsxDeclared = new Set(entries.filter((t) => t.xlsx === true).map((t) => t.slug));
+
+  for (const slug of xlsxDeclared) {
+    if (!xlsxOnDisk.has(slug)) {
+      problems.push(
+        `manifest 宣告 \`${slug}\` 有 xlsx，但 public/assets/templates/${slug}.xlsx 不存在——` +
+        `指南頁會渲染出一顆 404 的「Excel 活頁簿」按鈕。`
+      );
+    }
+  }
+  for (const slug of xlsxOnDisk) {
+    if (!xlsxDeclared.has(slug)) {
+      problems.push(
+        `public/assets/templates/${slug}.xlsx 存在，但 manifest 那筆沒有 "xlsx": true——` +
+        `檔案進了 repo 卻沒有任何頁面連得到它。`
+      );
+    }
+  }
+
   // CSV 必須帶 UTF-8 BOM。
   //
   // 沒有 BOM 的話，Excel 會用系統 ANSI 編碼開啟中文 CSV，整份變亂碼——

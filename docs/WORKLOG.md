@@ -6,6 +6,40 @@
 
 ---
 
+## #033｜2026-09-10｜CL 的 batch2 備審檢核表落地：xlsx 成為第三種交付格式
+
+CL 交回九份 `grad-*-portfolio-checklist.xlsx`（Drive 資料夾 `Batch2_CL_備審checklist`，
+9/5 修改）。不是文字修訂，是換了形狀：repo 原本是單張 92 行的平面 CSV，
+交回來的是四分頁活頁簿。九份全部驗過同構：4 分頁、16–20 條 COUNTIF 公式、
+1–7 個下拉驗證、四個分頁都凍結窗格。壓回 CSV 會掉光公式與分頁，所以另發 xlsx（D-016）。
+
+**做了什麼**（可觀察的行為差異）：
+
+- **`public/assets/templates/` 多九個 `.xlsx`**。位元組數與 Drive metadata 逐一核對相符。
+- **`src/config/gradTemplates.ts`**：`GradTemplate` 加選配旗標 `xlsx?: true`，
+  九份 portfolio-checklist 標上；`templateLinks()` 多輸出 `xlsx`（沒標的是 `undefined`）。
+- **九個 `graduate-*.astro` 指南頁**：模板卡片多一顆「Excel 活頁簿」按鈕，
+  `{t.xlsx && ...}` 條件渲染——所以只有備審檢核表那張卡有第三顆鈕，其餘四張仍是兩顆。
+- **同九頁的格式說明句改寫**。原本寫「兩種格式任選」，現在會多一句說明備審檢核表
+  另有活頁簿、打勾後自動算完成度。照舊句子讀，使用者不會知道那顆新按鈕跟其他兩顆差在哪。
+- **七篇 `*-graduate-cv.mdx` 的下載句補上活頁簿連結**（arts／biomed／business／
+  education／engineering／humanities／law）。農生與設計那兩篇本來就沒連自己的
+  checklist，這次沒補——那是既有缺口，不是這輪弄掉的。
+- **`scripts/template-manifest.json`**：九筆加 `"xlsx": true`。
+- **`scripts/verify.mjs` 加一道雙向閘門**。宣告了 xlsx 但磁碟沒檔 → 失敗
+  （指南頁會渲染出 404 按鈕）；磁碟有 xlsx 但 manifest 沒宣告 → 失敗
+  （檔案進了 repo 卻沒有頁面連得到）。照舊的 verify 跑，兩種情況都靜默通過。
+
+**沒動的**：`audit-templates.mjs` 的 B3-portfolio 六條規則。它驗的是 CSV 的內容規格，
+九份本來就全過，xlsx 是另一條軌道。要不要把「有沒有 xlsx」也納入規格審閱，留給下一批。
+
+**取檔過程的坑**：`uc?export=download` 對這個資料夾拿回登入頁（分享給帳號、非公開連結），
+curl 走不通；MCP 下載回 base64 再由模型轉寫進檔案也不可行（34KB 的 base64 手抄無法
+保證位元正確，實測第一份就打壞）。可行的是瀏覽器擴充功能：開資料夾 → 全選 → 右鍵下載，
+Drive 打包成 zip。下載目錄是 `D:\New folder (2)`，不是 `~/Downloads`（那個路徑不存在）。
+
+---
+
 ## #032｜2026-09-06｜D-015 改寫成實際走法：審閱者的入口是網站連結，不是 Drive 上的工作副本
 
 條文與實際做法對不上。原本的 D-015 寫「審閱者在 Drive 上直接改工作副本」，

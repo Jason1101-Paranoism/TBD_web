@@ -31,7 +31,8 @@
     },
     {
       "slug": "grad-agriculture-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-agriculture-proposal-framework",
@@ -47,7 +48,8 @@
     },
     {
       "slug": "grad-arts-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-arts-proposal-framework",
@@ -71,7 +73,8 @@
     },
     {
       "slug": "grad-biomed-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-biomed-proposal-framework",
@@ -87,7 +90,8 @@
     },
     {
       "slug": "grad-business-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-business-proposal-framework",
@@ -107,7 +111,8 @@
     },
     {
       "slug": "grad-design-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-design-proposal-framework",
@@ -127,7 +132,8 @@
     },
     {
       "slug": "grad-education-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-education-proposal-framework",
@@ -151,7 +157,8 @@
     },
     {
       "slug": "grad-engineering-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-engineering-proposal-framework",
@@ -167,7 +174,8 @@
     },
     {
       "slug": "grad-humanities-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-humanities-proposal-framework",
@@ -187,7 +195,8 @@
     },
     {
       "slug": "grad-law-portfolio-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-law-proposal-framework",
