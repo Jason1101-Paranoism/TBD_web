@@ -111,8 +111,14 @@ export const gradGuideByDept: Record<string, GradGuide> =
 export interface GradTemplate {
   title: string;
   desc: string;
-  /** 檔名主幹，實體檔為 public/assets/templates/<file>.{md,csv} */
+  /** 檔名主幹，實體檔為 public/assets/templates/<file>.{md,csv}，另可有 .xlsx */
   file: string;
+  /**
+   * 有沒有活頁簿版本（public/assets/templates/<file>.xlsx）。
+   * CSV 攤平成單張表就會掉公式與分頁，備審檢核表的「我到哪了」自動計數靠公式，
+   * 所以這一類另外發 xlsx。verify.mjs 會檢查標了 true 的檔案真的存在。
+   */
+  xlsx?: true;
   /** 使用說明所在的文章 */
   article: string;
 }
@@ -159,6 +165,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '設計備審與作品集 Checklist',
         desc: '送件清單、選件（少而深）、排序、每件的作品說明六欄位，以及最關鍵的一段：讓作品集與研究計畫互相指涉而不是各寫各的。',
         file: 'grad-design-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/design-graduate-portfolio.html',
       },
       {
@@ -196,6 +203,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '理工備審資料 Checklist',
         desc: 'CV、自傳、專題成果與整體一致性，逐項勾完再送件。',
         file: 'grad-engineering-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/engineering-graduate-cv.html',
       },
       {
@@ -233,6 +241,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '生醫備審 Checklist',
         desc: '學術 CV 欄位、技術清單具體化、專題誠實呈現與一致性，逐項勾完再送件。',
         file: 'grad-biomed-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/biomed-graduate-cv.html',
       },
       {
@@ -270,6 +279,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '商管財經備審 Checklist',
         desc: '經歷盤點表、CV 欄位、每段經歷該寫出的七件事、自傳與五份文件分工，逐項勾完再送件。',
         file: 'grad-business-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/business-graduate-cv.html',
       },
       {
@@ -307,6 +317,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '文字作品選件與備審 Checklist',
         desc: '作品選件十項評分、學術 CV 十二欄位、自傳要素與五份文件分工，逐項勾完再送件。',
         file: 'grad-humanities-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/humanities-graduate-cv.html',
       },
       {
@@ -344,6 +355,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '作品集選件與備審 Checklist',
         desc: '選件十項評分、作品說明八欄位、藝術 CV 十一欄位與五份文件分工，逐項勾完再送件。',
         file: 'grad-arts-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/arts-graduate-cv.html',
       },
       {
@@ -381,6 +393,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '教育類備審 Checklist',
         desc: '經驗盤點表、CV 十二欄位、每段經歷該寫出的七件事、推薦信素材與三份文件分工，逐項勾完再送件。',
         file: 'grad-education-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/education-graduate-cv.html',
       },
       {
@@ -418,6 +431,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '法政備審 Checklist',
         desc: '經歷盤點表、學術 CV 十二欄位、每段經歷該寫出的七件事、自傳四要素與三份文件分工，逐項勾完再送件。',
         file: 'grad-law-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/law-graduate-cv.html',
       },
       {
@@ -455,6 +469,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         title: '農生環境備審檢核表',
         desc: '技術與經驗盤點（量、產出、能否獨立操作）、現實變數處理案例的四段結構、成果圖表檢核與三份文件一致性檢查。',
         file: 'grad-agriculture-portfolio-checklist',
+        xlsx: true,
         article: '/pages/resources/agriculture-graduate-cv.html',
       },
       {
@@ -474,6 +489,7 @@ export function templateLinks(t: GradTemplate) {
     desc: t.desc,
     md: `/assets/templates/${t.file}.md`,
     csv: `/assets/templates/${t.file}.csv`,
+    xlsx: t.xlsx ? `/assets/templates/${t.file}.xlsx` : undefined,
     article: t.article,
   };
 }
