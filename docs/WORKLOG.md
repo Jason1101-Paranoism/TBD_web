@@ -6,6 +6,55 @@
 
 ---
 
+## #038｜2026-09-12｜SEO 報告 22 項：結構性的那批修完，已修 1 → 11
+
+依 `progress/build-seo-progress.mjs` 的判定條件逐項修，修完重跑掃描驗證，不是憑感覺做 SEO。
+
+**修掉的 10 項**（掃描器全部翻綠）：
+
+| 項目 | 修法 | 前 → 後 |
+|---|---|---|
+| S-01 LCP 主圖過大 | sharp 轉 1600px WebP；6000×3375 的母檔 `git mv` 到 `design-assets/`（不刪，且順手去掉檔名裡的空格） | 11.1 MB → **79 KB** |
+| S-02 og:image 超上限 | 另切 1200×630 專用 OG 圖，補 `og:image:width/height/alt` | 11.1 MB → **72 KB**，171 頁有 width |
+| S-04 CSS @import 串連 | `scripts/prebuild.mjs` 把五個模組串成 `style.css` | 5 個 @import → **0** |
+| S-05 noindex 進 sitemap | sitemap filter 排除 `/compass` | 1 頁 → **0**（noindex 6 頁皆不在） |
+| S-06 sitemap 無 lastmod | prebuild 由 `git log -1 --format=%cI` 產生路徑→日期表 | 0/171 → **170/170** |
+| S-07 首頁兩種 URL | 全站 `href="/index.html"` → `href="/"`，31 處 23 個檔 | 173 頁 → **0** |
+| S-08 dateModified＝datePublished | schema 改吃 `updatedDate ?? git 時間 ?? publishDate` | 0/134 → **134/134** |
+| A-01 Organization 缺錨點 | 補 `logo` 與 `sameAs`（值本來就在 site.ts，只是沒寫進 schema） | 無 → **都有** |
+| A-03 沒有 llms.txt | prebuild 產生，含 7 個主要頁面＋134 篇文章 | 不存在 → **產出** |
+| S-10 heading 跳階 | 頁尾 h4→h2（全站來源）；另修 404、interview-bank、portfolio-guide 三頁的頁內跳階 | 36 頁 → **0** |
+
+**刻意沒做的事**：S-08 只改 schema 的 `dateModified`，**沒有動頁面上那行「更新於／發布於」**——
+那行仍然只認 frontmatter 的 `updatedDate`。若一併改，134 篇會突然全部顯示「更新於」，
+那是改文案不是修 SEO。
+
+**架構變動**：`style.css` 從「@import 入口」變成「串接產物」。`npm run build` 前置跑
+`scripts/prebuild.mjs`（CSS bundle ＋ lastmod ＋ llms.txt 三件）。CLAUDE.md 的樣式層級一節已同步改寫，
+註明它不可手改。產物進版控是刻意的——`public/pages/` 那兩個靜態頁直接連 `/css/style.css`，
+dev 時沒人會先跑 build。
+
+npm 的 `prebuild` 是生命週期保留名，同時定義它又在 `build` 裡呼叫會跑兩次，所以腳本命名為 `gen`。
+
+**驗證**：`npm run build` 176 頁通過；`npm run verify` **40/40**；
+重跑 SEO 掃描 **已修 1／未修 19／待拍板 2 → 已修 11／未修 9／待拍板 2**（`v5_20260912`）。
+
+**沒做的 9 項，各有原因**：
+
+- **S-03 拔 Tailwind Play CDN**（172/179 頁）——架構級改動，而且已知有一支帶 184 檔的
+  Tailwind WIP 掛在 `docs/worklog-032`。要另開一輪，不混進這次。
+- **A-04／A-05／A-06／A-07／A-08／S-11／S-12**——都是跨 134 篇的內容工作：補表格、補 HowTo、
+  補答案先行的重點框、縮短 129 個標題與 92 段描述、擴寫 5 個薄頁、補內部連結。
+  這些要逐篇判斷，不是機械替換。
+- **S-14** 要把 library 的清單改成建置期抓取，會讓 Vercel 建置多一個外部網路相依——取捨題。
+
+**待拍板兩項不變**：S-09 正式網域（BIZ-01）、A-02 具名作者。
+
+**下一步**：A-07／A-08 是剩下裡面最接近機械、CP 值最高的（標題與描述收斂），建議下一輪做。
+S-03 要單獨一輪並先處理那支 WIP 分支。
+
+---
+
 ## #037｜2026-09-12｜面試比較圖拿掉 PLAN A/B/C 字母；順帶清掉會輸出到正式站的內部註解
 
 **背景**：#034 留下的第二件——圖上 `PLAN A/B/C` 與服務頁方案 A–D 撞字母。

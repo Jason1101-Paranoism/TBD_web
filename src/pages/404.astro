@@ -7,7 +7,7 @@ const description = '你要找的頁面可能已搬家或不存在。從首頁�
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=404`;
 
 const entries = [
-  { title: '回首頁', href: '/index.html', desc: '從頭認識 TBD Studio 的服務與方法。' },
+  { title: '回首頁', href: '/', desc: '從頭認識 TBD Studio 的服務與方法。' },
   { title: '服務內容', href: '/pages/services.html', desc: '依你的升學管道找到對應服務與方案。' },
   { title: '升學知識庫', href: '/pages/resources.html', desc: '近百篇文章與主題指南，支援搜尋與分類篩選。' },
   { title: '常見問題', href: '/pages/faq.html', desc: '費用、流程、合作方式，先看大家最常問的。' },
@@ -26,7 +26,7 @@ const entries = [
     <div class="card-grid">
       {entries.map((e) => (
         <article class="card article-card">
-          <h3><a class="text-link" href={e.href}>{e.title}</a></h3>
+          <h2><a class="text-link" href={e.href}>{e.title}</a></h2>
           <p class="card-desc">{e.desc}</p>
         </article>
       ))}

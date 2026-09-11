@@ -4,6 +4,7 @@ import { site } from '../config/site';
 import { resourceCategories } from '../config/resourceCategories';
 import { gradGuideByDept } from '../config/gradTemplates';
 import { getCollection } from 'astro:content';
+import lastmod from '../config/lastmod.json';
 
 interface TocItem {
   href: string;
@@ -135,6 +136,17 @@ if (gradStage) {
   seriesNav = { track, stage: gradStage, prev: link(prevA), next: link(nextA), others, guides, stages };
 }
 
+// dateModified 的優先序：frontmatter 的 updatedDate（人工宣告）→ git 最後提交時間 → 發布日。
+//
+// 為什麼要接 git（S-08）：原本 dateModified 一律等於 datePublished，對搜尋引擎是
+// 「這篇從未維護」的訊號；對生成式引擎更關鍵，它們挑引用來源時高度偏好近期更新過的頁面。
+// 而檔案其實一直在改，只是沒有人回頭手動更新 frontmatter。
+//
+// 刻意**只**影響 schema，不影響頁面上那行「更新於／發布於」——那行仍然只認 updatedDate。
+// 否則每篇都會突然顯示「更新於」，那是改文案，不是修 SEO。
+const gitModified = (lastmod.bySlug as Record<string, string>)[slug];
+const schemaModified = updatedDate ?? (gitModified ? new Date(gitModified) : publishDate);
+
 const articleSchema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -144,7 +156,7 @@ const articleSchema = {
       "description": description,
       "url": `${site.siteUrl}/pages/resources/${slug}.html`,
       "datePublished": publishDate.toISOString(),
-      "dateModified": (updatedDate ?? publishDate).toISOString(),
+      "dateModified": schemaModified.toISOString(),
       "author": { "@type": "Organization", "name": "TBD Studio", "url": site.siteUrl },
       "publisher": { "@type": "Organization", "name": "TBD Studio", "url": site.siteUrl },
       "inLanguage": "zh-TW"
@@ -181,7 +193,7 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
 <BaseLayout title={title} description={description} bodyClass={bodyClass} ogType="article" seoTitle={seoTitle} schema={articleSchema}>
   <section class="hero article-hero">
     <nav class="breadcrumb">
-      <a href="/index.html">首頁</a>
+      <a href="/">首頁</a>
       <span>›</span>
       <a href="/pages/resources.html">知識庫</a>
       <span>›</span>

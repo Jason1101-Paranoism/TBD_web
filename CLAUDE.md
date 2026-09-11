@@ -93,7 +93,7 @@ src/
                                ← 皆為轉址頁（Vercel 308 或 meta-refresh，保留舊連結用，不要當內容頁改）
 
 public/
-├── css/                       ← CSS 唯一來源（5 個模組 + style.css @import 入口）
+├── css/                       ← CSS 唯一來源（5 個模組；style.css 是串接產物，勿手改）
 ├── js/                        ← main.js（含 GA4 事件追蹤）、portfolio-guide.js
 ├── assets/images/
 └── pages/
@@ -244,8 +244,18 @@ public/css/tbd-base.css       ← reset、全站基礎
 public/css/tbd-layout.css     ← nav、footer、全站 layout
 public/css/tbd-components.css ← button、card、table、timeline、cta
 public/css/tbd-pages.css      ← 各頁差異樣式（about、swimlane、search、resources 等）
-public/css/style.css          ← @import 入口，不直接寫樣式
+public/css/style.css          ← **產物，不要手改**（由 scripts/prebuild.mjs 串成）
 ```
+
+**`style.css` 是產生出來的，不是入口檔。** 它原本用 `@import` 串五個模組，但 `@import`
+不平行下載、會把關鍵渲染路徑序列化（SEO 報告 S-04）。現在由 `npm run build`
+（或單獨 `npm run gen`）在 build 前把五個模組依序串成一份，頁面只載入它。
+**改樣式一律改那五個模組**，`style.css` 的內容每次都會被覆寫。
+它進版控是刻意的——`public/pages/` 那兩個靜態頁直接連 `/css/style.css`，dev 時沒人會先跑 build。
+
+`scripts/prebuild.mjs` 同時產生另外兩份衍生物，理由同樣寫在該檔開頭：
+`src/config/lastmod.json`（sitemap 的 `<lastmod>` 與文章 schema 的 `dateModified`，由 git 推導）
+與 `public/llms.txt`（生成式引擎的站點自述入口）。
 
 - 修改按鈕 → `public/css/tbd-components.css`
 - 修改品牌色 → `public/css/tbd-theme.css`

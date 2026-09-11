@@ -57,7 +57,7 @@ const deptQuestions = [
 <BaseLayout title={title} description={description} bodyClass="sub-page resources-page">
 <section class="hero">
   <nav class="breadcrumb">
-    <a href="/index.html">首頁</a>
+    <a href="/">首頁</a>
     <span>›</span>
     <a href="/pages/resources.html">知識庫</a>
     <span>›</span>
@@ -91,7 +91,7 @@ const deptQuestions = [
     {questions.map((item) => (
       <article class="card article-card q-item" data-type={item.type}>
         <span class="badge">{item.type}</span>
-        <h3 style="font-size: 17px; line-height: 1.5;">{item.q}</h3>
+        <h2 style="font-size: 17px; line-height: 1.5;">{item.q}</h2>
         <p class="card-desc"><strong style="color: var(--tbd-ink);">評審想看：</strong>{item.hint}</p>
       </article>
     ))}

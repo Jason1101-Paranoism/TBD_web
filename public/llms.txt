@@ -1,0 +1,154 @@
+# TBD Studio
+
+> 台灣的升學申請策略顧問。協助高中生與研究所申請者完成方向判斷、備審重構、
+> 學習歷程整理與面試訓練。核心原則是共創而非代筆：把學生既有的經歷整理成
+> 可被教授理解、可被面試答辯的申請系統，每一步準備都可追蹤、可驗收。
+
+服務對象為台灣的高中生、大學生與家長，內容以繁體中文撰寫。
+
+## 主要頁面
+
+- [服務內容：四種方案與各升學管道的服務說明](https://tbd-web.vercel.app/pages/services.html)
+- [合作流程與各升學管道的申請時程](https://tbd-web.vercel.app/pages/process.html)
+- [成功案例](https://tbd-web.vercel.app/pages/cases.html)
+- [知識庫首頁：升學準備的主題指南與文章](https://tbd-web.vercel.app/pages/resources.html)
+- [可下載的模板與工具（研究所推甄工具包等）](https://tbd-web.vercel.app/pages/resources/tools.html)
+- [常見問題](https://tbd-web.vercel.app/pages/faq.html)
+- [關於 TBD Studio](https://tbd-web.vercel.app/pages/about.html)
+
+## 知識庫文章
+
+- [個申、特選、分科怎麼選？三種升學管道完整比較](https://tbd-web.vercel.app/pages/resources/admission-channels-compare.html): 個人申請、特殊選才、考試分發到底怎麼選？本文比較三種升學管道的核心邏輯差異、各自適合的學生輪廓，並說明能不能同時準備，幫你把力氣用在最適合自己的那條路上，少走冤枉路。
+- [農業、生態、環境科系備審要展示什麼？](https://tbd-web.vercel.app/pages/resources/agriculture-application.html): 想申請農藝、生態、環工這些農生環境科系，卻不確定備審該放什麼？評審看的是科學態度、真實的觀察實作與對永續議題的問題意識。本文拆解最有說服力的材料、常見失誤，以及怎麼把零散經歷整理成一條主線。
+- [農生環境研究所怎麼選實驗室、選指導教授？](https://tbd-web.vercel.app/pages/resources/agriculture-graduate-choose.html): 農生與環境類群選研究所，排名的參考價值比多數領域低——決定你兩年過得如何的是實驗室的經費、儀器、樣區與耗材，以及教授的指導風格與生活節奏。本文提供領域、實驗室、教授三層收斂法、三個必問的評估問題，以及一張可直接填的實驗室比較表。
+- [農生環境備審怎麼準備？CV、自傳與成果整理](https://tbd-web.vercel.app/pages/resources/agriculture-graduate-cv.html): 農生與環境類群的備審，教授在驗證一件事——你對變動環境與生物週期的實務掌控力。本文說明 CV 怎麼把技術寫成可驗證的時數與產出、自傳該舉哪一種例子、成果圖表怎麼整理，以及三份文件如何指向同一條研究主軸。
+- [農生環境口試怎麼準備？答辯實驗設計的完整邏輯](https://tbd-web.vercel.app/pages/resources/agriculture-graduate-oral.html): 農生與環境類群的口試很少停在理論，委員多半直接追問技術細節——這個對照組能排除什麼、這個方法的盲點在哪、假設被推翻你打算怎麼辦。本文提供五步答題框架、四類技術追問題庫，以及被指出設計漏洞時的具體句型。
+- [農生環境研究計畫書怎麼寫？先證明它做得完](https://tbd-web.vercel.app/pages/resources/agriculture-graduate-proposal.html): 農生與環境類群的研究計畫，教授看的第一件事往往不是題目多新，而是它在碩士修業年限與實驗室資源下做不做得完。本文提供從技術出發的收斂五步、十二節計畫架構、可行性換算方法，以及一定要寫的風險與替代方案。
+- [農生環境研究所推甄時程：生物長多久，就是多久](https://tbd-web.vercel.app/pages/resources/agriculture-graduate-timeline.html): 農生與環境類群的推甄材料卡在一個別的領域沒有的限制——生物的生長週期、作物的季節、樣區的可進入時間，都不能靠加班壓縮。本文把準備拆成大三下、暑假、大四上三個階段，說明每一階段該產出什麼、三個起跑判斷標準，以及已經來不及的人該怎麼取捨。
+- [高中生 AI 工具實用指南：哪些工具真的值得用？](https://tbd-web.vercel.app/pages/resources/ai-tools-guide.html): 不是所有 AI 工具都值得高中生花時間學。這篇實用指南整理在自學、Side Project、研究分析與備審呈現上真正派得上用場的 AI 工具，說明各自適合的場合與正確使用心態，也提醒哪些用法反而會讓你退步。
+- [藝術、音樂、戲劇科系備審怎麼準備？](https://tbd-web.vercel.app/pages/resources/arts-application.html): 準備美術、音樂、戲劇科系備審時，總覺得技術夠好就行？其實藝術類科系評審看的不只是技術高低，更是創作動機與審美觀點。本文拆解各科系評選邏輯、作品集的角色與最常見的三個準備誤區。
+- [藝術研究所怎麼選校、選所、選指導教授？校名相近，訓練可能完全不同](https://tbd-web.vercel.app/pages/resources/arts-graduate-choose.html): 藝術研究所不能只看學校排名。同樣名稱的系所，可能一個偏純藝術創作、一個偏當代跨域、一個偏藝術理論或策展。本文用「創作方向→教授與資源→系所文化」三層邏輯，說明怎麼查、怎麼比、怎麼判斷契合度，並附一張可直接填的比較表。
+- [藝術研究所備審：作品集、藝術 CV 與自傳怎麼分工](https://tbd-web.vercel.app/pages/resources/arts-graduate-cv.html): 藝術備審不只是把作品排版。作品集、CV、自傳、創作計畫四份各有分工。本文說明選件排序、作品說明欄位與 CV 內容，附檢核表。
+- [藝術研究所口試：怎麼答辯自己的作品](https://tbd-web.vercel.app/pages/resources/arts-graduate-oral.html): 藝術研究所口試不是大學面試的加強版，也不是朗讀作品說明，而是一場針對作品、創作選擇與未來計畫的學術對話。本文整理四類常見追問、五步答題框架、面對不同意見的回應方式，以及作品簡報該怎麼設計，附可下載題庫。
+- [創作研究計畫怎麼寫？藝術推甄的核心關卡](https://tbd-web.vercel.app/pages/resources/arts-graduate-proposal.html): 藝術研究計畫不是把作品說得感性，也不是替創作硬套理論。它要回答的是：我持續關注什麼、過去作品如何形成現在的方向、我選擇什麼媒材與形式、研究所期間要如何深化。本文提供十節架構、三個核心問題與常見錯誤清單，附可下載模板。
+- [藝術研究所推甄時程：作品集不是大四才排版的文件](https://tbd-web.vercel.app/pages/resources/arts-graduate-timeline.html): 藝術類群推甄最大的誤區，是把作品集當成大四上才要排版的文件。真正耗時的是補作關鍵作品、重拍圖像、修正論述與釐清創作母題，這些都得從大三下開始。本文說明各階段該完成什麼、暑假這段創作與整理期該產出什麼，以及推甄或考試的路線判斷。
+- [生醫與公衛研究所怎麼選實驗室？資源、指導風格與畢業去向](https://tbd-web.vercel.app/pages/resources/biomed-graduate-choose.html): 生醫與公衛選研究所，選「實驗室」往往比看校名更有決定性。本文用「領域→實驗室→教授→學校」的決策邏輯，說明如何評估研究方向與資源、教授指導風格與失敗容忍度，以及工時、值班、作者排序等隱性契合度，並附教授與實驗室比較表。
+- [生醫與公衛研究所備審：用 CV 與自傳證明研究誠信與技術真實性](https://tbd-web.vercel.app/pages/resources/biomed-graduate-cv.html): 生醫與公衛備審不是比誰經歷多，是看研究經驗可不可信。本文說明學術 CV 欄位、技術清單怎麼具體化，以及失敗怎麼誠實寫。
+- [生醫與公衛研究所口試：如何答辯研究計畫與處理研究限制](https://tbd-web.vercel.app/pages/resources/biomed-graduate-oral.html): 生醫與公衛口試的核心不是背稿，而是學術對話。教授想知道你是否理解自己的研究、知不知道方法的限制、能不能處理不確定性與追問。本文整理常見追問方向、面對不會的問題怎麼回應，以及上場前的準備與檢核。
+- [生醫與公衛研究計畫書怎麼寫？可行性、風險與備援方案](https://tbd-web.vercel.app/pages/resources/biomed-graduate-proposal.html): 研究計畫書不是把文獻堆成一篇有學問的文章。生醫與公衛推甄的研究計畫，要能定義有意義的問題、提出可執行方法、辨識限制與風險並提出備援。本文說明建議架構、生醫與公衛各自的注意點，以及如何讓計畫在碩士時程內做得完。
+- [生醫與公衛研究所推甄時程：為什麼暑假是研究與申請的雙軌衝刺？](https://tbd-web.vercel.app/pages/resources/biomed-graduate-timeline.html): 生醫與公衛推甄的素材——實驗數據、統計分析、推薦信——都需要時間累積，還常受試劑、樣本、IRB 與資料品質影響。本文說明各階段該完成什麼、暑假如何雙軌衝刺、實驗卡關的備援策略，以及推甄或考試的路線判斷。
+- [Build in Public：公開學習與公開成長的力量](https://tbd-web.vercel.app/pages/resources/build-in-public.html): Build in Public 是工程師與創業者圈流行的做法：不等做完才分享，而是在過程中就公開進展與遇到的問題。本文說明這對高中生的意義，為什麼公開學習更有累積感、也讓學習歷程更有說服力，以及可以從哪裡開始。
+- [商管、社科科系備審怎麼規劃主線？](https://tbd-web.vercel.app/pages/resources/business-application.html): 幹部、志工、讀書會、社企都做了，商管社科備審卻還是說不清楚自己是誰？常見問題不是活動太少，而是太多卻沒有主線。這份指南帶你從真實的好奇心出發，挑選有深度的活動，整理出一條有說服力的申請主線。
+- [商管與財經研究所怎麼選校、選所、選教授？定位、資源與職涯出口](https://tbd-web.vercel.app/pages/resources/business-graduate-choose.html): 商管財經研究所不能只看學校排名。名稱相似的系所，在課程設計、教授專長與畢業出口上可能完全不同。本文用「系所定位→教授與研究方向→職涯與校友網絡」的三層決策邏輯，說明各層要查什麼、怎麼查，並附校所與教授比較表。
+- [商管與財經研究所備審：用 CV、自傳與商業故事線整合零散經歷](https://tbd-web.vercel.app/pages/resources/business-graduate-cv.html): 商管備審最大的問題通常不是經歷不足，是缺乏整理與連結。本文說明 CV 欄位、每段經歷該寫的七件事，以及五份文件的分工。
+- [商管與財經研究所口試：研究計畫答辯、專業科目與個案時事怎麼答](https://tbd-web.vercel.app/pages/resources/business-graduate-oral.html): 商管財經口試是綜合能力測試，教授可能同時檢驗研究計畫理解、專業科目基礎、財經時事、商業邏輯與臨場反應。本文整理四類常見題型、個案與時事的答題框架、面對不會的問題怎麼回應，以及上場前的準備與檢核。
+- [商管與財經研究計畫書怎麼寫？把熱門議題變成可研究的問題](https://tbd-web.vercel.app/pages/resources/business-graduate-proposal.html): 商管財經研究計畫書最常見的問題，是把「熱門議題」誤當成「研究問題」。ESG、數位轉型、AI 對企業的影響都只是主題。本文說明從現象收斂成研究問題的五步、建議的十節架構、常見研究方法的選用邏輯，以及可行性檢核。
+- [商管與財經研究所推甄時程：為什麼問題不是沒經歷，而是經歷太零散？](https://tbd-web.vercel.app/pages/resources/business-graduate-timeline.html): 商管財經推甄最大的誤區，是等到大四才開始整理資料。實習、競賽、專題與證照多半在大二大三就發生了，大三下到大四上真正該做的是整合與輸出。本文說明各階段該完成什麼、暑假怎麼分流，以及推甄或考試的路線判斷。
+- [如何把競賽延伸成長期專案？](https://tbd-web.vercel.app/pages/resources/competition-to-project.html): 比賽結束後，大多數人除了一張獎狀什麼都沒留下，辛苦累積的能力與素材就這樣浪費掉。本文說明為什麼延伸比得獎更重要，以及三種把競賽成果轉化成 Side Project 與申請主線的具體方式。
+- [高中生競賽怎麼選？如何把競賽延伸成申請亮點？](https://tbd-web.vercel.app/pages/resources/competitions.html): 高中生競賽該怎麼選，得獎就一定能替申請加分嗎？本文說明不同方向適合的競賽類型、競賽真正培養的能力、評審看到成果時在評估什麼，並帶你把競賽延伸成學習歷程的長期主線，沒得獎也用得上。
+- [為什麼未來最強的人通常是「跨域整合者」？](https://tbd-web.vercel.app/pages/resources/cross-domain-integrator.html): 在 AI 時代，單一領域的專精越來越容易被取代，能把不同領域接起來、找到新解法的人反而越來越稀缺。本文說明跨域整合是什麼、為什麼重要，以及高中生怎麼從現在開始培養，讓申請主線更有差異化。
+- [申請資工/AI 科系，備審要展示什麼？](https://tbd-web.vercel.app/pages/resources/cs-ai-application.html): 想申請資工或 AI 科系，卻不確定備審該放哪些東西才有說服力？本文說明評審真正在找的不是技術清單，而是問題意識，並拆解最有說服力的材料、四個常見失誤，以及不同程度的學生怎麼準備。
+- [怎麼認識一個科系？比較兩個科系的 8 層拆法](https://tbd-web.vercel.app/pages/resources/department-compare-method.html): 「化學偏理論、化工偏應用」，為什麼聽完還是不會選？本文提供可套用在任何科系的 8 層比較法：拆標籤、比問題、看課程訓練什麼能力、比職涯分工，再判斷自己適合誰，並附可直接使用的科系比較 Prompt 產生器模板。
+- [科系探索訪談問題清單：問學長姐與從業者該問什麼？](https://tbd-web.vercel.app/pages/resources/department-interview-questions.html): 想確認一個科系適不適合自己，與其看網路上零碎的評價，不如直接訪談真的在念或在做這行的人。本文提供一份可直接使用的科系探索訪談問題清單，並說明怎麼找到對象、開口，以及訪談後如何整理。
+- [設計科系備審要展示什麼？從作品到思維的準備指南](https://tbd-web.vercel.app/pages/resources/design-application.html): 準備設計科系備審時，是不是把最漂亮的作品全放進去就好？評審更在意的，其實是你抵達結果的過程。本文拆解設計備審的準備邏輯、作品怎麼選、如何呈現設計思考，以及還沒有正式作品時該怎麼辦。
+- [設計研究所怎麼選？學術型、實務型與選校選教授](https://tbd-web.vercel.app/pages/resources/design-graduate-choose.html): 設計研究所不是只有一種——同樣是碩士，學術型重研究與論文、實務型重創作與作品集，準備方向天差地別。這篇先幫你分清兩條路，再說明設計領域怎麼看師資與作品選校選所，以及如何找到真正適合你的指導教授。
+- [設計研究所口試與作品集講評怎麼準備？](https://tbd-web.vercel.app/pages/resources/design-graduate-oral.html): 設計研究所口試和一般面試不同：教授會當場翻你的作品集、追問每個設計決定，甚至直接講評（critique）。這篇說明設計口試在評估什麼、怎麼為作品答辯、面對批評怎麼回應，以及一份能讓你穩住現場的口試準備清單。
+- [設計研究所備審：作品集怎麼選件、排序與說明？](https://tbd-web.vercel.app/pages/resources/design-graduate-portfolio.html): 設計研究所的備審核心是作品集，但研究所作品集和大學申請的完全不同——評審是領域專家，看的是思考深度而非數量或炫技。這篇說明作品集怎麼選件、排序、寫作品說明，以及如何讓它支撐你的研究計畫。
+- [設計研究所研究計畫書怎麼寫？](https://tbd-web.vercel.app/pages/resources/design-graduate-proposal.html): 設計研究計畫書不是把網路資料拼成一篇學術文章，而是提出一個值得做的設計問題。這篇說明設計研究計畫的四大架構、學術型與實務型（透過創作探究）的差別、研究問題怎麼收斂，以及設計學生最常踩的幾個錯誤。
+- [設計研究所推甄時程：作品集決定你該從哪一年開始](https://tbd-web.vercel.app/pages/resources/design-graduate-timeline.html): 設計推甄和其他學群最大的差別，是作品集沒辦法在兩個月內生出來。本文把準備拆成大三上、大三下、暑假、大四上四個階段，說明每階段該完成什麼、作品集保守該從哪一年開始整理，以及大四上才決定的人還有哪些選項。
+- [教育、師培科系備審要展示什麼？](https://tbd-web.vercel.app/pages/resources/education-application.html): 寫「我從小就想當老師」真的會打動教育科系評審嗎？教育、師培、幼教、特教的評審，看的其實是你有沒有真實教學陪伴經驗、能不能觀察學習者的需要、願不願意反思調整。這篇說明教育備審最有說服力的材料，以及最常見的失誤。
+- [教育研究所怎麼選校、選所、選指導教授？排名之外，先看場域與取向](https://tbd-web.vercel.app/pages/resources/education-graduate-choose.html): 教育研究所不能只看學校排名。教育行政、課程與教學、心理與諮商、特殊教育的生態差異很大，同一個系名底下也可能一邊偏理論、一邊偏現場訓練。本文用「次領域→學術取向與教授→場域與資源」三層邏輯，說明怎麼查、怎麼比、怎麼判斷契合度，並附一張可直接填的比較表。
+- [教育研究所備審：CV、自傳與研究計畫怎麼分工](https://tbd-web.vercel.app/pages/resources/education-graduate-cv.html): 教育類備審要把現場實務與學術潛力連起來，不能寫成經歷流水帳。本文說明三份文件的分工、CV 欄位與推薦信素材，附 Checklist。
+- [教育研究所口試：政策題、個案題與方法答辯怎麼準備](https://tbd-web.vercel.app/pages/resources/education-graduate-oral.html): 教育所口試不只是自我介紹。教授要確認的是你對研究計畫理解得夠不夠深、方法被質疑時能不能說清楚、面對政策題與個案模擬時能否用專業拆解。本文整理四類常見追問、五步答題框架、個案題六步流程與上場前檢核，附可下載題庫。
+- [教育研究計畫怎麼寫？從現場困惑到可執行的研究設計](https://tbd-web.vercel.app/pages/resources/education-graduate-proposal.html): 教育類研究計畫最容易被寫成教學方案設計或實習心得。真正要做的，是從教育現場、政策困境或輔導個案的痛點出發，透過文獻找出研究缺口，再提出具體可行的研究設計。本文說明十節架構、方法選用、研究對象取得與倫理評估，附可下載的轉換模板與可行性檢核表。
+- [教育研究所推甄時程：研究問題不是大四上才想的東西](https://tbd-web.vercel.app/pages/resources/education-graduate-timeline.html): 教育類群推甄最大的誤區，是等到大四上才開始準備。真正耗時的是確認次領域、盤點教學與輔導現場經驗、把重複出現的困惑收斂成研究問題，這些都得從大三下開始。本文說明各階段該完成什麼、暑假這段核心準備期該產出什麼，以及推甄或考試的路線判斷。
+- [理工研究所怎麼選實驗室？資源、指導風格與職涯銜接](https://tbd-web.vercel.app/pages/resources/engineering-graduate-choose.html): 同樣是理工研究所，實驗室的經費、設備與指導風格，對你研究生活的影響遠大於校名。本文說明怎麼查實驗室的研究資源與產學計畫、怎麼判斷教授是緊盯型還是放養型、畢業去向怎麼看，並附可下載的實驗室比較表。
+- [理工研究所備審怎麼寫？把團隊專題變成個人貢獻](https://tbd-web.vercel.app/pages/resources/engineering-graduate-cv.html): 理工備審最常見的問題，是把團隊專題寫成流水帳，教授看不出你負責什麼。本文說明 CV 怎麼寫出個人任務與成果，以及除錯過程為何更值得寫。
+- [理工研究所口試怎麼準備？面對技術追問的答辯方法](https://tbd-web.vercel.app/pages/resources/engineering-graduate-oral.html): 理工口試的核心不是自我介紹，而是技術答辯——教授會指著你的圖表問「這為什麼長這樣」、質疑你的方法、追問誤差來源。本文整理理工口試的常見追問類型、用學理解釋數據的準備方法，以及被問倒時展現研究思維的回應方式。
+- [理工研究計畫書怎麼寫？用技術匹配度說服教授](https://tbd-web.vercel.app/pages/resources/engineering-graduate-proposal.html): 理工的研究計畫書不是文獻整理，教授點開它是想確認一件事——你的技術背景能不能接上實驗室的研究。本文說明理工計畫書的定位、怎麼從已掌握的工具與專題延伸選題、怎麼和目標實驗室接軌，以及最常見的失分寫法。
+- [理工研究所推甄時程：為什麼要從大二暑假開始準備？](https://tbd-web.vercel.app/pages/resources/engineering-graduate-timeline.html): 理工推甄的素材——專題數據與實驗室經驗——都要時間累積，等大四才開始通常來不及。本文說明理工為什麼要從大二暑假佈局、各階段該完成什麼、實驗卡關的備案策略，以及推甄或考試的路線判斷基準。
+- [AI 時代為什麼 Execution 比知識更重要？](https://tbd-web.vercel.app/pages/resources/execution-over-knowledge.html): AI 工具讓知識變得隨手可得，但能真正把事情做出來的人反而更稀少。本文說明在這個時代，「真的做過」為何比「知道」更有價值，以及這對你的升學準備與備審累積代表什麼。
+- [如何找到一起做專案的隊友？](https://tbd-web.vercel.app/pages/resources/find-teammates.html): 想做 Side Project 或參加 Hackathon，卻找不到一起做的人？本文說明高中生可以在哪裡找到有能力也有意願的隊友、第一次開口怎麼說、合作開始後如何持續，以及哪些人其實不適合一起做。
+- [GitHub Commit 與版本管理入門：從混亂到有結構](https://tbd-web.vercel.app/pages/resources/github-commit-guide.html): 很多學生用 GitHub 只是把程式碼丟上去，commit 訊息寫「update」就交差。其實 commit 記錄的是你的學習過程。本文說明怎麼寫出有意義的 commit、版本管理的基本邏輯，以及清楚的 commit history 為何是備審與面試的加分項。
+- [一份強的 GitHub 作品集，長什麼樣子？](https://tbd-web.vercel.app/pages/resources/github-portfolio.html): 資訊、工程、設計科系的學生，常不知道 GitHub 作品集怎麼呈現才有說服力。本文說明 GitHub 在升學申請中的角色、評審如何判斷作品集，以及不同方向學生的整理重點與起步方法。
+- [研究所怎麼選校、選所、選指導教授？](https://tbd-web.vercel.app/pages/resources/graduate-choose-lab.html): 很多人選研究所只看學校排名，進去才發現研究方向不合、和指導教授處不來。其實最關鍵的是「領域、實驗室、指導教授」這條線。本文說明三層決策邏輯、怎麼查教授與實驗室資訊，以及最容易被忽略的契合度問題。
+- [研究所聯繫教授：套磁信怎麼寫、什麼時候寄？](https://tbd-web.vercel.app/pages/resources/graduate-contact-professor.html): 研究所推甄前想聯繫教授，卻怕一封套磁信石沉大海？主動聯繫能幫你確認研究方向是否契合，也讓教授在審查時對你有印象。這篇說明套磁信該寫什麼、什麼時候寄、怎麼避免沒有回音，以及收到回覆後該怎麼接續對話。
+- [研究所備審怎麼準備？自傳、CV 與資料整理](https://tbd-web.vercel.app/pages/resources/graduate-cv.html): 研究所書審看的不是探索與潛力，而是你做研究的準備與專業軌跡。本文說明研究所自傳怎麼寫、學術 CV 該呈現哪些經歷、書審資料如何組織，並釐清它和研究計畫書怎麼分工——讓專題、實習與研究經歷連成一條對準目標實驗室的線。
+- [研究所口試怎麼準備？答辯研究計畫書的完整邏輯](https://tbd-web.vercel.app/pages/resources/graduate-oral-defense.html): 研究所推甄口試不是大學面試的加強版，教授要看的是你能否在學術對話中為研究方向辯護。本文拆解研究計畫書答辯的核心邏輯、口試常見問題類型，並說明如何展現進入研究室的成熟度與準備節奏。
+- [研究所推甄 vs 考試：我該走哪條路？](https://tbd-web.vercel.app/pages/resources/graduate-recommend-vs-exam.html): 研究所推甄還是考試？選錯路，可能讓你把力氣花在不利於自己的戰場。兩條路篩的東西完全不同——推甄看整體輪廓與研究潛力，考試比專業科目的硬實力。本文比較兩者的評選邏輯與適合對象，幫你判斷哪一條更有利。
+- [研究所推甄時程規劃：大三下到大四上完整準備](https://tbd-web.vercel.app/pages/resources/graduate-timeline.html): 以為研究所推甄等大四上開學再準備就好？太晚動身，往往在研究計畫書與推薦信上吃虧。本文是研究所推甄時程規劃，從大三下確認方向、暑假準備書審到大四上口試，說明每階段該做什麼、什麼別拖。
+- [Hackathon 參加指南：高中生怎麼找、怎麼準備、怎麼讓它有申請價值？](https://tbd-web.vercel.app/pages/resources/hackathon-guide.html): 聽過 Hackathon 卻不知從何開始？這篇高中生 Hackathon 參加指南帶你認識它是什麼、為什麼值得參加，整理台灣高中生可以報名的管道、第一次參加的準備方式，以及如何讓這段經歷真正成為備審裡有說服力的素材。
+- [為什麼高分不一定能申請上頂大？](https://tbd-web.vercel.app/pages/resources/high-score-not-enough.html): 成績很高就一定能申請上頂大嗎？在現行制度下這個直覺並不成立。本文說明分數只是入場券、頂大真正在篩選什麼、為何高分學生反而可能落後，以及如何同時規劃成績與備審主線。
+- [人文、外文、社會科系備審要展示什麼？](https://tbd-web.vercel.app/pages/resources/humanities-application.html): 列一長串讀書清單，就能讓人文社科科系評審看見你嗎？人文、外文、歷史、哲學、社會、傳播的備審，評審真正在找的是問題意識、文字思考能力與真實的好奇心。這篇說明什麼材料最有說服力，並拆解學生最常踩到的三個誤區。
+- [人文社科研究所怎麼選校、選所、選指導教授？](https://tbd-web.vercel.app/pages/resources/humanities-graduate-choose.html): 人文社科選所不能只看校名，也不能只看教授研究題目是否出現相同關鍵字。本文提供三層決策邏輯——研究對象、理論與方法、教授與校所資源，說明「關鍵字相同不代表取徑相同」「系所名稱相同不代表學術傳統相同」，並附校所比較表。
+- [人文社科研究所備審怎麼準備？自傳、學術 CV 與文字作品](https://tbd-web.vercel.app/pages/resources/humanities-graduate-cv.html): 人文社科備審的任務，是證明申請者已經開始學習如何閱讀、提問、論證與寫作。本文說明學術 CV 的建議欄位、文字作品的選件原則、自傳該呈現的轉折，以及五份文件之間怎麼分工不重複。
+- [人文社科研究所口試怎麼準備？答辯研究計畫的完整邏輯](https://tbd-web.vercel.app/pages/resources/humanities-graduate-oral.html): 人文社科研究所口試不是朗讀研究計畫，也不是背標準答案，而是一次學術對話。本文整理研究問題、文獻與理論、材料與方法、契合度四類常見追問，提供五步答題框架、面對反對意見的回應方式，以及遇到不會的問題該怎麼處理。
+- [人文社科研究計畫書怎麼寫？從問題意識到文獻對話](https://tbd-web.vercel.app/pages/resources/humanities-graduate-proposal.html): 人文社科研究計畫書的核心，不是證明自己讀了很多，而是證明你能從既有文獻中辨識尚未被充分回答的問題。本文說明十節架構、問題意識的形成路徑、文獻回顧與文獻摘要的差別，以及人文與社科在材料與方法上的不同。
+- [人文社科研究所推甄時程：為什麼問題不是沒經歷，而是問題還沒長出來？](https://tbd-web.vercel.app/pages/resources/humanities-graduate-timeline.html): 人文社科推甄最大的誤區，是等簡章公告才開始找題目、查文獻與寫研究計畫。真正耗時的是確認問題、讀文獻、界定範圍與反覆修改論述，這些都得從大三下開始。本文說明各階段該完成什麼、暑假怎麼分流，以及推甄或考試的路線判斷。
+- [面試常見問題清單：每類題型怎麼準備答題素材？](https://tbd-web.vercel.app/pages/resources/interview-common-questions.html): 一階通過了，卻不知道二階面試會被問什麼、又該怎麼準備？本文整理升學面試最常出現的五類問題、每類背後的評估邏輯，以及如何在備審之外準備出真正說得出口的具體答案。
+- [面試前你必須做的五件事](https://tbd-web.vercel.app/pages/resources/interview-prep.html): 升學面試不是背答案，而是能否在現場自然說清楚你是誰。本文整理面試前必做的五件事——讀熟備審、準備自我介紹主線、了解科系、大聲練習、想好想問的問題，幫你在面試現場真正站穩、有底氣。
+- [教授在面試中最常問哪些問題？](https://tbd-web.vercel.app/pages/resources/interview-questions.html): 升學面試前拼命背標準答案，卻不知道教授到底會問什麼？其實面試問題不是隨機的，而是有固定的類型與邏輯。本文整理教授最常問的問題，拆解每一類背後真正想評估的能力，讓你的準備更有方向。
+- [面試自我介紹怎麼說：結構化的兩分鐘表達指南](https://tbd-web.vercel.app/pages/resources/interview-self-intro.html): 面試一開場就被請做自我介紹，卻常常準備不到位？問題不是不知道自己是誰，而是不知道怎麼在兩分鐘內說清楚。本文提供面試自我介紹的結構框架，幫你說清楚你是誰、做了什麼、為什麼在這裡。
+- [特殊選才面試 vs 個申二階：差在哪裡、怎麼分別準備？](https://tbd-web.vercel.app/pages/resources/interview-types.html): 同樣是面試，特殊選才和個申二階的邏輯卻截然不同，準備方向錯了結果差很多。本文比較兩種面試的根本差異——一個從備審答辯出發，一個測深度與原創潛力，以及各自的準備重點。
+- [法政研究所怎麼選校、選所、選指導教授？同一個系，訓練可能完全不同](https://tbd-web.vercel.app/pages/resources/law-graduate-choose.html): 法政類群同一個系所裡，實體法與程序法、規範法學與實證法學、政治理論與量化分析，訓練出來的是不同的人。本文用「次領域→研究取向與方法→教授現況」三層邏輯，說明怎麼查教授近五年的實際產出、怎麼判斷方法相容性，以及為什麼一定要確認教授當年度收不收生，並附可直接填的比較表。
+- [法政備審怎麼準備？CV、自傳與研究計畫的分工](https://tbd-web.vercel.app/pages/resources/law-graduate-cv.html): 法政備審的 CV、自傳、研究計畫各司其職。本文說明三份文件的分工、每段經歷該寫出的七件事，附可下載 Checklist。
+- [法政研究所口試怎麼準備？答辯研究計畫的完整邏輯](https://tbd-web.vercel.app/pages/resources/law-graduate-oral.html): 法政口試與理工、商管最大的不同：研究問題往往沒有絕對正確的答案。教授追問的是你的立場站不站得住、推論前後一不一致、面對反駁能不能理性處理。本文提供一分鐘立場說明、四類追問題庫、六步答題框架，以及被指出矛盾時的實際句型，並附可下載的檢核表。
+- [法政研究計畫書怎麼寫？從一個可辯論的爭點開始](https://tbd-web.vercel.app/pages/resources/law-graduate-proposal.html): 法政研究計畫最常見的兩種死法：寫成一整篇文獻整理，或題目大到碩士兩年做不完。本文說明怎麼用五步把議題縮小成一個可辯論的爭點、十節架構每一節要回答什麼、方法怎麼選才真的答得了問題，以及「為什麼是我」這條證據鏈要怎麼寫，並附可下載的縮小與架構模板。
+- [法政研究所推甄時程：為什麼要從大三上開始，而不是大四上](https://tbd-web.vercel.app/pages/resources/law-graduate-timeline.html): 法政研究所推甄的材料——十五到二十頁的研究計畫、小論文、核心法理與政治理論的成績、教授推薦信——沒有一項能在兩個月內生出來。本文把準備拆成大三上、大三下、暑假、大四上四個階段，說明每一階段該完成什麼、三個起跑判斷標準，以及已經大四上才開始的人該怎麼取捨。
+- [法律、政治、公共事務科系備審要展示什麼？](https://tbd-web.vercel.app/pages/resources/law-politics-application.html): 申請法律、政治、公共行政、外交科系，評審看的不是你背了多少法條，而是論證能力、對公共議題的真實關注與多角度思考。本文說明法政備審最有說服力的材料、常見失誤，以及怎麼把議題關注建立成一條有觀點的主線。
+- [學習歷程主線是什麼？為什麼比活動數量更重要](https://tbd-web.vercel.app/pages/resources/learning-main-thread.html): 活動紀錄很多，學習歷程卻顯得零散、抓不到重點嗎？本文說明「申請主線」的概念，拆解評審真正在看什麼，並帶你從現有經歷找出一條主線，讓備審在短時間內讓人看懂你為什麼適合這個科系。
+- [你以為是臨場反應，其實是事前做的功課：從 Lulu 主持筆記學系統性準備](https://tbd-web.vercel.app/pages/resources/lulu-preparation-system.html): 你以為是臨場反應，其實是事前做過的功課。Lulu 公開金曲獎主持筆記，背後是人物研究、關係比對與反覆修正；本文把它轉化為面試、口試與簡報可直接使用的六層準備架構與準備表，讓你在意外發生時仍有材料可以反應。
+- [醫學、藥學、生命科學科系備審要展示什麼？](https://tbd-web.vercel.app/pages/resources/medical-application.html): 準備醫學、藥學、生命科學科系備審時，以為成績夠高就夠？其實評審更在找有清楚動機、同理心與科學思維的人。本文說明醫療生科各科系的評審重點差異、最有說服力的材料，以及最常見的問題。
+- [沒有特殊資源，也能做出強的學習歷程嗎？](https://tbd-web.vercel.app/pages/resources/no-resources.html): 沒補習、沒人脈、沒出國交流，這些缺乏真的會決定備審強弱嗎？本文說明評審實際在評什麼，沒有特殊資源的學生如何建立有說服力的學習歷程，以及現在最值得著手的幾件事，把手上的材料用好。
+- [高中生怎麼用 Notion 整理學習歷程和 Side Project？](https://tbd-web.vercel.app/pages/resources/notion-system.html): 想用 Notion 整理學習歷程，卻常把時間花在整理工具本身？本文說明高中生最實用的 Notion 架構怎麼設計，整理學習資料、Side Project 進度與備審素材，並指出哪些功能真的值得花時間學。
+- [台大化學系 vs 化工系：課程、學習與職涯到底差在哪？](https://tbd-web.vercel.app/pages/resources/ntu-chem-vs-cheme.html): 台大化學系和化工系，差別不只是「理論與應用」。本文用 8 層拆法實際比較：兩系各在解什麼問題、同名課程訓練的能力差異、一顆鋰電池從分子到產線的分工、四年日常與職涯路徑，最後用十題快篩判斷你靠近哪一邊。
+- [如何陪孩子選科系？家長該做的是引導，不是決定](https://tbd-web.vercel.app/pages/resources/parent-choose-major.html): 選科系往往是親子之間最容易起衝突的升學議題——家長有經驗與期待，孩子有興趣卻還不確定。本文說明家長如何在「引導」與「主導」之間拿捏，幫孩子做出一個他自己想清楚、也願意承擔的選擇。
+- [升學期間的親子溝通：怎麼支持而不增加壓力](https://tbd-web.vercel.app/pages/resources/parent-communication.html): 「準備得怎麼樣了？」這句關心，為什麼常變成升學期間的親子壓力？這是親子關係最緊繃的時期之一，家長的好意往往被孩子當成催促。這篇談升學期間最常見的溝通陷阱，以及怎麼把你的關心，轉化成孩子真正接得住的支持。
+- [要不要幫孩子找升學顧問？家長的決策指南](https://tbd-web.vercel.app/pages/resources/parent-consult-decision.html): 看到孩子備審卡關、或聽說別人在找升學顧問，家長難免猶豫。本文說明升學顧問能做什麼、不能做什麼，並具體列出哪三種情況值得找顧問、哪些情況其實靠自己就足夠，幫你做出不焦慮的決定。
+- [家長能怎麼幫孩子準備備審？（不是替他們準備）](https://tbd-web.vercel.app/pages/resources/parent-how-to-help.html): 看著孩子準備備審，家長很想幫忙，卻擔心幫錯方向反而讓備審失真。本文說明家長在備審準備裡最有用的角色、哪些事具體能做，以及哪些該留給孩子自己完成，幫你站在對的位置陪伴。
+- [家長最常誤解的備審準備方式](https://tbd-web.vercel.app/pages/resources/parent-misconceptions.html): 家長在孩子升學備審中常因不熟悉現行制度，無意間讓準備方向走偏。本文整理四個最常見的備審迷思——從盲目追營隊、比賽到代勞文件，並說明家長真正能幫上忙、和孩子站在同一個方向的做法。
+- [家長怎麼看備審品質？如何給出有幫助的回饋](https://tbd-web.vercel.app/pages/resources/parent-portfolio-quality.html): 孩子把備審拿給你看，你看得出哪裡好、哪裡需要加強嗎？本文用評審的視角，說明備審品質真正的判斷標準在於主線與真實性，並具體指出家長能給的有用回饋，以及哪些介入該避免。
+- [AI 時代的個人品牌：為什麼高中生也需要開始想這件事？](https://tbd-web.vercel.app/pages/resources/personal-brand-ai.html): 個人品牌不是只有網紅才需要。當 AI 讓能力展示門檻降低，讓對的人看見努力，有時比努力本身更關鍵。本文說明個人品牌對升學與長期發展的作用，以及高中生可以從哪裡開始、為何一致性最重要。
+- [升學自傳怎麼寫？結構框架與常見錯誤完整指南](https://tbd-web.vercel.app/pages/resources/personal-statement.html): 自傳寫成流水帳或感謝散文，評審看完卻記不住你是誰？本文說明升學自傳的結構框架、每個部分該說清楚什麼、最常見的五個錯誤，以及為什麼多數自傳讓人毫無印象，並附上寫完後的自我檢核。
+- [為什麼個人網站正在變成數位名片？](https://tbd-web.vercel.app/pages/resources/personal-website-digital-card.html): 在 AI 工具讓做網站的門檻大幅降低後，有沒有個人網站，正在成為能力與主動性的一個簡單指標。這篇說明高中生為什麼值得擁有個人網站、它在升學上的實際作用、不同階段適合的形式，以及第一步可以從哪裡開始建立。
+- [備審排版與視覺設計：讓材料更好讀的基本原則](https://tbd-web.vercel.app/pages/resources/portfolio-design.html): 內容夠好，卻因排版混亂讓評審找不到重點、甚至直接跳過？備審視覺設計不是要做得多漂亮，而是讓人快速讀懂。本文拆解備審排版的基本原則、文字與版面設定、何時該加圖，以及最常見的排版錯誤。
+- [升大學前作品集資料夾怎麼整理？一套可複製的架構範例](https://tbd-web.vercel.app/pages/resources/portfolio-folder-structure.html): 升大學前最該養成的習慣之一，是把做過的東西好好收起來。這篇提供一套可直接複製的作品 / 經歷資料夾架構，適用 Google Drive 或 Notion，讓未來做履歷、備審、面試都有素材可用。
+- [個人網站與 Portfolio 怎麼做？](https://tbd-web.vercel.app/pages/resources/portfolio-website.html): 想做個人網站與 Portfolio，卻不知道用什麼工具、頁面該放什麼？本文說明高中生適合的工具選擇、Portfolio 的基本架構長什麼樣，並整理最常見的問題，幫你把作品整理成讓評審看懂的能力敘事。
+- [升大學前 30 天準備 Checklist：一個月把一件事做完](https://tbd-web.vercel.app/pages/resources/pre-college-30-day-checklist.html): 升大學前只剩一個月空檔，重點不是樣樣都碰，而是把一件事真正做完。這份 30 天 Checklist 把一個月拆成探索選題、動手做、優化整理、表達收尾四週，讓你月底手上有一個能展示、也能說清楚的成果。
+- [農生環境科系升大學前準備：觀察、實驗紀錄與永續議題](https://tbd-web.vercel.app/pages/resources/pre-college-agriculture-environment.html): 農生環境科系升大學前該做什麼？核心是培養觀察與實驗紀錄的習慣、練習整理資料，並對永續與在地環境議題有真實的理解。這篇說明先修重點、第一個作品與探索方法。
+- [藝術科系升大學前準備：基本功、創作紀錄與作品集起步](https://tbd-web.vercel.app/pages/resources/pre-college-arts.html): 藝術、音樂、表演科系升大學前該做什麼？核心是把基本功練扎實、開始留下持續的創作紀錄，並做出第一個能展示創作觀點的作品。這篇說明先修重點、第一個作品方向與探索方法。
+- [商管財經科系升大學前準備：商業觀察、試算表與第一份案例分析](https://tbd-web.vercel.app/pages/resources/pre-college-business.html): 確定要念企管、財金、會計或行銷，升大學前該補什麼？比起背管理名詞，更值得做的是培養「看懂商業如何運作」的觀察力，練熟會用一輩子的試算表與簡報，並完成第一份有分析視角的案例或小型經營專案。
+- [升大學前可以做什麼？給準大學生的完整準備指南](https://tbd-web.vercel.app/pages/resources/pre-college-complete-guide.html): 升大學前最重要的不是提前念完大一課程，而是完成探索、先修、作品、表達四件事。這篇給準大學生的完整指南，涵蓋科系探索方法、自主學習與工具能力、八大科系群準備方向，以及一個月與一個暑假的安排方式。
+- [設計傳播科系升大學前準備：工具上手、審美累積與作品集起步](https://tbd-web.vercel.app/pages/resources/pre-college-design-media.html): 確定要走視覺設計、傳播、新聞或數位媒體，升大學前這段時間該怎麼用？設計傳播科系真正在意的是設計思維與敘事能力，工具只是手段。本文說明該先練熟的底層能力、第一個能放進作品集的作品方向，以及怎麼累積審美。
+- [教育相關科系升大學前準備：觀察、教學練習與反思紀錄](https://tbd-web.vercel.app/pages/resources/pre-college-education.html): 確定要念教育、師培、幼教、特教或教育心理，升大學前該做什麼？核心不是背教育理論，而是培養觀察力、實際練習「把一件事教懂別人」，並養成把過程記下來、反思的習慣。本文說明先修重點與家教、營隊等可累積的經歷。
+- [理工科系升大學前準備：數學手感、程式與第一個技術作品](https://tbd-web.vercel.app/pages/resources/pre-college-engineering.html): 升大學前要不要先念微積分？理工科系真正值得先補的是數學手感、程式基礎與動手做出一個技術作品，而不是搶課程進度。這篇說明先修重點、第一個作品方向與探索方法。
+- [人文社科科系升大學前準備：深度閱讀、寫作與議題思考](https://tbd-web.vercel.app/pages/resources/pre-college-humanities.html): 確定要念文、史、哲、社會、政治、心理或外文，升大學前該補什麼？核心不是搶讀大學課本，而是把閱讀讀得更深、把想法寫得更清楚，並培養從不同角度看同一件事的能力。本文說明先修重點與第一篇分析作品怎麼下手。
+- [法政公共事務科系升大學前準備：邏輯、論證與時事分析](https://tbd-web.vercel.app/pages/resources/pre-college-law-politics.html): 法政公共事務科系升大學前該做什麼？核心是練好邏輯與論證、培養讀懂政策與法條的耐心，並能對時事做正反兩面的分析。這篇說明先修重點、第一份作品與探索方法。
+- [醫藥衛生科系升大學前準備：生化閱讀、現場觀察與醫療倫理入門](https://tbd-web.vercel.app/pages/resources/pre-college-medical.html): 想走醫學、牙醫、藥學或護理，升大學前該補什麼？這些科系不只看你會不會念書，更在意動機與面對生命的成熟度。比起提前啃生物化學，更值得做的是培養科學閱讀、累積真實的現場觀察，並建立對醫療倫理與同理心的理解。
+- [高中生簡報與 Demo 技巧：讓作品在三分鐘內說清楚](https://tbd-web.vercel.app/pages/resources/presentation-demo.html): 做了好作品，卻在競賽或面試裡說不清楚？本文說明如何在三分鐘內讓對的人聽懂你做了什麼、為什麼有意義，拆解 Side Project 與研究成果的呈現結構、Demo 技巧與簡報原則，以及面試裡怎麼說。
+- [如何寫出一份讓人看懂的 README？](https://tbd-web.vercel.app/pages/resources/readme-guide.html): 評審通常不會細讀你的程式碼，卻會看 README——它幾乎是專案的唯一第一印象。本文說明一份好的 GitHub README 該包含哪些內容、最常見的錯誤，以及為什麼 commit 紀錄也會影響評審對你的判斷。
+- [推薦信怎麼請？讓老師寫出有說服力的推薦信指南](https://tbd-web.vercel.app/pages/resources/recommendation-letter.html): 推薦信不只是找一個認識你的老師簽名——它需要你提前布局、提供足夠的資訊，以及讓老師真的有辦法說出你的具體優點。這份指南說明從選老師到提供素材的完整準備流程。
+- [學習歷程中的「反思」到底是什麼？](https://tbd-web.vercel.app/pages/resources/reflection-in-portfolio.html): 老師總說學習歷程要有反思，卻很少有人講清楚反思到底是什麼。本文說明反思在備審裡真正的功能、三種有效的反思結構、最常見的兩個陷阱，以及怎麼讓反思變成習慣而非考前臨時補寫。
+- [高中生怎麼開始接觸研究、聯繫教授？](https://tbd-web.vercel.app/pages/resources/research-find-professor.html): 想接觸研究、聯繫教授，卻以為那是上大學才開始的事？對研究型科系來說，高中就動身很有說服力。本文說明高中生怎麼找到適合的教授、寫出有回音的聯繫信，以及進實驗室後如何讓經歷有申請價值。
+- [研究計畫書怎麼寫？研究所推甄的核心關卡](https://tbd-web.vercel.app/pages/resources/research-proposal.html): 把網路資料整理成一篇看起來很有學問的文章，就是研究計畫書嗎？它是研究所推甄最關鍵的書面材料，重點不在展示你知道多少，而在你能不能定義一個有意義的問題，並讓教授相信你有能力解決它。這篇拆解結構與常見錯誤。
+- [教授 30 秒看備審，真正在評估什麼？](https://tbd-web.vercel.app/pages/resources/reviewer-perspective.html): 教授第一次看備審可能只花 30 秒。本文還原書審委員的閱讀方式與評估邏輯，拆解評審心中真正在問的三個核心問題，並指出讓備審在前 30 秒就被認真讀下去的關鍵特徵。
+- [如何把零散的活動整理成一條有邏輯的故事？](https://tbd-web.vercel.app/pages/resources/scatter-to-story.html): 高中三年做了很多事，到備審整理時卻發現活動之間毫無關聯——這不是材料問題，而是視角問題。本文用四個具體步驟，帶你從現有活動裡找出那條真實存在的申請主線，把零散經歷整理成有邏輯的故事。
+- [個申選校策略：志願序怎麼排、落點怎麼評估？](https://tbd-web.vercel.app/pages/resources/school-selection-strategy.html): 個申只能填四個志願，卻不知道該怎麼排、落點又該怎麼抓？本文說明個申選校策略的三個評估維度，帶你用衝、穩、保的邏輯設計志願序，並點出三個常見選校誤區，讓備審努力落在最值得的地方。
+- [高中生自學 SOP：怎麼從不會到做出成果？](https://tbd-web.vercel.app/pages/resources/self-learning-sop.html): 找了一堆免費資源、學沒幾天卻什麼都做不出來？高中生自學最難的從來不是資源，而是方向感與走完一件事的能力。本文拆解一套從「想學」到「做出能展示成果」的可複製流程，並說明如何維持動力。
+- [高三個申時程全覽：一月到五月每個關卡怎麼準備](https://tbd-web.vercel.app/pages/resources/senior-year-timeline.html): 學測一考完，個人申請的準備時間其實比你想的更短——通常只有六到八週。這份高三個申時程從一月學測排到五月放榜，逐月說明每個關卡該做什麼、哪些事不能拖，並帶你在備審整理與學測備考之間，找到合理分配力氣的節奏。
+- [AI 時代為什麼 Side Project 越來越重要？](https://tbd-web.vercel.app/pages/resources/side-project-ai-era.html): 當 AI 讓知識唾手可得，高中生該如何證明自己真正會什麼？這篇從頂尖大學 Holistic Review 的評審邏輯轉變談起，拆解 AI 時代真正稀缺的能力，並說明 Side Project 為何能成為可被驗證的能力證明。
+- [從 0 到 1：Side Project 從題目到成果的完整流程](https://tbd-web.vercel.app/pages/resources/side-project-from-zero.html): 有了方向和題目，卻卡在不知道怎麼開始做，Side Project 常常半途而廢？本文把執行過程拆成定義問題、縮小範圍、做出第一版、得到反饋到整理展示五個階段，讓每一步都知道自己在做什麼。
+- [Side Project 可以怎麼開始？如何從科系方向反推專案主題？](https://tbd-web.vercel.app/pages/resources/side-project-start.html): 想做 Side Project 卻卡在選題，遲遲開不了頭？問題往往不是能力，而是不知道從哪開始。本文說明常見的卡關原因與錯誤開始方式，帶你從想申請的科系反推，找到一個真正適合自己的專案題目。
+- [高中生可以做哪些 Side Project？五大類型與科系對照](https://tbd-web.vercel.app/pages/resources/side-project-types.html): 想做 Side Project 卻不知道該從哪個方向下手，也擔心做出來的東西跟想申請的科系兜不起來？本文整理高中生可以做的五大 Side Project 類型、不同科系方向的具體建議與難度分級，幫你找到適合自己的起點。
+- [為什麼升學越來越重視 Side Project？](https://tbd-web.vercel.app/pages/resources/side-project-why.html): 成績不錯，卻擔心備審拿不出讓人記得的東西？在台灣升學中，成績只是入場券。本文說明評審邏輯的轉變，以及為什麼 Side Project 正成為書審、特殊選才與研究所推甄裡最有說服力的能力證明。
+- [未來哪些能力最不容易被 AI 取代？](https://tbd-web.vercel.app/pages/resources/skills-ai-cannot-replace.html): AI 工具一個接一個出現，學的東西會不會很快就沒用了？本文說明在 AI 普及之後，反而變得更稀缺的五種能力，以及高中生如何在課業之餘開始培養，並把它放進對的升學準備方向裡。
+- [特殊選才怎麼選？什麼情況真的適合走這條路？](https://tbd-web.vercel.app/pages/resources/special-admission-choose.html): 聽說特殊選才可以不看成績，就適合你走嗎？它既不是成績不夠好的備案，也不是所有有特色的學生都該選的路。這份指南說明特殊選才的評選邏輯、真正適合的學生輪廓，以及常見的迷思。
+- [特殊選才備審跟個人申請差在哪裡？如何分別準備？](https://tbd-web.vercel.app/pages/resources/special-admission-portfolio.html): 同時走特殊選才和個人申請，卻只把同一份備審稍微調整就分別送出？這正是最常見的失誤。特選備審與個申備審的評選邏輯根本不同——一個強調原創與深度，一個強調完整與主線。本文說明兩者該如何分別準備。
+- [繁星推薦怎麼準備？申請機制、適合對象與備審策略](https://tbd-web.vercel.app/pages/resources/stellar-admission-guide.html): 繁星推薦常被高中生忽略，但對校排穩定的學生來說，競爭力反而比個申更強。本文說明繁星推薦的實際申請機制、什麼樣的學生適合走這條路，以及有面試要求的科系該怎麼額外準備。
+- [繁星推薦 vs 個人申請：我該走哪條路？](https://tbd-web.vercel.app/pages/resources/stellar-vs-personal.html): 繁星推薦和個人申請該走哪一條，總是讓人猶豫不決？本文說明兩個管道的根本差異——繁星看校排、個申看備審故事，並拆解各自更有優勢的情況、能否同時準備，以及幫你判斷競爭力的三個關鍵問題。
+- [理工科系備審如何呈現研究與技術經驗？](https://tbd-web.vercel.app/pages/resources/stem-application.html): 準備理工科系備審時，以為成績好就夠了？教授真正想看的，是你有沒有動手做過東西、遇到問題怎麼解決。本文說明如何呈現研究與技術經驗，把你解決問題的動機與能力寫成最有說服力的備審內容。
+- [強申請者有哪些共同特徵？](https://tbd-web.vercel.app/pages/resources/strong-applicant-traits.html): 為什麼有些學生的備審和面試特別讓評審印象深刻？本文整理強申請者的共同特徵——清楚主線、具體說明、真實問題意識、清醒自我認識、主動性與備審面試一致，給你一個能對照、逐步強化的方向。
+- [讀書計畫怎麼寫？大學申請與研究所推甄的準備指南](https://tbd-web.vercel.app/pages/resources/study-plan.html): 讀書計畫考的不是你讀了多少書，而是你對大學學習的思考深度——你知道你想學什麼、為什麼、以及你有沒有具體的計畫。這份指南說明大學版和研究所版的差異與寫法。
+- [高中三年怎麼規劃？從探索到整理的完整框架](https://tbd-web.vercel.app/pages/resources/three-year-plan.html): 很多學生到高三才發現沒作品、沒主線，其實學習歷程是三年累積出來的。本文提供高一探索、高二累積、高三整理的規劃框架，說明每個階段的核心目標、該做什麼、該避免什麼，讓你及早不慌張。
+- [高中生怎麼在課業之外累積能力？](https://tbd-web.vercel.app/pages/resources/time-management-skills.html): 「想做 Side Project，但我真的沒有時間。」這是高中生最常說的話。其實能力累積靠的不是天賦或大量時間，而是刻意的時間配置。本文說明三個時間管理原則，帶你在現有課表裡建立讓小行動產生複利的節奏。
+- [為什麼活動很多，備審卻還是看起來很散？](https://tbd-web.vercel.app/pages/resources/why-busy-not-strong.html): 三年參加了不少活動，整理備審時卻發現每段像獨立事件、拼不成完整故事？本文說明活動清單與申請故事的根本差別、備審「看起來很散」的三個原因，並提供一套能快速自我診斷的方法。

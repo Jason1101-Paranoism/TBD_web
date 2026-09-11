@@ -3,10 +3,11 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "node scripts/prebuild.mjs && astro dev",
+    "build": "node scripts/prebuild.mjs && astro build",
     "preview": "astro preview",
-    "verify": "node scripts/verify.mjs"
+    "verify": "node scripts/verify.mjs",
+    "gen": "node scripts/prebuild.mjs"
   },
   "engines": {
     "node": ">=18.17.1"
