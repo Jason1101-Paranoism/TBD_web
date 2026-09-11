@@ -17,7 +17,18 @@ interface Props {
 
 const { title, description, bodyClass = '', canonicalUrl, ogType = 'website', seoTitle, schema, noindex = false } = Astro.props;
 const canonical = canonicalUrl ?? `${site.siteUrl}${Astro.url.pathname}`;
-const pageTitle = seoTitle ?? title;
+
+// 品牌後綴由這裡統一決定，來源檔不要自己接（A-07）。
+//
+// 中文 SERP 約 30 字截斷。原本 152 頁把「｜TBD Studio」手寫進 title，佔掉 11 字，
+// 結果 129 頁超標——而被截掉的正好就是品牌後綴，等於既沒顯示品牌、又吃掉了描述空間。
+// 規則：接得下才接；接不下就讓標題把 30 字全用在內容上。
+// 品牌訊號不會因此消失——og:site_name 與 Organization schema 都還在。
+//
+// 結尾的 replace 是防呆：來源檔若又被手動接上後綴，不會變成接兩次。
+const BRAND = '｜TBD Studio';
+const baseTitle = (seoTitle ?? title).replace(/｜TBD Studio$/, '').trim();
+const pageTitle = baseTitle.length + BRAND.length <= 30 ? baseTitle + BRAND : baseTitle;
 
 const siteSchema = {
   "@context": "https://schema.org",
