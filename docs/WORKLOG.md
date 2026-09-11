@@ -6,6 +6,46 @@
 
 ---
 
+## #035｜2026-09-12｜九份研究計畫模板：確認無需回填，另修四份 CSV 缺的分隔列
+
+YY 回報九份 `grad-*-proposal-framework` 已對過，「各學群的倫理與資料取得／倫理與授權補上了」、
+「商管的導讀也補上了」。逐份查完的結論是：**這兩件都是 Drive Sheet 端的修正，repo 沒有缺件。**
+
+**查證**（方向是 Sheet ← repo，不是 repo ← Sheet）：
+
+- **九份 repo CSV 本來就都有倫理區塊**，只是各學群名稱不同：
+  agriculture／biomed／business／humanities 用「倫理與資料取得」，arts／design 用「倫理與授權」，
+  education 用「研究對象取得與倫理」，engineering 用「資料授權與倫理」，
+  law 用「研究倫理與資料取得檢核」。
+- **反向驗證**：arts 的 Sheet 現在含有 repo 一字不差的四列（`田野或機構場域拍攝已確認進場許可與紀錄使用範圍` 等）。
+- **導讀是 Sheet 獨有的分頁**（`先讀這裡｜使用說明`，01–06 節）。repo 的 `.md` 與 `.csv`
+  九份全部沒有、也從來沒有過（grep `先讀這裡`／`01｜` 皆為 0）。商管是九份 Sheet 裡唯一缺的，
+  YY 補的是那裡。
+- **模板分頁與 repo 對得上**：business（全文）、education（區塊序列完全相同）、law、arts 皆已比對。
+
+**中途的一個誤判**：曾用 `search_files` 的 `fullText contains '倫理與資料取得'` 得到「8/9 命中，
+education 與 law 的 repo 缺」。那是錯的——**Drive 的 fullText 是分詞搜尋不是精確子字串比對**，
+導讀分頁裡的「倫理與時程」「可行性與倫理」也會命中。讀分頁後才確認兩份 repo 都有對應區塊。
+要判斷某字串在不在 Sheet 裡，不能靠 fullText。
+
+**實際改了什麼**（唯一的行為差異）：
+
+- `grad-biomed／business／engineering／humanities-proposal-framework.csv` 各補一列 `,,,,,`。
+  這四份在倫理區塊與「常見失分點自我對照」之間少一列空白分隔列，agriculture 與 arts 有，
+  全檔其他區塊之間也都有，business 的 Sheet 亦有。純版面、`audit-templates.mjs` 不會擋，
+  但四份與其餘不一致。BOM 與 CRLF 未動，diff 恰好四行。
+
+**驗證**：`audit-templates.mjs` 56 份全符合規格、轉檔殘留零命中；build 176 頁通過；verify 40/40。
+
+**踩到的坑**：本輪自己起的 `astro preview` 用 `spawn(..., {shell:true})`，
+Windows 上 `kill()` 只殺到 shell、殺不到子行程，殘留占著 4321 讓 verify 報「埠已被占用」。
+而且它綁的是 `[::1]:4321`（IPv6-only），`Get-NetTCPConnection -LocalPort 4321` 抓不到，
+要用 `netstat -ano | findstr :4321` 才看得見。
+
+**下一步**：九份無 PR 可開；Sheet 端已由 YY 對齊，不需要重建（重建會換連結，見 D-013）。
+
+---
+
 ## #034｜2026-09-12｜官網 SOP 三張圖落地：改寫成原生元件，不是貼圖
 
 YY 在 Drive 給了「官網 SOP」資料夾（`1DvvRf6f…`），訊息寫「四張圖片和一份每張圖片
