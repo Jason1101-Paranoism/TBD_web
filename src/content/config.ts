@@ -37,6 +37,16 @@ const articles = defineCollection({
       href: z.string(),
       label: z.string(),
     })),
+
+    // 步驟型文章的 HowTo schema（A-05）。只有**真的是有序步驟**的文章才填——
+    // 時程型（大三下→暑假→大四上）、清單型（第 1–4 週）、流程型（Step 1–5）。
+    // 三層決策框架那種「並列的判斷面向」不算，硬掛會讓結構化資料失真。
+    // href 是該步驟在文章裡的錨點，會變成 HowToStep 的 url。
+    howToSteps: z.array(z.object({
+      name: z.string(),
+      text: z.string(),
+      href: z.string().optional(),
+    })).optional(),
     relatedArticles: z.array(z.object({
       badge: z.string(),
       title: z.string(),

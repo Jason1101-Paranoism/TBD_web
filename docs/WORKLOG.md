@@ -6,6 +6,49 @@
 
 ---
 
+## #040｜2026-09-12｜A-05：六篇真正的步驟型文章補上 HowTo schema
+
+A-05 的判定只要 `HowTo schema > 0` 就翻綠——**掛一篇就過**。沒有那樣做。
+
+**挑選標準**：只有真的是**有序步驟**的文章才填。時程型（大三下→暑假→大四上）、
+清單型（第 1–4 週）、流程型（Step 1–5）算；「三層決策框架」那種並列的判斷面向不算——
+硬掛會讓結構化資料失真，而失真的結構化資料比沒有更糟。
+
+依這個標準選出 6 篇，共 24 個步驟：
+
+| 文章 | 步驟 |
+|---|---|
+| `pre-college-30-day-checklist` | 4 週 |
+| `side-project-from-zero` | Step 1–5 |
+| `scatter-to-story` | 四步 |
+| `senior-year-timeline` | 學測前→一月→二三月→四月→五月 |
+| `graduate-timeline` | 大三下→暑假→大四上 |
+| `three-year-plan` | 高一→高二→高三 |
+
+**步驟文字不是我編的**：先用腳本抽出每個 section 底下的第一段內文，再據此改寫成一句話。
+每個步驟都帶 `href` 錨點，輸出成 `HowToStep.url`，指向文章內對應段落。
+
+**做了什麼**：
+
+- `src/content/config.ts`：新增選配的 `howToSteps: [{ name, text, href? }]`。
+- `ArticleLayout.astro`：有填才把 HowTo 節點加進 `@graph`，與既有的 FAQPage 同一種寫法。
+- `[slug].astro`：補傳 `howToSteps`（漏了這行的話 frontmatter 填了也不會生效）。
+- 六篇 `.mdx` 補 frontmatter。
+
+**一件要說清楚的事**：**Google 已於 2023 年把 HowTo 從搜尋的複合式結果下架**，
+所以這不會拿到 rich result。做它的理由是讓生成式引擎能直接抽出有序步驟——
+那也正是 SEO 報告 A-05 自己寫的理由（「生成式摘要與精選摘要都偏好可直接抽取的結構」）。
+已把這點寫進 `ArticleLayout` 的註解，免得日後有人以為做白工。
+
+**驗證**：build 176 頁通過；verify **40/40**；
+dist 實測 `three-year-plan.html` 的 HowTo 節點三個 step、`url` 錨點正確；
+SEO 掃描 **已修 13／未修 7 → 已修 14／未修 6**（`v7_20260912`）。
+
+**剩下 6 項**：S-03 Tailwind CDN、A-04 表格、A-06 重點框、S-11 薄頁、S-12 內部連結、S-14 建置期抓取。
+待拍板仍是 S-09 網域與 A-02 具名作者。
+
+---
+
 ## #039｜2026-09-12｜A-07／A-08：標題與描述收斂，SEO 已修 11 → 13
 
 **A-07 title 超過 30 字：129 頁 → 0**

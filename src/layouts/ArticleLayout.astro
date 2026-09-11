@@ -40,6 +40,7 @@ interface Props {
   publishDate: Date;
   updatedDate?: Date;
   readingMinutes?: number;
+  howToSteps?: Array<{ name: string; text: string; href?: string }>;
 }
 
 const {
@@ -47,7 +48,7 @@ const {
   bodyClass = 'sub-page article-page',
   sidebarCtaText, sidebarCtaUtm,
   bottomCtaH2, bottomCtaUtm,
-  tocItems, relatedArticles, faqItems, slug, seoTitle, category, departmentGroup, gradStage,
+  tocItems, relatedArticles, faqItems, howToSteps, slug, seoTitle, category, departmentGroup, gradStage,
   publishDate, updatedDate, readingMinutes,
 } = Astro.props;
 
@@ -174,6 +175,22 @@ const articleSchema = {
         "@type": "Question",
         "name": f.q,
         "acceptedAnswer": { "@type": "Answer", "text": f.a },
+      })),
+    }] : []),
+    // HowTo：有填 howToSteps 才加（A-05）。
+    // 注意 Google 已於 2023 年把 HowTo 從搜尋的複合式結果下架，所以這不是為了拿 rich result，
+    // 而是讓生成式引擎能直接抽出有序步驟——這也是 SEO 報告 A-05 的原始理由。
+    ...(howToSteps && howToSteps.length ? [{
+      "@type": "HowTo",
+      "name": title,
+      "description": description,
+      "inLanguage": "zh-TW",
+      "step": howToSteps.map((s, i) => ({
+        "@type": "HowToStep",
+        "position": i + 1,
+        "name": s.name,
+        "text": s.text,
+        ...(s.href ? { "url": `${site.siteUrl}/pages/resources/${slug}.html${s.href}` } : {}),
       })),
     }] : []),
   ]
