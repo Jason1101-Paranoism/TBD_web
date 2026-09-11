@@ -22,3 +22,6 @@ node_modules/
 
 # 學生對話紀錄與個資，一律不入版控（[ ] 需跳脫，否則會被當成字元類別）
 \[LINE\]*.txt
+
+# Tailwind 建置產物（npm run css 每次重產，不入版控避免與原始碼漂移）
+public/css/tailwind.css

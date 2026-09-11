@@ -3,11 +3,12 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "node scripts/prebuild.mjs && astro dev",
-    "build": "node scripts/prebuild.mjs && astro build",
+    "dev": "npm run css && node scripts/prebuild.mjs && astro dev",
+    "build": "npm run css && node scripts/prebuild.mjs && astro build",
     "preview": "astro preview",
     "verify": "node scripts/verify.mjs",
-    "gen": "node scripts/prebuild.mjs"
+    "gen": "node scripts/prebuild.mjs",
+    "css": "tailwindcss -c tailwind.config.mjs -i src/styles/tailwind.css -o public/css/tailwind.css --minify"
   },
   "engines": {
     "node": ">=18.17.1"
@@ -23,6 +24,7 @@
     "astro-eslint-parser": "^1.4.0",
     "eslint": "^9.39.5",
     "eslint-plugin-astro": "^1.7.0",
-    "globals": "^17.7.0"
+    "globals": "^17.7.0",
+    "tailwindcss": "^3.4.19"
   }
 }
