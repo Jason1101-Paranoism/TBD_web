@@ -22,6 +22,13 @@ const articles = defineCollection({
     departmentGroup: z.string().optional(),
     // 研究所申請系列的階段（1–7），用來建立「階段 × 軌道」矩陣導覽
     gradStage: z.number().optional(),
+    // 這篇屬於哪個主題指南（hub）。值是 src/pages/pages/guides/ 底下的檔名。
+    //
+    // 為什麼需要它：麵包屑原本只用 category 對應指南，但「材料累積」與「工具與延伸」
+    // 這兩個分類各自橫跨好幾個系列（Side Project／競賽／GitHub／AI 時代／研究自學），
+    // 一個 category 對不到一個 hub，結果那幾個指南沒有任何文章連回去——
+    // hub-and-spoke 只有 hub 沒有 spoke（SEO 報告 S-11／S-12）。
+    guideSlug: z.string().optional(),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     updatedAt: z.string().optional(),

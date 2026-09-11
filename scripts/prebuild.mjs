@@ -157,6 +157,58 @@ function buildLlms(articles) {
   return { pages: CORE_PAGES.length, articles: articles.length };
 }
 
+// ── 4. 社群資源庫快照（S-14）────────────────────────────────────────
+// library 頁的清單原本是前端 fetch Google Sheet 的 CSV 產生的，爬蟲與生成式引擎
+// 只拿得到一個空殼。改成建置期抓一次、存成快照，頁面直接靜態渲染。
+//
+// 抓不到就沿用上一份快照（檔案已進版控）。這是刻意的：把外部網路變成 build 的硬相依，
+// 等於讓別人的分享設定可以弄爆我們的部署。抓不到只是內容舊一點，不該讓 build 失敗。
+const LIB_CSV = 'https://docs.google.com/spreadsheets/d/1wwhuwgx8bWd2qkUzEfyMCkLJaNM_fP-F7E8L7OEBP4M/gviz/tq?tqx=out:csv';
+const LIB_SNAP = p('src/config/library-snapshot.json');
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [], cur = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+      else cur += c;
+    } else if (c === '"') q = true;
+    else if (c === ',') { row.push(cur); cur = ''; }
+    else if (c === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+    else if (c !== '\r') cur += c;
+  }
+  if (cur || row.length) { row.push(cur); rows.push(row); }
+  return rows;
+}
+
+// 欄位：0 分類, 1 貼文標題, 2 貼文連結, 3 懶人包標題, 4 懶人包連結, 5 站上完整文章
+const toItems = (rows) => rows
+  .filter((r) => /^https?:\/\//i.test((r[2] || '').trim()))
+  .map((r) => ({
+    category: (r[0] || '').trim() || '其他',
+    title: (r[1] || '').trim(),
+    postUrl: (r[2] || '').trim(),
+    lpTitle: (r[3] || '').trim(),
+    lpUrl: (r[4] || '').trim(),
+    article: (r[5] || '').trim(),
+  }));
+
+async function buildLibrary() {
+  const prev = fs.existsSync(LIB_SNAP) ? JSON.parse(read(LIB_SNAP)) : { items: [] };
+  try {
+    const res = await fetch(LIB_CSV, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const items = toItems(parseCsv(await res.text()));
+    if (!items.length) throw new Error('解析後 0 筆，不覆蓋既有快照');
+    fs.writeFileSync(LIB_SNAP, JSON.stringify({ fetchedAt: new Date().toISOString(), items }, null, 2) + '\n', 'utf8');
+    return { n: items.length, fresh: true };
+  } catch (e) {
+    return { n: prev.items.length, fresh: false, why: e.message };
+  }
+}
+
 // ── 執行 ────────────────────────────────────────────────────────────
 const css = buildCss();
 const lm = buildLastmod();
@@ -167,7 +219,10 @@ const articles = walk(p('src/content/articles'), '.mdx')
   .sort((a, b) => a.slug.localeCompare(b.slug));
 const llms = buildLlms(articles);
 
+const lib = await buildLibrary();
+
 console.log(`prebuild ✓`);
 console.log(`  style.css   ${css.files} 個模組串成 1 檔，${css.kb} KB，0 個 @import`);
 console.log(`  lastmod     ${lm.paths} 個路徑、${lm.slugs} 篇文章`);
 console.log(`  llms.txt    ${llms.pages} 個主要頁面、${llms.articles} 篇文章`);
+console.log(`  資源庫快照  ${lib.n} 筆${lib.fresh ? '（本次重新抓取）' : `（沿用上次快照；抓取失敗：${lib.why}）`}`);

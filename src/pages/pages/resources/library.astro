@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { site } from '../../../config/site';
+import snapshot from '../../../config/library-snapshot.json';
 
 const title = '社群資源庫';
 const description = 'TBD Studio 在社群分享過的升學懶人包總整理：學習歷程、大學面試、活動競賽與升學觀念，依主題分類，可直接開啟與下載。內容持續更新。';
@@ -14,6 +15,19 @@ const CSV_URL = 'https://docs.google.com/spreadsheets/d/1wwhuwgx8bWd2qkUzEfyMCkL
 const DRIVE_FOLDER = 'https://drive.google.com/drive/folders/1S58hRy-2MvUdHoe3Dw825ZgjcI9PprWr';
 // 分類顯示順序（CSV 內出現但不在此列的分類，會接在後面）。
 const CATEGORY_ORDER = ['學習歷程', '面試', '其他'];
+
+// 建置期快照（scripts/prebuild.mjs 產生）。清單先在伺服器端渲染出來，爬蟲與生成式引擎
+// 才讀得到——原本純靠前端 fetch，它們只拿得到一個空殼（SEO 報告 S-14）。
+// 前端那段 fetch 保留，抓到新資料就覆蓋；抓不到就維持這份靜態清單，不再顯示錯誤。
+const snapItems = (snapshot.items ?? []) as Array<{
+  category: string; title: string; postUrl: string; lpTitle: string; lpUrl: string; article: string;
+}>;
+const presentCats = [...new Set(snapItems.map((i) => i.category))];
+const orderedCats = [
+  ...CATEGORY_ORDER.filter((c) => presentCats.includes(c)),
+  ...presentCats.filter((c) => !CATEGORY_ORDER.includes(c)),
+];
+const hasSnapshot = snapItems.length > 0;
 ---
 
 <BaseLayout title={title} description={description} bodyClass="sub-page resources-page">
@@ -52,8 +66,8 @@ const CATEGORY_ORDER = ['學習歷程', '面試', '其他'];
     </div>
   </section>
 
-  <!-- 載入中 -->
-  <section class="section" id="library-loading">
+  <!-- 載入中：已有建置期快照時不顯示（清單本來就已經在頁面上） -->
+  <section class="section" id="library-loading" hidden={hasSnapshot}>
     <p style="color: var(--tbd-mid);">資源載入中…</p>
   </section>
 
@@ -66,8 +80,31 @@ const CATEGORY_ORDER = ['學習歷程', '面試', '其他'];
     </div>
   </section>
 
-  <!-- 動態渲染區 -->
-  <div id="library-sections"></div>
+  {/* 建置期快照先渲染出來；前端抓到新資料時會整塊覆蓋 */}
+  <div id="library-sections" data-has-snapshot={hasSnapshot ? 'true' : 'false'}>
+    {orderedCats.map((cat) => (
+      <section class="section">
+        <h2 class="section-label">{cat}</h2>
+        <div class="card-grid">
+          {snapItems.filter((it) => it.category === cat).map((it) => (
+            <article class="card article-card">
+              <span class="badge">{it.category}</span>
+              <h3>{it.title}</h3>
+              <div class="button-row" style="margin-top:16px;flex-wrap:wrap;">
+                <a class="button" href={it.postUrl} target="_blank" rel="noopener noreferrer" data-track-event="download_resource">開啟 / 下載</a>
+                {it.lpUrl && (
+                  <a class="button secondary" href={it.lpUrl} target="_blank" rel="noopener noreferrer" data-track-event="download_resource">懶人包：{it.lpTitle || '下載'}</a>
+                )}
+              </div>
+              {it.article && (
+                <p style="margin-top:10px;"><a class="text-link" href={it.article}>看站上完整文章 →</a></p>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
 
   <!-- 篩選後找不到 -->
   <section class="section" id="library-empty" hidden>
@@ -127,6 +164,13 @@ const CATEGORY_ORDER = ['學習歷程', '面試', '其他'];
   }
 
   function showError() {
+    // 已經有建置期快照渲染在頁面上時，抓取失敗不該把清單換成錯誤訊息——
+    // 使用者手上仍有一份可用的（只是可能舊一點）清單。
+    var sectionsEl = document.getElementById('library-sections');
+    if (sectionsEl && sectionsEl.getAttribute('data-has-snapshot') === 'true') {
+      if (loadingEl) loadingEl.hidden = true;
+      return;
+    }
     if (loadingEl) loadingEl.hidden = true;
     if (controlsEl) controlsEl.hidden = true;
     if (errorEl) errorEl.hidden = false;
