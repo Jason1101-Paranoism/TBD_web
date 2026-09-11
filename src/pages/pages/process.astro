@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import JourneyMatrix from '../../components/JourneyMatrix.astro';
+import { journeyMap } from '../../config/figures';
 const gate = "https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=process-deliverable";
 ---
 
@@ -174,6 +176,16 @@ const gate = "https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campa
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ── 合作旅程地圖（Drive「SOP 圖檔放置」指定：關鍵節點之後、初談到送件之前）── -->
+  <section class="section">
+    <div class="services-chapter-header">
+      <span class="kicker">合作旅程</span>
+      <h2>這段合作從頭到尾長什麼樣</h2>
+      <p class="services-chapter-desc">上面是各管道的外部時程，下面是與 TBD 合作時你會經過的六個階段，以及每個階段的成果與接觸點。</p>
+    </div>
+    <JourneyMatrix data={journeyMap} id="cjm-process" />
   </section>
 
   <!-- ── 合作流程（泳道圖）── -->

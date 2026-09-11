@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import JourneyMatrix from '../../components/JourneyMatrix.astro';
+import PlanCompare from '../../components/PlanCompare.astro';
+import { urgentJourneyMap, interviewPlans } from '../../config/figures';
 ---
 
 <BaseLayout title="服務內容｜TBD Studio" description="TBD Studio 升學服務說明：依升學管道（個人申請、特殊選才、研究所推甄、海外申請）找到對應服務，備審健檢、備審重構、面試訓練與全程陪跑四種方案的差異與適合情境。" bodyClass="sub-page services-page">
@@ -270,6 +273,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </section>
 
+  <!-- ── 備審急件旅程（Drive「SOP 圖檔放置」指定：服務說明區塊之後）── -->
+  <section class="section" id="urgent">
+    <div class="services-chapter-header">
+      <span class="kicker">時程已經很緊的情況</span>
+      <h2>送件在即，流程會怎麼壓縮</h2>
+      <p class="services-chapter-desc">距離截止只剩幾週時，做法不是把所有事情都做完，而是先判斷可行性、再把時間集中在最關鍵的缺口。以下是急件情況下的實際走法。</p>
+    </div>
+    <JourneyMatrix data={urgentJourneyMap} id="cjm-urgent" />
+  </section>
+
   <!-- ── 章節 3：服務方案 ── -->
   <section class="section" id="plans">
     <div class="services-chapter-header">
@@ -341,6 +354,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h3 style="margin-top: 12px;">先初談，再決定要不要往下走</h3>
       <p>第一步是 60 分鐘的策略諮詢（NT$3,500）：盤點現況、判斷該走哪條路線，並給一份可帶走的具體建議。<strong>若決定正式合作，這筆費用可全額折抵方案費用</strong>；正式方案依合作範圍與時程報價，會在初談時說明清楚，沒有隱藏費用。</p>
     </div>
+  </section>
+
+  <!-- ── 面試衝刺方案比較（Drive「SOP 圖檔放置」指定：方案比較之後、最終 CTA 之前）──
+       注意：此表的 PLAN A/B/C 是面試衝刺強度的分級，與上方「怎麼開始合作」的方案 A–D
+       不是同一套命名。兩套並存是 YY 交來的原稿狀態，尚未由 LR／YY 收斂。 -->
+  <section class="section" id="interview-plans">
+    <div class="services-chapter-header">
+      <span class="kicker">面試衝刺</span>
+      <h2>面試準備要練到什麼程度</h2>
+      <p class="services-chapter-desc">如果你的下一關是面試，以下比較三種衝刺強度的服務內容與適合情境，協助你判斷需要練到哪個程度。</p>
+    </div>
+    <PlanCompare data={interviewPlans} id="plan-compare" />
   </section>
 
   <!-- ── CTA ── -->

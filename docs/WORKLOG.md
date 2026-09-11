@@ -6,6 +6,63 @@
 
 ---
 
+## #034｜2026-09-12｜官網 SOP 三張圖落地：改寫成原生元件，不是貼圖
+
+YY 在 Drive 給了「官網 SOP」資料夾（`1DvvRf6f…`），訊息寫「四張圖片和一份每張圖片
+要放哪裡的檔案」。實際不符：資料夾裡是 **HTML 檔不是圖片**，而且說明檔
+（Google Doc「SOP 圖檔放置」）只列 **3 個**位置——第四份 `TBD_Studio_CJM_web_v2.html`
+是 v3 的舊版，未列入，**沒有落地**。
+
+三份原檔都是 `width:1200px` 固定寬的獨立 HTML，自帶 `:root{--navy/--blue/…}` 與自己的
+h1/h2。直接內嵌會與站上 token 互撞、手機橫向捲。LR 指定走「重寫成站上元件 + RWD」。
+
+**做了什麼**（可觀察的行為差異）：
+
+- **`src/config/figures.ts`（新）**：三份圖的文案轉成資料。文字一字未改。
+- **`src/components/JourneyMatrix.astro`（新）**：CJM 矩陣。DOM 刻意做成**階段為主**
+  （一欄一個 `.cjm-col`），桌機再用 `grid-template-rows: subgrid` 把列高對齊回矩陣。
+  寫成原圖的「列為主」的話，手機只能橫向捲。
+- **`src/components/PlanCompare.astro`（新）**：同一套策略，3 欄版。
+- **`public/css/tbd-pages.css` +221 行**：`.cjm-*` / `.plancmp-*`。色值全走 `--tbd-*`，
+  沒有寫死。1023px 以下（以及 `@supports not (subgrid)`）整個拆成一張張階段卡，
+  列名用 `content: attr(data-row)` 補回，**不做橫向捲軸**。
+- **`process.astro`**：「各升學管道的關鍵節點」與「從初談到送件」之間多一個
+  「這段合作從頭到尾長什麼樣」區塊（合作旅程 CJM）。
+- **`services.astro`**：「各申請管道的服務說明」之後多 `#urgent`（備審急件 CJM）；
+  方案 A–D 之後、最終 CTA 之前多 `#interview-plans`（面試衝刺方案比較）。
+- **`scripts/verify.mjs`**：process 與 services 兩項加 `mustContain`。這兩張圖是資料驅動的，
+  import 被拿掉時頁面仍會 build 成功、圖悄悄消失——與 D-003 同形狀，所以釘住。
+
+**驗證**：
+
+1. `npm run build`：通過（176 頁）。
+2. `npm run verify`：**40/40 通過**。verify 每頁都在 400px 量
+   `documentElement.scrollWidth - clientWidth`，兩頁都是 0 → 手機無橫向溢出。
+3. 桌機版型用一次性 CDP 探針量 1280 寬幾何：CJM 七欄並排、首列與末列的儲存格
+   跨欄 top 值完全相同（1338／1638、4261／4651），方案表 4 欄同樣對齊，
+   `docOverflow=0` → subgrid 確實生效，不是靠目視。
+4. **未做**：真人目視。Chrome 擴充功能本輪兩次 `tabs_context_mcp` 逾時，沒有截圖證據。
+
+**留給 LR／YY 收斂的兩件事**（已落地但內容有衝突，不是實作問題）：
+
+- **站上沒有「急件服務」**。全站只有 `cases.astro` 一個案例提到急件（「約 2 週（急件）」），
+  沒有定價、沒有服務說明。急件 CJM 現在掛在服務說明底下，讀起來像宣告了一個不存在的方案。
+- **兩套方案命名並存**。圖裡是 PLAN A 基礎診斷／B 實戰衝刺／C 尊榮全套（面試衝刺強度），
+  同頁上方是方案 A 備審健檢／B 備審重構／C 面試訓練／D 全程陪跑。目前靠區塊標題
+  （「面試準備要練到什麼程度」）限定語意，但同頁兩套 A/B/C 仍會混淆。
+
+**沒動的**：YY 的任何文案、nav／IA、`TBD_Studio_CJM_web_v2.html`、急件的定價與服務頁。
+**未 push**——feature branch 上的工作，正式站部署 main。
+
+**取檔過程**（補 #033 的坑）：base64 手抄一樣不可靠，這次又打壞一份
+（`擬真`→`擁瞟`，而且 byte 數相同抓不出來；另一份 `哪裡`→`哩裡`）。
+可靠且唯讀的做法是 **`get_file_metadata` 帶 `snippetVerbosity: MAX_ALLOWED`**——
+對 text/html 會回整份純文字，不必下載、不必動 Drive、不經過模型轉寫。
+
+**下一步**：等 LR／YY 對急件服務與方案命名拍板；若要上正式站需 merge 到 main 再 push。
+
+---
+
 ## #033｜2026-09-10｜CL 的 batch2 備審檢核表落地：xlsx 成為第三種交付格式
 
 CL 交回九份 `grad-*-portfolio-checklist.xlsx`（Drive 資料夾 `Batch2_CL_備審checklist`，

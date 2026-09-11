@@ -1,0 +1,133 @@
+---
+// Customer Journey Map 矩陣圖。
+//
+// DOM 刻意做成「階段為主」（每個 phase 一個 .cjm-col，底下掛該階段的各列儲存格），
+// 而不是原始 HTML 的「列為主」。原因是手機上要能直接堆疊成一張張階段卡片；
+// 桌機再用 grid subgrid 把各欄的列高對齊回矩陣。若寫成列為主，手機只能橫向捲。
+//
+// 資料來源與對應關係見 src/config/figures.ts。
+import type { JourneyMatrixData } from '../config/figures';
+
+interface Props {
+  data: JourneyMatrixData;
+  /** 給 aria-labelledby 用，同頁放兩張時不能重複 */
+  id: string;
+}
+
+const { data, id } = Astro.props as Props;
+const rowCount = data.rows.length;
+const { emotion } = data;
+---
+
+<figure class="cjm" aria-labelledby={`${id}-title`}>
+  <div class="cjm-intro">
+    <div>
+      <span class="cjm-kicker">{data.kicker}</span>
+      <h3 class="cjm-title" id={`${id}-title`}>{data.title}</h3>
+      <p class="cjm-lead">{data.intro}</p>
+    </div>
+    <aside class="cjm-aside">
+      <h4>{data.aside.title}</h4>
+      <ul>
+        {data.aside.items.map((item) => <li>{item}</li>)}
+      </ul>
+    </aside>
+  </div>
+
+  <div class="cjm-matrix" style={`--cjm-rows: ${rowCount}`}>
+    <div class="cjm-col cjm-col--head" aria-hidden="true">
+      <div class="cjm-headlabel">{data.headLabel}</div>
+      {data.rows.map((row) => <div class="cjm-rowlabel">{row.label}</div>)}
+    </div>
+
+    {
+      data.phases.map((phase, colIndex) => (
+        <div class="cjm-col">
+          <div class="cjm-phase">
+            <span class="cjm-phase-no">{phase.no}</span>
+            <h4>{phase.title}</h4>
+            <p>{phase.desc}</p>
+          </div>
+          {data.rows.map((row) => {
+            const cell = row.cells[colIndex];
+            return (
+              <div
+                class:list={['cjm-cell', { 'cjm-cell--emphasis': row.emphasis }]}
+                data-row={row.label}
+              >
+                {'tags' in cell ? (
+                  <span class="cjm-tags">
+                    {cell.tags.map((tag) => (
+                      <span class="cjm-tag">{tag}</span>
+                    ))}
+                  </span>
+                ) : (
+                  <>
+                    {'strong' in cell && <strong>{cell.strong}</strong>}
+                    {cell.text}
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ))
+    }
+  </div>
+
+  <section class="cjm-emotion">
+    <div class="cjm-emotion-head">
+      <h4>{emotion.title}</h4>
+      <span class="cjm-emotion-sub">{emotion.sub}</span>
+    </div>
+    <div class="cjm-curve">
+      <svg
+        viewBox={`0 0 1000 ${emotion.viewBoxHeight}`}
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <line
+          x1="20"
+          y1={emotion.baselineY}
+          x2="980"
+          y2={emotion.baselineY}
+          stroke="var(--tbd-line)"
+          stroke-width="1"
+        />
+        <path
+          d={emotion.path}
+          fill="none"
+          stroke="var(--tbd-accent)"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
+        {
+          emotion.points.map((point) => (
+            <circle cx={point.x} cy={point.y} r="5" fill="var(--tbd-yellow)" />
+          ))
+        }
+      </svg>
+    </div>
+    <ol class="cjm-curve-labels">
+      {emotion.labels.map((label) => <li>{label}</li>)}
+    </ol>
+  </section>
+
+  {
+    data.method && (
+      <section class="cjm-method">
+        <h4 class="cjm-method-title">{data.method.title}</h4>
+        <div class="cjm-method-grid">
+          {data.method.cards.map((card) => (
+            <div class="cjm-method-card">
+              <span class="cjm-method-en">{card.en}</span>
+              <span class="cjm-method-zh">{card.zh}</span>
+              <p>{card.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</figure>

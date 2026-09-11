@@ -30,7 +30,11 @@ const MOBILE = '400,800';
 const TARGETS = [
   { path: '/index.html', name: '首頁' },
   { path: '/pages/cases.html', name: '成功案例（tab 切換）' },
-  { path: '/pages/services.html', name: '服務頁' },
+  // 服務頁掛了兩張 SOP 圖（備審急件 CJM、面試衝刺方案比較）。它們是資料驅動的元件，
+  // 一旦 figures.ts 被改壞或 import 被拿掉，頁面仍會 build 成功、只是圖悄悄消失——
+  // 與 D-003「模板在下載頁消失四輪沒被發現」是同一種形狀，所以在這裡釘住。
+  { path: '/pages/services.html', name: '服務頁（含急件 CJM＋面試方案比較圖）',
+    mustContain: ['id="urgent"', '急件可行性判斷', 'id="interview-plans"', '擬真情境演練'] },
   // 瀏覽動線只留一張匯總卡導到對照表；搜尋資料則六份分學群指南都要在
   { path: '/pages/resources.html', name: '知識庫首頁（主題指南 Tabs）', guideTab: true,
     mustContain: ['graduate-application.html#matrix', '各學群研究所申請指南',
@@ -124,7 +128,8 @@ const TARGETS = [
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
   { path: '/pages/grad-path-quiz.html', name: '推甄vs考試測驗（vanilla JS）', gpq: true,
     mustContain: ['id="gpq-card"', 'grad-path-quiz.js'] },
-  { path: '/pages/process.html', name: '合作流程（track tabs + 時程軸）' },
+  { path: '/pages/process.html', name: '合作流程（track tabs + 時程軸 + 合作旅程 CJM）',
+    mustContain: ['cjm-matrix', '可延伸申請資產'] },
   { path: '/404.html', name: '自訂 404 頁' },
   // 落點分析方案頁。價格的正本在 tbd-compass-app 的 entitlement.ts（見 src/config/pricing.ts 的警語），
   // 這裡刻意把數字寫死當獨立事實來源：改價時本項會紅，逼人回頭確認 compass 那側也改了。

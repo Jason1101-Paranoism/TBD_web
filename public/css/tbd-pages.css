@@ -949,3 +949,224 @@ table.deliv-mini td b { color: var(--tbd-dark); }
 }
 .pricing-suited { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--tbd-line); }
 .pricing-note { color: var(--tbd-mid); font-size: 14px; line-height: 1.75; margin: 18px 0 0; }
+
+/* ── Customer Journey Map 矩陣（JourneyMatrix.astro）──────────────────
+   原圖是 1200px 固定寬的獨立 HTML。這裡改成：
+   桌機用 grid subgrid 讓「階段為主」的 DOM 對齊回矩陣列高；
+   1023px 以下整個拆成一張張階段卡，列名由 data-row 以 ::before 補回。
+   不使用橫向捲軸——手機是這張圖的主要閱讀場景。 */
+.cjm { margin: 24px 0 0; padding: 0; }
+.cjm-intro { display: grid; grid-template-columns: 1.55fr .8fr; gap: 26px; align-items: start; }
+.cjm-kicker {
+  display: block; font-size: 12px; font-weight: 800; letter-spacing: .13em;
+  color: var(--tbd-accent); margin-bottom: 10px;
+}
+.cjm-title { margin: 0; font-size: 26px; line-height: 1.3; letter-spacing: -.01em; color: var(--tbd-dark); }
+.cjm-lead { margin: 12px 0 0; max-width: 760px; color: var(--tbd-mid); font-size: 15px; line-height: 1.75; }
+.cjm-aside { border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-md); padding: 16px 18px; }
+.cjm-aside h4 { margin: 0 0 10px; font-size: 15px; color: var(--tbd-dark); }
+.cjm-aside ul { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin: 0; padding: 0; list-style: none; }
+.cjm-aside li { position: relative; padding-left: 15px; font-size: 12.5px; line-height: 1.5; }
+.cjm-aside li::before {
+  content: ""; position: absolute; left: 0; top: .5em;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--tbd-yellow);
+}
+
+.cjm-matrix {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 148px repeat(6, minmax(0, 1fr));
+  grid-template-rows: auto repeat(var(--cjm-rows), auto);
+  border: 1px solid var(--tbd-line);
+  border-radius: var(--tbd-radius-md);
+  overflow: hidden;
+}
+.cjm-col { display: grid; grid-row: 1 / -1; grid-template-rows: subgrid; }
+.cjm-col > * { border-right: 1px solid var(--tbd-line); border-bottom: 1px solid var(--tbd-line); }
+.cjm-col:last-child > * { border-right: 0; }
+.cjm-col > *:last-child { border-bottom: 0; }
+
+.cjm-headlabel {
+  background: var(--tbd-dark); color: #fff; padding: 18px 16px;
+  display: flex; align-items: flex-end; font-size: 13px; font-weight: 700; line-height: 1.5;
+}
+.cjm-rowlabel {
+  background: var(--tbd-soft); padding: 14px; display: flex; align-items: center;
+  font-size: 13px; font-weight: 700; line-height: 1.45; color: var(--tbd-dark);
+}
+.cjm-phase { padding: 15px 14px 13px; }
+.cjm-phase-no {
+  display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--tbd-dark); color: #fff; font-size: 11px; font-weight: 800; margin-bottom: 8px;
+}
+.cjm-phase h4 { margin: 0; font-size: 15px; line-height: 1.4; color: var(--tbd-dark); }
+.cjm-phase p { margin: 5px 0 0; font-size: 12px; line-height: 1.5; color: var(--tbd-mid); }
+.cjm-cell { padding: 14px 13px; font-size: 12.5px; line-height: 1.62; }
+.cjm-cell strong { display: block; font-size: 12.5px; margin-bottom: 4px; color: var(--tbd-accent); }
+.cjm-cell--emphasis { background: rgba(26, 93, 148, .07); }
+.cjm-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.cjm-tag {
+  padding: 5px 8px; border: 1px solid var(--tbd-line); border-radius: 999px;
+  background: #fff; font-size: 11px; line-height: 1.2;
+}
+
+.cjm-emotion {
+  margin-top: 22px; border: 1px solid var(--tbd-line);
+  border-radius: var(--tbd-radius-md); padding: 17px 18px 14px;
+}
+.cjm-emotion-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.cjm-emotion-head h4 { margin: 0; font-size: 15px; color: var(--tbd-dark); }
+.cjm-emotion-sub { font-size: 12px; color: var(--tbd-mid); }
+.cjm-curve { height: 100px; margin-top: 9px; }
+.cjm-curve svg { width: 100%; height: 100%; }
+.cjm-curve-labels {
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: -4px 0 0; padding: 0; list-style: none;
+}
+.cjm-curve-labels li { text-align: center; font-size: 11px; color: var(--tbd-mid); line-height: 1.4; }
+
+.cjm-method { margin-top: 22px; }
+.cjm-method-title {
+  margin: 0 0 9px; font-size: 12px; font-weight: 800;
+  color: var(--tbd-mid); letter-spacing: .08em;
+}
+.cjm-method-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.cjm-method-card { border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-sm); padding: 12px 14px; }
+.cjm-method-en { display: block; color: var(--tbd-accent); font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+.cjm-method-zh { display: block; margin-top: 4px; font-size: 13px; font-weight: 700; color: var(--tbd-dark); }
+.cjm-method-card p { margin: 4px 0 0; color: var(--tbd-mid); font-size: 11.5px; line-height: 1.5; }
+
+@media (max-width: 1023px) {
+  .cjm-intro { grid-template-columns: 1fr; gap: 18px; }
+  .cjm-method-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .cjm-title { font-size: 22px; }
+  .cjm-aside ul { grid-template-columns: 1fr; }
+  .cjm-method-grid { grid-template-columns: 1fr; }
+  .cjm-curve-labels { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 4px; }
+  .cjm-curve { height: 72px; }
+}
+
+/* 手機／不支援 subgrid 時：整個矩陣拆成一張張階段卡 */
+@media (max-width: 1023px) {
+  .cjm-matrix { display: block; border: 0; border-radius: 0; overflow: visible; }
+  .cjm-col--head { display: none; }
+  .cjm-col {
+    display: block; margin-top: 12px;
+    border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-sm); overflow: hidden;
+  }
+  .cjm-col > * { border-right: 0; }
+  .cjm-phase { background: var(--tbd-soft); }
+  .cjm-cell::before {
+    content: attr(data-row); display: block; margin-bottom: 5px;
+    font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--tbd-mid);
+  }
+}
+@supports not (grid-template-rows: subgrid) {
+  .cjm-matrix { display: block; border: 0; border-radius: 0; overflow: visible; }
+  .cjm-col--head { display: none; }
+  .cjm-col {
+    display: block; margin-top: 12px;
+    border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-sm); overflow: hidden;
+  }
+  .cjm-col > * { border-right: 0; }
+  .cjm-phase { background: var(--tbd-soft); }
+  .cjm-cell::before {
+    content: attr(data-row); display: block; margin-bottom: 5px;
+    font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--tbd-mid);
+  }
+}
+
+/* ── 面試衝刺方案比較（PlanCompare.astro）────────────────────────────
+   與 .cjm 同一套 subgrid／堆疊策略，欄數 3 而非 6。 */
+.plancmp { margin: 24px 0 0; padding: 0; }
+.plancmp-kicker {
+  display: block; font-size: 12px; font-weight: 800; letter-spacing: .13em;
+  color: var(--tbd-accent); margin-bottom: 10px;
+}
+.plancmp-title { margin: 0; font-size: 26px; line-height: 1.3; letter-spacing: -.01em; color: var(--tbd-dark); }
+.plancmp-lead { margin: 12px 0 0; max-width: 780px; color: var(--tbd-mid); font-size: 15px; line-height: 1.75; }
+.plancmp-note {
+  display: inline-block; margin: 16px 0 0; padding: 8px 12px; border-radius: 999px;
+  background: rgba(26, 93, 148, .07); color: var(--tbd-accent); font-size: 12px; font-weight: 700;
+}
+
+.plancmp-grid {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 170px repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto repeat(var(--plancmp-rows), auto);
+  border: 1px solid var(--tbd-line);
+  border-radius: var(--tbd-radius-md);
+  overflow: hidden;
+}
+.plancmp-col { display: grid; grid-row: 1 / -1; grid-template-rows: subgrid; }
+.plancmp-col > * { border-right: 1px solid var(--tbd-line); border-bottom: 1px solid var(--tbd-line); }
+.plancmp-col:last-child > * { border-right: 0; }
+.plancmp-col > *:last-child { border-bottom: 0; }
+
+.plancmp-headlabel {
+  background: var(--tbd-dark); color: #fff; padding: 18px 16px;
+  display: flex; align-items: flex-end; font-size: 14px; font-weight: 700;
+}
+.plancmp-rowlabel {
+  background: var(--tbd-soft); padding: 15px 14px; display: flex; align-items: center;
+  font-size: 13px; font-weight: 700; color: var(--tbd-dark);
+}
+.plancmp-head { position: relative; padding: 18px; }
+.plancmp-col--reco .plancmp-head { background: linear-gradient(180deg, rgba(250, 183, 72, .16) 0%, transparent 100%); }
+.plancmp-col--reco .plancmp-cell { background: rgba(250, 183, 72, .05); }
+.plancmp-badge {
+  position: absolute; top: 14px; right: 14px;
+  background: var(--tbd-yellow); color: var(--tbd-dark); border-radius: 999px;
+  padding: 6px 9px; font-size: 11px; font-weight: 800;
+}
+.plancmp-label { display: block; color: var(--tbd-accent); font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+.plancmp-head h4 { margin: 8px 0 5px; font-size: 19px; line-height: 1.35; color: var(--tbd-dark); }
+.plancmp-head p { margin: 0; color: var(--tbd-mid); font-size: 13px; line-height: 1.65; }
+.plancmp-cell { padding: 15px 16px; font-size: 13px; line-height: 1.7; }
+.plancmp-cell strong { display: block; color: var(--tbd-accent); font-size: 13px; margin-bottom: 4px; }
+.plancmp-stars { letter-spacing: .05em; color: var(--tbd-accent); font-size: 15px; }
+.plancmp-footnote { display: block; margin-top: 4px; }
+
+.plancmp-boxes { margin-top: 22px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 14px; }
+.plancmp-box { border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-sm); padding: 16px 18px; }
+.plancmp-box h4 { margin: 0 0 8px; font-size: 15px; color: var(--tbd-dark); }
+.plancmp-box p { margin: 0; color: var(--tbd-mid); font-size: 13px; line-height: 1.7; }
+.plancmp-steps { display: flex; gap: 8px; flex-wrap: wrap; }
+.plancmp-step {
+  border: 1px solid var(--tbd-line); border-radius: 999px;
+  padding: 7px 10px; font-size: 12px; background: #fff;
+}
+
+@media (max-width: 1023px) {
+  .plancmp-grid { display: block; border: 0; border-radius: 0; overflow: visible; }
+  .plancmp-col--head { display: none; }
+  .plancmp-col {
+    display: block; margin-top: 12px;
+    border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-sm); overflow: hidden;
+  }
+  .plancmp-col > * { border-right: 0; }
+  .plancmp-cell::before {
+    content: attr(data-row); display: block; margin-bottom: 5px;
+    font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--tbd-mid);
+  }
+  .plancmp-boxes { grid-template-columns: 1fr; }
+}
+@supports not (grid-template-rows: subgrid) {
+  .plancmp-grid { display: block; border: 0; border-radius: 0; overflow: visible; }
+  .plancmp-col--head { display: none; }
+  .plancmp-col {
+    display: block; margin-top: 12px;
+    border: 1px solid var(--tbd-line); border-radius: var(--tbd-radius-sm); overflow: hidden;
+  }
+  .plancmp-col > * { border-right: 0; }
+  .plancmp-cell::before {
+    content: attr(data-row); display: block; margin-bottom: 5px;
+    font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--tbd-mid);
+  }
+}
+@media (max-width: 640px) {
+  .plancmp-title { font-size: 22px; }
+}

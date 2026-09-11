@@ -1,0 +1,86 @@
+---
+// 面試衝刺方案比較表。
+//
+// 與 JourneyMatrix 同樣採「欄為主」DOM：每個方案一欄，手機上直接變成三張方案卡，
+// 每格用 data-row 補回列名。桌機再用 subgrid 對齊列高。
+//
+// 注意：此表的 PLAN A/B/C 是「面試訓練」內部的三種衝刺強度，
+// 與 services.astro「怎麼開始合作」的方案 A–D（備審健檢／備審重構／面試訓練／全程陪跑）
+// 不是同一套分類。放在同頁時務必保留區塊標題的限定語。
+import type { PlanCompareData } from '../config/figures';
+
+interface Props {
+  data: PlanCompareData;
+  id: string;
+}
+
+const { data, id } = Astro.props as Props;
+const rowCount = data.rows.length;
+---
+
+<figure class="plancmp" aria-labelledby={`${id}-title`}>
+  <div class="plancmp-intro">
+    <span class="plancmp-kicker">{data.kicker}</span>
+    <h3 class="plancmp-title" id={`${id}-title`}>{data.title}</h3>
+    <p class="plancmp-lead">{data.lead}</p>
+    <p class="plancmp-note">{data.note}</p>
+  </div>
+
+  <div class="plancmp-grid" style={`--plancmp-rows: ${rowCount}`}>
+    <div class="plancmp-col plancmp-col--head" aria-hidden="true">
+      <div class="plancmp-headlabel">{data.headLabel}</div>
+      {data.rows.map((row) => <div class="plancmp-rowlabel">{row.label}</div>)}
+    </div>
+
+    {
+      data.plans.map((plan, colIndex) => (
+        <div class:list={['plancmp-col', { 'plancmp-col--reco': plan.badge }]}>
+          <div class="plancmp-head">
+            {plan.badge && <span class="plancmp-badge">{plan.badge}</span>}
+            <span class="plancmp-label">{plan.label}</span>
+            <h4>{plan.name}</h4>
+            <p>{plan.desc}</p>
+          </div>
+          {data.rows.map((row) => {
+            const cell = row.cells[colIndex];
+            return (
+              <div class="plancmp-cell" data-row={row.label}>
+                {cell.stars ? (
+                  <>
+                    <span class="plancmp-stars" aria-label={cell.stars}>
+                      {cell.stars}
+                    </span>
+                    {cell.footnote && <span class="plancmp-footnote">{cell.footnote}</span>}
+                  </>
+                ) : (
+                  <>
+                    {cell.strong && <strong>{cell.strong}</strong>}
+                    {cell.text}
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="plancmp-boxes">
+    {
+      data.boxes.map((box) => (
+        <div class="plancmp-box">
+          <h4>{box.title}</h4>
+          {box.steps && (
+            <div class="plancmp-steps">
+              {box.steps.map((step) => (
+                <span class="plancmp-step">{step}</span>
+              ))}
+            </div>
+          )}
+          {box.desc && <p>{box.desc}</p>}
+        </div>
+      ))
+    }
+  </div>
+</figure>
