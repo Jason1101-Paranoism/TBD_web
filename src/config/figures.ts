@@ -243,7 +243,11 @@ export interface PlanCompareData {
   lead: string;
   note: string;
   headLabel: string;
-  plans: Array<{ label: string; name: string; desc: string; badge?: string }>;
+  // 原圖的三欄標了 PLAN A / B / C，但 services.astro 同一頁的「怎麼開始合作」已經有
+  // 方案 A–D（備審健檢／備審重構／面試訓練／全程陪跑）。兩套不是同一個軸、也不互相取代
+  // ——面試三件套是強度分級，四方案是跨服務類型——但同頁出現兩組 A/B/C 會讓讀者誤以為
+  // 有對應關係。因此拿掉字母標籤，只留三個名稱（LR 2026-09-12 決定，未等 YY 回覆）。
+  plans: Array<{ name: string; desc: string; badge?: string }>;
   rows: Array<{
     label: string;
     cells: Array<{ strong?: string; text?: string; stars?: string; footnote?: string }>;
@@ -259,14 +263,13 @@ export const interviewPlans: PlanCompareData = {
   note: '本比較圖僅呈現服務內容與適合情境，不顯示價格資訊',
   headLabel: '比較項目',
   plans: [
-    { label: 'PLAN A', name: '基礎診斷方案', desc: '適合觀念建立與快速抓出個人優缺點。' },
+    { name: '基礎診斷方案', desc: '適合觀念建立與快速抓出個人優缺點。' },
     {
-      label: 'PLAN B',
       name: '實戰衝刺方案',
       desc: '適合需要擬真演練、修正表達邏輯與臨場應變。',
       badge: '熱門推薦',
     },
-    { label: 'PLAN C', name: '尊榮全套陪伴方案', desc: '適合高階、多校系或需要完整高強度指導。' },
+    { name: '尊榮全套陪伴方案', desc: '適合高階、多校系或需要完整高強度指導。' },
   ],
   rows: [
     {
