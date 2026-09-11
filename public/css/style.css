@@ -1431,3 +1431,42 @@ table.deliv-mini td b { color: var(--tbd-dark); }
 @media (max-width: 640px) {
   .plancmp-title { font-size: 22px; }
 }
+
+/* ── 答案先行的重點框（ArticleLayout / keyTakeaways，SEO 報告 A-06）──────
+   放在導言與內文之間。視覺上要明顯是「摘要」而不是內文的一部分，
+   但不能比 h1 搶眼——它的工作是讓答案先被看到（含被 AI 抽到），不是當標題。 */
+.article-takeaways-wrap { padding-top: 0; }
+.article-takeaways {
+  border: 1px solid var(--tbd-line);
+  border-left: 3px solid var(--tbd-accent);
+  border-radius: var(--tbd-radius-sm);
+  background: rgba(26, 93, 148, .04);
+  padding: 18px 22px;
+}
+.article-takeaways h2 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  color: var(--tbd-accent);
+}
+.article-takeaways ul { margin: 0; padding-left: 0; list-style: none; }
+.article-takeaways li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--tbd-dark);
+}
+.article-takeaways li:last-child { margin-bottom: 0; }
+.article-takeaways li::before {
+  content: '';
+  position: absolute; left: 3px; top: .72em;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--tbd-accent);
+}
+@media (max-width: 640px) {
+  .article-takeaways { padding: 16px 18px; }
+  .article-takeaways li { font-size: 14.5px; }
+}

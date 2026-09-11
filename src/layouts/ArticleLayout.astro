@@ -32,6 +32,7 @@ interface Props {
   tocItems: TocItem[];
   relatedArticles: RelatedArticle[];
   faqItems?: { q: string; a: string }[];
+  keyTakeaways?: string[];
   slug: string;
   seoTitle?: string;
   category?: string;
@@ -49,7 +50,7 @@ const {
   bodyClass = 'sub-page article-page',
   sidebarCtaText, sidebarCtaUtm,
   bottomCtaH2, bottomCtaUtm,
-  tocItems, relatedArticles, faqItems, howToSteps, slug, seoTitle, category, departmentGroup, gradStage, guideSlug,
+  tocItems, relatedArticles, faqItems, howToSteps, keyTakeaways, slug, seoTitle, category, departmentGroup, gradStage, guideSlug,
   publishDate, updatedDate, readingMinutes,
 } = Astro.props;
 
@@ -236,6 +237,19 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
     <p class="article-meta"><span>TBD Studio 編輯團隊</span><span aria-hidden="true">·</span><span>{updatedDate ? '更新於' : '發布於'} {metaDateLabel}</span>{readingMinutes && (<><span aria-hidden="true">·</span><span>閱讀約 {readingMinutes} 分鐘</span></>)}</p>
     <p class="lead">{lead}</p>
   </section>
+
+  {/* 答案先行的重點框（A-06）。放在導言之後、內文之前：本站導言多半是「誤區鉤子」，
+      人讀得懂那是反例，但 AI 摘要抽首段容易把反例當成結論。這個框讓答案先出現。 */}
+  {keyTakeaways && keyTakeaways.length > 0 && (
+    <section class="section article-takeaways-wrap">
+      <aside class="article-takeaways" aria-labelledby="takeaways-heading">
+        <h2 id="takeaways-heading">這篇的重點</h2>
+        <ul>
+          {keyTakeaways.map((t) => <li>{t}</li>)}
+        </ul>
+      </aside>
+    </section>
+  )}
 
   <main>
     <div class="article-layout">
