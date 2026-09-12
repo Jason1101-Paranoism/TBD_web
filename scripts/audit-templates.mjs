@@ -17,13 +17,136 @@
 //   B3（contact-email / portfolio-checklist / oral-checklist）＝ 2026-08-23 補審歸納，
 //      這三類從未進過任何一批審閱，規格是從各學群最完整的樣本反推的。
 
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { inflateRawSync } from 'node:zlib';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIR = join(ROOT, 'public/assets/templates');
 const STRICT = process.argv.includes('--strict');
+
+// ── 讀檔層：CSV 與 xlsx 都要看得懂 ─────────────────────────────────────────
+//
+// 為什麼：模板交付格式正在從 CSV 轉成活頁簿（YCC 2026-09-12）。本檔原本只掃
+// `grad-*.csv`，等最後一批 CSV 撤掉的那一刻，它會變成掃 0 個檔、然後回報「全部符合
+// 規格」——安靜地少驗一項，正是本檔開頭那段病史在講的事。所以在 CSV 還在的時候
+// 先把讀檔層換掉，規格規則一行都不動。
+//
+// 作法：把 xlsx 讀成「和 CSV 同一個形狀」的 lines（每列一個字串、欄以逗號相接），
+// 下游的欄數、規格比對與「到到」掃描因此完全不必知道來源是哪一種格式。
+
+/** 極簡 zip 讀取：xlsx 就是 zip，只需要取出幾個 XML，不值得為它加一個相依套件。 */
+function unzip(buf) {
+  const files = new Map();
+  // 從 End of Central Directory 往回找中央目錄，再逐筆讀 local header 取資料。
+  let eocd = buf.length - 22;
+  while (eocd >= 0 && buf.readUInt32LE(eocd) !== 0x06054b50) eocd--;
+  if (eocd < 0) return files;
+  const count = buf.readUInt16LE(eocd + 10);
+  let p = buf.readUInt32LE(eocd + 16);
+  for (let i = 0; i < count; i++) {
+    if (buf.readUInt32LE(p) !== 0x02014b50) break;
+    const method = buf.readUInt16LE(p + 10);
+    const size = buf.readUInt32LE(p + 24);
+    const nameLen = buf.readUInt16LE(p + 28);
+    const extraLen = buf.readUInt16LE(p + 30);
+    const commentLen = buf.readUInt16LE(p + 32);
+    const localOff = buf.readUInt32LE(p + 42);
+    const name = buf.toString('utf8', p + 46, p + 46 + nameLen);
+    const lNameLen = buf.readUInt16LE(localOff + 26);
+    const lExtraLen = buf.readUInt16LE(localOff + 28);
+    const start = localOff + 30 + lNameLen + lExtraLen;
+    const raw = buf.subarray(start, start + size);
+    files.set(name, method === 0 ? raw : inflateRawSync(raw));
+    p += 46 + nameLen + extraLen + commentLen;
+  }
+  return files;
+}
+
+const unescapeXml = (s) =>
+  s.replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'").replace(/&amp;/g, '&');
+
+const stripTags = (s) => unescapeXml(s.replace(/<[^>]+>/g, ''));
+
+/**
+ * 把 xlsx 讀成 CSV 形狀的 lines。
+ * 多個分頁直接接續（說明頁在前、工具本體在後），與規格規則「整份文件裡找得到某個區塊」
+ * 的判斷方式一致；`使用說明第 2 行` 因此看到的是第一個分頁的第二列，與 CSV 版同義。
+ */
+function xlsxLines(file) {
+  const z = unzip(readFileSync(file));
+  const wb = z.get('xl/workbook.xml')?.toString('utf8') ?? '';
+  const rels = z.get('xl/_rels/workbook.xml.rels')?.toString('utf8') ?? '';
+  // 屬性順序不能假設：openpyxl 寫的是 Id 在前，這批活頁簿寫的是 Type→Target→Id。
+  // 照順序寫死的 regex 會取不到任何分頁，然後整份被讀成 0 列——看起來像規格全缺。
+  const relMap = new Map(
+    [...rels.matchAll(/<Relationship\b([^>]*)\/?>/g)].map((m) => {
+      const id = /\bId="([^"]+)"/.exec(m[1])?.[1];
+      const target = /\bTarget="([^"]+)"/.exec(m[1])?.[1];
+      return [id, target?.replace(/^\/?xl\//, '')];
+    }).filter(([id, t]) => id && t)
+  );
+  // sharedStrings 與 inlineStr 兩種寫法都要支援：openpyxl 產的是前者，Numbers／
+  // 其他工具匯出的常是後者，而這兩種來源在這個專案裡都實際出現過。
+  const shared = [...(z.get('xl/sharedStrings.xml')?.toString('utf8') ?? '')
+    .matchAll(/<si>([\s\S]*?)<\/si>/g)].map((m) => stripTags(m[1]));
+
+  const sheetRefs = [...wb.matchAll(/<sheet [^>]*r:id="([^"]+)"/g)].map((m) => m[1]);
+  const targets = sheetRefs.length
+    ? sheetRefs.map((id) => relMap.get(id)).filter(Boolean)
+    : [...z.keys()].filter((k) => /^xl\/worksheets\/sheet\d+\.xml$/.test(k)).sort()
+        .map((k) => k.replace(/^xl\//, ''));
+
+  const lines = [];
+  for (const t of targets) {
+    const xml = z.get(`xl/${t}`)?.toString('utf8');
+    if (!xml) continue;
+    for (const row of xml.matchAll(/<row[^>]*>([\s\S]*?)<\/row>/g)) {
+      const cells = [];
+      for (const c of row[1].matchAll(/<c\b([^>]*)(?:\/>|>([\s\S]*?)<\/c>)/g)) {
+        const attrs = c[1], body = c[2] ?? '';
+        if (/t="s"/.test(attrs)) {
+          const idx = Number(stripTags(body));
+          cells.push(shared[idx] ?? '');
+        } else if (/t="(inlineStr|str)"/.test(attrs)) {
+          cells.push(stripTags(body));
+        } else {
+          cells.push(stripTags(body));
+        }
+      }
+      lines.push(cells.join(','));
+    }
+  }
+  return lines;
+}
+
+/**
+ * 一份模板的內容，不論它以哪種格式交付。
+ * CSV 優先：它還在的時候行為與改版前完全一致，轉成活頁簿的那幾份才走 xlsx 這條路。
+ */
+function readTemplate(slug) {
+  const csv = join(DIR, `${slug}.csv`);
+  if (existsSync(csv)) {
+    const buf = readFileSync(csv);
+    const text = buf.toString('utf8').replace(/^\uFEFF/, '');
+    return {
+      format: 'csv',
+      bom: buf[0] === 0xef && buf[1] === 0xbb && buf[2] === 0xbf,
+      lines: text.split(/\r?\n/),
+    };
+  }
+  const xlsx = join(DIR, `${slug}.xlsx`);
+  if (existsSync(xlsx)) {
+    // BOM 是 CSV 專屬的問題（Excel 開中文 CSV 會亂碼），活頁簿沒有這回事，
+    // 所以標成 null 表示「不適用」，而不是假裝它通過了。
+    return { format: 'xlsx', bom: null, lines: xlsxLines(xlsx) };
+  }
+  return null;
+}
 
 const has = (t, ...xs) => xs.some((x) => t.includes(x));
 const hasRe = (t, re) => re.test(t);
@@ -94,30 +217,34 @@ const RULES = {
   ],
 };
 
-const files = readdirSync(DIR).filter((f) => f.startsWith('grad-') && f.endsWith('.csv')).sort();
+// 掃描對象取自 manifest 而不是磁碟上的 *.csv：格式會變，清單不該跟著格式縮水。
+// 一份模板在 manifest 上、磁碟卻兩種格式都沒有，是要紅的事，不是少列一行而已。
+const manifestSlugs = JSON.parse(readFileSync(join(ROOT, 'scripts/template-manifest.json'), 'utf8'))
+  .templates.filter((t) => t.delivery === 'file').map((t) => t.slug);
+const gradSlugs = manifestSlugs.filter((s) => s.startsWith('grad-')).sort();
 const results = [];
+const unreadable = [];
 
-for (const f of files) {
-  const buf = readFileSync(join(DIR, f));
-  const bom = buf[0] === 0xef && buf[1] === 0xbb && buf[2] === 0xbf;
-  const text = buf.toString('utf8').replace(/^\uFEFF/, '');
-  const lines = text.split(/\r?\n/);
+for (const slug of gradSlugs) {
+  const doc = readTemplate(slug);
+  if (!doc) { unreadable.push(slug); continue; }
+  const { format, bom, lines } = doc;
+  const text = lines.join('\n');
   const cols = Math.max(...lines.map((x) => x.split(',').length));
-  const base = f.slice(0, -4);
-  const parts = base.split('-');
+  const parts = slug.split('-');
   const group = parts[1];
   const type = parts.slice(2).join('-');
   const specKey = SPECS[type];
   const missing = specKey
     ? RULES[specKey].filter(([, fn]) => !fn(text, lines)).map(([n]) => n)
     : [];
-  results.push({ group, type, specKey, lines: lines.length, cols, bom, missing });
+  results.push({ group, type, specKey, format, lines: lines.length, cols, bom, missing });
 }
 
 const pad = (s, n) => String(s) + ' '.repeat(Math.max(0, n - [...String(s)].reduce((a, c) => a + (c.charCodeAt(0) > 127 ? 2 : 1), 0)));
 
 console.log('\n── 模板規格稽核 ──');
-console.log(`${pad('學群', 14)}${pad('類型', 24)}${pad('規格', 16)}行   欄  問題`);
+console.log(`${pad('學群', 14)}${pad('類型', 24)}${pad('規格', 16)}${pad('格式', 8)}行   欄  問題`);
 console.log('-'.repeat(110));
 let bad = 0;
 for (const r of results) {
@@ -126,11 +253,12 @@ for (const r of results) {
   // （時間／做了什麼／用到什麼能力／與研究方向的關聯／可查證的產出／放哪份文件），
   // 壓成 6 欄會刪掉一整欄內容——規格的用意是統一下限，不是砍內容。
   if (r.cols < 6) issues.push(`欄數 ${r.cols}`);
-  if (!r.bom) issues.push('無 BOM');
+  // bom 為 null 代表不適用（活頁簿沒有 BOM 這回事），只有 CSV 缺 BOM 才算問題。
+  if (r.bom === false) issues.push('無 BOM');
   issues.push(...r.missing);
   if (issues.length) bad++;
   console.log(
-    `${pad(r.group, 14)}${pad(r.type, 24)}${pad(r.specKey ?? '—', 16)}${pad(r.lines, 5)}${pad(r.cols, 4)}` +
+    `${pad(r.group, 14)}${pad(r.type, 24)}${pad(r.specKey ?? '—', 16)}${pad(r.format, 8)}${pad(r.lines, 5)}${pad(r.cols, 4)}` +
     (issues.length ? issues.join('、') : '✓')
   );
 }
@@ -142,14 +270,16 @@ for (const r of results) {
 //（高中生找方向那批），漏掃等於留半個洞。
 // 病史：8/23 審 Batch 2 只修掉 proposal-framework 一份就收工，另三份 8/29 才被掃出來，
 // 9/4 複查發現修正指令根本沒生效、仍在站上。「修得掉但只修一個檔」要靠閘門，不是靠記得。
-const allCsv = readdirSync(DIR).filter((f) => f.endsWith('.csv')).sort();
 const leaks = [];
-for (const f of allCsv) {
-  const ls = readFileSync(join(DIR, f), 'utf8').replace(/^\uFEFF/, '').split(/\r?\n/);
-  const hits = ls.map((x, i) => (x.includes('到到') ? i + 1 : 0)).filter(Boolean);
-  if (hits.length) leaks.push(`${f}：行 ${hits.join('、')}`);
+let scanned = 0;
+for (const slug of manifestSlugs) {
+  const doc = readTemplate(slug);
+  if (!doc) continue;
+  scanned++;
+  const hits = doc.lines.map((x, i) => (x.includes('到到') ? i + 1 : 0)).filter(Boolean);
+  if (hits.length) leaks.push(`${slug}.${doc.format}：行 ${hits.join('、')}`);
 }
-console.log(`\n── 轉檔殘留掃描（${allCsv.length} 份 CSV）──`);
+console.log(`\n── 轉檔殘留掃描（${scanned} 份，CSV 與 xlsx 都掃）──`);
 if (leaks.length) {
   console.log('❌ 破折號被轉成「到到」，應為 ——：');
   for (const l of leaks) console.log(`   ✗ ${l}`);
@@ -157,9 +287,16 @@ if (leaks.length) {
   console.log('✅ 零命中');
 }
 
+// 在 manifest 上、磁碟卻兩種格式都沒有：這份模板等於不存在，但頁面仍會連向它。
+// 舊版是掃磁碟，這種情況只會讓表格少一列——正是本檔要擋的「安靜地少驗一項」。
+if (unreadable.length) {
+  console.log(`\n❌ 這幾份在 manifest 上，磁碟卻沒有 .csv 也沒有 .xlsx：${unreadable.join('、')}`);
+}
+
 const verdict = [
   bad ? `❌ 規格 ${bad}/${results.length} 份有缺漏` : null,
+  unreadable.length ? `❌ ${unreadable.length} 份讀不到` : null,
   leaks.length ? `❌ 轉檔殘留 ${leaks.length} 份` : null,
 ].filter(Boolean).join('；') || '✅ 全部符合規格';
 console.log(`\n結論：${verdict}`);
-if ((bad || leaks.length) && STRICT) process.exit(1);
+if ((bad || leaks.length || unreadable.length) && STRICT) process.exit(1);
