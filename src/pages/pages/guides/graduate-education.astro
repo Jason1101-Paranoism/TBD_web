@@ -138,8 +138,8 @@ const schema = {
           <h3>{t.title}</h3>
           <p class="card-desc">{t.desc}</p>
           <div class="button-row" style="margin-top: 16px;">
-            <a class="button" href={t.md} download data-track-event="download_resource">Notion / Markdown</a>
-            <a class="button secondary" href={t.csv} download data-track-event="download_resource">CSV 試算表</a>
+            {t.md && <a class="button" href={t.md} download data-track-event="download_resource">Notion / Markdown</a>}
+            {t.csv && <a class="button secondary" href={t.csv} download data-track-event="download_resource">CSV 試算表</a>}
             {t.xlsx && (
               <a class="button secondary" href={t.xlsx} download data-track-event="download_resource">Excel 活頁簿</a>
             )}

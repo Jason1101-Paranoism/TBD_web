@@ -119,6 +119,13 @@ export interface GradTemplate {
    * 所以這一類另外發 xlsx。verify.mjs 會檢查標了 true 的檔案真的存在。
    */
   xlsx?: true;
+  /**
+   * 只發 xlsx，不發 .md／.csv（磁碟上也不該有那兩個檔）。
+   * 審閱回路自 2026-09-12 起改以活頁簿交件（CSV 原始檔不可用，YCC），
+   * 若仍照舊渲染 CSV／Markdown 按鈕，使用者會下載到再也不會更新的舊版內容。
+   * 宣告成 xlsxOnly 的那筆，verify.mjs 會反過來要求 .md／.csv 確實不存在。
+   */
+  xlsxOnly?: true;
   /** 使用說明所在的文章 */
   article: string;
 }
@@ -211,6 +218,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         desc: '簡報、數據答辯、追問應對與行政準備，上場前的完整檢核。',
         file: 'grad-engineering-oral-checklist',
         xlsx: true,
+        xlsxOnly: true,
         article: '/pages/resources/engineering-graduate-oral.html',
       },
     ],
@@ -250,6 +258,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         desc: '三分鐘說明、四類追問、面對不會的問題與研究誠信，上場前的完整檢核。',
         file: 'grad-biomed-oral-checklist',
         xlsx: true,
+        xlsxOnly: true,
         article: '/pages/resources/biomed-graduate-oral.html',
       },
     ],
@@ -289,6 +298,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         desc: '一分鐘說明、四類題型、個案與時事兩個答題框架、面對不會的問題五步，上場前完整檢核。',
         file: 'grad-business-oral-checklist',
         xlsx: true,
+        xlsxOnly: true,
         article: '/pages/resources/business-graduate-oral.html',
       },
     ],
@@ -490,8 +500,8 @@ export function templateLinks(t: GradTemplate) {
   return {
     title: t.title,
     desc: t.desc,
-    md: `/assets/templates/${t.file}.md`,
-    csv: `/assets/templates/${t.file}.csv`,
+    md: t.xlsxOnly ? undefined : `/assets/templates/${t.file}.md`,
+    csv: t.xlsxOnly ? undefined : `/assets/templates/${t.file}.csv`,
     xlsx: t.xlsx ? `/assets/templates/${t.file}.xlsx` : undefined,
     article: t.article,
   };

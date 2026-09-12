@@ -153,13 +153,18 @@ function templateManifest() {
  *
  * `file` 交付的用 `<slug>.md`（下載連結）；`external` 交付的用它的 url——
  * 模板改成 Google Sheets／Notion 之後磁碟上不會有檔案，但它仍必須在下載頁上找得到。
+ * `xlsxOnly` 的那幾份沒有 `.md`，斷言改看 `.xlsx`：這裡要的是「這份工具在下載頁上找得到」，
+ * 不是「它以哪一種格式交付」，換格式不該讓它從這道清單裡消失。
  */
 function templateLinkFragments() {
   // TARGETS 在模組載入時就求值，早於 main 的 checkTemplateManifest()。manifest 壞掉時
   // 這裡回空陣列讓載入不中斷，由 checkTemplateManifest() 印出可讀的原因並中止——
   // 不是靜默降級：那條路徑保證會 exit(1)。
   try {
-    return templateManifest().map((t) => (t.delivery === 'external' ? t.url : `${t.slug}.md`));
+    return templateManifest().map((t) => {
+      if (t.delivery === 'external') return t.url;
+      return t.xlsxOnly === true ? `${t.slug}.xlsx` : `${t.slug}.md`;
+    });
   } catch {
     return [];
   }
@@ -207,10 +212,23 @@ function checkTemplateManifest() {
     if (!t.slug) { problems.push(`manifest 有一筆缺 slug：${JSON.stringify(t)}`); continue; }
     if (t.delivery === 'file') {
       declaredAsFile.add(t.slug);
-      if (!onDisk.has(t.slug)) {
+      if (t.xlsxOnly === true) {
+        // 只發活頁簿的那一類：.md／.csv 必須確實不在磁碟上。
+        // 反過來要求「不存在」是刻意的——留著一份不再更新的舊 CSV 比沒有更糟，
+        // 使用者下載到的是同一個工具的另一個版本，而頁面上看不出哪一個才是現行的。
+        for (const ext of ['md', 'csv']) {
+          if (existsSync(join(process.cwd(), 'public', 'assets', 'templates', `${t.slug}.${ext}`))) {
+            problems.push(
+              `manifest 宣告 \`${t.slug}\` 是 xlsxOnly，但 public/assets/templates/${t.slug}.${ext} 還在。` +
+              `（要恢復發 ${ext} 就把 xlsxOnly 拿掉，不要讓兩種交付形式同時存在）`
+            );
+          }
+        }
+      } else if (!onDisk.has(t.slug)) {
         problems.push(
           `manifest 宣告 \`${t.slug}\` 是 file 交付，但 public/assets/templates/${t.slug}.md 不存在。` +
-          `（若它已改成 Sheets／Notion，請把該筆改成 delivery: "external" 並填 url，不要只刪檔案）`
+          `（若它已改成 Sheets／Notion，請把該筆改成 delivery: "external" 並填 url，不要只刪檔案；` +
+          `若改成只發活頁簿，請加 "xlsxOnly": true）`
         );
       }
     } else if (t.delivery === 'external') {
@@ -279,6 +297,23 @@ function checkTemplateManifest() {
       .filter((f) => f.endsWith('.html'))
       .map((f) => readFileSync(f, 'utf8'))
       .join('\n');
+    // xlsxOnly 的那幾份，頁面上不該還留著指向 .md／.csv 的按鈕或內文連結。
+    // 磁碟上的檔案已經刪了，這種連結是 404——而 check-links.mjs 只查站內頁面，
+    // 不查 /assets/ 下的下載檔，所以它不會幫你擋這一條。
+    for (const t of entries.filter((t) => t.xlsxOnly === true)) {
+      if (t.xlsx !== true) {
+        problems.push(`manifest 的 \`${t.slug}\` 宣告了 xlsxOnly 卻沒有 "xlsx": true——那就一種格式都不發了。`);
+      }
+      for (const ext of ['md', 'csv']) {
+        if (distHtml.includes(`${t.slug}.${ext}`)) {
+          problems.push(
+            `\`${t.slug}\` 是 xlsxOnly，但 dist/ 裡還有指向 ${t.slug}.${ext} 的連結——` +
+            `檔案已不存在，點下去是 404。渲染處請改成 {t.md && …}／{t.csv && …}，` +
+            `文章內文的手寫連結也要一併改指 .xlsx。`
+          );
+        }
+      }
+    }
     for (const slug of xlsxDeclared) {
       if (!distHtml.includes(`${slug}.xlsx`)) {
         problems.push(
