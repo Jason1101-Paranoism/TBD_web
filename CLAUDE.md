@@ -190,6 +190,8 @@ relatedArticles:
 3. 在 `gradTemplates.ts` 對應的學群 group 裡登記（`title` / `desc` / `file` / `article`）
 4. `npm run verify`
 
+**另外發 xlsx 活頁簿時**：`.xlsx` 放進同一個目錄後，`template-manifest.json` 與 `gradTemplates.ts` **兩邊都要加 `xlsx: true`**。前者是閘門的事實來源，後者才是渲染下載連結的依據——只加前者時 build 與 verify 曾經全綠，但 `tools.html` 與指南頁一個 xlsx 連結都沒有（2026-09-12，B3 口試檢核）。現在 `verify.mjs` 會對 `dist/` 反查有沒有頁面連得到它。
+
 第 2、3 步漏掉任一步，verify 都會直接失敗。事實來源是 `template-manifest.json`，並與**磁碟上的實體檔**雙向校驗——設定檔（`gradTemplates.ts`）不能兼任事實來源，兩邊都從同一份設定推導的話等於自己驗自己。
 
 **模板要改成 Google Sheets／Docs／Notion 時**：把 manifest 那筆改成 `delivery: "external"` 並填 `url`，不要只刪掉磁碟上的檔案。只刪檔會讓這道閘門安靜地少驗一項，而那正是它要擋的事（理由見 `docs/DECISIONS.md` 的 D-008）。

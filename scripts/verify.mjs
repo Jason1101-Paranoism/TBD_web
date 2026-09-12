@@ -165,6 +165,16 @@ function templateLinkFragments() {
   }
 }
 
+const DIST_DIR = 'dist';
+
+/** 遞迴列出 dist/ 下的所有檔案（作法與 check-links.mjs 一致）。 */
+function walkDist(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+    const p = join(dir, e.name);
+    return e.isDirectory() ? walkDist(p) : [p];
+  });
+}
+
 /**
  * manifest 與磁碟互相校驗。回傳問題清單（空陣列＝通過）。
  *
@@ -248,6 +258,34 @@ function checkTemplateManifest() {
         `public/assets/templates/${slug}.xlsx 存在，但 manifest 那筆沒有 "xlsx": true——` +
         `檔案進了 repo 卻沒有任何頁面連得到它。`
       );
+    }
+  }
+
+  // 第三個方向：manifest 說有、磁碟也有，但**沒有任何頁面連得到它**。
+  //
+  // 上面兩條都只在 manifest 與磁碟之間對帳，而渲染下載連結的其實是第三份設定
+  // （grad 系列是 src/config/gradTemplates.ts 的 `xlsx: true`，其餘在 tools.astro）。
+  // 2026-09-12 上 B3 口試檢核那三份時只登記了 manifest：檔案在、manifest 對、
+  // build 與 verify 全綠，但 tools.html 與指南頁一個 xlsx 連結都沒有——
+  // 少的那一項不會讓任何東西壞掉，只會讓做出來的東西沒人拿得到。這正是 D-003
+  // 要擋的事故形狀，只是換到了 xlsx 這條路上。
+  //
+  // 事實來源刻意選 dist 而不是去解析 TS：要判斷「頁面上有沒有這個連結」，
+  // 查 build 產物才算數，設定檔只能證明「不是忘了寫」。
+  if (!existsSync(DIST_DIR)) {
+    problems.push(`找不到 ${DIST_DIR}/——xlsx 的下載連結要對 build 產物驗，請先 npm run build。`);
+  } else {
+    const distHtml = walkDist(DIST_DIR)
+      .filter((f) => f.endsWith('.html'))
+      .map((f) => readFileSync(f, 'utf8'))
+      .join('\n');
+    for (const slug of xlsxDeclared) {
+      if (!distHtml.includes(`${slug}.xlsx`)) {
+        problems.push(
+          `\`${slug}.xlsx\` 在 manifest 與磁碟上都有，但 dist/ 裡沒有任何一頁連到它——` +
+          `多半是漏了 src/config/gradTemplates.ts 那筆的 \`xlsx: true\`（tools.astro 與指南頁都從它渲染）。`
+        );
+      }
     }
   }
 
