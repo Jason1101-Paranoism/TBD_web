@@ -84,8 +84,10 @@ const siteSchema = {
   {/* Tailwind 由 npm run css 在建置期編成 /css/tailwind.css，不再用 Play CDN——
       那是同步 render-blocking 腳本、樣式要等 JS 跑完才生得出來（SEO 報告 S-03）。
       設定在 tailwind.config.mjs，preflight 必須保留，全站預設樣式建立在它之上。
-      這裡用 {/* */} 而不是 HTML 註解：Astro 的 <!-- --> 會原樣輸出，
-      而註解裡若出現 CDN 的網域字串，SEO 掃描器會誤判成這頁還在載 CDN。 */}
+      這裡刻意用 JSX 註解而不是 HTML 註解：後者會原樣輸出到頁面，
+      而註解裡若出現 CDN 的網域字串，SEO 掃描器會誤判成這頁還在載 CDN。
+      注意 JSX 註解不能巢狀，內文也不要出現註解結束符號，否則會提前關閉、
+      後面整段變成頁面上看得見的文字（2026-09-12 就是這樣全站漏字的）。 */}
   <link rel="stylesheet" href="/css/tailwind.css">
   <link rel="stylesheet" href="/css/style.css">
   <script is:inline>document.documentElement.classList.add('js-reveal');</script>

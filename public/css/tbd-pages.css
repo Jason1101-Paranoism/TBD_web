@@ -1173,7 +1173,9 @@ table.deliv-mini td b { color: var(--tbd-dark); }
 /* ── 答案先行的重點框（ArticleLayout / keyTakeaways，SEO 報告 A-06）──────
    放在導言與內文之間。視覺上要明顯是「摘要」而不是內文的一部分，
    但不能比 h1 搶眼——它的工作是讓答案先被看到（含被 AI 抽到），不是當標題。 */
-.article-takeaways-wrap { padding-top: 0; }
+/* 重點框現在直接放在 main 內（容器寬度由 .sub-page main 提供），
+   與下方 .article-layout 之間留一段間距。 */
+.article-takeaways { margin-bottom: 2rem; }
 .article-takeaways {
   border: 1px solid var(--tbd-line);
   border-left: 3px solid var(--tbd-accent);
