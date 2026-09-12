@@ -69,7 +69,8 @@
     },
     {
       "slug": "grad-biomed-oral-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-biomed-portfolio-checklist",
@@ -86,7 +87,8 @@
     },
     {
       "slug": "grad-business-oral-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-business-portfolio-checklist",
@@ -153,7 +155,8 @@
     },
     {
       "slug": "grad-engineering-oral-checklist",
-      "delivery": "file"
+      "delivery": "file",
+      "xlsx": true
     },
     {
       "slug": "grad-engineering-portfolio-checklist",
