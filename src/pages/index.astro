@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ConsultCompare from '../components/ConsultCompare.astro';
 ---
 
 <BaseLayout title="升學申請策略顧問：讓選擇變清楚、路徑可驗收" description="TBD Studio 是台灣專注升學申請策略的教育顧問，協助高中生與研究所學生完成方向判斷、備審重構、學習歷程整理與面試訓練。每一步準備都可追蹤、可驗收。" bodyClass="home-page">
@@ -35,11 +36,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
           <!-- CTA: single high-contrast primary action -->
           <div class="pt-2">
-            <a href="#contact"
+            <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=home-hero"
+               target="_blank"
+               rel="noopener noreferrer"
+               data-track-event="click_consultation_cta"
+               data-ga-event="click_line_home_hero"
                class="inline-flex items-center justify-center bg-tbd-accent text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-bold hover:opacity-90 transition shadow-soft">
-              預約策略諮詢 →
+              預約免費諮詢 →
             </a>
-            <p class="mt-4 text-[15px] font-semibold text-[#374151]">NT$3,500 策略諮詢，正式合作可全額折抵。<a href="#contact" class="underline underline-offset-2 hover:text-tbd-accent">看費用與內容 →</a></p>
+            <p class="mt-4 text-[15px] font-semibold text-[#374151]">先免費聊聊你的狀況；需要完整評估報告，再預約 NT$3,500 策略諮詢。<a href="#contact" class="underline underline-offset-2 hover:text-tbd-accent">看費用與內容 →</a></p>
           </div>
         </div>
 
@@ -378,7 +383,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </svg>
           </div>
           <h3 class="text-lg font-bold text-tbd-dark mb-2">申請策略診斷報告</h3>
-          <p class="text-tbd-mid text-sm leading-relaxed">初談後產出一份文件，說明你目前的競爭力定位、最適合的升學管道、以及建議的準備優先順序。是整個申請系統的起點。</p>
+          <p class="text-tbd-mid text-sm leading-relaxed">策略諮詢後產出一份文件，說明你目前的競爭力定位、最適合的升學管道、以及建議的準備優先順序。是整個申請系統的起點。</p>
         </div>
 
         <div class="deliverable-card bg-white rounded-xl border border-tbd-light/80 hover-lift">
@@ -598,8 +603,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-tbd-dark">開始設計你的升學路徑</h2>
       <p class="text-base sm:text-lg text-tbd-mid mb-6 sm:mb-8">
         我們相信，信任建立在透明的評估之上。<br>
-        預約一次 60 分鐘的升學策略諮詢，獲得一份客觀的策略建議報告。
+        預約一次 60 分鐘的升學策略諮詢，獲得一份客觀的策略建議報告。<br>
+        還不確定是否需要完整諮詢？可以先<a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=home-contact-intro" target="_blank" rel="noopener noreferrer" data-track-event="click_consultation_cta" data-ga-event="click_line_home_contact_intro" class="font-semibold text-tbd-accent underline underline-offset-2">預約免費諮詢</a>。
       </p>
+
+      <div class="max-w-2xl mx-auto mb-8 text-left"><ConsultCompare /></div>
 
       <div data-reveal class="bg-white p-6 sm:p-8 rounded-2xl shadow-soft inline-block text-left max-w-md w-full border border-tbd-light/80">
         <div class="flex items-start justify-between gap-4">
@@ -641,11 +649,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=home-contact"
             target="_blank"
             rel="noopener noreferrer"
+            data-track-event="click_strategy_consultation_cta"
             data-ga-event="click_line_home_pricing"
             class="w-full inline-flex items-center justify-center bg-tbd-accent text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition shadow-soft">
 
             預約策略諮詢 →
 
+          </a>
+          <a href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=home-pricing-free"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-track-event="click_consultation_cta"
+            data-ga-event="click_line_home_pricing_free"
+            class="mt-3 inline-block text-sm text-tbd-mid hover:text-tbd-dark hover:underline underline-offset-2">
+            還不確定？先預約免費諮詢
           </a>
         </div>
     </div>

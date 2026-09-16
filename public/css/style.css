@@ -1473,3 +1473,9 @@ table.deliv-mini td b { color: var(--tbd-dark); }
   .article-takeaways { padding: 16px 18px; }
   .article-takeaways li { font-size: 14.5px; }
 }
+
+/* 免費諮詢 vs 策略諮詢對照（ConsultCompare.astro）：只有三欄短文字，不需要全站表格的 760px 下限與橫向捲動 */
+.consult-compare { min-width: 0; table-layout: fixed; }
+.consult-compare th[scope="row"] { width: 22%; background: transparent; white-space: nowrap; }
+.consult-compare td, .consult-compare th { padding: 12px 14px; font-size: 15px; line-height: 1.6; }
+@media (max-width: 480px) { .consult-compare td, .consult-compare th { padding: 10px 8px; font-size: 14px; } .consult-compare th[scope="row"] { width: 18%; white-space: normal; } }

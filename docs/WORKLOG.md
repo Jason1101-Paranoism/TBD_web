@@ -6,6 +6,51 @@
 
 ---
 
+## #047｜2026-09-16｜免費諮詢／策略諮詢加對照表，清掉免費諮詢越界的描述（D-020 補充）
+
+**問題**：#046 把 CTA 全改成免費諮詢後，站上沒有一處並排說明兩者差異；
+LR 指出免費諮詢與策略諮詢重點不同（後者要看學生資料、有回饋文件與後續方案建議）。
+逐條檢查所有「免費諮詢」段落，發現 12 處把看資料、判斷文件內容的工作寫在免費諮詢底下。
+
+**改了什麼（可觀察）**：
+- 新增 `ConsultCompare.astro` 對照表（適合／做什麼／你會拿到／費用），放在服務頁 #pricing、FAQ「諮詢與費用」、首頁價格卡上方
+- 流程頁策略諮詢格：標「付費」、寫明依事先提供的學生資料，交付物加「建議的後續方案」
+- FAQ 策略諮詢答案（頁面＋JSON-LD）改成事先看資料、交付回饋文件與後續方案
+- 越界修正 12 處：`resourceCategories.ts` 4 段（備審製作、材料累積、各科系、工具）、5 篇文章 `bottomCtaP`、parents-guide、interview-training 底部、CJM 兩張旅程圖「初步對談／初步了解」階段的接觸點由「線上免費諮詢」改「策略諮詢」（該階段有前置表單與資料上傳），「免費諮詢」移到「初次接觸」
+
+**驗證**：build 176 頁；verify 40/40；headless Chrome 500px 寬截 FAQ 與首頁 contact 區，對照表三欄不需橫向捲動、價格卡與文字連結無跑版。
+（375px 截圖右側被裁是 headless 視窗最小寬度造成的，不是頁面問題。）
+
+**下一步**：LR 確認文案語氣 → push `feat/free-consultation-cta` 開 PR → 合併後打正式站驗收。
+
+---
+
+## #046｜2026-09-16｜全站主 CTA 改為「免費諮詢」，付費「策略諮詢」與之切開（D-020）
+
+**問題**：免費諮詢已推出，但全站 CTA 都是「預約策略諮詢」，而且「初談」在站上等同 NT$3,500 付費諮詢
+（`services/*.astro`「初談費 NT$3,500」、FAQ「預約初談之後會得到什麼？」答 60 分鐘付費）。
+外部 CRO 報告建議改主 CTA，但只談按鈕，沒看到按鈕上方的段落在承諾付費交付物。
+
+**改了什麼（可觀察）**：
+- Nav（桌面／手機／選單）、36 個頁面按鈕、2 份靜態 HTML（portfolio-guide、grad-path-quiz）的 nav 與 CTA：「預約策略諮詢」→「預約免費諮詢」
+- 首頁 hero 按鈕原本跳 `#contact`，改直連 LINE（`utm_campaign=home-hero`）；下方說明改成先免費、要報告再付費
+- 首頁價格卡：付費按鈕保留並標 `click_strategy_consultation_cta`；段落下加「可以先預約免費諮詢」連結、按鈕下加灰色「還不確定？先預約免費諮詢」
+- CTA 段落改寫：`resourceCategories.ts` 9 段、6 篇文章 `bottomCtaP`、ArticleLayout fallback、16 份 guide、services／cases／about／process／resources／library；免費諮詢不承諾報告
+- FAQ：拆成「免費諮詢會做什麼？」與「策略諮詢會得到什麼？和免費諮詢差在哪？」，JSON-LD 同步
+- 「初談」全站清空（案例頁歷史敘述改「策略諮詢」、CJM 接觸點改「線上免費諮詢」）；唯一保留 `parent-consult-decision.mdx`，那篇講的是業界通用的「初談」，不是 TBD 的服務
+- CLAUDE.md 事件表加 `click_strategy_consultation_cta`、補用語規則；main.js 註解同步
+
+**驗證**：`npm run build` 176 頁通過；`npm run verify` 40/40；
+dist 中 grep「初談」只剩 parent-consult-decision；「策略諮詢」按鈕只剩首頁價格卡一顆；
+新加的 Tailwind class（`hover:text-tbd-dark`、`hover:underline` 等）確認有編進 `tailwind.css`。
+**未做**：375／1280 人工目視（首頁價格卡新增兩個連結是最可能跑版的位置）。
+
+**風險與待確認**：免費諮詢時長未寫進文案（D-020 未定項）；GA 比較前後要切在 2026-09-16。
+
+**下一步**：見 #047。
+
+---
+
 ## #045｜2026-09-12｜SEO 進度報告 v3–v13 合併成單一 v3，版號規則補上例外（D-019）
 
 **問題**：`build-seo-progress.mjs` 的規則是「每跑一次遞增版號，舊檔保留不覆寫」。

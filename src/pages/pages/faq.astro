@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConsultCompare from '../../components/ConsultCompare.astro';
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -28,17 +29,22 @@ const faqSchema = {
     {
       "@type": "Question",
       "name": "離申請截止日只剩一個月，還有機會嗎？",
-      "acceptedAnswer": { "@type": "Answer", "text": "要看目前的材料狀況。如果已經有初稿，一個月夠做備審健檢和面試準備；如果完全沒有任何材料，一個月非常緊，需要在初談時評估可行性和優先順序。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "要看目前的材料狀況。如果已經有初稿，一個月夠做備審健檢和面試準備；如果完全沒有任何材料，一個月非常緊，需要在諮詢時評估可行性和優先順序。" }
     },
     {
       "@type": "Question",
-      "name": "預約初談之後會得到什麼？",
-      "acceptedAnswer": { "@type": "Answer", "text": "一次 60 分鐘的策略諮詢，TBD 會了解你的升學管道、目前的準備狀況、以及最需要補強的環節，然後產出一份申請策略建議報告——包含競爭力初步定位、建議的準備方向和優先順序。這份報告是你的，不管後續有沒有繼續合作都帶得走。" }
+      "name": "免費諮詢會做什麼？",
+      "acceptedAnswer": { "@type": "Answer", "text": "透過 LINE 預約，TBD 會先了解你的年級、升學管道與目前卡住的地方，說明 TBD 能怎麼幫上忙、適合從哪個環節開始。免費諮詢不收費，也不需要先決定要不要合作。" }
+    },
+    {
+      "@type": "Question",
+      "name": "策略諮詢會得到什麼？和免費諮詢差在哪？",
+      "acceptedAnswer": { "@type": "Answer", "text": "策略諮詢是付費的 60 分鐘深度評估。TBD 會先看過事先提供的學生資料，在談話中盤點升學管道、準備狀況與最需要補強的環節，之後交付回饋文件（策略建議報告）——包含競爭力初步定位、建議的準備方向和優先順序，以及建議的後續方案。這份報告是你的，不管後續有沒有繼續合作都帶得走。免費諮詢著重在了解狀況與說明合作方式；需要一份完整的書面評估時，再預約策略諮詢。" }
     },
     {
       "@type": "Question",
       "name": "策略諮詢的費用是多少？可以折抵嗎？",
-      "acceptedAnswer": { "@type": "Answer", "text": "策略諮詢費為 NT$3,500。如果初談後決定繼續合作正式方案，這筆費用可以全額折抵。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "免費諮詢不收費。策略諮詢費為 NT$3,500，如果之後決定繼續合作正式方案，這筆費用可以全額折抵。" }
     },
     {
       "@type": "Question",
@@ -53,20 +59,20 @@ const faqSchema = {
     {
       "@type": "Question",
       "name": "我還沒有確定的方向，適合找 TBD 嗎？",
-      "acceptedAnswer": { "@type": "Answer", "text": "適合。「不知道自己適合什麼」本身就是一個 TBD 可以幫你釐清的問題。方向探索和定位判斷是初談最常做的事，不需要在找 TBD 之前先把方向想清楚。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "適合。「不知道自己適合什麼」本身就是一個 TBD 可以幫你釐清的問題。方向探索和定位判斷是諮詢最常做的事，不需要在找 TBD 之前先把方向想清楚。" }
     }
   ]
 };
 ---
 
-<BaseLayout title="常見問題" description="TBD Studio 常見問題：服務是否代寫備審、初談諮詢費用與折抵方式、幾年級開始合適、線上合作如何進行，以及正式方案的選擇邏輯。" bodyClass="sub-page faq-page" schema={faqSchema}>
+<BaseLayout title="常見問題" description="TBD Studio 常見問題：服務是否代寫備審、免費諮詢與策略諮詢的差異、費用與折抵方式、幾年級開始合適、線上合作如何進行，以及正式方案的選擇邏輯。" bodyClass="sub-page faq-page" schema={faqSchema}>
 <section class="hero">
   <span class="kicker">常見問題</span>
   <h1>你可能想先問的事</h1>
   <p class="lead">在預約諮詢之前，這裡整理了學生和家長最常問的問題。如果你的問題沒有在這裡，歡迎直接聯絡我們。</p>
   <div class="button-row">
     <a class="button secondary" href="/pages/services.html">查看服務內容</a>
-    <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=faq" target="_blank" rel="noopener noreferrer" data-ga-event="click_line_faq">預約策略諮詢</a>
+    <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=faq" target="_blank" rel="noopener noreferrer" data-ga-event="click_line_faq">預約免費諮詢</a>
   </div>
 </section>
 
@@ -130,8 +136,8 @@ const faqSchema = {
       <details class="faq-item">
         <summary class="faq-summary">離申請截止日只剩一個月，還有機會嗎？</summary>
         <div class="faq-body">
-          <p>要看目前的材料狀況。如果已經有初稿，一個月夠做備審健檢和面試準備；如果完全沒有任何材料，一個月非常緊，需要在初談時評估可行性和優先順序。</p>
-          <p>最快的方式是先預約策略諮詢，說明目前的狀況和截止日期，TBD 會給你一個誠實的評估。</p>
+          <p>要看目前的材料狀況。如果已經有初稿，一個月夠做備審健檢和面試準備；如果完全沒有任何材料，一個月非常緊，需要在諮詢時評估可行性和優先順序。</p>
+          <p>最快的方式是先預約免費諮詢，說明目前的狀況和截止日期，TBD 會給你一個誠實的評估。</p>
         </div>
       </details>
 
@@ -140,31 +146,40 @@ const faqSchema = {
 
   <section class="section">
     <div class="services-chapter-header">
-      <span class="kicker">初談與費用</span>
+      <span class="kicker">諮詢與費用</span>
       <h2>第一次諮詢會做什麼、費用怎麼算</h2>
     </div>
+
+    <div style="margin-top: 24px;"><ConsultCompare /></div>
 
     <div class="faq-list" style="margin-top: 24px;">
 
       <details class="faq-item">
-        <summary class="faq-summary">預約初談之後會得到什麼？</summary>
+        <summary class="faq-summary">免費諮詢會做什麼？</summary>
         <div class="faq-body">
-          <p>一次 60 分鐘的策略諮詢，TBD 會在談話過程中了解你的升學管道、目前的準備狀況、以及最需要補強的環節，然後產出一份申請策略建議報告——包含競爭力初步定位、建議的準備方向和優先順序、以及是否需要進一步合作的建議。</p>
-          <p>這份報告是你的，不管後續有沒有繼續合作都帶得走。</p>
+          <p>透過 LINE 預約，TBD 會先了解你的年級、升學管道與目前卡住的地方，說明 TBD 能怎麼幫上忙、適合從哪個環節開始。免費諮詢不收費，也不需要先決定要不要合作。</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-summary">策略諮詢會得到什麼？和免費諮詢差在哪？</summary>
+        <div class="faq-body">
+          <p>策略諮詢是付費的 60 分鐘深度評估。TBD 會先看過事先提供的學生資料，在談話中盤點升學管道、準備狀況與最需要補強的環節，之後交付回饋文件（策略建議報告）——包含競爭力初步定位、建議的準備方向和優先順序，以及建議的後續方案。</p>
+          <p>這份報告是你的，不管後續有沒有繼續合作都帶得走。免費諮詢著重在了解狀況與說明合作方式；需要一份完整的書面評估時，再預約策略諮詢。</p>
         </div>
       </details>
 
       <details class="faq-item">
         <summary class="faq-summary">策略諮詢的費用是多少？可以折抵嗎？</summary>
         <div class="faq-body">
-          <p>策略諮詢費為 NT$3,500。如果初談後決定繼續合作正式方案，這筆費用可以全額折抵。</p>
+          <p>免費諮詢不收費。策略諮詢費為 NT$3,500，如果之後決定繼續合作正式方案，這筆費用可以全額折抵。</p>
         </div>
       </details>
 
       <details class="faq-item">
         <summary class="faq-summary">正式合作方案的費用大概是多少？</summary>
         <div class="faq-body">
-          <p>正式方案依學生的升學管道、目前階段和需求組合報價，沒有固定的套餐價格。初談後 TBD 會根據實際狀況說明建議方案和費用範圍。</p>
+          <p>正式方案依學生的升學管道、目前階段和需求組合報價，沒有固定的套餐價格。諮詢後 TBD 會根據實際狀況說明建議方案和費用範圍。</p>
           <p>簡單來說：備審健檢（方案 A）最輕量；備審重構（方案 B）適合需要全面整理主線的學生；面試訓練（方案 C）依次數計算；全程陪跑（方案 D）涵蓋最完整。</p>
         </div>
       </details>
@@ -190,7 +205,7 @@ const faqSchema = {
       <details class="faq-item">
         <summary class="faq-summary">我還沒有確定的方向，適合找 TBD 嗎？</summary>
         <div class="faq-body">
-          <p>適合。「不知道自己適合什麼」本身就是一個 TBD 可以幫你釐清的問題。方向探索和定位判斷是初談最常做的事，不需要在找 TBD 之前先把方向想清楚。</p>
+          <p>適合。「不知道自己適合什麼」本身就是一個 TBD 可以幫你釐清的問題。方向探索和定位判斷是諮詢最常做的事，不需要在找 TBD 之前先把方向想清楚。</p>
         </div>
       </details>
 
@@ -200,10 +215,10 @@ const faqSchema = {
   <!-- ── CTA ── -->
   <section class="section cta">
     <h2>還有其他問題？</h2>
-    <p>如果你的問題沒有在這裡，最直接的方式是預約一次策略諮詢，TBD 會在談話中給你針對你狀況的具體回答。</p>
+    <p>如果你的問題沒有在這裡，最直接的方式是預約免費諮詢，TBD 會在談話中給你針對你狀況的具體回答。</p>
     <div class="button-row">
       <a class="button secondary" href="/pages/services.html">查看服務內容</a>
-      <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=faq" target="_blank" rel="noopener noreferrer" data-ga-event="click_line_faq_bottom">預約策略諮詢</a>
+      <a class="button" href="https://lin.ee/9ciZvbA?utm_source=website&utm_medium=cta&utm_campaign=faq" target="_blank" rel="noopener noreferrer" data-ga-event="click_line_faq_bottom">預約免費諮詢</a>
     </div>
   </section>
 

@@ -247,7 +247,7 @@
       '</div>' +
       '<div class="gpq-guide"><div class="gpq-rl gpq-guide-h">🧭 實戰指南</div><ul>' + guideHtml + '</ul></div>' +
       '<div class="gpq-links">' + linksHtml + '</div>' +
-      '<div class="gpq-cta"><a class="gpq-btn gpq-btn-full gpq-btn-cta" href="' + LINE + '" target="_blank" rel="noopener noreferrer" data-track-event="click_consultation_cta" data-ga-event="grad-path-quiz-result">不確定怎麼取捨？預約策略諮詢 →</a></div>' +
+      '<div class="gpq-cta"><a class="gpq-btn gpq-btn-full gpq-btn-cta" href="' + LINE + '" target="_blank" rel="noopener noreferrer" data-track-event="click_consultation_cta" data-ga-event="grad-path-quiz-result">不確定怎麼取捨？預約免費諮詢 →</a></div>' +
       '<div class="gpq-restart"><button type="button" id="gpq-restart">重新測驗一次</button></div>';
     card.appendChild(s);
     document.getElementById('gpq-restart').addEventListener('click', function () { state = { step: -1, answers: [] }; render(); });

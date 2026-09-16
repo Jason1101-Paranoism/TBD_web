@@ -22,12 +22,13 @@
   // GA4 event tracking (v1.2 — Key Event / CTA 追蹤)
   //
   // Standard key events:
-  //   click_line_cta, click_ig_cta, click_consultation_cta,
+  //   click_line_cta, click_ig_cta, click_consultation_cta（免費諮詢）,
   //   view_service_page, view_article, scroll_75,
   //   download_resource, submit_contact_form
   //
   // 任一 CTA 可用 data-track-event="<event>" 明確指定要送的事件。
   // 沒有指定時，下方 script 會依舊有的 data-ga-event 或 href 自動推斷。
+  // 付費策略諮詢用 click_strategy_consultation_cta，只能明確指定，不做推斷。
   // ---------------------------------------------------------------------------
   const DEBUG =
     location.hostname === 'localhost' ||
@@ -69,7 +70,7 @@
     if (/instagram\.com/i.test(href)) return 'click_ig_cta';
     if (DOWNLOAD_RE.test(href)) return 'download_resource';
     if (/lin\.ee|line\.me/i.test(href)) {
-      // 「預約策略諮詢」類 CTA 帶 utm_medium=cta / nav；純加好友連結則沒有
+      // 「預約免費諮詢」類 CTA 帶 utm_medium=cta / nav；純加好友連結則沒有
       return /utm_medium=(cta|nav)/i.test(href) ? 'click_consultation_cta' : 'click_line_cta';
     }
     return null;
