@@ -21,7 +21,9 @@ LR 指出免費諮詢與策略諮詢重點不同（後者要看學生資料、�
 **驗證**：build 176 頁；verify 40/40；headless Chrome 500px 寬截 FAQ 與首頁 contact 區，對照表三欄不需橫向捲動、價格卡與文字連結無跑版。
 （375px 截圖右側被裁是 headless 視窗最小寬度造成的，不是頁面問題。）
 
-**下一步**：LR 確認文案語氣 → push `feat/free-consultation-cta` 開 PR → 合併後打正式站驗收。
+**上線**：PR #35 合併（`b9ce007`），部署約 30 秒後正式站可見。正式站抽查首頁、FAQ、服務、流程、reviewer-perspective：都有「預約免費諮詢」，「初談」0 處，付費事件只在首頁出現 1 次。
+
+**下一步**：375px 真機目視首頁價格卡與對照表（還沒做）；免費諮詢時長確認後補進 `ConsultCompare.astro`。
 
 ---
 
