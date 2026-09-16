@@ -106,13 +106,14 @@ public/
 
 ## GA4 事件追蹤（v1.2 Key Event）
 
-`public/js/main.js` 是全站統一的事件追蹤 script（在每頁 `</body>` 前載入），會自動把點擊／瀏覽行為對應到 8 個標準 Key Event：
+`public/js/main.js` 是全站統一的事件追蹤 script（在每頁 `</body>` 前載入），會自動把點擊／瀏覽行為對應到 8 個標準 Key Event（另有 1 個需明確指定的付費諮詢事件）：
 
 | 標準事件 | 觸發方式 |
 |---------|---------|
 | `click_line_cta` | 點擊純加 LINE 好友連結（頁腳「加入 LINE 官方帳號」、或無 cta/nav utm 的 lin.ee 連結） |
 | `click_ig_cta` | 點擊 Instagram 連結（頁腳「追蹤 Instagram」、或任何 `instagram.com` 連結） |
-| `click_consultation_cta` | 點擊「預約策略諮詢」類 CTA（帶 `utm_medium=cta` 或 `nav` 的 LINE 連結、或舊有 `data-ga-event="click_line_*"`） |
+| `click_consultation_cta` | 點擊「預約免費諮詢」類 CTA（全站主 CTA；帶 `utm_medium=cta` 或 `nav` 的 LINE 連結、或舊有 `data-ga-event="click_line_*"`） |
+| `click_strategy_consultation_cta` | 點擊付費「預約策略諮詢」（NT$3,500）CTA。**只能用 `data-track-event` 明確指定**，不會被自動推斷——沒標的 LINE 連結一律算免費諮詢 |
 | `view_service_page` | 進入 `/pages/services...` 任一服務頁 |
 | `view_article` | 進入 `/pages/resources/<slug>` 文章頁 |
 | `scroll_75` | 頁面捲動超過 75%（每頁一次） |
@@ -271,7 +272,8 @@ public/css/style.css          ← **產物，不要手改**（由 scripts/prebui
 - 語氣專業但親切，不生硬、不像 SaaS 行銷文案
 - 不要過度強調功能列表，要有溫度感與陪伴感
 - 避免「一鍵解決」、「極致體驗」等誇大詞彙
-- CTA 應明確但不強迫（「預約策略諮詢」比「立即購買」好）
+- 用語：「免費諮詢」＝全站主 CTA（免費、走 LINE）；「策略諮詢」＝60 分鐘 NT$3,500、產出報告的付費服務。不要再用「初談」，兩者不可混用（見 D-020）
+- CTA 應明確但不強迫（「預約免費諮詢」比「立即購買」好）
 - 信任感來自案例的真實性，不來自設計炫技
 - 核心語氣原則：「共創，不代筆；引導，不操控；如實呈現，不憑空捏造。」
 

@@ -213,7 +213,7 @@ const articleSchema = {
 
 // 結尾 CTA 段落 fallback 鏈：文章自訂 → 分類預設 → 全站通用
 const categoryCtaP = resourceCategories.find((c) => c.category === category)?.ctaParagraph;
-const bottomCtaP = Astro.props.bottomCtaP ?? categoryCtaP ?? 'TBD 的第一次策略諮詢會先依據學生的升學管道、競爭力與目前最該補強的環節進行評估與建議，線上與您一起討論可能合作方案，決定是否需要文件重構、面試訓練或全程陪跑。';
+const bottomCtaP = Astro.props.bottomCtaP ?? categoryCtaP ?? 'TBD 的免費諮詢會先了解學生的升學管道、目前進度與最卡關的環節，說明 TBD 能怎麼幫上忙，再一起判斷是否需要策略諮詢、文件重構、面試訓練或全程陪跑。';
 const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=${sidebarCtaUtm}`;
 const bottomCtaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=${bottomCtaUtm}`;
 
@@ -290,7 +290,7 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
 
         <div class="sidebar-cta card">
           <p>{sidebarCtaText}</p>
-          <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_article_sidebar">預約策略諮詢</a>
+          <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_article_sidebar">預約免費諮詢</a>
         </div>
       </div>
 
@@ -353,7 +353,7 @@ const metaDateLabel = `${metaDate.getFullYear()} 年 ${metaDate.getMonth() + 1} 
         {serviceLink && <a class="button secondary" href={serviceLink.href}>{serviceLink.label}</a>}
         {/* 推甄系列拿掉「回知識庫」：轉換終端只留服務＋諮詢，避免低價值選項稀釋（v3 review P0） */}
         {category !== '研究所推甄' && <a class="button secondary" href="/pages/resources.html">回知識庫</a>}
-        <a class="button" href={bottomCtaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_article_bottom">預約策略諮詢</a>
+        <a class="button" href={bottomCtaLink} target="_blank" rel="noopener noreferrer" data-ga-event="click_line_article_bottom">預約免費諮詢</a>
       </div>
     </section>
 
