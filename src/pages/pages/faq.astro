@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConsultCompare from '../../components/ConsultCompare.astro';
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -38,7 +39,7 @@ const faqSchema = {
     {
       "@type": "Question",
       "name": "策略諮詢會得到什麼？和免費諮詢差在哪？",
-      "acceptedAnswer": { "@type": "Answer", "text": "策略諮詢是一次 60 分鐘的深度評估，TBD 會在談話過程中了解你的升學管道、目前的準備狀況、以及最需要補強的環節，然後產出一份申請策略建議報告——包含競爭力初步定位、建議的準備方向和優先順序、以及是否需要進一步合作的建議。這份報告是你的，不管後續有沒有繼續合作都帶得走。免費諮詢著重在了解狀況與說明合作方式；需要一份完整的書面評估時，再預約策略諮詢。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "策略諮詢是付費的 60 分鐘深度評估。TBD 會先看過事先提供的學生資料，在談話中盤點升學管道、準備狀況與最需要補強的環節，之後交付回饋文件（策略建議報告）——包含競爭力初步定位、建議的準備方向和優先順序，以及建議的後續方案。這份報告是你的，不管後續有沒有繼續合作都帶得走。免費諮詢著重在了解狀況與說明合作方式；需要一份完整的書面評估時，再預約策略諮詢。" }
     },
     {
       "@type": "Question",
@@ -149,6 +150,8 @@ const faqSchema = {
       <h2>第一次諮詢會做什麼、費用怎麼算</h2>
     </div>
 
+    <div style="margin-top: 24px;"><ConsultCompare /></div>
+
     <div class="faq-list" style="margin-top: 24px;">
 
       <details class="faq-item">
@@ -161,7 +164,7 @@ const faqSchema = {
       <details class="faq-item">
         <summary class="faq-summary">策略諮詢會得到什麼？和免費諮詢差在哪？</summary>
         <div class="faq-body">
-          <p>策略諮詢是一次 60 分鐘的深度評估，TBD 會在談話過程中了解你的升學管道、目前的準備狀況、以及最需要補強的環節，然後產出一份申請策略建議報告——包含競爭力初步定位、建議的準備方向和優先順序、以及是否需要進一步合作的建議。</p>
+          <p>策略諮詢是付費的 60 分鐘深度評估。TBD 會先看過事先提供的學生資料，在談話中盤點升學管道、準備狀況與最需要補強的環節，之後交付回饋文件（策略建議報告）——包含競爭力初步定位、建議的準備方向和優先順序，以及建議的後續方案。</p>
           <p>這份報告是你的，不管後續有沒有繼續合作都帶得走。免費諮詢著重在了解狀況與說明合作方式；需要一份完整的書面評估時，再預約策略諮詢。</p>
         </div>
       </details>

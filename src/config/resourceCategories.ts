@@ -47,7 +47,7 @@ export const resourceCategories: ResourceCategory[] = [
     sectionLabel: '備審製作',
     category: '備審製作',
     desc: '從評審邏輯、主線建立，到自傳、讀書計畫、排版的實作指南。',
-    ctaParagraph: '備審難的往往不是文筆，而是看不出自己哪些經歷值得寫、又該怎麼串成一條線。TBD 的免費諮詢會先了解你手上的材料與卡住的地方，幫你判斷自傳、讀書計畫與反思哪裡最該先處理，以及 TBD 能怎麼陪你整理出個人主線——不用先決定要不要合作。',
+    ctaParagraph: '備審難的往往不是文筆，而是看不出自己哪些經歷值得寫、又該怎麼串成一條線。TBD 的免費諮詢會先聽你卡在哪裡，說明 TBD 能怎麼陪你整理出個人主線；要逐份看過自傳、讀書計畫與反思、給出修改方向，則是策略諮詢的工作。',
   },
   {
     id: 'materials',
@@ -55,7 +55,7 @@ export const resourceCategories: ResourceCategory[] = [
     sectionLabel: '材料累積',
     category: '材料累積',
     desc: '備審的原料從哪來——Side Project、競賽、自學、研究，如何有策略地累積有申請價值的材料。',
-    ctaParagraph: '有經歷不等於有材料，關鍵是能不能轉成評審看得懂的申請價值。TBD 的免費諮詢會先聽你手上有哪些專題、競賽、自學或研究經歷，幫你看出哪些值得深化、哪些該補上——不用先決定要不要合作。',
+    ctaParagraph: '有經歷不等於有材料，關鍵是能不能轉成評審看得懂的申請價值。TBD 的免費諮詢會先聽你手上有哪些專題、競賽、自學或研究經歷，說明 TBD 能怎麼幫你累積——不用先決定要不要合作。',
   },
   {
     id: 'pre-college',
@@ -79,7 +79,7 @@ export const resourceCategories: ResourceCategory[] = [
     sectionLabel: '各科系申請指南',
     category: '各科系指南',
     desc: '不同科系的評審邏輯不同，備審要展示的重點也不一樣。',
-    ctaParagraph: '不同科系的評審看的重點不一樣，同一份備審不會適用所有系。TBD 的免費諮詢會依你的目標科系，幫你判斷備審該凸顯哪些能力、還缺哪些材料，讓準備對準你真正想申請的方向——不用先決定要不要合作。',
+    ctaParagraph: '不同科系的評審看的重點不一樣，同一份備審不會適用所有系。TBD 的免費諮詢會先了解你的目標科系與準備進度，說明 TBD 能怎麼幫你對準方向；要依事先提供的資料判斷備審該凸顯哪些能力、還缺哪些材料，則是策略諮詢的工作。',
   },
   {
     id: 'graduate',
@@ -114,7 +114,7 @@ export const resourceCategories: ResourceCategory[] = [
     sectionLabel: '工具與延伸閱讀',
     category: '工具與延伸',
     desc: 'GitHub 作品集建置、數位工具使用，以及 AI 時代升學觀點的延伸資源。',
-    ctaParagraph: '做了東西，卻擔心評審看不懂，是很常見的問題。TBD 的免費諮詢會先看你目前的作品集、GitHub 與線上呈現卡在哪裡，幫你判斷 README、Demo 與個人頁面最該先調整什麼——不用先決定要不要合作。',
+    ctaParagraph: '做了東西，卻擔心評審看不懂，是很常見的問題。TBD 的免費諮詢會先聽你做了什麼、擔心哪裡，說明 TBD 能怎麼幫；要實際檢查作品集、GitHub、README 與 Demo，則是策略諮詢的工作。',
     extraCards: [
       {
         kicker: 'Portfolio',

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import JourneyMatrix from '../../components/JourneyMatrix.astro';
 import PlanCompare from '../../components/PlanCompare.astro';
+import ConsultCompare from '../../components/ConsultCompare.astro';
 import { urgentJourneyMap, interviewPlans } from '../../config/figures';
 ---
 
@@ -357,7 +358,9 @@ import { urgentJourneyMap, interviewPlans } from '../../config/figures';
     <div class="card" id="pricing" style="margin-top: 18px;">
       <span class="badge">費用怎麼計算</span>
       <h3 style="margin-top: 12px;">先免費諮詢，再決定要不要往下走</h3>
-      <p>第一步是免費諮詢：了解現況、說明 TBD 能怎麼幫上忙。需要完整評估時，再預約 60 分鐘的策略諮詢（NT$3,500）：盤點現況、判斷該走哪條路線，並給一份可帶走的具體建議。<strong>若決定正式合作，策略諮詢費可全額折抵方案費用</strong>；正式方案依合作範圍與時程報價，會在諮詢時說明清楚，沒有隱藏費用。</p>
+      <p>第一步是免費諮詢；需要完整評估時，再預約付費的策略諮詢。兩者差在深度與交付物：</p>
+      <div style="margin-top: 14px;"><ConsultCompare /></div>
+      <p style="margin-top: 14px;"><strong>若決定正式合作，策略諮詢費可全額折抵方案費用</strong>；正式方案依合作範圍與時程報價，會在諮詢時說明清楚，沒有隱藏費用。</p>
     </div>
   </section>
 

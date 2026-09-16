@@ -90,8 +90,8 @@ export const journeyMap: JourneyMatrixData = {
     {
       label: '主要接觸點',
       cells: [
-        { tags: ['官網', 'LINE OA', 'IG / Threads', '轉介紹'] },
-        { tags: ['前置表單', '線上免費諮詢', '資料上傳'] },
+        { tags: ['官網', 'LINE OA', 'IG / Threads', '轉介紹', '免費諮詢'] },
+        { tags: ['前置表單', '策略諮詢', '資料上傳'] },
         { tags: ['方案說明', '時程討論', '費用／合約'] },
         { tags: ['Drive', 'Notion', '專案群組'] },
         { tags: ['課程', '文件共編', '模擬面試', '回饋報告'] },
@@ -177,7 +177,7 @@ export const urgentJourneyMap: JourneyMatrixData = {
       label: 'TBD 如何協助',
       cells: [
         { strong: '急件初判', text: '確認截止時間、需求範圍與是否符合可執行條件。' },
-        { strong: '快速釐清', text: '透過前置資訊與免費諮詢整理申請目標與背景。' },
+        { strong: '快速釐清', text: '透過前置資訊與策略諮詢整理申請目標與背景。' },
         { strong: '資料診斷', text: '盤點既有備審、經歷與素材，標示主要缺口。' },
         { strong: '策略縮限', text: '依剩餘時間重新排序工作，定義可完成與暫不處理項目。' },
         { strong: '集中執行', text: '優先處理高影響內容，進行文件、架構與表達修正。' },
@@ -188,7 +188,7 @@ export const urgentJourneyMap: JourneyMatrixData = {
       label: '主要接觸點',
       cells: [
         { tags: ['LINE OA', '急件詢問', '截止時間'] },
-        { tags: ['前置表單', '線上免費諮詢', '基本資料'] },
+        { tags: ['前置表單', '策略諮詢', '基本資料'] },
         { tags: ['Drive', '現有備審', '經歷素材'] },
         { tags: ['方案確認', '時程安排', '優先順序'] },
         { tags: ['文件共編', '顧問回饋', '版本修正'] },
