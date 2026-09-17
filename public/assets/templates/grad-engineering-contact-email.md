@@ -31,11 +31,11 @@
 - 沒讀過教授的研究，連結段落空泛
 - 附件雜亂或缺漏，教授無從判斷
 
-> 通用寫法與後續互動：〈研究所聯繫教授〉 tbd-web.vercel.app/pages/resources/graduate-contact-professor.html
+> 通用寫法與後續互動：〈研究所聯繫教授〉 tbd-edu.com/pages/resources/graduate-contact-professor.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*
 ## 先判斷這封信該不該寄
 
 - [ ] 我讀過這位教授近三年的論文，不是只看研究方向那一段

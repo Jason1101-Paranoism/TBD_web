@@ -126,8 +126,8 @@
 - [ ] 談媒材停在技術層次，說不出為什麼這個媒材服務這個概念
 - [ ] 未來創作計畫的規模，明顯超過碩士修業年限
 
-> 搭配文章：〈藝術研究所口試：怎麼答辯自己的作品〉 tbd-web.vercel.app/pages/resources/arts-graduate-oral.html
+> 搭配文章：〈藝術研究所口試：怎麼答辯自己的作品〉 tbd-edu.com/pages/resources/arts-graduate-oral.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

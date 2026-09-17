@@ -87,5 +87,5 @@
 
 > 寫得出「差別在哪」，才算真的讀過。引用密度不重要——每個概念都能拿掉而不影響論述的話，那些引用就是裝飾。
 
-> 搭配文章：〈創作研究計畫怎麼寫？藝術推甄的核心關卡〉 tbd-web.vercel.app/pages/resources/arts-graduate-proposal.html
+> 搭配文章：〈創作研究計畫怎麼寫？藝術推甄的核心關卡〉 tbd-edu.com/pages/resources/arts-graduate-proposal.html
 ---

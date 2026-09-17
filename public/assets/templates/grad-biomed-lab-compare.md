@@ -80,5 +80,5 @@
 
 > 查法提示：教授近年主持的計畫可公開查詢，看研究方向與活躍度；實驗室網頁看設備、成員與更新頻率；工時、值班、失敗後有沒有指導、作者排序與畢業門檻等隱性資訊，問學長姐最準。
 
-> 搭配文章：〈生醫與公衛研究所怎麼選實驗室？〉 tbd-web.vercel.app/pages/resources/biomed-graduate-choose.html
+> 搭配文章：〈生醫與公衛研究所怎麼選實驗室？〉 tbd-edu.com/pages/resources/biomed-graduate-choose.html
 ---

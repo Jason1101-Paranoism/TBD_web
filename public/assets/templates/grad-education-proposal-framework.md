@@ -113,5 +113,5 @@
 
 > 這一節不需要長，但一定要有。寫出「對象怎麼來、誰同意、怎麼保護、時程怎麼算」，就勝過大部分只寫一句「將遵守研究倫理」的計畫。
 
-> 搭配文章：〈教育研究計畫怎麼寫？從現場困惑到可執行的研究設計〉 tbd-web.vercel.app/pages/resources/education-graduate-proposal.html
+> 搭配文章：〈教育研究計畫怎麼寫？從現場困惑到可執行的研究設計〉 tbd-edu.com/pages/resources/education-graduate-proposal.html
 ---

@@ -116,8 +116,8 @@ CV 的任務只有一個：**證明你做過什麼**。條列、可查證、不�
 - [ ] 核心科目的弱項有主動說明
 - [ ] 三份文件指向同一個次領域
 
-> 搭配文章：〈法政備審怎麼準備？CV、自傳與研究計畫的分工〉 tbd-web.vercel.app/pages/resources/law-graduate-cv.html
+> 搭配文章：〈法政備審怎麼準備？CV、自傳與研究計畫的分工〉 tbd-edu.com/pages/resources/law-graduate-cv.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

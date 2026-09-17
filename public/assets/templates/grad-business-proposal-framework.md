@@ -71,5 +71,5 @@
 
 > 檢核：走完五步後，你的題目應該從「AI 對企業的影響」這種主題，變成一個有對象、有變數、有關係的問句。題目變小是正確方向。
 
-> 搭配文章：〈商管與財經研究計畫書怎麼寫？〉 tbd-web.vercel.app/pages/resources/business-graduate-proposal.html
+> 搭配文章：〈商管與財經研究計畫書怎麼寫？〉 tbd-edu.com/pages/resources/business-graduate-proposal.html
 ---

@@ -55,5 +55,5 @@
 - [ ] 第 6 節換一間實驗室就不成立
 - [ ] 兩年做得完且設備與數據拿得到
 
-> 搭配文章：〈理工研究計畫書怎麼寫？〉 tbd-web.vercel.app/pages/resources/engineering-graduate-proposal.html
+> 搭配文章：〈理工研究計畫書怎麼寫？〉 tbd-edu.com/pages/resources/engineering-graduate-proposal.html
 ---

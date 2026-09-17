@@ -117,7 +117,7 @@ function frontmatter(file) {
   return fm;
 }
 
-const SITE = 'https://tbd-web.vercel.app';
+const SITE = 'https://tbd-edu.com';
 
 const CORE_PAGES = [
   ['/pages/services.html', '服務內容：四種方案與各升學管道的服務說明'],

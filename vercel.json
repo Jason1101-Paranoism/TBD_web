@@ -5,12 +5,12 @@
   "redirects": [
     {
       "source": "/pages/seen.html",
-      "destination": "https://tbd-compass-app.vercel.app/",
+      "destination": "https://app.tbd-edu.com/",
       "permanent": false
     },
     {
       "source": "/pages/placement.html",
-      "destination": "https://tbd-compass-app.vercel.app/placement",
+      "destination": "https://app.tbd-edu.com/placement",
       "permanent": false
     },
     {

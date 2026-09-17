@@ -67,5 +67,5 @@
 - [ ] 規模過大碩士兩年做不完
 - [ ] 強調引用但缺乏具體方法
 
-> 搭配文章：〈生醫與公衛研究計畫書怎麼寫？〉 tbd-web.vercel.app/pages/resources/biomed-graduate-proposal.html
+> 搭配文章：〈生醫與公衛研究計畫書怎麼寫？〉 tbd-edu.com/pages/resources/biomed-graduate-proposal.html
 ---

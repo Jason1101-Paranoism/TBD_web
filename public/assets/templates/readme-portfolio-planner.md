@@ -89,4 +89,4 @@ README 的最低可行版本花一到兩個小時就能寫完，但它讓你的�
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

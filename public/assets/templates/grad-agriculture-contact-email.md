@@ -68,7 +68,7 @@
 - [ ] 我確認過稱謂、姓名與系所沒有寫錯（換教授時最容易出錯的地方）
 - [ ] 把教授名字換掉之後，這封信就不成立
 
-> 搭配文章：〈研究所聯繫教授：套磁信怎麼寫、什麼時候寄〉 tbd-web.vercel.app/pages/resources/graduate-contact-professor.html
+> 搭配文章：〈研究所聯繫教授：套磁信怎麼寫、什麼時候寄〉 tbd-edu.com/pages/resources/graduate-contact-professor.html
 
 ---
 

@@ -72,5 +72,5 @@
 
 > 查法提示：國科會補助計畫可公開查詢教授近年主持的計畫；實驗室網頁看設備、成員與更新頻率；指導風格問學長姐最準。
 
-> 搭配文章：〈理工研究所怎麼選實驗室？〉 tbd-web.vercel.app/pages/resources/engineering-graduate-choose.html
+> 搭配文章：〈理工研究所怎麼選實驗室？〉 tbd-edu.com/pages/resources/engineering-graduate-choose.html
 ---

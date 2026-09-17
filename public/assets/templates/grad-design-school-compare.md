@@ -89,4 +89,4 @@
 
 > 兩個外部驗證管道比官網更誠實：[臺灣博碩士論文知識加值系統](https://ndltd.ncl.edu.tw/) 可依校所檢索近年碩論與創作論述——學術型有明確的研究方法與文獻回顧，實務型多是設計專案的論述與反思，一比就知道這裡把學生訓練成什麼樣子；[新一代設計展](https://www.yodex.com.tw/)線上展區與[金點新秀設計獎](https://goldenpin.org.tw/)歷年入圍名單都以校系分類，直接看得到完成度與題目取向。
 
-> 搭配文章：〈設計研究所怎麼選校、選所、選教授？〉 tbd-web.vercel.app/pages/resources/design-graduate-choose.html
+> 搭配文章：〈設計研究所怎麼選校、選所、選教授？〉 tbd-edu.com/pages/resources/design-graduate-choose.html

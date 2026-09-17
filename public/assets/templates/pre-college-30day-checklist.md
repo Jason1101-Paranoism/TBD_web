@@ -44,10 +44,10 @@
 
 TBD Growth Compass 可以把每段經歷的過程與反思存下來，不用等到要用了才回想：
 
-→ https://tbd-web.vercel.app/pages/seen.html?utm_source=tbd-web&utm_medium=template&utm_campaign=pre-college-30day-checklist
+→ https://tbd-edu.com/pages/seen.html?utm_source=tbd-web&utm_medium=template&utm_campaign=pre-college-30day-checklist
 
 不用登入就能先看。
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

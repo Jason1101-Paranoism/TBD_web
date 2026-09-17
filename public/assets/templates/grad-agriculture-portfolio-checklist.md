@@ -91,7 +91,7 @@
 - [ ] 三份文件指向同一條研究主軸
 - [ ] 備審裡的每一項，我都準備好被口試追問
 
-> 搭配文章：〈農生環境備審怎麼準備？CV、自傳與成果整理〉 tbd-web.vercel.app/pages/resources/agriculture-graduate-cv.html
+> 搭配文章：〈農生環境備審怎麼準備？CV、自傳與成果整理〉 tbd-edu.com/pages/resources/agriculture-graduate-cv.html
 
 ---
 

@@ -26,7 +26,7 @@ export interface PricingPlan {
   suitedFor: string;
 }
 
-export const COMPASS_URL = 'https://tbd-compass-app.vercel.app';
+export const COMPASS_URL = 'https://app.tbd-edu.com';
 
 export const pricingPlans: readonly PricingPlan[] = [
   {

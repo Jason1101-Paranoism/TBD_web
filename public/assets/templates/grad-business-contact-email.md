@@ -52,8 +52,8 @@
 - [ ] 我有一個具體的問題可以談，不只是想加入
 - [ ] 把教授名字換掉，這封信就不成立
 
-> 搭配文章：〈研究所聯繫教授：套磁信怎麼寫？〉商管與財經專屬重點 tbd-web.vercel.app/pages/resources/graduate-contact-professor.html#business-tips
+> 搭配文章：〈研究所聯繫教授：套磁信怎麼寫？〉商管與財經專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#business-tips
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

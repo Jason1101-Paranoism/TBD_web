@@ -83,5 +83,5 @@
 
 > 查法提示：系所官網的課程地圖、修業規定與招生簡章評分配比，是判斷「這裡在訓練什麼人」最直接的三份文件；教授近三到五年的發表與計畫看研究方向；畢業生去向、業界管道與校友活躍度，直接問學長姐最準。
 
-> 搭配文章：〈商管與財經研究所怎麼選校、選所、選教授？〉 tbd-web.vercel.app/pages/resources/business-graduate-choose.html
+> 搭配文章：〈商管與財經研究所怎麼選校、選所、選教授？〉 tbd-edu.com/pages/resources/business-graduate-choose.html
 ---

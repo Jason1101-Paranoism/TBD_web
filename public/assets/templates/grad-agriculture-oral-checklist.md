@@ -97,7 +97,7 @@
 - [ ] 遇到不會的技術，我知道怎麼誠實回答並接上「我會的最接近的東西」
 - [ ] 我把研究計畫裡自己讀了都想追問的地方標出來了
 
-> 搭配文章：〈農生環境口試怎麼準備？答辯實驗設計的完整邏輯〉 tbd-web.vercel.app/pages/resources/agriculture-graduate-oral.html
+> 搭配文章：〈農生環境口試怎麼準備？答辯實驗設計的完整邏輯〉 tbd-edu.com/pages/resources/agriculture-graduate-oral.html
 
 ---
 
