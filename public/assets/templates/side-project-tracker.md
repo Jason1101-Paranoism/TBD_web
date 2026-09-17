@@ -53,4 +53,4 @@ Side Project 最常見的死法不是做不出來，是**做到一半失去方�
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

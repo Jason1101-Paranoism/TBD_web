@@ -135,7 +135,7 @@ const TARGETS = [
   // 這裡刻意把數字寫死當獨立事實來源：改價時本項會紅，逼人回頭確認 compass 那側也改了。
   // 兩邊價格不一致＝網站標一個價、結帳頁收另一個價，是 D-003 的同一種形狀。
   { path: '/pages/compass.html', name: '落點分析方案（價格須與 compass entitlement.ts 一致）',
-    mustContain: ['NT$', '499', '899', 'tbd-compass-app.vercel.app'] },
+    mustContain: ['NT$', '499', '899', 'app.tbd-edu.com'] },
   // 回歸：Week 3–6 的 20 份分學群模板曾只登記在指南頁、沒進下載頁，四輪都沒被發現。
   // 事實來源是 scripts/template-manifest.json（見 D-008），且該 manifest 由
   // checkTemplateManifest() 與磁碟互相校驗，任一邊少一份都會失敗。

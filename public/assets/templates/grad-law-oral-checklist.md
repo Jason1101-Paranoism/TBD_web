@@ -105,8 +105,8 @@
 | 推論被指出矛盾 | 老師指出的這一點確實和我前面的推論不一致。我需要重新界定的是○○的適用範圍。 |
 | 資料取得有疑慮 | 這確實是可行性上的風險。備援是改以○○判決或△△官方統計替代，樣本會縮小但仍能回答核心問題。 |
 
-> 搭配文章：〈法政研究所口試怎麼準備？答辯研究計畫的完整邏輯〉 tbd-web.vercel.app/pages/resources/law-graduate-oral.html
+> 搭配文章：〈法政研究所口試怎麼準備？答辯研究計畫的完整邏輯〉 tbd-edu.com/pages/resources/law-graduate-oral.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

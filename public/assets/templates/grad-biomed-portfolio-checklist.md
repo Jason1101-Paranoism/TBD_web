@@ -74,8 +74,8 @@
 - [ ] 三份文件指向同一個研究方向
 - [ ] 倫理與樣本來源的說明已備妥
 
-> 搭配文章：〈生醫與公衛研究所備審：CV 與自傳〉 tbd-web.vercel.app/pages/resources/biomed-graduate-cv.html
+> 搭配文章：〈生醫與公衛研究所備審：CV 與自傳〉 tbd-edu.com/pages/resources/biomed-graduate-cv.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

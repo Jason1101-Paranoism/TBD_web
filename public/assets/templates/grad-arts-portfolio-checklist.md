@@ -112,8 +112,8 @@
 - [ ] CV 只列展覽名稱，沒有標明角色（個展／聯展／策展／協力）
 - [ ] 三份文件各說各話：作品集、創作論述與研究計畫指向不同方向
 
-> 搭配文章：〈藝術研究所備審：作品集、藝術 CV 與自傳怎麼分工〉 tbd-web.vercel.app/pages/resources/arts-graduate-cv.html
+> 搭配文章：〈藝術研究所備審：作品集、藝術 CV 與自傳怎麼分工〉 tbd-edu.com/pages/resources/arts-graduate-cv.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

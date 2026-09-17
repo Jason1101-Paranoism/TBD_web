@@ -129,7 +129,7 @@
 - [ ] 倫理與許可需求已確認並算進時程
 - [ ] 不熟悉我研究的人讀完，說得出我要做什麼、怎麼做、為什麼做得完
 
-> 搭配文章：〈農生環境研究計畫書怎麼寫？先證明它做得完〉 tbd-web.vercel.app/pages/resources/agriculture-graduate-proposal.html
+> 搭配文章：〈農生環境研究計畫書怎麼寫？先證明它做得完〉 tbd-edu.com/pages/resources/agriculture-graduate-proposal.html
 
 ---
 

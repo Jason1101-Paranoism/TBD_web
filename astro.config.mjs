@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap';
 const lastmod = JSON.parse(fs.readFileSync(new URL('./src/config/lastmod.json', import.meta.url), 'utf8'));
 
 export default defineConfig({
-  site: 'https://tbd-web.vercel.app',
+  site: 'https://tbd-edu.com',
   output: 'static',
   build: {
     format: 'file',
@@ -17,7 +17,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      customPages: ['https://tbd-web.vercel.app/pages/portfolio-guide'],
+      customPages: ['https://tbd-edu.com/pages/portfolio-guide'],
       filter: (page) =>
         !page.includes('/audience') &&
         !page.includes('/plans') &&
@@ -30,7 +30,7 @@ export default defineConfig({
         !page.includes('/compass') &&
         !page.endsWith('/pages'),
       serialize(item) {
-        const root = 'https://tbd-web.vercel.app';
+        const root = 'https://tbd-edu.com';
         if (item.url !== root && item.url !== root + '/') {
           item.url = item.url + '.html';
         }

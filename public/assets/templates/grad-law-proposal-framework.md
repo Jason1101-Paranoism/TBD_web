@@ -78,5 +78,5 @@
 
 > 資料查詢入口：全國法規資料庫（law.moj.gov.tw）查現行與歷次修正條文；立法院法律系統（lis.ly.gov.tw/lglawc/lglawkm）查立法沿革與立法理由；司法院裁判書查詢（judgment.judicial.gov.tw）做判決檢索；憲法法庭（cons.judicial.gov.tw）查裁判與解釋；學術文獻用 Google 學術搜尋與臺灣期刊論文索引系統（tpl.ncl.edu.tw）。
 
-> 搭配文章：〈法政研究計畫書怎麼寫？從一個可辯論的爭點開始〉 tbd-web.vercel.app/pages/resources/law-graduate-proposal.html
+> 搭配文章：〈法政研究計畫書怎麼寫？從一個可辯論的爭點開始〉 tbd-edu.com/pages/resources/law-graduate-proposal.html
 ---

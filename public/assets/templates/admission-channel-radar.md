@@ -86,10 +86,10 @@ CSV 匯入後只有數字。要畫出雷達圖（做一次就好）：
 
 TBD Growth Compass 用歷年級分與篩選標準做跨年度換算，把你圈選的校系一次算完並排序：
 
-→ https://tbd-web.vercel.app/pages/placement.html?utm_source=tbd-web&utm_medium=template&utm_campaign=admission-channel-radar
+→ https://tbd-edu.com/pages/placement.html?utm_source=tbd-web&utm_medium=template&utm_campaign=admission-channel-radar
 
 輸入級分、圈選校系、看基本結果都不用付費，也不必先決定要不要付費。
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

@@ -112,8 +112,8 @@
 - [ ] 研究計畫的取徑在文字作品裡看得到對應
 - [ ] 推薦人拿到了作品與計畫初稿
 
-> 搭配文章：〈人文社科研究所備審怎麼準備？自傳、學術 CV 與文字作品〉 tbd-web.vercel.app/pages/resources/humanities-graduate-cv.html
+> 搭配文章：〈人文社科研究所備審怎麼準備？自傳、學術 CV 與文字作品〉 tbd-edu.com/pages/resources/humanities-graduate-cv.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

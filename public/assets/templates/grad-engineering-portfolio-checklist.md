@@ -67,8 +67,8 @@
 - [ ] 團隊專題標明了個人貢獻
 - [ ] 備審方向與研究計畫、目標實驗室三者一致
 
-> 搭配文章：〈理工研究所備審怎麼寫？〉 tbd-web.vercel.app/pages/resources/engineering-graduate-cv.html
+> 搭配文章：〈理工研究所備審怎麼寫？〉 tbd-edu.com/pages/resources/engineering-graduate-cv.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

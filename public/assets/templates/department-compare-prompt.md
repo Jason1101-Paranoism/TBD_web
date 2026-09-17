@@ -1,7 +1,7 @@
 # 科系比較 Prompt 產生器（Meta Prompt）
 
 > 用法：把下方「Meta Prompt」整段複製給任何 AI，並填入五個變數，AI 就會為你產生一份完整的「科系深度比較 Prompt」（8 階段版），再把產出的 Prompt 丟給 AI 執行即可。
-> 方法說明與示範：〈怎麼認識一個科系？比較兩個科系的 8 層拆法〉 tbd-web.vercel.app/pages/resources/department-compare-method.html
+> 方法說明與示範：〈怎麼認識一個科系？比較兩個科系的 8 層拆法〉 tbd-edu.com/pages/resources/department-compare-method.html
 >
 > **匯入 Notion**：Import → Markdown。**用 Google Docs**：直接貼上。
 
@@ -60,10 +60,10 @@ Prompt 本體結尾必須附「資料查核條款」：優先來源清單（兩�
 
 把兩個科系的落點一起算出來，這個取捨會具體很多：
 
-→ https://tbd-web.vercel.app/pages/placement.html?utm_source=tbd-web&utm_medium=template&utm_campaign=department-compare-prompt
+→ https://tbd-edu.com/pages/placement.html?utm_source=tbd-web&utm_medium=template&utm_campaign=department-compare-prompt
 
 基本功能免費。
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

@@ -72,7 +72,7 @@
 - [ ] 照顧生物或進行野外採樣的週期，符合我的生活步調嗎？教授對假日與駐點的態度我確認過嗎？
 - [ ] 近幾年的碩士生畢業狀況與去向，跟我想走的方向對得上嗎？
 
-> 搭配文章：〈農生環境研究所怎麼選實驗室、選指導教授？〉 tbd-web.vercel.app/pages/resources/agriculture-graduate-choose.html
+> 搭配文章：〈農生環境研究所怎麼選實驗室、選指導教授？〉 tbd-edu.com/pages/resources/agriculture-graduate-choose.html
 
 ---
 

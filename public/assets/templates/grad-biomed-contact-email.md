@@ -51,8 +51,8 @@
 | 可用的寫法 | 我在專題期間獨立完成○○次 qPCR 與△△培養，您實驗室的□□模式正好需要這組技術 |
 | 差別 | 具體技術＋次數＋和他資源的接點 |
 
-> 搭配文章：〈研究所聯繫教授：套磁信怎麼寫？〉生醫與公衛專屬重點 tbd-web.vercel.app/pages/resources/graduate-contact-professor.html#biomed-tips
+> 搭配文章：〈研究所聯繫教授：套磁信怎麼寫？〉生醫與公衛專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#biomed-tips
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

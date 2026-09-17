@@ -124,8 +124,8 @@
 - [ ] 倫理一句話帶過，沒想過同意、保密與退出機制
 - [ ] 被問到政策時事只表達立場，沒有連回自己的研究問題
 
-> 搭配文章：〈教育研究所口試：政策題、個案題與方法答辯怎麼準備〉 tbd-web.vercel.app/pages/resources/education-graduate-oral.html
+> 搭配文章：〈教育研究所口試：政策題、個案題與方法答辯怎麼準備〉 tbd-edu.com/pages/resources/education-graduate-oral.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

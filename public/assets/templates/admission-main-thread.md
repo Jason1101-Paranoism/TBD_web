@@ -33,10 +33,10 @@
 
 TBD Growth Compass 可以把你想比的校系存成一份工作集，用歷年篩選標準算出你的相對位置：
 
-→ https://tbd-web.vercel.app/pages/placement.html?utm_source=tbd-web&utm_medium=template&utm_campaign=admission-main-thread
+→ https://tbd-edu.com/pages/placement.html?utm_source=tbd-web&utm_medium=template&utm_campaign=admission-main-thread
 
 基本功能免費，資料存在你自己的帳號裡，換裝置也還在。
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

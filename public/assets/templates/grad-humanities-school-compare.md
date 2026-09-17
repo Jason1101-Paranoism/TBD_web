@@ -79,5 +79,5 @@
 
 > 查法提示：系所官網的課程地圖與修業規定，看它在訓練什麼人；教授近三到五年的發表看「怎麼研究」而不只是「研究什麼」；**近年碩士論文清單是投報率最高的一份資料**，它直接顯示這裡實際做得出什麼題目、用什麼材料、寫到什麼深度。建議每所至少讀三到五本論文的摘要與目次。
 
-> 搭配文章：〈人文社科研究所怎麼選校、選所、選指導教授？〉 tbd-web.vercel.app/pages/resources/humanities-graduate-choose.html
+> 搭配文章：〈人文社科研究所怎麼選校、選所、選指導教授？〉 tbd-edu.com/pages/resources/humanities-graduate-choose.html
 ---

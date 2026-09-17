@@ -108,8 +108,8 @@
 | 文獻掌握不足 | 這篇我沒有讀到，謝謝老師。就我掌握的○○那一支討論，我的理解是△△；若這篇結論不同，我需要回去確認它是否改變我的問題設定。 |
 | 材料取得有疑慮 | 這確實是最大的風險。備援是改用○○，範圍會縮到△△，但核心問題仍答得出來。 |
 
-> 搭配文章：〈人文社科研究所口試怎麼準備？答辯研究計畫的完整邏輯〉 tbd-web.vercel.app/pages/resources/humanities-graduate-oral.html
+> 搭配文章：〈人文社科研究所口試怎麼準備？答辯研究計畫的完整邏輯〉 tbd-edu.com/pages/resources/humanities-graduate-oral.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

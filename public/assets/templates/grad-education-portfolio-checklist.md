@@ -106,8 +106,8 @@
 - [ ] 讀書計畫連得到該系所的實際課程與師資
 - [ ] 推薦人能具體描述我在現場的表現
 
-> 搭配文章：〈教育研究所備審：CV、自傳與研究計畫怎麼分工〉 tbd-web.vercel.app/pages/resources/education-graduate-cv.html
+> 搭配文章：〈教育研究所備審：CV、自傳與研究計畫怎麼分工〉 tbd-edu.com/pages/resources/education-graduate-cv.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

@@ -90,8 +90,8 @@
 - [ ] 研究計畫的方向在經歷裡看得到伏筆
 - [ ] 推薦人拿到了我的 CV 與計畫初稿
 
-> 搭配文章：〈商管與財經研究所備審：CV、自傳與商業故事線〉 tbd-web.vercel.app/pages/resources/business-graduate-cv.html
+> 搭配文章：〈商管與財經研究所備審：CV、自傳與商業故事線〉 tbd-edu.com/pages/resources/business-graduate-cv.html
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

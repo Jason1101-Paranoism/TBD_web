@@ -80,8 +80,8 @@
 | 可用的寫法 | 您在○○那篇對△△的解釋，若套用到□□這類事實，是否會得出不同結論？ |
 | 差別 | 針對一項具體產出提出可辯論的疑問 |
 
-> 搭配文章：〈研究所聯繫教授：套磁信怎麼寫、什麼時候寄〉的法政類群專屬重點 tbd-web.vercel.app/pages/resources/graduate-contact-professor.html#law-tips
+> 搭配文章：〈研究所聯繫教授：套磁信怎麼寫、什麼時候寄〉的法政類群專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#law-tips
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

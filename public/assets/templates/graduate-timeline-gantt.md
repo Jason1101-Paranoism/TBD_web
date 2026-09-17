@@ -78,4 +78,4 @@ CSV 匯入後只有日期，沒有色條。要看到長條需要自己加一次�
 
 ---
 
-*模板由 TBD Studio 提供 · tbd-web.vercel.app*
+*模板由 TBD Studio 提供 · tbd-edu.com*

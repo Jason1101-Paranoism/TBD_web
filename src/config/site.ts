@@ -7,10 +7,10 @@ export const site = {
   email: 'tbd.consulting.studio@gmail.com',
   lineId: '@756etimx',
   tagline: 'Define, Design, Deliver Your Next Move.',
-  siteUrl: 'https://tbd-web.vercel.app',
+  siteUrl: 'https://tbd-edu.com',
   // OG 圖是專用的 1200×630 裁切版（S-02）。原本直接用 6000×3375 的主視覺 PNG，
   // 11.1 MB 遠超 LINE／FB／X 的 5–8 MB 上限，超過就不產生預覽卡——而 LINE 是站上主要 CTA 通道。
-  ogImage: 'https://tbd-web.vercel.app/assets/images/tbd-og-cover.jpg',
+  ogImage: 'https://tbd-edu.com/assets/images/tbd-og-cover.jpg',
   ogImageWidth: 1200,
   ogImageHeight: 630,
 };

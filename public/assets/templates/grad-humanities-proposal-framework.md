@@ -92,5 +92,5 @@
 
 > 檢核：第 2、3、4 節必須是同一條線上的三個刻度。問題意識講 A、研究問題問 B、文獻回顧整理 C，是最常見的失敗模式。
 
-> 搭配文章：〈人文社科研究計畫書怎麼寫？從問題意識到文獻對話〉 tbd-web.vercel.app/pages/resources/humanities-graduate-proposal.html
+> 搭配文章：〈人文社科研究計畫書怎麼寫？從問題意識到文獻對話〉 tbd-edu.com/pages/resources/humanities-graduate-proposal.html
 ---
