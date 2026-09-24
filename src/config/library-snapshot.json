@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-16T09:23:09.734Z",
+  "fetchedAt": "2026-09-24T10:06:42.766Z",
   "items": [
     {
       "category": "學習歷程",
@@ -199,7 +199,7 @@
       "postUrl": "https://drive.google.com/file/d/17e5r80jUzftXSbRoEgJMIUPwEn5vQ2-o/view",
       "lpTitle": "",
       "lpUrl": "",
-      "article": "https://tbd-edu.com/pages/resources/pre-college-complete-guide.html"
+      "article": "https://tbd-web.vercel.app/pages/resources/pre-college-complete-guide.html"
     },
     {
       "category": "解惑",
@@ -279,7 +279,7 @@
       "postUrl": "https://drive.google.com/file/d/17XyHa-ZHEqg6BA5Je7eW0vlTHu4PcS6W/view",
       "lpTitle": "",
       "lpUrl": "",
-      "article": "https://tbd-edu.com/pages/portfolio-guide.html"
+      "article": "https://tbd-web.vercel.app/pages/portfolio-guide.html"
     },
     {
       "category": "高中",
@@ -419,8 +419,32 @@
     },
     {
       "category": "其他",
-      "title": "你適合研究所推甄還是考試",
-      "postUrl": "https://drive.google.com/file/d/1au-HxbnKhTejNcRxDsLfeeAsALvMC4Cb/view?usp=drive_link",
+      "title": "高一高二忘記 勾選學習歷程怎麼辦",
+      "postUrl": "https://drive.google.com/file/d/1Bt5g_wqxoyk22c5fkY9FfmyOkOnu77Fk/view?usp=drive_link",
+      "lpTitle": "",
+      "lpUrl": "",
+      "article": ""
+    },
+    {
+      "category": "其他",
+      "title": "英文口說免費資源推薦",
+      "postUrl": "https://drive.google.com/file/d/1QbF_Vm5z0EcVw2bU-Y1m0LeQoKyAdv9b/view?usp=drive_link",
+      "lpTitle": "",
+      "lpUrl": "",
+      "article": ""
+    },
+    {
+      "category": "其他",
+      "title": "如何在備審資料中 展現自己的亮點",
+      "postUrl": "https://drive.google.com/file/d/1M1Zb_tWPgaWdELWoK1A7HeOos33YPHub/view?usp=drive_link",
+      "lpTitle": "",
+      "lpUrl": "",
+      "article": ""
+    },
+    {
+      "category": "其他",
+      "title": "從0開始製作學習歷程",
+      "postUrl": "https://drive.google.com/file/d/12S16Sxg1OZyjoVKpminp5TCFRqJ6nMcE/view?usp=drive_link",
       "lpTitle": "",
       "lpUrl": "",
       "article": ""
