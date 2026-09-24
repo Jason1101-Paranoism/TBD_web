@@ -72,7 +72,7 @@
 - [GitHub Commit 與版本管理入門：從混亂到有結構](https://tbd-edu.com/pages/resources/github-commit-guide.html): 很多學生用 GitHub 只是把程式碼丟上去，commit 訊息寫「update」就交差。但那其實記錄著你的學習過程。本文說明怎麼寫出有意義的訊息，以及它為何是備審與面試的加分項。
 - [一份強的 GitHub 作品集，長什麼樣子？](https://tbd-edu.com/pages/resources/github-portfolio.html): 資訊、工程、設計科系的學生，常不知道 GitHub 作品集怎麼呈現才有說服力。本文說明 GitHub 在升學申請中的角色、評審如何判斷作品集，以及不同方向學生的整理重點與起步方法。
 - [研究所怎麼選校、選所、選指導教授？](https://tbd-edu.com/pages/resources/graduate-choose-lab.html): 很多人選研究所只看學校排名，進去才發現研究方向不合、和指導教授處不來。關鍵其實是「領域、實驗室、指導教授」這條線。本文說明三層決策邏輯與最容易被忽略的契合度問題。
-- [研究所聯繫教授：套磁信怎麼寫、什麼時候寄？](https://tbd-edu.com/pages/resources/graduate-contact-professor.html): 推甄前想聯繫教授，卻怕一封套磁信石沉大海？主動聯繫能確認研究方向是否契合，也讓教授審查時對你有印象。本文說明信該寫什麼、什麼時候寄、怎麼避免沒有回音，以及收到回覆後怎麼接續。
+- [研究所聯繫教授：聯繫信怎麼寫、什麼時候寄？](https://tbd-edu.com/pages/resources/graduate-contact-professor.html): 推甄前想寫信給教授，卻怕石沉大海？主動聯繫能確認研究方向是否契合，也讓教授審查時對你有印象。本文說明信該寫什麼、什麼時候寄、怎麼避免沒有回音，以及收到回覆後怎麼接續。
 - [研究所備審怎麼準備？自傳、CV 與資料整理](https://tbd-edu.com/pages/resources/graduate-cv.html): 研究所書審看的不是探索與潛力，而是你做研究的準備與專業軌跡。本文說明學術 CV 該呈現哪些經歷、自傳怎麼寫，以及它和研究計畫書怎麼分工，連成一條對準目標實驗室的線。
 - [研究所口試怎麼準備？答辯研究計畫書的完整邏輯](https://tbd-edu.com/pages/resources/graduate-oral-defense.html): 研究所推甄口試不是大學面試的加強版，教授要看的是你能否在學術對話中為研究方向辯護。本文拆解研究計畫書答辯的核心邏輯、口試常見問題類型，並說明如何展現進入研究室的成熟度與準備節奏。
 - [研究所推甄 vs 考試：我該走哪條路？](https://tbd-edu.com/pages/resources/graduate-recommend-vs-exam.html): 研究所推甄還是考試？選錯路可能讓你把力氣花在不利的戰場。兩條路篩的東西完全不同——推甄看整體輪廓與研究潛力，考試比專業科目硬實力。本文比較評選邏輯與適合對象。

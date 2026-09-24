@@ -89,7 +89,7 @@
 | 可用的寫法 | 您在○○那件裡用○○處理△△的方式，和我這兩年在處理的□□是同一個問題的兩種解法 |
 | 差別 | 指名一件具體作品，並說出你看到什麼——拿掉這段信就不成立 |
 
-> 搭配文章：〈研究所聯繫教授（套磁）信怎麼寫？〉藝術類群專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#arts-tips
+> 搭配文章：〈研究所聯繫教授：聯繫信怎麼寫？〉藝術類群專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#arts-tips
 
 ---
 

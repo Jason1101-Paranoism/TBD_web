@@ -98,7 +98,7 @@
 | 可用的寫法 | 我在○○國中代課兩學期，反覆遇到△△的狀況；您在□□那篇處理的正是這個機制 |
 | 差別 | 從具體事件寫起，不是從教育熱忱寫起 |
 
-> 搭配文章：〈研究所聯繫教授（套磁）信怎麼寫？〉教育類群專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#education-tips
+> 搭配文章：〈研究所聯繫教授：聯繫信怎麼寫？〉教育類群專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#education-tips
 
 ---
 

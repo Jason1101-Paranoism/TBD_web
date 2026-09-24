@@ -195,7 +195,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         article: '/pages/resources/engineering-graduate-choose.html',
       },
       {
-        title: '理工套磁信結構模板',
+        title: '理工聯繫信結構模板',
         desc: '六段信件結構＋寄信前檢核：用專題成果證明契合度，不是表達熱情。',
         file: 'grad-engineering-contact-email',
         article: '/pages/resources/graduate-contact-professor.html#stem-tips',
@@ -235,7 +235,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         article: '/pages/resources/biomed-graduate-choose.html',
       },
       {
-        title: '生醫套磁信結構模板',
+        title: '生醫聯繫信結構模板',
         desc: '六段信件結構＋能力證據清單＋寄信前檢核：用技術即戰力證明契合度，並依教授類型調整切入點。',
         file: 'grad-biomed-contact-email',
         article: '/pages/resources/graduate-contact-professor.html#biomed-tips',
@@ -275,7 +275,7 @@ export const gradTemplateGroups: GradTemplateGroup[] = [
         article: '/pages/resources/business-graduate-choose.html',
       },
       {
-        title: '商管財經套磁信結構模板',
+        title: '商管財經聯繫信結構模板',
         desc: '七段信件結構＋適合呈現的能力證據清單＋寄信前檢核，避免寫成群發罐頭信。',
         file: 'grad-business-contact-email',
         article: '/pages/resources/graduate-contact-professor.html#business-tips',

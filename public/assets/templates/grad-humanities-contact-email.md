@@ -79,7 +79,7 @@
 | 可用的寫法 | 您在○○那篇主張△△，但我在處理□□材料時看到相反的樣態，想請教這是否代表⋯⋯ |
 | 差別 | 提出一個他答得出、別人答不出的問題 |
 
-> 搭配文章：〈研究所聯繫教授（套磁）信怎麼寫？〉人文社科專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#humanities-tips
+> 搭配文章：〈研究所聯繫教授：聯繫信怎麼寫？〉人文社科專屬重點 tbd-edu.com/pages/resources/graduate-contact-professor.html#humanities-tips
 
 ---
 
