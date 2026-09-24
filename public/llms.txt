@@ -58,7 +58,7 @@
 - [設計研究所推甄時程：作品集決定你該從哪一年開始](https://tbd-edu.com/pages/resources/design-graduate-timeline.html): 設計推甄和其他學群最大的差別，是作品集沒辦法在兩個月內生出來。本文把準備拆成大三上到大四上四個階段，說明每階段該完成什麼，以及大四上才決定的人還有哪些選項。
 - [教育、師培科系備審要展示什麼？](https://tbd-edu.com/pages/resources/education-application.html): 寫「我從小就想當老師」真的會打動評審嗎？教育、師培、幼教、特教的評審看的是你有沒有真實教學陪伴經驗、能不能觀察學習者的需要。本文說明最有說服力的材料與常見失誤。
 - [教育研究所怎麼選校、選所、選指導教授？排名之外，先看場域與取向](https://tbd-edu.com/pages/resources/education-graduate-choose.html): 教育研究所不能只看排名。教育行政、課程與教學、心理與諮商、特教的生態差異很大，同系名也可能一邊偏理論、一邊偏現場。本文用次領域、學術取向、場域資源三層判斷，附比較表。
-- [教育研究所備審：CV、自傳與研究計畫怎麼分工](https://tbd-edu.com/pages/resources/education-graduate-cv.html): 教育類備審最常見的問題不是經歷太少，而是三份文件在講同一件事，全部寫成經歷流水帳。本文說明 CV、自傳與研究計畫的分工、CV 欄位與推薦信素材，附可下載 Checklist。
+- [教育研究所備審：CV、自傳與研究計畫怎麼分工](https://tbd-edu.com/pages/resources/education-graduate-cv.html): 教育類備審最常見的問題不是經歷太少，而是三份文件在講同一件事，全部寫成經歷流水帳。本文說明 CV、自傳與研究計畫的分工、CV 欄位與推薦信素材，附可下載檢核表。
 - [教育研究所口試：政策題、個案題與方法答辯怎麼準備](https://tbd-edu.com/pages/resources/education-graduate-oral.html): 教育所口試不只是自我介紹。教授要確認你對研究計畫理解得夠不夠深、方法被質疑時能不能說清楚。本文整理四類常見追問、五步答題框架、個案題六步流程，附可下載題庫。
 - [教育研究計畫怎麼寫？從現場困惑到可執行的研究設計](https://tbd-edu.com/pages/resources/education-graduate-proposal.html): 教育類研究計畫最容易被寫成教學方案或實習心得。真正要做的是從現場痛點出發，透過文獻找出研究缺口。本文說明十節架構、方法選用與研究倫理，附轉換模板與可行性檢核表。
 - [教育研究所推甄時程：研究問題不是大四上才想的東西](https://tbd-edu.com/pages/resources/education-graduate-timeline.html): 教育類群推甄最大的誤區，是等到大四上才開始準備。真正耗時的是確認次領域、盤點現場經驗、把重複出現的困惑收斂成研究問題。本文說明各階段產出與推甄或考試的路線判斷。
@@ -91,7 +91,7 @@
 - [面試自我介紹怎麼說：結構化的兩分鐘表達指南](https://tbd-edu.com/pages/resources/interview-self-intro.html): 面試一開場就被請做自我介紹，卻常常準備不到位？問題不是不知道自己是誰，而是不知道怎麼在兩分鐘內說清楚。本文提供面試自我介紹的結構框架，幫你說清楚你是誰、做了什麼、為什麼在這裡。
 - [特殊選才面試 vs 個申二階：差在哪裡、怎麼分別準備？](https://tbd-edu.com/pages/resources/interview-types.html): 同樣是面試，特殊選才和個申二階的邏輯卻截然不同，準備方向錯了結果差很多。本文比較兩種面試的根本差異——一個從備審答辯出發，一個測深度與原創潛力，以及各自的準備重點。
 - [法政研究所怎麼選校、選所、選指導教授？同一個系，訓練可能完全不同](https://tbd-edu.com/pages/resources/law-graduate-choose.html): 法政同一個系所裡，實體法與程序法、規範與實證、理論與量化，訓練出來的是不同的人。本文用次領域、研究取向、教授現況三層邏輯判斷契合度，並說明為何要確認當年收不收生。
-- [法政備審怎麼準備？CV、自傳與研究計畫的分工](https://tbd-edu.com/pages/resources/law-graduate-cv.html): 法政備審最常見的問題不是材料太少，而是三份文件在講同一件事。CV 列事實、自傳講軌跡、研究計畫寫未來。本文說明三者的分工、每段經歷該寫出的七件事，附可下載 Checklist。
+- [法政備審怎麼準備？CV、自傳與研究計畫的分工](https://tbd-edu.com/pages/resources/law-graduate-cv.html): 法政備審最常見的問題不是材料太少，而是三份文件在講同一件事。CV 列事實、自傳講軌跡、研究計畫寫未來。本文說明三者的分工、每段經歷該寫出的七件事，附可下載檢核表。
 - [法政研究所口試怎麼準備？答辯研究計畫的完整邏輯](https://tbd-edu.com/pages/resources/law-graduate-oral.html): 法政口試與理工、商管最大的不同：研究問題往往沒有絕對正確的答案，教授追問的是你的立場站不站得住。本文提供一分鐘立場說明、四類追問題庫、六步答題框架與被指出矛盾時的句型。
 - [法政研究計畫書怎麼寫？從一個可辯論的爭點開始](https://tbd-edu.com/pages/resources/law-graduate-proposal.html): 法政研究計畫最常見的兩種死法：寫成一整篇文獻整理，或題目大到碩士兩年做不完。本文說明怎麼把議題縮小成可辯論的爭點、十節架構每一節要回答什麼，附縮小與架構模板。
 - [法政研究所推甄時程：為什麼要從大三上開始，而不是大四上](https://tbd-edu.com/pages/resources/law-graduate-timeline.html): 法政推甄的材料——十五到二十頁的研究計畫、小論文、教授推薦信——沒有一項能在兩個月內生出來。本文拆成大三上到大四上四個階段，說明各階段產出與來不及時該怎麼取捨。
