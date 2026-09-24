@@ -252,7 +252,9 @@ for (const r of results) {
   // 規格寫「統一 6 欄」，這裡驗的是下限。法政備審的經歷盤點是 7 欄實體寬表
   // （時間／做了什麼／用到什麼能力／與研究方向的關聯／可查證的產出／放哪份文件），
   // 壓成 6 欄會刪掉一整欄內容——規格的用意是統一下限，不是砍內容。
-  if (r.cols < 6) issues.push(`欄數 ${r.cols}`);
+  // 只驗 CSV：「6 欄」是 CSV 攤平時為了匯入一致而補齊的寬度。活頁簿的欄數就是版面本身，
+  // 計畫書 5 欄是完整內容（節次／要回答的問題／常見失分／我的內容…），補一欄空白沒有意義。
+  if (r.format === 'csv' && r.cols < 6) issues.push(`欄數 ${r.cols}`);
   // bom 為 null 代表不適用（活頁簿沒有 BOM 這回事），只有 CSV 缺 BOM 才算問題。
   if (r.bom === false) issues.push('無 BOM');
   issues.push(...r.missing);
@@ -287,6 +289,30 @@ if (leaks.length) {
   console.log('✅ 零命中');
 }
 
+// 活頁簿的作者欄位：從 Drive 下載的檔案會帶審閱者本人的帳號名（docProps/core.xml 的
+// creator／lastModifiedBy），這個 repo 是公開的、檔案也直接給使用者下載。
+// 9/24 上架前發現 56 份裡 50 份帶著成員姓名；每次從 Drive 換檔都會再帶進來，所以擋在閘門。
+// openpyxl 是存檔工具的名字，不是人。
+const AUTHOR_OK = new Set(['', 'TBD Studio', 'openpyxl']);
+const authorLeaks = [];
+for (const slug of manifestSlugs) {
+  const file = join(DIR, `${slug}.xlsx`);
+  if (!existsSync(file)) continue;
+  const core = unzip(readFileSync(file)).get('docProps/core.xml')?.toString('utf8') ?? '';
+  for (const tag of ['dc:creator', 'cp:lastModifiedBy']) {
+    // 標籤可能帶 xmlns 屬性（<dc:creator xmlns:dc="…">），不能寫死成 <tag>。
+    const v = new RegExp(`<${tag}(?:\\s[^>]*)?>([^<]*)</${tag}>`).exec(core)?.[1] ?? '';
+    if (!AUTHOR_OK.has(v)) authorLeaks.push(`${slug}.xlsx：${tag}＝${v}`);
+  }
+}
+console.log('\n── 活頁簿作者欄位掃描 ──');
+if (authorLeaks.length) {
+  console.log('❌ 作者欄位帶著個人名稱，請改成「TBD Studio」或清空：');
+  for (const l of authorLeaks) console.log(`   ✗ ${l}`);
+} else {
+  console.log('✅ 零命中');
+}
+
 // 在 manifest 上、磁碟卻兩種格式都沒有：這份模板等於不存在，但頁面仍會連向它。
 // 舊版是掃磁碟，這種情況只會讓表格少一列——正是本檔要擋的「安靜地少驗一項」。
 if (unreadable.length) {
@@ -297,6 +323,7 @@ const verdict = [
   bad ? `❌ 規格 ${bad}/${results.length} 份有缺漏` : null,
   unreadable.length ? `❌ ${unreadable.length} 份讀不到` : null,
   leaks.length ? `❌ 轉檔殘留 ${leaks.length} 份` : null,
+  authorLeaks.length ? `❌ 作者欄位帶個人名稱 ${authorLeaks.length} 處` : null,
 ].filter(Boolean).join('；') || '✅ 全部符合規格';
 console.log(`\n結論：${verdict}`);
-if ((bad || leaks.length || unreadable.length) && STRICT) process.exit(1);
+if ((bad || leaks.length || unreadable.length || authorLeaks.length) && STRICT) process.exit(1);

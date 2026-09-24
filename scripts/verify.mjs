@@ -50,8 +50,8 @@ const TARGETS = [
   { path: '/pages/resources/graduate-timeline.html', name: '文章（通用時程：inline CTA＋無回知識庫）', toc: true,
     mustContain: ['guide-inline-cta', '閱讀約'], mustNotContain: ['回知識庫'] },
   // v3 review 回歸：理工套磁要點移入通用套磁文（#stem-tips 錨點＋情境化模板下載）
-  { path: '/pages/resources/graduate-contact-professor.html', name: '文章（套磁：理工專屬重點＋模板）', toc: true,
-    mustContain: ['id="stem-tips"', 'grad-engineering-contact-email.md'] },
+  { path: '/pages/resources/graduate-contact-professor.html', name: '文章（聯繫信：理工專屬重點＋模板）', toc: true,
+    mustContain: ['id="stem-tips"', 'grad-engineering-contact-email.xlsx'] },
   // 階段 1／4 沒有分學群專屬文，series-nav 的橫向軸必須改列六份學群指南，不能是死路
   { path: '/pages/resources/graduate-recommend-vs-exam.html', name: '文章（階段1：橫向出口回退為學群指南）', toc: true,
     mustContain: ['guides/graduate-arts.html', 'guides/graduate-design.html', 'guides/graduate-engineering.html',
@@ -79,9 +79,9 @@ const TARGETS = [
     mustContain: [
       'design-graduate-timeline.html',
       '設計推甄專屬工具包',
-      'grad-design-school-compare.md', 'grad-design-school-compare.csv',
-      'grad-design-contact-email.md', 'grad-design-proposal-framework.md',
-      'grad-design-portfolio-checklist.md', 'grad-design-oral-checklist.md',
+      'grad-design-school-compare.xlsx',
+      'grad-design-contact-email.xlsx', 'grad-design-proposal-framework.xlsx',
+      'grad-design-portfolio-checklist.xlsx', 'grad-design-oral-checklist.xlsx',
       'graduate-contact-professor.html#design-tips',
     ] },
   { path: '/pages/guides/graduate-engineering.html', name: '理工研究所指南（工具包＋stem-tips 錨點）',
@@ -121,9 +121,9 @@ const TARGETS = [
   // tbd-pages.css 的 `.article-section table:not([class])`。下面三項刻意涵蓋：多表格的新文章、
   // 以及兩篇 Week 6/7 的舊文——舊內容從來沒進過這份清單，那正是這個破版活了八週沒被發現的原因。
   { path: '/pages/resources/law-graduate-proposal.html', name: '文章（法政研究計畫：多表格 RWD）', toc: true,
-    mustContain: ['grad-law-proposal-framework.md'] },
+    mustContain: ['grad-law-proposal-framework.xlsx'] },
   { path: '/pages/resources/education-graduate-choose.html', name: '文章（教育選校：舊文表格 RWD 回歸）', toc: true,
-    mustContain: ['grad-education-school-compare.md'] },
+    mustContain: ['grad-education-school-compare.xlsx'] },
   { path: '/pages/resources/arts-graduate-cv.html', name: '文章（藝術備審：舊文表格 RWD 回歸）', toc: true },
   { path: '/pages/portfolio-guide.html', name: '作品集指南（vanilla JS）', menuToggle: '#pg-guide-menu-toggle' },
   { path: '/pages/grad-path-quiz.html', name: '推甄vs考試測驗（vanilla JS）', gpq: true,

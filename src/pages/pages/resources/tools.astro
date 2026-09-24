@@ -30,24 +30,21 @@ const downloadGroups = [
     why: '還沒決定要走哪條路、讀哪個科系的時候用。',
     items: [
       {
-        title: '升學管道戰力評估雷達圖',
+        title: '升學管道戰力評估與決策雷達圖',
         desc: '11 個題目各給 1–5 分，個申／特選／分科三條路的平均分自動算出。它不告訴你走哪條，它告訴你哪條路你還缺什麼。',
-        csv: '/assets/templates/admission-channel-radar.csv',
-        md: '/assets/templates/admission-channel-radar.md',
+        xlsx: '/assets/templates/admission-channel-radar.xlsx',
         article: '/pages/resources/admission-channels-compare.html',
       },
       {
         title: '科系比較 Prompt 產生器',
         desc: '填五個變數，產生一份 8 階段的科系深度比較 Prompt——適用任何兩個科系的取捨。',
-        csv: '/assets/templates/department-compare-prompt.csv',
-        md: '/assets/templates/department-compare-prompt.md',
+        xlsx: '/assets/templates/department-compare-prompt.xlsx',
         article: '/pages/resources/department-compare-method.html',
       },
       {
         title: '科系探索訪談清單',
         desc: '訪談學長姐或從業者時可直接用的問題表，附「對方回答」與「我的判斷」欄位。',
-        csv: '/assets/templates/department-interview-questions.csv',
-        md: '/assets/templates/department-interview-questions.md',
+        xlsx: '/assets/templates/department-interview-questions.xlsx',
         article: '/pages/resources/department-interview-questions.html',
       },
     ],
@@ -58,17 +55,15 @@ const downloadGroups = [
     why: '高一高二、或還在做東西的階段。記錄的時機是當下，不是備審前。',
     items: [
       {
-        title: 'Side Project 執行追蹤板',
+        title: 'Side Project 企劃與執行追蹤板',
         desc: '填專案開始日，15 個任務的目標完成日自動排出、剩餘天數每天更新。前六項都還沒開始寫程式——那是刻意的。',
-        csv: '/assets/templates/side-project-tracker.csv',
-        md: '/assets/templates/side-project-tracker.md',
+        xlsx: '/assets/templates/side-project-tracker.xlsx',
         article: '/pages/resources/side-project-from-zero.html',
       },
       {
         title: '學習歷程「反思」寫作引導',
         desc: '三種有效的反思結構，先選結構再下筆。附自我檢查：把活動名稱換掉還成立的話，就是太空泛。',
-        csv: '/assets/templates/portfolio-reflection-guide.csv',
-        md: '/assets/templates/portfolio-reflection-guide.md',
+        xlsx: '/assets/templates/portfolio-reflection-guide.xlsx',
         article: '/pages/resources/reflection-in-portfolio.html',
       },
     ],
@@ -81,15 +76,13 @@ const downloadGroups = [
       {
         title: '備審主線整理表',
         desc: '把所有經歷攤開來，依「與目標科系的關聯」找出能串成一條主線的那幾項。',
-        csv: '/assets/templates/admission-main-thread.csv',
-        md: '/assets/templates/admission-main-thread.md',
+        xlsx: '/assets/templates/admission-main-thread.xlsx',
         article: '/pages/resources/scatter-to-story.html',
       },
       {
         title: 'README 與 Portfolio 內容規劃表',
         desc: '區塊檢核表加一份可直接複製的 README 公版。先確認每個區塊有沒有，再處理好不好。',
-        csv: '/assets/templates/readme-portfolio-planner.csv',
-        md: '/assets/templates/readme-portfolio-planner.md',
+        xlsx: '/assets/templates/readme-portfolio-planner.xlsx',
         article: '/pages/resources/readme-guide.html',
       },
     ],
@@ -102,15 +95,13 @@ const downloadGroups = [
       {
         title: '面試答題素材工作表',
         desc: '含兩分鐘自我介紹的三段式填空，以及依五個題型整理「這題我要用哪段經歷」。搭配面試題庫頁一起用。',
-        csv: '/assets/templates/interview-answer-material.csv',
-        md: '/assets/templates/interview-answer-material.md',
+        xlsx: '/assets/templates/interview-answer-material.xlsx',
         article: '/pages/resources/interview-self-intro.html',
       },
       {
-        title: '系統性面試準備六層防護網',
+        title: '系統性面試準備　六層防護網',
         desc: '對象、背景、關係、素材、情境、流程六層逐層填。答不出來時通常不是表達的問題，是第三層沒建立起來。',
-        csv: '/assets/templates/interview-six-layer-prep.csv',
-        md: '/assets/templates/interview-six-layer-prep.md',
+        xlsx: '/assets/templates/interview-six-layer-prep.xlsx',
         article: '/pages/resources/lulu-preparation-system.html',
       },
     ],
@@ -121,10 +112,9 @@ const downloadGroups = [
     why: '已經錄取了，暑假那個月。',
     items: [
       {
-        title: '升大學前 30 天 Checklist',
+        title: '升大學前 30 天準備 Checklist',
         desc: '一個月四週的準備節奏：探索選題 → 做第一版 → 優化紀錄 → 整理表達。可勾選追蹤進度。',
-        csv: '/assets/templates/pre-college-30day-checklist.csv',
-        md: '/assets/templates/pre-college-30day-checklist.md',
+        xlsx: '/assets/templates/pre-college-30day-checklist.xlsx',
         article: '/pages/resources/pre-college-30-day-checklist.html',
       },
     ],
@@ -136,10 +126,9 @@ const downloadGroups = [
 // 硬塞一份跨學群的進去會讓指南頁也長出一張不屬於該學群的卡。
 const gradShared = [
   {
-    title: '推甄時程倒數與任務甘特圖',
-    desc: '填一個日期——你第一間的送件截止日——17 個任務的建議起訖自動回推。CSV 版的日期欄是公式，改一格全部跟著動。',
-    csv: '/assets/templates/graduate-timeline-gantt.csv',
-    md: '/assets/templates/graduate-timeline-gantt.md',
+    title: '研究所推甄時程倒數與任務甘特圖',
+    desc: '填一個日期——你第一間的送件截止日——17 個任務的建議起訖自動回推。日期欄是公式，改一格全部跟著動。',
+    xlsx: '/assets/templates/graduate-timeline-gantt.xlsx',
     article: '/pages/resources/graduate-timeline.html',
   },
 ];
@@ -177,14 +166,14 @@ const relatedArticles = [
   </nav>
   <span class="kicker">工具與模板</span>
   <h1>把準備變成可以動手的工具</h1>
-  <p class="lead">知識看完還是要動手。這裡整理了可以直接下載使用的升學準備模板，以及可複製的範本——挑一個現在最用得到的開始。CSV 檔可用 Excel 或 Google 試算表開啟。</p>
+  <p class="lead">知識看完還是要動手。這裡整理了可以直接下載使用的升學準備模板，以及可複製的範本——挑一個現在最用得到的開始。模板都是 Excel 活頁簿，Excel、Numbers、Google 試算表都能直接開。</p>
 </section>
 
 <main class="search-main">
 
   <section class="section" id="downloads">
     <h2 class="section-label">可下載模板</h2>
-    <p style="margin-bottom: 8px; color: var(--tbd-mid);">依準備的先後順序排列，不確定自己在哪一步就從第一組開始。兩種格式任選：<strong>CSV</strong> 用 Excel / Numbers / Google 試算表開；<strong>Markdown</strong> 可一鍵匯入 Notion（也能貼進 Google Docs）。</p>
+    <p style="margin-bottom: 8px; color: var(--tbd-mid);">依準備的先後順序排列，不確定自己在哪一步就從第一組開始。全部是 <strong>Excel 活頁簿</strong>，Excel、Numbers、Google 試算表都能直接開；第一個分頁「先讀這裡」說明怎麼用。</p>
     {downloadGroups.map((g) => (
       <div class="tool-group" id={g.id}>
         <h3 class="tool-group-title">
@@ -198,8 +187,7 @@ const relatedArticles = [
               <h4>{d.title}</h4>
               <p class="card-desc">{d.desc}</p>
               <div class="button-row" style="margin-top: 16px;">
-                {d.md && <a class="button" href={d.md} download data-track-event="download_resource">Notion / Markdown</a>}
-                {d.csv && <a class="button secondary" href={d.csv} download data-track-event="download_resource">CSV 試算表</a>}
+                {d.xlsx && <a class="button" href={d.xlsx} download data-track-event="download_resource">下載 Excel 活頁簿</a>}
               </div>
               <p style="margin-top: 10px;"><a class="text-link" href={d.article}>看使用說明 →</a></p>
             </article>
@@ -225,8 +213,7 @@ const relatedArticles = [
             <h4>{d.title}</h4>
             <p class="card-desc">{d.desc}</p>
             <div class="button-row" style="margin-top: 16px;">
-              {d.md && <a class="button" href={d.md} download data-track-event="download_resource">Notion / Markdown</a>}
-              {d.csv && <a class="button secondary" href={d.csv} download data-track-event="download_resource">CSV 試算表</a>}
+              {d.xlsx && <a class="button" href={d.xlsx} download data-track-event="download_resource">下載 Excel 活頁簿</a>}
             </div>
             <p style="margin-top: 10px;"><a class="text-link" href={d.article}>看使用說明 →</a></p>
           </article>
@@ -246,11 +233,7 @@ const relatedArticles = [
               <h4>{d.title}</h4>
               <p class="card-desc">{d.desc}</p>
               <div class="button-row" style="margin-top: 16px;">
-                {d.md && <a class="button" href={d.md} download data-track-event="download_resource">Notion / Markdown</a>}
-                {d.csv && <a class="button secondary" href={d.csv} download data-track-event="download_resource">CSV 試算表</a>}
-                {d.xlsx && (
-                  <a class="button secondary" href={d.xlsx} download data-track-event="download_resource">Excel 活頁簿</a>
-                )}
+                {d.xlsx && <a class="button" href={d.xlsx} download data-track-event="download_resource">下載 Excel 活頁簿</a>}
               </div>
               <p style="margin-top: 10px;"><a class="text-link" href={d.article}>看使用說明 →</a></p>
             </article>
@@ -275,11 +258,11 @@ const relatedArticles = [
 
   <section class="section" id="how-to-use">
     <h2 class="section-label">怎麼變成你自己的正式模板</h2>
-    <p style="margin-bottom: 16px; color: var(--tbd-mid);">這些檔案是可直接使用的範本。想做成自己長期維護、或可分享給別人的版本，三步就好：</p>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">每份模板都是 Excel 活頁簿，下載後直接填。想存成自己長期維護、或分享給別人的版本：</p>
     <ul class="content-list" style="color: var(--tbd-mid); line-height: 2;">
-      <li><strong>匯入 Notion：</strong>新增一頁 → 左下／右上「⋯」→ Import → Markdown，選下載的 <code>.md</code> 檔。勾選項會變成 to-do、表格會變成 Notion 表格（可再轉成資料庫方便篩選）。</li>
-      <li><strong>用 Google 試算表：</strong>新增試算表 → 檔案 → 匯入 → 上傳 <code>.csv</code>，即成為可填寫的表格；要分享給別人就設定共用權限。</li>
-      <li><strong>用 Google Docs：</strong>把 <code>.md</code> 內容貼上（或開啟「以 Markdown 貼上」），再依需要調整格式。</li>
+      <li><strong>用 Excel 或 Numbers：</strong>直接開啟。淡黃色的儲存格是要你填或勾的；有「我到哪了」分頁的，打勾後完成度會自動更新。</li>
+      <li><strong>用 Google 試算表：</strong>上傳到 Google 雲端硬碟 → 用 Google 試算表開啟 → 檔案 → 儲存為 Google 試算表。下拉選單與公式都會保留；要分享給別人就設定共用權限。</li>
+      <li><strong>想放進 Notion：</strong>在 Notion 頁面嵌入 Google 試算表的共用連結，或把需要的分頁匯出成 CSV 再匯入（公式與下拉選單不會跟過去）。</li>
     </ul>
   </section>
 
