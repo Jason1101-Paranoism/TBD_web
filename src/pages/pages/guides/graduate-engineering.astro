@@ -130,7 +130,7 @@ const schema = {
 
   <section class="section" id="templates">
     <h2>理工推甄專屬工具包</h2>
-    <p style="margin-bottom: 16px; color: var(--tbd-mid);">五份對應各階段的工具，格式任選：<strong>CSV</strong> 用 Excel / Google 試算表開；<strong>Markdown</strong> 可一鍵匯入 Notion。備審檢核表另有 <strong>Excel 活頁簿</strong>，四個分頁、打勾後自動算出各區完成度；口試檢核表只發 <strong>Excel 活頁簿</strong>，三個分頁，含模擬追問紀錄。</p>
+    <p style="margin-bottom: 16px; color: var(--tbd-mid);">五份對應各階段的工具，全部是 <strong>Excel 活頁簿</strong>（Google 試算表也能直接開）。第一個分頁「先讀這裡」說明怎麼用，淡黃色的儲存格是要你填或勾的；檢核表打勾後會自動算出各區完成度。<a class="text-link" href="/pages/resources/tool-design.html">這些工具為什麼這樣設計 →</a></p>
     <div class="card-grid">
       {templates.map((t) => (
         <article class="card article-card">
@@ -138,11 +138,7 @@ const schema = {
           <h3>{t.title}</h3>
           <p class="card-desc">{t.desc}</p>
           <div class="button-row" style="margin-top: 16px;">
-            {t.md && <a class="button" href={t.md} download data-track-event="download_resource">Notion / Markdown</a>}
-            {t.csv && <a class="button secondary" href={t.csv} download data-track-event="download_resource">CSV 試算表</a>}
-            {t.xlsx && (
-              <a class="button secondary" href={t.xlsx} download data-track-event="download_resource">Excel 活頁簿</a>
-            )}
+            {t.xlsx && <a class="button" href={t.xlsx} download data-track-event="download_resource">下載 Excel 活頁簿</a>}
           </div>
           <p style="margin-top: 10px;"><a class="text-link" href={t.article}>看使用說明 →</a></p>
         </article>

@@ -186,9 +186,9 @@ relatedArticles:
    那是「學群共有幾個、各自到哪個階段」的正本（2026-08-18 定案 9 群，見 D-011）。三態：
    `shipped`（指南＋模板都在）／`guide-only`（只有指南）／`planned`（研究所內容未產出，前台不得有入口）。
    模板補齊後要把該群從 `guide-only` 升成 `shipped`，否則 `check-grad-departments.mjs` 會擋。
-1. 把 `.md` 與 `.csv` 放進 `public/assets/templates/`，檔名為 `grad-<學群>-<用途>`
-2. 在 `scripts/template-manifest.json` 登記一筆（`slug` ＋ `delivery: "file"`）
-3. 在 `gradTemplates.ts` 對應的學群 group 裡登記（`title` / `desc` / `file` / `article`）
+1. 把 `.xlsx` 放進 `public/assets/templates/`，檔名為 `grad-<學群>-<用途>`。自 2026-09-24 起全部只發活頁簿（D-021），不再放 `.md`／`.csv`；xlsx 的作者欄位（creator／lastModifiedBy）要是「TBD Studio」，否則 verify 會擋
+2. 在 `scripts/template-manifest.json` 登記一筆（`slug` ＋ `delivery: "file"` ＋ `xlsx: true` ＋ `xlsxOnly: true`）
+3. 在 `gradTemplates.ts` 對應的學群 group 裡登記（`title` / `desc` / `file` / `xlsx: true` / `xlsxOnly: true` / `article`）；`title` 要與 xlsx 第一列標題一字不差（不含「v1」）
 4. `npm run verify`
 
 **另外發 xlsx 活頁簿時**：`.xlsx` 放進同一個目錄後，`template-manifest.json` 與 `gradTemplates.ts` **兩邊都要加 `xlsx: true`**。前者是閘門的事實來源，後者才是渲染下載連結的依據——只加前者時 build 與 verify 曾經全綠，但 `tools.html` 與指南頁一個 xlsx 連結都沒有（2026-09-12，B3 口試檢核）。現在 `verify.mjs` 會對 `dist/` 反查有沒有頁面連得到它。
