@@ -139,6 +139,8 @@ const TARGETS = [
   // 回歸：Week 3–6 的 20 份分學群模板曾只登記在指南頁、沒進下載頁，四輪都沒被發現。
   // 事實來源是 scripts/template-manifest.json（見 D-008），且該 manifest 由
   // checkTemplateManifest() 與磁碟互相校驗，任一邊少一份都會失敗。
+  { path: '/pages/resources/tool-design.html', name: '工具設計原則（三原則＋出處 DOI）',
+    mustContain: ['id="handoff"', 'doi.org/10.3102/003465430298487', 'tools.html'] },
   { path: '/pages/resources/tools.html', name: '工具與模板下載（所有模板不得漏檔）',
     mustContain: templateLinkFragments() },
 ];

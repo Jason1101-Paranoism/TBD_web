@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../config/site';
+
+// 工具的設計依據。內容來自團隊的方法論筆記（四個理論收斂成三根支柱），
+// 這裡只放「對使用者有意義」的部分：理論一句話、它在工具裡長成什麼樣子、刻意不做什麼。
+// 顧問訓練、內部稽核、對外話術等內部用途不放在這頁。
+// 出處一律附 DOI；2026-09-24 已逐筆對 Crossref 核對標題、期刊、卷期與頁碼。
+const title = '這些工具為什麼這樣設計';
+const description = '升學工具與模板背後的三個設計原則：方向是說出來的、幫忙要有退場的設計、把焦慮變成看得見的下一步，以及各自依據的研究與出處。';
+const ctaLink = `${site.lineUrl}?utm_source=website&utm_medium=cta&utm_campaign=tool-design`;
+
+const pillars = [
+  {
+    id: 'story',
+    no: '一',
+    name: '方向是說出來的，不只是測出來的',
+    short: '把散落的經歷，整理成一條說得清楚的線。',
+    theory:
+      '生涯建構論（Savickas）指出，一個人的方向不只來自測驗配對，也來自他怎麼理解、敘說自己的經歷；而面對轉變的調適力——關注未來、覺得能自己決定、願意探索、相信自己做得到——是可以培養的。',
+    why:
+      '高中生正在從「做事的人」變成「能解釋自己在做什麼的人」。備審要求的正是後者：把做過的事，說成一個有意義、前後連得起來的故事。',
+    inTools: [
+      ['備審主線整理表', '先把三年做過的事全部列出來、先不篩選，再收斂成一句主線。順序是刻意的：主線是從經歷裡整理出來的，不是先想好再去找材料。'],
+      ['學習歷程「反思」寫作引導', '用「我原本以為……但實際做了之後發現……」這類結構，把一段經歷寫成你的想法怎麼改變。'],
+      ['科系探索訪談清單、科系比較 Prompt 產生器', '用真實的人與具體的比較，補上量表看不到的部分：這個科系每天在做什麼、跟你想像的差在哪。'],
+      ['研究所計畫書架構模板', '第一步是「先盤點我做過什麼」。題目從你真的動手做過的事長出來，而不是從一個聽起來很好的主題開始。'],
+    ],
+    notDo: '不替你決定方向，也不給一組代碼就下結論。',
+  },
+  {
+    id: 'handoff',
+    no: '二',
+    name: '幫忙要有退場的設計',
+    short: '結構給你，內容你寫；卡住才給提示，給方向不給答案。',
+    theory:
+      '鷹架理論（Wood, Bruner & Ross；van de Pol 等人的回顧）指出，有效的協助有三個特徵：依當下的表現調整、隨時間減少、把主導權交還給學習者——沒有退場計畫的協助，就只是代工。回饋研究（Hattie & Timperley；Kluger & DeNisi）則發現，回饋有沒有用，取決於它落在哪一層：說清楚目標、差距與下一步的回饋有用；只評價「你這個人」的回饋，常常沒有用，甚至有反效果。',
+    why:
+      '自我調節學習（Zimmerman）補上另一半：學習者要能自己跑「設目標、邊做邊看、事後檢討」的循環。工具真正要教的，是讓你學會怎麼給自己回饋。',
+    inTools: [
+      ['淡黃色的儲存格', '每份工具裡要你填或勾的地方都是淡黃色，說明與判準寫在旁邊，但答案一格都不會先替你寫好。'],
+      ['「填不出來怎麼辦」', '只在容易卡住的地方出現，告訴你可以從哪裡開始想，不給現成答案。'],
+      ['檢核表的「沒打勾的話，下一步」', '每一項沒過，旁邊都寫著下一個具體動作，而不是分數或評語。'],
+      ['口試「模擬追問紀錄」', '每練一次記下被問倒的地方與下一步，下一輪從那裡開始——這就是一次完整的自我調節循環。'],
+    ],
+    notDo: '不代寫。工具只提供結構與判準，你寫出來的才是你的。',
+  },
+  {
+    id: 'anxiety',
+    no: '三',
+    name: '把焦慮變成看得見的下一步',
+    short: '風險改不掉，但「我知道下一步是什麼」可以增加。',
+    theory:
+      '壓力的認知評估模型（Lazarus & Folkman）指出，同一件事帶來多大的壓力，取決於兩層判斷：這件事對我是威脅還是挑戰，以及我手上有什麼資源可以應對。',
+    why:
+      '升學本來就有風險，誰都改不了。能改的是第二層：當你清楚知道每週要做什麼、什麼時候交、用什麼標準算完成，同一件事就比較像挑戰，而不是威脅。',
+    inTools: [
+      ['「我到哪了」分頁', '打勾之後，各區完成度自動長出來。最短的那一條，就是現在最該補的地方。'],
+      ['送出前檢核', '幾項刻意與前面重複的「閘門」，沒滿就先別送——把「不知道這樣夠不夠」換成明確的標準。'],
+      ['推甄時程倒數與任務甘特圖', '只填一個送件截止日，所有任務的建議起訖日自動回推，逾期的會自己亮起提醒。'],
+      ['升學管道戰力評估與決策雷達圖', '三條管道的平均分與雷達圖一起算出來，看得見自己在每條路上還缺什麼。'],
+    ],
+    notDo: '不承諾結果，也不用倒數製造恐慌；工具給的是節奏與標準。',
+  },
+];
+
+// APA 格式；有 DOI 的都已對 Crossref 核對。書籍沒有 DOI，不附連結。
+const references = [
+  { text: 'Hattie, J., & Timperley, H. (2007). The power of feedback. Review of Educational Research, 77(1), 81–112.', doi: '10.3102/003465430298487' },
+  { text: 'Kluger, A. N., & DeNisi, A. (1996). The effects of feedback interventions on performance: A historical review, a meta-analysis, and a preliminary feedback intervention theory. Psychological Bulletin, 119(2), 254–284.', doi: '10.1037/0033-2909.119.2.254' },
+  { text: 'Lazarus, R. S., & Folkman, S. (1984). Stress, appraisal, and coping. Springer.' },
+  { text: 'Savickas, M. L. (2012). Life design: A paradigm for career intervention in the 21st century. Journal of Counseling & Development, 90(1), 13–19.', doi: '10.1111/j.1556-6676.2012.00002.x' },
+  { text: 'Savickas, M. L., & Porfeli, E. J. (2012). Career Adapt-Abilities Scale: Construction, reliability, and measurement equivalence across 13 countries. Journal of Vocational Behavior, 80(3), 661–673.', doi: '10.1016/j.jvb.2012.01.011' },
+  { text: 'van de Pol, J., Volman, M., & Beishuizen, J. (2010). Scaffolding in teacher–student interaction: A decade of research. Educational Psychology Review, 22(3), 271–296.', doi: '10.1007/s10648-010-9127-6' },
+  { text: 'Vygotsky, L. S. (1978). Mind in society: The development of higher psychological processes. Harvard University Press.' },
+  { text: 'Wood, D., Bruner, J. S., & Ross, G. (1976). The role of tutoring in problem solving. Journal of Child Psychology and Psychiatry, 17(2), 89–100.', doi: '10.1111/j.1469-7610.1976.tb00381.x' },
+  { text: 'Zimmerman, B. J. (2002). Becoming a self-regulated learner: An overview. Theory Into Practice, 41(2), 64–70.', doi: '10.1207/s15430421tip4102_2' },
+];
+---
+
+<BaseLayout title={title} description={description} bodyClass="sub-page resources-page">
+<section class="hero">
+  <nav class="breadcrumb">
+    <a href="/">首頁</a>
+    <span>›</span>
+    <a href="/pages/resources.html">知識庫</a>
+    <span>›</span>
+    <a href="/pages/resources/tools.html">工具與模板</a>
+    <span>›</span>
+    <span>設計原則</span>
+  </nav>
+  <span class="kicker">工具與模板</span>
+  <h1>{title}</h1>
+  <p class="lead">每一份工具背後都有三個設計原則，各自來自一條研究脈絡。這頁說明原則是什麼、它在工具裡長成什麼樣子，以及我們刻意不做的事。出處附在最後。</p>
+</section>
+
+<main class="search-main">
+
+  <section class="section" id="principles">
+    <h2 class="section-label">三個設計原則</h2>
+    <div class="card-grid">
+      {pillars.map((p) => (
+        <article class="card article-card">
+          <span class="badge">原則{p.no}</span>
+          <h3><a class="text-link" href={`#${p.id}`}>{p.name}</a></h3>
+          <p class="card-desc">{p.short}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  {pillars.map((p) => (
+    <section class="section" id={p.id}>
+      <h2 class="section-label">原則{p.no}：{p.name}</h2>
+      <p style="margin-bottom: 12px;">{p.theory}</p>
+      <p style="margin-bottom: 16px; color: var(--tbd-mid);">{p.why}</p>
+      <h3 style="margin-bottom: 8px;">在工具裡長成什麼樣子</h3>
+      <ul class="content-list" style="line-height: 1.9;">
+        {p.inTools.map(([name, how]) => (
+          <li><strong>{name}：</strong>{how}</li>
+        ))}
+      </ul>
+      <p style="margin-top: 12px; color: var(--tbd-mid);"><strong>刻意不做：</strong>{p.notDo}</p>
+    </section>
+  ))}
+
+  <section class="section" id="references">
+    <h2 class="section-label">出處</h2>
+    <ul class="content-list" style="color: var(--tbd-mid); line-height: 1.8;">
+      {references.map((r) => (
+        <li>
+          {r.text}
+          {r.doi && <> <a class="text-link" href={`https://doi.org/${r.doi}`} target="_blank" rel="noopener noreferrer">doi:{r.doi}</a></>}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section cta">
+    <h2>下載工具，照著原則用一次</h2>
+    <p>每份工具的第一個分頁「先讀這裡」會告訴你怎麼開始。卡住、或想要依你的目標客製，再來聊。</p>
+    <div class="button-row">
+      <a class="button secondary" href="/pages/resources/tools.html">回工具與模板</a>
+      <a class="button" href={ctaLink} target="_blank" rel="noopener noreferrer" data-track-event="click_consultation_cta">預約免費諮詢</a>
+    </div>
+  </section>
+
+</main>
+</BaseLayout>
